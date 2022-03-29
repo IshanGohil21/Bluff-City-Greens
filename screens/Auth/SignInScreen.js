@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button, Dimensions,SafeAreaView } from 'react-native';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
@@ -59,6 +59,7 @@ const SignInScreen = (props) => {
                         onChangeText={handleChange('email')}
                         placeholder="E-mail"
                         color="white"
+                        keyboardType='email-address'
                     />
                     {touched.email && errors.email &&
                         <Text style={{ fontSize: 11, color: 'red' }}>{errors.email}</Text>
@@ -118,8 +119,10 @@ const SignInScreen = (props) => {
                     </View>
                     <View  style={{flexDirection: 'row', justifyContent:'center', alignItems:'center', marginTop: 10}}>
                             <Text style={{color:'white'}} >Don't have account?</Text>
-                            <TouchableOpacity > 
-                        <Text style={{color:'green', fontWeight:'bold', fontSize:20}} >  Sign Up </Text>
+                            <TouchableOpacity onPress={() => {
+                                props.navigation.navigate('SignUp')
+                            }} > 
+                        <Text style={{color:'#4ef001', fontWeight:'bold', fontSize:20}} > SignUp </Text>
                         </TouchableOpacity>
                         </View>
                     
@@ -127,6 +130,7 @@ const SignInScreen = (props) => {
                 </View>
             )}
         </Formik>
+        
     );
 }
 
