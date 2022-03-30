@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import LinearGradient from "react-native-linear-gradient";
 
 const SignInScreen = (props) => {
+
     const [rememberMe, setRememberMe] = useState(false);
     return (
         <Formik

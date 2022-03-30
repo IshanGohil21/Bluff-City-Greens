@@ -6,43 +6,20 @@ import * as yup from 'yup';
 import ProfilePicture from 'react-native-profile-picture';
 import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import PhoneInput from 'react-native-phone-number-input';
-import * as  ImagePicker from 'react-native-image-picker';
-//import * as Permissions from 'expo-permissions'
+// import * as  ImagePicker from 'react-native-image-picker';
+//import * as Permissions from 'expo-permissions';
+import PhoneVerificationScreen from './PhoneVerification'
 
 
 
 const SignUpScreen = props => {
+
     const [phoneNumber, setphoneNumber] = useState('');
     const phoneInput = useRef(null);
-
-    const options = {
-        title: 'Select Image',
-        // customButtons: [{ name: 'fb', title: 'choose photo from facebook' }],
-        storageOptions: {
-            skipBackup: true,
-            path: 'images',
-        },
-    }
-    
-    const openPicker = () => {
-        ImagePicker.showImagePicker(options, (response) => {
-            if(response.didCancel){
-                console.log('User Cancelled image Picker');
-            }
-            else if(response.error){
-                console.log('ImagePicker Error:', response.error);
-            }
-            // else if(response.customButton) {
-            //     console.log('user tapped custom button', response.customButton)
-            // }
-            else{
-                const source = {uri: response.uri};
-            }
-        });
-    };
+      
 
     return (
-        <SafeAreaView>
+       // <SafeAreaView>
             <ScrollView>
                 <View style={{ flex: 1 }}>
 
@@ -104,7 +81,7 @@ const SignUpScreen = props => {
 
                                 <TouchableOpacity onPress={() => { }}
                                     style={styles.camera}
-                                    onPress={ () => {openPicker}}
+                                    onPress={ () => {}}
                                 >
                                     <Ionicons name='camera' color='#259D57' size={25} />
                                 </TouchableOpacity>
@@ -180,7 +157,9 @@ const SignUpScreen = props => {
                                 </View>
 
 
-                                <TouchableOpacity>
+                                <TouchableOpacity  onPress={() => {
+                                    props.navigation.navigate('PhoneVerification')
+                                }}>
                                     <Text style={styles.signin}> SIGN UP </Text>
                                 </TouchableOpacity>
 
@@ -197,7 +176,7 @@ const SignUpScreen = props => {
                     </Formik>
                 </View>
             </ScrollView>
-        </SafeAreaView>
+     //   </SafeAreaView>
     );
 }
 
