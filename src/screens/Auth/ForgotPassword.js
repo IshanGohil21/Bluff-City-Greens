@@ -8,16 +8,24 @@ import * as yup from 'yup'
 const ForgotPasswordScreen = props => {
     return (
         <>
-        <View style={{flex: 0.4, backgroundColor:'#259D57', alignItems:'flex-start'}} >
-            <TouchableOpacity onPress={() => {
-                props.navigation.goBack()
-            }}
-            >
-                <Ionicons name='arrow-back-outline' color='white' size={24} style={{marginBottom:20}}/>
-            </TouchableOpacity>
-            <Text style={{justifyContent: 'center', color: 'white', fontSize: 25, fontWeight:'bold', marginBottom:10}} > Forgot Password</Text>
-            <Text style={{justifyContent: 'center', color: 'white', fontSize: 18}} > Enter the email address</Text>
-        </View>
+       {/* Header */}
+       <View style={{ flexDirection: 'row', padding: 10, backgroundColor: '#259D57' }}>
+       <TouchableOpacity onPress={() => {
+          props.navigation.goBack()
+        }}
+        >
+          <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 10}} />
+        </TouchableOpacity>
+                {/*Title*/}
+                <View>
+                    <View style={{ flexDirection: 'row', marginTop: 30 }}>
+                        <Text style={styles.title}>Forgot Password </Text>
+                    </View>
+                    <View>
+                        <Text style={styles.service}> Enter the email address </Text>
+                    </View>
+                </View>
+            </View>
         
       <Formik
         initialValues={{ 
@@ -36,7 +44,7 @@ const ForgotPasswordScreen = props => {
 
 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 30 }}>
                         <Image
-                            source={require('../../assets/icon/icons8-forgot-password-100.png')}
+                            source={require('../../../assets/icon/icons8-forgot-password-100.png')}
                             style={styles.image}
                             resizeMode='contain'
                         />
@@ -94,7 +102,21 @@ const styles = StyleSheet.create({
     borderColor: 'green',
     overflow: 'hidden',
     width: '100%'
-  }
+  },
+  title: {
+    color: 'white',
+    fontSize: 30,
+    padding: 10,
+    fontWeight: '600',
+    //  marginTop: 40,
+    fontWeight: 'bold',
+  },
+  service: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom:10
+  },
 });
 
 export default ForgotPasswordScreen;

@@ -8,19 +8,19 @@ const DiscountCouponScreen = props => {
         <View>
 
             {/* Header */}
-            <View style={{ flexDirection: 'row', padding: 10, backgroundColor: 'green' }}>
+            <View style={{ flexDirection: 'row', padding: 10, backgroundColor: '#259D57' }}>
                 <TouchableOpacity onPress={() => {
                     props.navigation.goBack()
                 }} style={{ flex: 1 }}
                 >
-                    <Ionicons name='arrow-back-outline' color='black' size={28} style={{ marginBottom: 20 }} />
+                    <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 30 }} />
                 </TouchableOpacity>
 
                 {/*Title*/}
                 <View style={{ flex: 3 }}>
                     <View>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ color: 'white', fontSize: 40, padding: 10, fontWeight: '600' }}>Bluff City </Text>
+                            <Text style={{ color: 'white', fontSize: 40, padding: 10, fontWeight: '600',marginTop: 60 }}>Bluff City </Text>
                         </View>
                         <View>
                             <Text style={{ color: 'white', fontSize: 50, fontWeight: 'bold' }}> GREENS </Text>

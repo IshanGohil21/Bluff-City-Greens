@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import AuthStackScreen from "../screens/Auth/AuthStackScreen";
+import AuthStackScreen from "../src/screens/Auth/AuthStackScreen";
 
 const AppStack = createStackNavigator();
 

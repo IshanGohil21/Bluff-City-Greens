@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button, Dimensions,SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button, Dimensions} from 'react-native';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 import LinearGradient from "react-native-linear-gradient";
+import { StatusBar } from 'expo-status-bar';
 
 const SignInScreen = (props) => {
 
@@ -34,6 +35,9 @@ const SignInScreen = (props) => {
             {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
                 <View style={styles.mainWrapper}>
                     <View>
+            <StatusBar style="auto" />
+        </View>
+                    <View>
                         <TouchableOpacity onPress={() => {}}>
                             <Text style={{textAlign:'right', color:'white', padding: 10}} > SKIP </Text>
                         </TouchableOpacity>
@@ -41,7 +45,7 @@ const SignInScreen = (props) => {
 
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 70 }}>
                         <Image
-                            source={require('../../assets/icon/icons8-spinach-100.png')}
+                            source={require('../../../assets/icon/icons8-spinach-100.png')}
                             style={styles.image}
                             resizeMode='contain'
                         />
@@ -90,7 +94,7 @@ const SignInScreen = (props) => {
                         <Text style={styles.remember}> Remember me </Text>
                     </View>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => {props.navigation.navigate('DiscountCoupon')}} >
                         <Text style={styles.signin}> SIGN IN </Text>
                     </TouchableOpacity>
 
@@ -107,13 +111,13 @@ const SignInScreen = (props) => {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }} >
                         <View>
                             <TouchableOpacity onPress={() => { }}>
-                                <Image source={require('../../assets/icon/icons8-facebook-circled-100.png')} style={{ height: 50, width: 50 }} />
+                                <Image source={require('../../../assets/icon/icons8-facebook-circled-100.png')} style={{ height: 50, width: 50 }} />
                             </TouchableOpacity>
                         </View>
                         <View>
                             <TouchableOpacity onPress={() => { }}>
                                 <View style={{ borderRadius: 25, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Image source={require('../../assets/icon/icons8-google-100.png')} style={{ height: 40, width: 40 }} />
+                                    <Image source={require('../../../assets/icon/icons8-google-100.png')} style={{ height: 40, width: 40 }} />
                                 </View>
                             </TouchableOpacity>
                         </View>

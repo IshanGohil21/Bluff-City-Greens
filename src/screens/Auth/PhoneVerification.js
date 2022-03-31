@@ -16,7 +16,7 @@ const PhoneVerificationScreen = (props) => {
           props.navigation.goBack()
         }}
         >
-          <Ionicons name='arrow-back-outline' color='white' size={24} style={{ marginBottom: 20 }} />
+          <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 30, marginLeft:10 }} />
         </TouchableOpacity>
         <Text style={styles.verify} > Phone Verification</Text>
         <Text style={styles.optEnter} > Enter your OTP code here </Text>
@@ -28,7 +28,7 @@ const PhoneVerificationScreen = (props) => {
           ref={pin1ref}
             autoFocus={true}
             maxLength={1}
-            keyboardType='numeric'  
+            keyboardType='phone-pad'  
           onKeyPress={({nativeEvent}) => {
           nativeEvent.key === 'Backspace' ? null : pin2ref.current.focus();
           }}
@@ -39,9 +39,10 @@ const PhoneVerificationScreen = (props) => {
           ref={pin2ref}
           maxLength={1}
           keyboardType='numeric'
-          onKeyPress={({nativeEvent}) => {
-            nativeEvent.key === 'Backspace' ? pin1ref.current.focus() : pin3ref.current.focus();
-        }}
+        
+         onKeyPress={({nativeEvent}) => {
+           nativeEvent.key === 'Backspace' ? pin1ref.current.focus() : pin3ref.current.focus();
+       }}
             style={styles.opt}
           />
 

@@ -7,11 +7,11 @@ const AccessibilityPolicyScreen = (props) => {
     <View>
 
       {/* Header */}
-      <View style={{ padding: 10, backgroundColor: 'green' }}>
+      <View style={{ padding: 10, backgroundColor: '#259D57' }}>
         <TouchableOpacity onPress={() => {
           props.navigation.goBack()
         }}>
-          <Ionicons name='arrow-back-outline' color='black' size={28} style={{ marginBottom: 20 }} />
+          <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 30 }} />
         </TouchableOpacity>
 
         {/* Title */}
