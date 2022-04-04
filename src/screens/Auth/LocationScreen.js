@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Searchbar from '../../../components/SearchBar';
+import Searchbar from '../../components/SearchBar';
 
 
 const LocationScreen = (props) => {
@@ -10,7 +10,7 @@ const LocationScreen = (props) => {
 
     return (
         <View >
-            
+
             {/* Header */}
             <View style={{ flexDirection: 'row', padding: 10, backgroundColor: '#259D57' }}>
                 {/*Title*/}
@@ -24,21 +24,21 @@ const LocationScreen = (props) => {
                 </View>
             </View>
             {/* Body */}
-            <View  style={styles.body} >
+            <View style={styles.body} >
                 <Searchbar
                     value={value}
                     style={{ margin: 20 }}
                 />
 
-<View style={styles.searchContainer2}>
-            <View style={styles.vwSearch}  onPress={() => {props.navigation.navigate('PickCurrentLocation')}} >
-                <Ionicons name="navigate" size={20} color="grey" />
-            </View>
+                <View style={styles.searchContainer2}>
+                    <View style={styles.vwSearch} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} >
+                        <Ionicons name="navigate" size={20} color="grey" />
+                    </View>
 
-            <Text style={styles.text3} onPress={() => {props.navigation.navigate('PickCurrentLocation')}} > Use current location </Text>
-        </View>
+                    <Text style={styles.text3} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} > Use current location </Text>
+                </View>
 
-                <Image source={require('../../../assets/icon/icons8-location-100.png')}
+                <Image source={require('../../assets/icon/icons8-location-100.png')}
                     style={styles.image}
                 />
                 <Text style={styles.text} >
@@ -52,15 +52,14 @@ const LocationScreen = (props) => {
                     <Text style={styles.signin}> SIGN IN </Text>
                 </TouchableOpacity>
 
-                <View  style={{flexDirection: 'row', justifyContent:'center', alignItems:'center', marginTop: 10}}>
-                            <Text style={{color:'black'}} >Don't have account?</Text>
-                            <TouchableOpacity onPress={() => {
-                                props.navigation.navigate('SignUp')
-                            }} > 
-                        <Text style={{color:'#4ef001', fontWeight:'bold', fontSize:20}} > SignUp </Text>
-                        </TouchableOpacity>
-                        </View>
-
+                <View style={styles.signUpContainer}>
+                    <Text style={{ color: 'grey' }} >Don't have account?</Text>
+                    <TouchableOpacity onPress={() => {
+                        props.navigation.navigate('SignUp')
+                    }} >
+                        <Text style={{ color: 'green', fontWeight: 'bold', fontSize: 20 }} > SignUp </Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
 
@@ -84,7 +83,7 @@ const styles = StyleSheet.create({
     vwSearch: {
         flex: 0.2,
         justifyContent: 'center',
-        alignItems:'flex-start',
+        alignItems: 'flex-start',
         flexDirection: 'row',
         width: 40,
     },
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 40,
-      //  marginLeft: 50
+        //  marginLeft: 50
     },
     text: {
         color: 'grey',
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     text3: {
-       textAlign: 'left'
+        textAlign: 'left'
     },
     signin: {
         width: "100%",
@@ -128,24 +127,31 @@ const styles = StyleSheet.create({
         width: '70%',
         // marginLeft: 50,
         marginTop: 20,
-        paddingBottom:10
-    }, 
+        paddingBottom: 10,
+        width: 300
+    },
     searchContainer2: {
-        width: '80%',
+        width: '90%',
         borderBottomWidth: 1,
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        alignItems:'flex-start',
-        marginRight: 30
-      
+        alignItems: 'flex-start',
+        //  marginRight: 30
+
     },
-    body:{
-        alignItems: 'center'
+    body: {
+        alignItems: 'center',
     },
     textInput: {
         // backgroundColor: 'green',
         flex: 1,
     },
+    signUpContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 30
+    }
 
 
 });

@@ -44,11 +44,11 @@ const DiscountCouponScreen = props => {
                 />
 
                 <View>
-                    <TouchableOpacity onPress={() => { }} style={{ marginTop: 50, marginHorizontal: 40 }}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab',{screen: 'Home' })}} style={{ marginTop: 50, marginHorizontal: 40 }}>
                         <Text style={styles.signin}> SUBMIT </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => { }} style={{ marginTop: 50, marginHorizontal: 40 }}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab',{screen: 'Home' })}} style={{ marginTop: 50, marginHorizontal: 40 }}>
                         <Text style={styles.take}> TAKE ME SHOPPING </Text>
                     </TouchableOpacity>
                 </View>

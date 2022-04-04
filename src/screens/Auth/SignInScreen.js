@@ -45,7 +45,7 @@ const SignInScreen = (props) => {
 
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 70 }}>
                         <Image
-                            source={require('../../../assets/icon/icons8-spinach-100.png')}
+                            source={require('../../assets/icon/icons8-spinach-100.png')}
                             style={styles.image}
                             resizeMode='contain'
                         />
@@ -111,13 +111,13 @@ const SignInScreen = (props) => {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }} >
                         <View>
                             <TouchableOpacity onPress={() => { }}>
-                                <Image source={require('../../../assets/icon/icons8-facebook-circled-100.png')} style={{ height: 50, width: 50 }} />
+                                <Image source={require('../../assets/icon/icons8-facebook-circled-100.png')} style={{ height: 50, width: 50 }} />
                             </TouchableOpacity>
                         </View>
                         <View>
                             <TouchableOpacity onPress={() => { }}>
                                 <View style={{ borderRadius: 25, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Image source={require('../../../assets/icon/icons8-google-100.png')} style={{ height: 40, width: 40 }} />
+                                    <Image source={require('../../assets/icon/icons8-google-100.png')} style={{ height: 40, width: 40 }} />
                                 </View>
                             </TouchableOpacity>
                         </View>

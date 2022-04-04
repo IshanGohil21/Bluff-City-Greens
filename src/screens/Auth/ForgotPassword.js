@@ -44,7 +44,7 @@ const ForgotPasswordScreen = props => {
 
 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 30 }}>
                         <Image
-                            source={require('../../../assets/icon/icons8-forgot-password-100.png')}
+                            source={require('../../assets/icon/icons8-forgot-password-100.png')}
                             style={styles.image}
                             resizeMode='contain'
                         />

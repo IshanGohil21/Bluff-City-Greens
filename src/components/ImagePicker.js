@@ -1,13 +1,12 @@
 import React,{forwardRef} from 'react';
 import {TouchableOpacity, Text, View} from 'react-native';
 import ImagePickerCropper from 'react-native-image-crop-picker';
-//import ImageCropPicker from 'react-native-image-crop-picker';
 import { Ionicons } from '@expo/vector-icons';
 
 const ImagePicker = forwardRef(({onFileSelected}, ref) => {
     const options = [
         {
-            name: 'Take from camera',
+            name: 'Camera',
             icon:  <Ionicons name="camera" size={20} color='white' /> ,
             onPress: () => {
               ImagePickerCropper.openCamera({
@@ -23,7 +22,7 @@ const ImagePicker = forwardRef(({onFileSelected}, ref) => {
             },
           },
           {
-            name: 'Choose from Gallery',
+            name: 'Gallery',
             icon: <Ionicons name="image" size={20} color='white' /> ,
              //<Icon name="image" color={colors.grey} size={21} />,
             onPress: () => {

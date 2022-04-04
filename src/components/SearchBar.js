@@ -30,23 +30,23 @@ export default function Searchbar({ value, updateSearch, style }) {
                 value={query}
                 placeholder="Search for Your Location"
                 style={styles.textInput}
-                onChangeText={(text) => {
-                    var letters = /^$|^[a-zA-Z._\b ]+$/;
-                    if (text.length > 12)
-                        setError("Query too long.")
-                    else if (text.match(letters)) {
-                        setQuery(text)
-                        updateSearch(text)
-                        if (error)
-                            setError(false)
-                    }
-                    else setError("Please only enter alphabets")
-                }}
+                // onChangeText={(text) => {
+                //     var letters = /^$|^[a-zA-Z._\b ]+$/;
+                //     if (text.length > 12)
+                //         setError("Query too long.")
+                //     else if (text.match(letters)) {
+                //         setQuery(text)
+                //         updateSearch(text)
+                //         if (error)
+                //             setError(false)
+                //     }
+                //     else setError("Please only enter alphabets")
+                // }}
             />
         </View>
         <Image 
-            source={require('../assets/icon/Cr7.jpeg')}
-            style={{height: 30, width: 30, marginLeft: 5}}
+            source={require('../assets/icon/location-icon.png')}
+            style={{height: 40, width: 40}}
             />
         </View>
     </View >
@@ -96,8 +96,10 @@ const styles = StyleSheet.create({
         marginRight: 30
     },
     container: {
-        height: 80,
+        height: 20,
+        marginBottom: 50,
         alignItems: 'center',
+        borderColor: 'white'
         // height: '100%', width: '100%' 
     },
     image: {

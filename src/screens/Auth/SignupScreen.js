@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import ProfilePicture from 'react-native-profile-picture';
-import { backgroundColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import { backgroundColor, borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import PhoneInput from 'react-native-phone-number-input';
 // import * as  ImagePicker from 'react-native-image-picker';
 //import * as Permissions from 'expo-permissions';
@@ -108,25 +108,28 @@ const SignUpScreen = props => {
                                 animationType="slide"
                                 transparent={true}
                                 visible={modalVisible}
-                                onRequestClose={() => {
-                                    Alert.alert("Options Closed");
-                                    setModalVisible(!modalVisible);
-                                }}
                             >
                                 <View style={styles.centeredView}>
                                     <View style={styles.modalView}>
-                                        <Text style={styles.modalText}>Choose Action</Text>
+
+                                        <Text style={styles.modalText}>Choose From</Text>
                                         <TouchableOpacity
                                             style={[styles.button, styles.buttonClose]}
                                             onPress={choosePhotoFromLibrary}
                                         >
-                                            <Text style={styles.textStyle}>Choose From Gallery</Text>
+                                            <Text style={styles.textStyle}>Gallery</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity
                                             style={[styles.button, styles.buttonClose]}
                                             onPress={takePhotoFromCamera}
                                         >
-                                            <Text style={styles.textStyle}>Open Camera</Text>
+                                        <Text style={styles.textStyle}>Camera</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            style={[styles.button, styles.buttonClose]}
+                                            onPress={() => {setModalVisible(false)}}
+                                        >
+                                        <Text style={styles.textStyle}>Close</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -170,19 +173,20 @@ const SignUpScreen = props => {
                                 <Text style={{ color: 'white', marginBottom: 5 }}>Phone Number</Text>
 
                                 <PhoneInput
-                                    ref={phoneInput}
-                                    style={styles.customCss}
-                                    defaultValue={phoneNumber}
-                                    defaultCode="IN"
-                                    layout="first"
-                                    withShadow
-                                    //autoFocus
+                                    
+                                 ref={phoneInput}
+                                //    style={styles.customCss}
+                                //    defaultValue={phoneNumber}
+                                //    defaultCode="IN"
+                                //    layout="first"
+                                    
                                     containerStyle={styles.phoneContainer}
-                                    textContainerStyle={styles.textInput}
+                                   textContainerStyle={styles.textInput}
                                     onChangeFormattedText={text => {
                                         setphoneNumber(text);
                                     }}
                                 />
+                                
                                 <Text style={{ color: 'white' }} >Password</Text>
                                 <TextInput
                                     value={values.password}
@@ -294,39 +298,33 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 50,
         marginBottom: 15,
-        backgroundColor: '#259D57'
+        backgroundColor: 'rgba(50,0,255,0.3)'
     },
     textInput: {
         paddingVertical: 0,
-        backgroundColor: 'rgba(50,0,255,0.3)'
+        backgroundColor: 'rgba(50,0,255,0.3)',
+        borderColor: '#cccccc'
     },
     centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 22,
-        
       },
       modalView: {
-        margin: 20,
         backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
+        borderRadius: 40,
+        padding: 25,
         alignItems: "center",
         shadowColor: "#000",
-        shadowOffset: {
-          width: 0,
-          height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
+        height: 280,
+        width: 270,
       },
       button: {
-        borderRadius: 20,
+        borderRadius: 50,
         padding: 10,
         elevation: 2,
-        marginTop: 20
+        marginTop: 20,
+        width: 150
       },
       buttonOpen: {
         backgroundColor: "#259D57",

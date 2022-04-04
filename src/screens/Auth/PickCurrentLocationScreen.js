@@ -27,7 +27,7 @@ const PickCurrentLocationScreen = (props) => {
       </View>
       {/* Body */}
       <Image
-        source={require('../../../assets/icon/map.jpeg')}
+        source={require('../../assets/icon/map.jpeg')}
         style={styles.map}
       />
       <Text style={styles.delivery} >

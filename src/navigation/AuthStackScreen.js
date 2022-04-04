@@ -1,15 +1,15 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import ForgotPasswordScreen from './ForgotPassword';
-import SignInScreen from './SignInScreen';
-import SignUpScreen from './SignupScreen';
-import PhoneVerificationScreen from './PhoneVerification';
-import DiscountCouponScreen from './DiscountCoupon';
-import AccessibilityPolicyScreen from './AccessibilityPolicyScreen';
-import LocationScreen from './LocationScreen';
-import PickCurrentLocationScreen from './PickCurrentLocationScreen';
-import SplashScreen from './SplashScreen';
+import ForgotPasswordScreen from '../screens/Auth/ForgotPassword';
+import SignInScreen from '../screens/Auth/SignInScreen';
+import SignUpScreen from '../screens/Auth/SignupScreen';
+import PhoneVerificationScreen from '../screens/Auth/PhoneVerification';
+import DiscountCouponScreen from '../screens/Auth/DiscountCoupon';
+import AccessibilityPolicyScreen from '../screens/Auth/AccessibilityPolicyScreen';
+import LocationScreen from '../screens/Auth/LocationScreen';
+import PickCurrentLocationScreen from '../screens/Auth/PickCurrentLocationScreen';
+import SplashScreen from '../screens/Auth/SplashScreen';
 
 const AuthStack = createStackNavigator();
 
