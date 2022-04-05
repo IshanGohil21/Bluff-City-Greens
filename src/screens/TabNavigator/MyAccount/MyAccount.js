@@ -7,7 +7,6 @@ const MyAccountScreen = props => {
     return (
         <View>
         <ScrollView>
-        <StatusBar barStyle='light-content' />
         {/* Header */}
         <View style={styles.container} >
         <View  style={styles.header} >
@@ -18,7 +17,7 @@ const MyAccountScreen = props => {
                 <TouchableOpacity>
                     <Ionicons name='create-outline' size={30} color='white'  style={{marginTop: 20, marginRight:10}} />
                 </TouchableOpacity>
-            </ImageBackground>
+                </ImageBackground>
         </View>
         { /*  Body */ }
         <View style={styles.bodyContainer}>
@@ -153,8 +152,6 @@ const styles = StyleSheet.create({
         height: 305,
         flexDirection:'row',
         padding:15,
-          borderTopLeftRadius: 30,
-         borderTopRightRadius: 30
     },
     body:{
         backgroundColor: 'white',
@@ -165,17 +162,19 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         paddingHorizontal: 15,
         marginLeft: 15,
+        // borderTopLeftRadius: 30,
+        // borderTopRightRadius: 30,
+        // borderWidth: 5
     },
-    // bodyContainer: {
-    //     backgroundColor: 'white',
-    //     flex:1,
-    //     alignItems:'center',
-    //    // flexDirection: 'row'
-    // },
     text:{
         padding:15,
         fontSize: 17,
-        color:'black'
+      color:'black'
+     },
+    bodyContainer: {
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        borderWidth: 1
     }
 });
 

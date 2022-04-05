@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Searchbar from '../../components/SearchBar';
 
@@ -10,6 +10,7 @@ const LocationScreen = (props) => {
 
     return (
         <View >
+             <StatusBar barStyle='light-content' backgroundColor='#259D57' />
 
             {/* Header */}
             <View style={{ flexDirection: 'row', padding: 10, backgroundColor: '#259D57' }}>

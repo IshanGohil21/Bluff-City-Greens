@@ -4,21 +4,22 @@ import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpaci
 import { Formik } from "formik";
 import * as yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
-import User from '../../dummy-data/User';
+import User from '../../../dummy-data/User';
+import Colors from '../../../Colors/Colors';
 
 const personalInfoScreen = props => {
     const [phoneNumber, setphoneNumber] = useState('');
     const phoneInput = useRef(null);
 
     return (
-        <View  style={{flex:1}}>
+        <View  style={styles.main}>
             {/* Header */}
-            <View style={{ padding: 10, backgroundColor: '#259D57', flex:0.2 }}>
+            <View style={styles.header}>
                 <TouchableOpacity onPress={() => {
                     props.navigation.goBack()
                 }}
                 >
-                    <Ionicons name='arrow-back-outline' color='white' size={30} style={{ marginTop: 10, }} />
+                    <Ionicons name='arrow-back-outline' color='white' size={30} style={{ marginTop: 10 }} />
                 </TouchableOpacity>
                 {/*Title*/}
                     <View>
@@ -29,13 +30,13 @@ const personalInfoScreen = props => {
                             
                         <View style={styles.mainWrapper}>
                         <View  >
-                            <Text style={{ color: 'grey', marginBottom: 5 }}>Full Name</Text>
+                            <Text style={styles.text}>Full Name</Text>
                               <Text style={styles.number} >{User.username}</Text>
 
-                            <Text style={{ color: 'grey' }} >Email</Text>
+                            <Text style={styles.text} >Email</Text>
                                 <Text style={styles.number} >{ User.email }</Text>
                             
-                            <Text style={{ color: 'grey', marginBottom: 5 }}>Contact Number</Text>
+                            <Text style={styles.text}>Contact Number</Text>
 
                                <Text style={styles.number}>{User.phone_number}</Text>
                             </View>
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     },
     signin: {
         width: "90%",
-        backgroundColor: "#259D57",
+        backgroundColor: Colors.primary,
         textAlign: 'center',
         color: 'white',
         fontSize: 23,
@@ -75,6 +76,17 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginBottom: 30
     },
+    header:{
+        padding: 10, 
+        backgroundColor: Colors.primary, 
+        flex:0.2 
+    },
+    main:{
+        flex:1
+    },
+    text:{
+        color: 'grey', marginBottom: 5
+    }
 })
 
 export default personalInfoScreen;

@@ -4,23 +4,37 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { Image, StyleSheet } from 'react-native'
 import { Icon } from 'react-native-vector-icons';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
-import HomeScreen from '../screens/TabNavigator/HomeScreen';
-import CheckoutScreen from '../screens/TabNavigator/Checkout';
-import ShopScreen from '../screens/TabNavigator/Shop';
-import MyAccountScreen from '../screens/TabNavigator/MyAccount';
-import ContactScreen from '../screens/TabNavigator/Contact';
-import FAQScreen from '../screens/TabNavigator/FAQ';
-import personalInfoScreen from '../screens/TabNavigator/personalInfo';
-import SavedAddressScreen from '../screens/TabNavigator/SavedAddressScreen';
-import MyOrdersScreen from '../screens/TabNavigator/MyOrdersScreen';
-import FavoritesScreen from '../screens/TabNavigator/FavoritesScreen';
-import PaymentScreen from '../screens/TabNavigator/PaymentScreen';
-import ReferFriendScreen from '../screens/TabNavigator/ReferFriend';
-import ChangePasswordScreen from '../screens/TabNavigator/ChangePassword';
+import HomeScreen from '../Screens/TabNavigator/HomeScreen';
+import CheckoutScreen from '../Screens/TabNavigator/Checkout';
+import ShopScreen from '../Screens/TabNavigator/Shop';
+
+{ /* Contact US Screen */ }
+import ContactScreen from '../Screens/TabNavigator/Contact';
+import FAQScreen from '../Screens/TabNavigator/FAQ';
+
+{ /* My Account Screens */ }
+import MyAccountScreen from '../Screens/TabNavigator/MyAccount/MyAccount';
+import personalInfoScreen from '../Screens/TabNavigator/MyAccount/PersonalInfo';
+import SavedAddressScreen from '../Screens/TabNavigator/MyAccount/SavedAddressScreen';
+import MyOrdersScreen from '../Screens/TabNavigator/MyAccount/MyOrdersScreen';
+import FavoritesScreen from '../Screens/TabNavigator/MyAccount/FavoritesScreen';
+import PaymentScreen from '../Screens/TabNavigator/MyAccount/PaymentScreen';
+import ReferFriendScreen from '../Screens/TabNavigator/MyAccount/ReferFriend';
+import ChangePasswordScreen from '../Screens/TabNavigator/MyAccount/ChangePassword';
+import AddNewAddressScreen from '../Screens/TabNavigator/MyAccount/Address/AddNewAddress';
+import EditAddressScreen from '../Screens/TabNavigator/MyAccount/Address/EditAddress';
+import AddNewAddress2Screen from '../Screens/TabNavigator/MyAccount/Address/AddAddress2';
 
 const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
+    const getTabBarVisibility = (route) => {
+        const routeName = getFocusedRouteNameFromRoute(route);
+        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2']
+        if(hideOnScreens.indexOf(routeName) > -1) return false;
+        return true;
+    };
     return (
         <Tab.Navigator tabBarOptions={{activeTintColor: 'green'}}>
             <Tab.Screen 
@@ -62,11 +76,12 @@ const MainTabScreen = () => {
             <Tab.Screen 
             name='MyAccount' 
             component={MyAccountStackScreen} 
-            options={{
+            options={ ({route}) => ({ 
+                tabBarVisible: getTabBarVisibility(route),
                 tabBarIcon: ({color}) => (
                     <Ionicons name='person' size={24} color={color} />
                     )
-                }} 
+                })} 
             />
         </Tab.Navigator>
     );
@@ -120,6 +135,9 @@ const MyAccountStackScreen = () => {
             <MyAccountStack.Screen  name='Favorites' component={FavoritesScreen} />
             <MyAccountStack.Screen  name='ReferFriend' component={ReferFriendScreen} />
             <MyAccountStack.Screen  name='ChangePassword' component={ChangePasswordScreen} />
+            <MyAccountStack.Screen name='AddNewAddress' component={AddNewAddressScreen} />
+            <MyAccountStack.Screen name='EditAddress' component={EditAddressScreen} />
+            <MyAccountStack.Screen name= 'AddNewAddress2' component={AddNewAddress2Screen} />
             <MyAccountStack.Screen name='FAQ' component={FAQScreen} />
         </MyAccountStack.Navigator>
     )
