@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import Colors from '../../../../Colors/Colors';
+import Colors from '../../../../CommonConfig/Colors/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Address from '../../../../dummy-data/Address';
 import { RadioButton } from 'react-native-paper';
+import Images from '../../../../CommonConfig/Images/Images';
 
 const EditAddressScreen = (props) => {
    
@@ -28,7 +29,7 @@ const EditAddressScreen = (props) => {
                <View style={styles.body} >
                 <View>
                     <Image
-                        source={require('../../../../assets/icon/location.jpeg')}
+                        source={ Images.mapDisplay }
                         style={styles.map}
                     />
                 </View>

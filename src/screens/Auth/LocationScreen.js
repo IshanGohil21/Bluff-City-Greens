@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, StatusBar } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, StatusBar} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Searchbar from '../../components/SearchBar';
-
+import Colors from '../../CommonConfig/Colors/Colors';
+import Images from '../../CommonConfig/Images/Images';
 
 const LocationScreen = (props) => {
     const [value, setValue] = useState();
@@ -10,13 +11,16 @@ const LocationScreen = (props) => {
 
     return (
         <View >
-             <StatusBar barStyle='light-content' backgroundColor='#259D57' />
+             <StatusBar barStyle='light-content' backgroundColor={Colors.primary} />
 
             {/* Header */}
-            <View style={{ flexDirection: 'row', padding: 10, backgroundColor: '#259D57' }}>
+
+            <View style={styles.header}>
+
                 {/*Title*/}
+
                 <View>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.titleContainer}>
                         <Text style={styles.title}>Location </Text>
                     </View>
                     <View>
@@ -24,12 +28,20 @@ const LocationScreen = (props) => {
                     </View>
                 </View>
             </View>
+
             {/* Body */}
+
             <View style={styles.body} >
-                <Searchbar
-                    value={value}
-                    style={{ margin: 20 }}
-                />
+                <View style={styles.search} >
+                    <View>
+                        <Searchbar
+                            value={value}
+                        />
+                    </View>
+                    <View style={styles.icon} >
+                        <Ionicons  name='location-outline' size={30} color={Colors.white} />
+                    </View>
+                </View>
 
                 <View style={styles.searchContainer2}>
                     <View style={styles.vwSearch} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} >
@@ -39,7 +51,7 @@ const LocationScreen = (props) => {
                     <Text style={styles.text3} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} > Use current location </Text>
                 </View>
 
-                <Image source={require('../../assets/icon/icons8-location-100.png')}
+                <Image source={Images.currentLocation}
                     style={styles.image}
                 />
                 <Text style={styles.text} >
@@ -71,9 +83,9 @@ const styles = StyleSheet.create({
     title: {
         color: 'white',
         fontSize: 30,
-        padding: 10,
+        padding: 20,
         fontWeight: '600',
-        marginTop: 40,
+        marginTop: 20,
         fontWeight: 'bold'
     },
     service: {
@@ -152,9 +164,31 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 30
+    },
+    search: {
+        flexGrow: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 10,
+        marginHorizontal: 15
+    },
+    icon:{
+        backgroundColor: Colors.primary,
+        borderRadius: 5,
+        padding: 5,
+        height: 50,
+        width: 50,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    header: {
+        flexDirection: 'row', 
+        padding: 10, 
+        backgroundColor: '#259D57'
+    },
+    titleContainer: {
+        flexDirection: 'row' 
     }
-
-
 });
 
 export default LocationScreen;

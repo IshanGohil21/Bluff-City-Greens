@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import * as yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import User from '../../../dummy-data/User';
-import Colors from '../../../Colors/Colors';
+import Colors from '../../../CommonConfig/Colors/Colors';
 
 const personalInfoScreen = props => {
     const [phoneNumber, setphoneNumber] = useState('');

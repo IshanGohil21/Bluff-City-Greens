@@ -44,22 +44,13 @@ export default function Searchbar({ value, updateSearch, style }) {
                 // }}
             />
         </View>
-        <Image 
-            source={require('../assets/icon/location-icon.png')}
-            style={{height: 40, width: 40}}
-            />
+        
         </View>
     </View >
     </View>
     )
 }
 const styles = StyleSheet.create({
-    txtError: {
-        marginTop: '2%',
-        width: '89%',
-        color: 'white',
-
-    },
     textInput: {
         // backgroundColor: 'green',
         flex: 1,

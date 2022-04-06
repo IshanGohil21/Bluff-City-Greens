@@ -5,6 +5,10 @@ import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 import LinearGradient from "react-native-linear-gradient";
 import { StatusBar } from 'expo-status-bar';
+import SignInValidationSchema from "../../CommonConfig/Schema/SignInValidationSchema";
+import Images from "../../CommonConfig/Images/Images";
+import Colors from "../../CommonConfig/Colors/Colors";
+
 
 const SignInScreen = (props) => {
 
@@ -16,21 +20,7 @@ const SignInScreen = (props) => {
                 password: ''
             }}
             onSubmit={values => Alert.alert(JSON.stringify(values))}
-            validationSchema={yup.object().shape({
-                email: yup
-                    .string()
-                    .email()
-                    .required('Email is required.'),
-                mobile: yup
-                    .number()
-                    .max(10)
-                    .required(),
-                password: yup
-                    .string()
-                    .min(3, 'Password can not be less than 3 characters.')
-                    .max(11, 'Password can not be more than 12 characters long.')
-                    .required(),
-            })}
+            validationSchema={SignInValidationSchema}
         >
             {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
                 <View style={styles.mainWrapper}>
@@ -39,20 +29,20 @@ const SignInScreen = (props) => {
         </View>
                     <View>
                         <TouchableOpacity onPress={() => {}}>
-                            <Text style={{textAlign:'right', color:'white', padding: 10}} > SKIP </Text>
+                            <Text style={{}} > SKIP </Text>
                         </TouchableOpacity>
                     </View>
 
-                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 70 }}>
+                    <View style={styles.imageContainer}>
                         <Image
-                            source={require('../../assets/icon/icons8-spinach-100.png')}
+                            source={Images.spinach}
                             style={styles.image}
                             resizeMode='contain'
                         />
                         <View>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ color: 'white', fontSize: 40, padding: 10, fontWeight: '600' }}>Bluff City </Text></View>
-                            <View><Text style={{ color: 'white', fontSize: 50, fontWeight: 'bold' }}> GREENS </Text></View>
+                                <Text style={styles.bluff}>Bluff City </Text></View>
+                            <View><Text style={styles.greens}> GREENS </Text></View>
                         </View>
                     </View>
 
@@ -67,7 +57,7 @@ const SignInScreen = (props) => {
                         keyboardType='email-address'
                     />
                     {touched.email && errors.email &&
-                        <Text style={{ fontSize: 11, color: 'red' }}>{errors.email}</Text>
+                        <Text style={styles.emailError}>{errors.email}</Text>
                     }
                     <Text style={{ color: 'white' }} >Password</Text>
                     <TextInput
@@ -79,7 +69,7 @@ const SignInScreen = (props) => {
                         secureTextEntry={true}
                     />
                     {touched.password && errors.password &&
-                        <Text style={{ fontSize: 11, color: 'red' }}>{errors.password}</Text>
+                        <Text style={styles.errors}>{errors.password}</Text>
                     }
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate('ForgotPassword')
@@ -87,7 +77,7 @@ const SignInScreen = (props) => {
                         <Text style={styles.forgot_password}> Forgot Password ? </Text>
                     </TouchableOpacity>
 
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.rememberContainer}>
                         <TouchableOpacity onPress={() => { setRememberMe(!rememberMe) }}>
                             {rememberMe ? <Ionicons name="checkbox-outline" size={20} color='white' /> : <Ionicons name="square-outline" size={20} color='white' />}
                         </TouchableOpacity>
@@ -99,35 +89,35 @@ const SignInScreen = (props) => {
                     </TouchableOpacity>
 
                     <View style={{ alignItems: 'center' }} >
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginVertical: 30, width: '65%' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: 'white' }} />
+                        <View style={styles.connect}>
+                            <View style={styles.connectContainer} />
                             <View>
-                                <Text style={{ width: 150, textAlign: 'center', color: 'white' }}>OR  CONNECT WITH</Text>
+                                <Text style={styles.connectWith}>OR  CONNECT WITH</Text>
                             </View>
-                            <View style={{ flex: 1, height: 1, backgroundColor: 'white' }} />
+                            <View style={styles.body} />
                         </View>
                     </View>
 
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }} >
+                    <View style={styles.bodyContainer} >
                         <View>
                             <TouchableOpacity onPress={() => { }}>
-                                <Image source={require('../../assets/icon/icons8-facebook-circled-100.png')} style={{ height: 50, width: 50 }} />
+                                <Image source={Images.facebook} style={styles.image2} />
                             </TouchableOpacity>
                         </View>
                         <View>
                             <TouchableOpacity onPress={() => { }}>
-                                <View style={{ borderRadius: 25, backgroundColor: 'white', alignItems: 'center', justifyContent: 'center' }}>
-                                    <Image source={require('../../assets/icon/icons8-google-100.png')} style={{ height: 40, width: 40 }} />
+                                <View style={styles.image3Container}>
+                                    <Image source={Images.google} style={styles.image3} />
                                 </View>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View  style={{flexDirection: 'row', justifyContent:'center', alignItems:'center', marginTop: 10}}>
-                            <Text style={{color:'white'}} >Don't have account?</Text>
+                    <View  style={styles.account}>
+                            <Text style={{color:Colors.white}} >Don't have account?</Text>
                             <TouchableOpacity onPress={() => {
                                 props.navigation.navigate('SignUp')
                             }} > 
-                        <Text style={{color:'#4ef001', fontWeight:'bold', fontSize:20}} > SignUp </Text>
+                        <Text style={styles.signup} > SignUp </Text>
                         </TouchableOpacity>
                         </View>
                     
@@ -144,7 +134,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 40,
         justifyContent: 'center',
-        backgroundColor: '#259D57'
+        backgroundColor: Colors.primary
     },
     customCss: {
         padding: 10,
@@ -160,19 +150,19 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         textAlign: 'right',
         fontSize: 18,
-        color: 'white'
+        color: Colors.white
     },
     signin: {
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "green",
+        backgroundColor: Colors.green,
         textAlign: 'center',
-        color: 'white',
+        color: Colors.white,
         fontSize: 23,
         padding: 10,
         borderRadius: 10,
-        borderColor: 'green',
+        borderColor: Colors.green,
         overflow: 'hidden',
         width: '100%'
     },
@@ -181,14 +171,97 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textAlign: 'left',
         fontSize: 18,
-        color: 'white'
+        color: Colors.white
     },
     image: {
         flexDirection: 'row',
         width: 120,
         height: 120,
     },
-
+    skip: {
+        textAlign:'right', 
+        color:Colors.white, 
+        padding: 10
+    },
+    imageContainer: {
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        marginBottom: 70 
+    },
+    bluff: {
+        color: Colors.white, 
+        fontSize: 40, 
+        padding: 10, 
+        fontWeight: '600'
+    },
+    greens: {
+        color: Colors.white, 
+        fontSize: 50, 
+        fontWeight: 'bold' 
+    },
+    errors: {
+        fontSize: 11, 
+        color: Colors.red
+    },
+    rememberContainer: {
+        flexDirection: 'row'
+    },
+    connect: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        marginVertical: 30, 
+        width: '65%'
+    },
+    emailError: {
+        fontSize: 11, 
+        color: Colors.red
+    },
+    connectContainer: {
+        flex: 1, 
+        height: 1, 
+        backgroundColor: Colors.white
+    },
+    connectWith: {
+        width: 150, 
+        textAlign: 'center', 
+        color: Colors.white
+    },
+    body: {
+        flex: 1, 
+        height: 1, 
+        backgroundColor: Colors.white
+    },
+    bodyContainer: {
+        flexDirection: 'row', 
+        alignItems: 'center',
+         justifyContent: 'space-evenly' 
+    },
+    image2: {
+        height: 50, 
+        width: 50 
+    },
+    image3: {
+        height: 40, 
+        width: 40
+    },
+    account: {
+        flexDirection: 'row', 
+        justifyContent:'center', 
+        alignItems:'center', 
+        marginTop: 10
+    },
+    signup: {
+        color: Colors.lightGreen,
+        fontWeight:'bold', 
+        fontSize:20
+    },
+    image3Container: {
+        borderRadius: 25, 
+        backgroundColor: Colors.white,
+        alignItems: 'center', 
+        justifyContent: 'center'
+    }
 });
 
 

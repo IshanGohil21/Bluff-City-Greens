@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../../CommonConfig/Colors/Colors';
+import Images from '../../CommonConfig/Images/Images';
 
 const PickCurrentLocationScreen = (props) => {
   return (
     <View>
-      <View style={{ flexDirection: 'row', padding:10, backgroundColor: '#259D57' }}>
+      <View style={styles.header}>
         <TouchableOpacity onPress={() => {
           props.navigation.goBack()
         }}
@@ -14,7 +16,7 @@ const PickCurrentLocationScreen = (props) => {
         </TouchableOpacity>
       </View>
       {/* Header */}
-      <View style={{ flexDirection: 'row',  backgroundColor: '#259D57' }}>
+      <View style={styles.title }>
         {/*Title*/}
         <View>
           <View style={{ flexDirection: 'row' }}>
@@ -27,7 +29,7 @@ const PickCurrentLocationScreen = (props) => {
       </View>
       {/* Body */}
       <Image
-        source={require('../../assets/icon/map.jpeg')}
+        source={Images.mapKey}
         style={styles.map}
       />
       <Text style={styles.delivery} >
@@ -47,7 +49,7 @@ const PickCurrentLocationScreen = (props) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: 'white',
+    color: Colors.white,
     fontSize: 30,
     padding: 10,
     fontWeight: '600',
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   service: {
-    color: 'white',
+    color: Colors.white,
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom:10
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
   },
   delivery: {
     textAlign: 'center',
-    color: '#99A3A4',
+    color: Colors.grey,
     fontWeight: 'bold',
     fontSize: 18,
     marginBottom: 20
@@ -81,19 +83,29 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "green",
+    backgroundColor: Colors.green,
     textAlign: 'center',
-    color: 'white',
+    color: Colors.white ,
     fontSize: 23,
     padding: 10,
     borderRadius: 10,
-    borderColor: 'green',
+    borderColor: Colors.green ,
     overflow: 'hidden',
     width: '70%',
      marginLeft: 50,
     marginTop: 20,
     paddingBottom:10
-}, 
+  },  
+  header: {
+    flexDirection: 'row', 
+    padding:10, 
+    backgroundColor: Colors.primary
+  },
+  title;{
+    flexDirection: 'row',  
+    backgroundColor: Colors.primary
+  }
+
 });
 
 export default PickCurrentLocationScreen;

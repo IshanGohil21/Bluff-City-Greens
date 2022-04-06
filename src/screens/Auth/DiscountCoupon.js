@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 
 const DiscountCouponScreen = props => {
@@ -8,7 +8,7 @@ const DiscountCouponScreen = props => {
         <View>
 
             {/* Header */}
-            <View style={{ flexDirection: 'row', padding: 10, backgroundColor: '#259D57' }}>
+            <View style={ styles.header}>
                 <TouchableOpacity onPress={() => {
                     props.navigation.goBack()
                 }} style={{ flex: 1 }}
@@ -20,10 +20,10 @@ const DiscountCouponScreen = props => {
                 <View style={{ flex: 3 }}>
                     <View>
                         <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ color: 'white', fontSize: 40, padding: 10, fontWeight: '600',marginTop: 60 }}>Bluff City </Text>
+                            <Text style={styles.bluff}>Bluff City </Text>
                         </View>
                         <View>
-                            <Text style={{ color: 'white', fontSize: 50, fontWeight: 'bold' }}> GREENS </Text>
+                            <Text style={styles.title}> GREENS </Text>
                         </View>
                     </View>
                 </View>
@@ -44,11 +44,11 @@ const DiscountCouponScreen = props => {
                 />
 
                 <View>
-                    <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab',{screen: 'Home' })}} style={{ marginTop: 50, marginHorizontal: 40 }}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab',{screen: 'Home' })}} style={styles.body}>
                         <Text style={styles.signin}> SUBMIT </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab',{screen: 'Home' })}} style={{ marginTop: 50, marginHorizontal: 40 }}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab',{screen: 'Home' })}} style={styles.body}>
                         <Text style={styles.take}> TAKE ME SHOPPING </Text>
                     </TouchableOpacity>
                 </View>
@@ -135,8 +135,28 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginTop: 30,
         textDecorationLine: 'underline'
+    },
+    bluff:{
+        color: 'white', 
+        fontSize: 40, 
+        padding: 10, 
+        fontWeight: '600',
+        marginTop: 60
+    },
+    header: {
+        flexDirection: 'row', 
+        padding: 10, 
+        backgroundColor: '#259D57' 
+    },
+    title: {
+        color: 'white', 
+        fontSize: 50, 
+        fontWeight: 'bold'
+    },
+    body:{
+        marginTop: 50, 
+        marginHorizontal: 40 
     }
-
 });
 
 

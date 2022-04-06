@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity,StatusBar } from 'react-native';
-import Colors from '../../../Colors/Colors';
+import Colors from '../../../CommonConfig/Colors/Colors';
 import Address from '../../../dummy-data/Address';
 import AddressItem from '../../../components/AddressItem';
 import { ScrollView } from 'react-native-gesture-handler';
-import { VirtualizedListCellContextProvider } from 'react-native/Libraries/Lists/VirtualizedListContext';
 import { array } from 'yup';
 
 

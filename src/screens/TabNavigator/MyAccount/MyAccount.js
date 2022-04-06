@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, ScrollView, ImageBackground } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Images from '../../../CommonConfig/Images/Images';
 
 const MyAccountScreen = props => {
-    const image = {uri:'https://static01.nyt.com/images/2022/03/25/multimedia/25rory-ronaldo/25rory-ronaldo-articleLarge.jpg?quality=75&auto=webp&disable=upscale'};
+    const image = {Images.ronaldo};
     return (
         <View>
         <ScrollView>

@@ -6,15 +6,17 @@ import * as yup from 'yup';
 import ProfilePicture from 'react-native-profile-picture';
 import { backgroundColor, borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import PhoneInput from 'react-native-phone-number-input';
-// import * as  ImagePicker from 'react-native-image-picker';
-//import * as Permissions from 'expo-permissions';
 import PhoneVerificationScreen from './PhoneVerification'
 import ImagePicker from 'react-native-image-crop-picker';
+import SignUpValidationSchema from '../../CommonConfig/Schema/SignUpValidationSchema';
+import Images from '../../CommonConfig/Images/Images';
+import Colors from '../../CommonConfig/Colors/Colors';
+
 
 const SignUpScreen = props => {
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [image, setImage] = useState('https://static01.nyt.com/images/2022/03/25/multimedia/25rory-ronaldo/25rory-ronaldo-articleLarge.jpg?quality=75&auto=webp&disable=upscale');
+    const [image, setImage] = useState(Images.ronaldo);
     const [phoneNumber, setphoneNumber] = useState('');
     const phoneInput = useRef(null);
 
@@ -45,15 +47,15 @@ const SignUpScreen = props => {
     return (
         // <SafeAreaView>
         <ScrollView>
-            <View style={{ flex: 1 }}>
+            <View style={styles.main}>
 
                 <TouchableOpacity onPress={() => {
                     props.navigation.goBack()
                 }
                 }
-                    style={{ backgroundColor: '#259D57' }}
+                    style={styles.back}
                 >
-                    <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 30, marginLeft: 10 }} />
+                    <Ionicons name='arrow-back-outline' color='white' size={28} style={styles.backArrow} />
                 </TouchableOpacity>
 
                 <Formik
@@ -64,29 +66,8 @@ const SignUpScreen = props => {
                         password: ''
                     }}
                     onSubmit={values => Alert.alert(JSON.stringify(values))}
-                    validationSchema={yup.object().shape({
-                        name: yup
-                            .string()
-                            .required('Name is required.'),
-                        email: yup
-                            .string()
-                            .email()
-                            .required('Email is required.'),
-                        mobile: yup
-                            .number()
-                            .max(10)
-                            .required(),
-                        password: yup
-                            .string()
-                            .min(3, 'Password can not be less than 3 characters.')
-                            .max(11, 'Password can not be more than 12 characters long.')
-                            .required(),
-                        passwordConfirm: yup
-                            .string()
-                            .label('Password Confirm')
-                            .required()
-                            .oneOf([yup.ref('password')], 'Passwords does not match'),
-                    })}
+                    validationSchema={SignUpValidationSchema}
+                   
                 >
                     {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
                         <View style={styles.mainWrapper}>
@@ -154,7 +135,7 @@ const SignUpScreen = props => {
 
                                 />
                                 {touched.name && errors.name &&
-                                    <Text style={{ fontSize: 11, color: 'red' }}>{errors.name}</Text>
+                                    <Text style={styles.error}>{errors.name}</Text>
                                 }
 
                                 <Text style={{ color: 'white' }} >Email</Text>
@@ -170,7 +151,7 @@ const SignUpScreen = props => {
                                     <Text style={{ fontSize: 11, color: 'red' }}>{errors.email}</Text>
                                 }
 
-                                <Text style={{ color: 'white', marginBottom: 5 }}>Phone Number</Text>
+                                <Text style={style.phone}>Phone Number</Text>
 
                                 <PhoneInput
                                     
@@ -187,7 +168,7 @@ const SignUpScreen = props => {
                                     }}
                                 />
                                 
-                                <Text style={{ color: 'white' }} >Password</Text>
+                                <Text style={styles.password} >Password</Text>
                                 <TextInput
                                     value={values.password}
                                     style={styles.customCss}
@@ -209,7 +190,7 @@ const SignUpScreen = props => {
                                     secureTextEntry={true}
                                 />
                                 {touched.passwordConfirm && errors.passwordConfirm &&
-                                    <Text style={{ fontSize: 11, color: 'red' }} >{errors.passwordConfirm}</Text>
+                                    <Text style={styles.errorPassword} >{errors.passwordConfirm}</Text>
                                 }
                             </View>
 
@@ -225,7 +206,7 @@ const SignUpScreen = props => {
                                 <TouchableOpacity onPress={() => {
                                     props.navigation.goBack()
                                 }} >
-                                    <Text style={{ color: '#4ef001', fontWeight: 'bold', fontSize: 20 }} >  SignIn </Text>
+                                    <Text style={styles.signIn} >  SignIn </Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -243,7 +224,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 25,
         justifyContent: 'center',
-        backgroundColor: '#259D57'
+        backgroundColor: Colors.primary
     },
     customCss: {
         padding: 10,
@@ -258,13 +239,13 @@ const styles = StyleSheet.create({
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "green",
+        backgroundColor:Colors.green,
         textAlign: 'center',
-        color: 'white',
+        color: Colors.white,
         fontSize: 23,
         padding: 10,
         borderRadius: 10,
-        borderColor: 'green',
+        borderColor: Colors.green,
         overflow: 'hidden',
         width: '100%',
     },
@@ -275,7 +256,6 @@ const styles = StyleSheet.create({
         marginBottom: 50
     },
     avatar: {
-        // position: 'absolute',
         width: 160,
         height: 160,
         borderRadius: 10
@@ -286,10 +266,10 @@ const styles = StyleSheet.create({
         top: Dimensions.get('window').width * 0.35,
         borderRadius: 25,
         borderWidth: 4,
-        borderColor: '#259D57',
+        borderColor: Colors.primary,
         overflow: 'hidden',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: Colors.white,
         height: 50,
         width: 50,
         justifyContent: 'center'
@@ -311,7 +291,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
       },
       modalView: {
-        backgroundColor: "white",
+        backgroundColor: Colors.white,
         borderRadius: 40,
         padding: 25,
         alignItems: "center",
@@ -327,14 +307,14 @@ const styles = StyleSheet.create({
         width: 150
       },
       buttonOpen: {
-        backgroundColor: "#259D57",
+        backgroundColor: Colors.primary,
       },
       buttonClose: {
-        backgroundColor: "#259D57",
+        backgroundColor: Colors.primary,
         justifyContent: 'center'
       },
       textStyle: {
-        color: "white",
+        color: Colors.white,
         fontWeight: "bold",
         textAlign: "center",
         padding: 5
@@ -343,7 +323,40 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         textAlign: "center",
         fontSize: 20
+      },
+      main: {
+        flex: 1
+      },
+      back: {
+        backgroundColor: Colors.primary
+      },
+      backArrow: {
+        marginTop: 30, 
+        marginLeft: 10 
+      },
+      error: {
+        fontSize: 11, 
+        color: Colors.red
+      },
+      phone: {
+        color: Colors.white,
+        marginBottom: 5 
+      },
+      password: {
+        color: Colors.white
+      },
+      signIn: {
+        color: Colors.lightGreen, 
+        fontWeight: 'bold', 
+        fontSize: 20
+      },
+      errorPassword: {
+        fontSize: 11,
+         color: Colors.red
       }
+
+     
+      
 });
 
 export default SignUpScreen;

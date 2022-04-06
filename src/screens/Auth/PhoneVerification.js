@@ -1,5 +1,6 @@
 import React, { useRef,useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import Colors from '../../CommonConfig/Colors/Colors';
 
 import { StyleSheet, Text, TextInput, View ,TouchableOpacity } from 'react-native';
 
@@ -16,13 +17,13 @@ const PhoneVerificationScreen = (props) => {
           props.navigation.goBack()
         }}
         >
-          <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 30, marginLeft:10 }} />
+          <Ionicons name='arrow-back-outline' color={Colors.white} size={28} style={{ marginTop: 30, marginLeft:10 }} />
         </TouchableOpacity>
         <Text style={styles.verify} > Phone Verification</Text>
         <Text style={styles.optEnter} > Enter your OTP code here </Text>
       </View>
 
-      <View style={{ flex: 0.75 }}>
+      <View style={styles.otp}>
         <View style={styles.optContainer}>
           <TextInput
           ref={pin1ref}
@@ -71,12 +72,12 @@ const PhoneVerificationScreen = (props) => {
           <Text style={styles.signin}> VERIFY </Text>
         </TouchableOpacity>
 
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 50 }}>
+        <View style={styles.code}>
           <Text style={{ color: 'grey' }} >Didn't recieved code?</Text>
           <TouchableOpacity onPress={() => {
             props.navigation.navigate('SignUp')
           }} >
-            <Text style={{ color: '#4ef001', fontWeight: 'bold', fontSize: 20 }} > Resend </Text>
+            <Text style={styles.resend} > Resend </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -94,13 +95,13 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "green",
+    backgroundColor: Colors.green,
     textAlign: 'center',
-    color: 'white',
+    color: Colors.white,
     fontSize: 23,
     padding: 10,
     borderRadius: 10,
-    borderColor: 'green',
+    borderColor: Colors.green,
     overflow: 'hidden',
     width: '100%'
   },
@@ -122,20 +123,34 @@ const styles = StyleSheet.create({
   },
   backButton:{
     flex: 0.25, 
-    backgroundColor: '#259D57', 
+    backgroundColor:Colors.primary, 
     alignItems: 'flex-start'
   },
   verify: {
     justifyContent: 'center', 
-    color: 'white', 
+    color: Colors.white, 
     fontSize: 25, 
     fontWeight: 'bold', 
     marginBottom: 10
   },
   optEnter:{
     justifyContent: 'center', 
-    color: 'white',
+    color: Colors.white,
      fontSize: 18
+  },
+  otp: {
+    flexDirection: 'row' 
+  },
+  resend: {
+    color: Colors.lightGreen, 
+    fontWeight: 'bold', 
+    fontSize: 20
+  },
+  code: {
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    marginTop: 50
   }
 });
 

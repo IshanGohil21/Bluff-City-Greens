@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import Colors from '../../../../Colors/Colors';
+import Colors from '../../../../CommonConfig/Colors/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Address from '../../../../dummy-data/Address';
 import { RadioButton } from 'react-native-paper';

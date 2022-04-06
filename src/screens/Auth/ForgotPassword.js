@@ -4,56 +4,58 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik'
 import * as yup from 'yup'
+import Colors from '../../CommonConfig/Colors/Colors';
+import Images from '../../CommonConfig/Images/Images';
 
 const ForgotPasswordScreen = props => {
-    return (
-        <>
-       {/* Header */}
-       <View style={{ flexDirection: 'row', padding: 10, backgroundColor: '#259D57' }}>
-       <TouchableOpacity onPress={() => {
+  return (
+    <>
+      {/* Header */}
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => {
           props.navigation.goBack()
         }}
         >
-          <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 10}} />
+          <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 10 }} />
         </TouchableOpacity>
-                {/*Title*/}
-                <View>
-                    <View style={{ flexDirection: 'row', marginTop: 30 }}>
-                        <Text style={styles.title}>Forgot Password </Text>
-                    </View>
-                    <View>
-                        <Text style={styles.service}> Enter the email address </Text>
-                    </View>
-                </View>
-            </View>
-        
+        {/*Title*/}
+        <View>
+          <View style={{ flexDirection: 'row', marginTop: 30 }}>
+            <Text style={styles.title}>Forgot Password </Text>
+          </View>
+          <View>
+            <Text style={styles.service}> Enter the email address </Text>
+          </View>
+        </View>
+      </View>
+
       <Formik
-        initialValues={{ 
-          email: '',  
+        initialValues={{
+          email: '',
         }}
-        onSubmit={values => props.navigation.goBack() }
-        validationSchema={yup.object().shape({  
+        onSubmit={values => props.navigation.goBack()}
+        validationSchema={yup.object().shape({
           email: yup
             .string()
             .email()
             .required('Email is required.'),
         })}
-       >
+      >
         {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
           <View style={styles.mainWrapper}>
 
-<View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 30 }}>
-                        <Image
-                            source={require('../../assets/icon/icons8-forgot-password-100.png')}
-                            style={styles.image}
-                            resizeMode='contain'
-                        />
-                        </View>
-                        <View>
-                            <Text style={{color: 'grey', fontSize: 18, textAlign: 'center', marginBottom: 50}} > Enter the email address associated with your account. </Text>
-                        </View>
+            <View style={styles.body}>
+              <Image
+                source={Images.forgotPassword}
+                style={styles.image}
+                resizeMode='contain'
+              />
+            </View>
+            <View>
+              <Text style={styles.text} > Enter the email address associated with your account. </Text>
+            </View>
 
-            <Text style={{ textAlign: 'left', paddingVertical: 10, color: 'grey', fontWeight: 'bold'}}>Email id</Text>
+            <Text style={styles.email}>Email id</Text>
             <TextInput
               value={values.email}
               style={styles.customCss}
@@ -62,25 +64,25 @@ const ForgotPasswordScreen = props => {
               placeholder="E-mail"
             />
             {touched.email && errors.email &&
-              <Text style={{ fontSize: 11, color: 'red' }}>{errors.email}</Text>
+              <Text style={styles.emailContainer}>{errors.email}</Text>
             }
             <View>
-            <TouchableOpacity onPress={ handleSubmit } style={{marginTop: 50}}>
-                    <Text style={styles.signin}> SUBMIT </Text>
-            </TouchableOpacity>
+              <TouchableOpacity onPress={handleSubmit} style={{ marginTop: 50 }}>
+                <Text style={styles.signin}> SUBMIT </Text>
+              </TouchableOpacity>
             </View>
           </View>
 
         )}
       </Formik>
-      </>
-    );
-  
+    </>
+  );
+
 }
 
 const styles = StyleSheet.create({
   mainWrapper: {
-    padding: 40 
+    padding: 40
   },
   customCss: {
     borderBottomWidth: 1,
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
     borderColor: '#cccccc',
   },
   signin: {
-    
+
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
@@ -115,8 +117,35 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom:10
+    marginBottom: 10
   },
+  header: {
+    flexDirection: 'row',
+    padding: 10,
+    backgroundColor: Colors.primary
+  },
+  body: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30
+  },
+  text: {
+    color: 'grey',
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 50
+  },
+  email: {
+    textAlign: 'left',
+    paddingVertical: 10,
+    color: 'grey',
+    fontWeight: 'bold'
+  },
+  emailContainer: {
+    fontSize: 11,
+    color: 'red'
+  }
 });
 
 export default ForgotPasswordScreen;
