@@ -11,7 +11,7 @@ import {
     TouchableOpacity,
     TextInput, Image
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import  Ionicons  from 'react-native-vector-icons/Ionicons';
 
 export default function Searchbar({ value, updateSearch, style }) {
 
@@ -30,18 +30,6 @@ export default function Searchbar({ value, updateSearch, style }) {
                 value={query}
                 placeholder="Search for Your Location"
                 style={styles.textInput}
-                // onChangeText={(text) => {
-                //     var letters = /^$|^[a-zA-Z._\b ]+$/;
-                //     if (text.length > 12)
-                //         setError("Query too long.")
-                //     else if (text.match(letters)) {
-                //         setQuery(text)
-                //         updateSearch(text)
-                //         if (error)
-                //             setError(false)
-                //     }
-                //     else setError("Please only enter alphabets")
-                // }}
             />
         </View>
         
@@ -71,7 +59,6 @@ const styles = StyleSheet.create({
     },
     searchContainer:
     {
-       // backgroundColor: 'white',
         width: '90%',
         height: 40,
         flexDirection: 'row',

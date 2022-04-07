@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, StatusBar} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Searchbar from '../../components/SearchBar';
-import Colors from '../../CommonConfig/Colors/Colors';
-import Images from '../../CommonConfig/Images/Images';
+import Searchbar from '../../Components/SearchBar';
+import { Images, Colors }from '../../CommonConfig/CommonConfig';
 
 const LocationScreen = (props) => {
     const [value, setValue] = useState();
@@ -45,7 +44,7 @@ const LocationScreen = (props) => {
 
                 <View style={styles.searchContainer2}>
                     <View style={styles.vwSearch} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} >
-                        <Ionicons name="navigate" size={20} color="grey" />
+                        <Ionicons name="navigate" size={20} color={Colors.grey} />
                     </View>
 
                     <Text style={styles.text3} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} > Use current location </Text>
@@ -66,11 +65,11 @@ const LocationScreen = (props) => {
                 </TouchableOpacity>
 
                 <View style={styles.signUpContainer}>
-                    <Text style={{ color: 'grey' }} >Don't have account?</Text>
+                    <Text style={{ color: Colors.grey}} >Don't have account?</Text>
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate('SignUp')
                     }} >
-                        <Text style={{ color: 'green', fontWeight: 'bold', fontSize: 20 }} > SignUp </Text>
+                        <Text style={styles.signup} > SignUp </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -112,14 +111,14 @@ const styles = StyleSheet.create({
         color: 'grey',
         justifyContent: 'center',
         alignItems: 'center',
-        fontSize: 18,
+        fontSize: 14,
         textAlign: 'center',
         padding: 10
     },
     text2: {
         textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 24,
+        fontSize: 20,
         marginTop: 20
     },
     text3: {
@@ -188,6 +187,11 @@ const styles = StyleSheet.create({
     },
     titleContainer: {
         flexDirection: 'row' 
+    },
+    signup: {
+        color: Colors.green , 
+        fontWeight: 'bold', 
+        fontSize: 20 
     }
 });
 

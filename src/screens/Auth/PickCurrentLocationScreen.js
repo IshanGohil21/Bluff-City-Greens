@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Colors from '../../CommonConfig/Colors/Colors';
-import Images from '../../CommonConfig/Images/Images';
+// import Colors from '../CommonConfig/Colors/Colors';
+// import Images from '../CommonConfig/Images/Images';
+import { Colors, Images } from '../../CommonConfig/CommonConfig';
+
 
 const PickCurrentLocationScreen = (props) => {
   return (
@@ -12,15 +14,15 @@ const PickCurrentLocationScreen = (props) => {
           props.navigation.goBack()
         }}
         >
-          <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 10}} />
+          <Ionicons name='arrow-back-outline' color={Colors.white} size={28} style={styles.icon} />
         </TouchableOpacity>
       </View>
       {/* Header */}
       <View style={styles.title }>
         {/*Title*/}
         <View>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={styles.title}>Location </Text>
+          <View style={styles.location}>
+            <Text style={styles.locationContainer}>Location </Text>
           </View>
           <View>
             <Text style={styles.service}> Service is location specific </Text>
@@ -60,7 +62,8 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom:10
+    marginBottom:10,
+    marginLeft: 10
   },
   map: {
     height: 400,
@@ -99,11 +102,26 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row', 
     padding:10, 
-    backgroundColor: Colors.primary
+    backgroundColor: Colors.primary,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    
   },
-  title;{
+  title:{
     flexDirection: 'row',  
     backgroundColor: Colors.primary
+  },
+  location: {
+    flexDirection: 'row'
+  },
+  icon: {
+    marginTop: 10
+  },
+  locationContainer: {
+    fontSize: 24,
+    fontWeight:'bold',
+    color: Colors.white,
+    marginLeft: 15
   }
 
 });

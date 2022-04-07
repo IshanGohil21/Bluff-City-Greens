@@ -1,14 +1,12 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button, Dimensions} from 'react-native';
+import React, { useState, useRef } from "react";
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button, Dimensions } from 'react-native';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 import LinearGradient from "react-native-linear-gradient";
 import { StatusBar } from 'expo-status-bar';
-import SignInValidationSchema from "../../CommonConfig/Schema/SignInValidationSchema";
-import Images from "../../CommonConfig/Images/Images";
-import Colors from "../../CommonConfig/Colors/Colors";
-
+import SignInValidationSchema from "../../Schema/SignInValidationSchema";
+import {Images, Colors} from '../../CommonConfig/CommonConfig'
 
 const SignInScreen = (props) => {
 
@@ -25,11 +23,11 @@ const SignInScreen = (props) => {
             {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
                 <View style={styles.mainWrapper}>
                     <View>
-            <StatusBar style="auto" />
-        </View>
+                        <StatusBar style="auto" />
+                    </View>
                     <View>
-                        <TouchableOpacity onPress={() => {}}>
-                            <Text style={{}} > SKIP </Text>
+                        <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab',{screen: 'Home' } )}}>
+                            <Text style={styles.skip} > SKIP </Text>
                         </TouchableOpacity>
                     </View>
 
@@ -59,7 +57,7 @@ const SignInScreen = (props) => {
                     {touched.email && errors.email &&
                         <Text style={styles.emailError}>{errors.email}</Text>
                     }
-                    <Text style={{ color: 'white' }} >Password</Text>
+                    <Text style={{ color: Colors.white }} >Password</Text>
                     <TextInput
                         value={values.password}
                         style={styles.customCss}
@@ -84,7 +82,7 @@ const SignInScreen = (props) => {
                         <Text style={styles.remember}> Remember me </Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => {props.navigation.navigate('DiscountCoupon')}} >
+                    <TouchableOpacity onPress={() => { props.navigation.navigate('DiscountCoupon') }} >
                         <Text style={styles.signin}> SIGN IN </Text>
                     </TouchableOpacity>
 
@@ -112,20 +110,20 @@ const SignInScreen = (props) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View  style={styles.account}>
-                            <Text style={{color:Colors.white}} >Don't have account?</Text>
-                            <TouchableOpacity onPress={() => {
-                                props.navigation.navigate('SignUp')
-                            }} > 
-                        <Text style={styles.signup} > SignUp </Text>
+                    <View style={styles.account}>
+                        <Text style={{ color: Colors.white }}>Don't have account?</Text>
+                        <TouchableOpacity onPress={() => {
+                            props.navigation.navigate('SignUp')
+                        }} >
+                            <Text style={styles.signup} > SignUp </Text>
                         </TouchableOpacity>
-                        </View>
-                    
-                      
+                    </View>
+
+
                 </View>
             )}
         </Formik>
-        
+
     );
 }
 
@@ -143,13 +141,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         width: '100%',
-        backgroundColor: 'rgba(50,0,255,0.3)'
+        backgroundColor: 'rgba(50,75,255,0.25)'
     },
     forgot_password: {
         height: 30,
         marginBottom: 30,
         textAlign: 'right',
-        fontSize: 18,
+        fontSize: 14,
         color: Colors.white
     },
     signin: {
@@ -167,11 +165,12 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     remember: {
-        height: 30,
+        height: 20,
         marginBottom: 20,
         textAlign: 'left',
-        fontSize: 18,
-        color: Colors.white
+        fontSize: 14,
+        color: Colors.white,
+        
     },
     image: {
         flexDirection: 'row',
@@ -179,90 +178,91 @@ const styles = StyleSheet.create({
         height: 120,
     },
     skip: {
-        textAlign:'right', 
-        color:Colors.white, 
+        textAlign: 'right',
+        color: Colors.white,
         padding: 10
     },
     imageContainer: {
-        flexDirection: 'row', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        marginBottom: 70 
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 70
     },
     bluff: {
-        color: Colors.white, 
-        fontSize: 40, 
-        padding: 10, 
+        color: Colors.white,
+        fontSize: 40,
+        padding: 10,
         fontWeight: '600'
     },
     greens: {
-        color: Colors.white, 
-        fontSize: 50, 
-        fontWeight: 'bold' 
+        color: Colors.white,
+        fontSize: 50,
+        fontWeight: 'bold'
     },
     errors: {
-        fontSize: 11, 
+        fontSize: 11,
         color: Colors.red
     },
     rememberContainer: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginBottom: 40
     },
     connect: {
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        marginVertical: 30, 
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 30,
         width: '65%'
     },
     emailError: {
-        fontSize: 11, 
+        fontSize: 11,
         color: Colors.red
     },
     connectContainer: {
-        flex: 1, 
-        height: 1, 
+        flex: 1,
+        height: 1,
         backgroundColor: Colors.white
     },
     connectWith: {
-        width: 150, 
-        textAlign: 'center', 
-        color: Colors.white
+        width: 150,
+        textAlign: 'center',
+        color: Colors.white,
+        fontSize: 14
     },
     body: {
-        flex: 1, 
-        height: 1, 
+        flex: 1,
+        height: 1,
         backgroundColor: Colors.white
     },
     bodyContainer: {
-        flexDirection: 'row', 
+        flexDirection: 'row',
         alignItems: 'center',
-         justifyContent: 'space-evenly' 
+        justifyContent: 'space-evenly'
     },
     image2: {
-        height: 50, 
-        width: 50 
+        height: 50,
+        width: 50
     },
     image3: {
-        height: 40, 
+        height: 40,
         width: 40
     },
     account: {
-        flexDirection: 'row', 
-        justifyContent:'center', 
-        alignItems:'center', 
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
         marginTop: 10
     },
     signup: {
         color: Colors.lightGreen,
-        fontWeight:'bold', 
-        fontSize:20
+        fontWeight: 'bold',
+        fontSize: 20
     },
     image3Container: {
-        borderRadius: 25, 
+        borderRadius: 25,
         backgroundColor: Colors.white,
-        alignItems: 'center', 
+        alignItems: 'center',
         justifyContent: 'center'
     }
 });
-
 
 export default SignInScreen;

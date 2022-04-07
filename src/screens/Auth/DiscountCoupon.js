@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { color } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import { Colors } from '../../CommonConfig/CommonConfig';
 
 const DiscountCouponScreen = props => {
     return (
@@ -11,16 +11,16 @@ const DiscountCouponScreen = props => {
             <View style={ styles.header}>
                 <TouchableOpacity onPress={() => {
                     props.navigation.goBack()
-                }} style={{ flex: 1 }}
+                }} style={styles.main}
                 >
-                    <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 30 }} />
+                    <Ionicons name='arrow-back-outline' color={Colors.white} size={28} style={styles.icon} />
                 </TouchableOpacity>
 
                 {/*Title*/}
-                <View style={{ flex: 3 }}>
+                <View style={styles.titleContainer}>
                     <View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={styles.bluff}>Bluff City </Text>
+                        <View style={styles.bluff}>
+                            <Text style={styles.bluffCity}>Bluff City </Text>
                         </View>
                         <View>
                             <Text style={styles.title}> GREENS </Text>
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         textDecorationLine: 'underline'
     },
-    bluff:{
+    bluffCity:{
         color: 'white', 
         fontSize: 40, 
         padding: 10, 
@@ -156,6 +156,18 @@ const styles = StyleSheet.create({
     body:{
         marginTop: 50, 
         marginHorizontal: 40 
+    },
+    icon: {
+        marginTop: 30 
+    },
+    bluff: {
+        flexDirection: 'row' 
+    },
+    titleContainer: {
+        flex: 3 
+    },
+    main: {
+        flex: 1
     }
 });
 

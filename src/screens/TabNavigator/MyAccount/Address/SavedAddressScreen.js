@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity,StatusBar } from 'react-native';
-import Colors from '../../../CommonConfig/Colors/Colors';
-import Address from '../../../dummy-data/Address';
-import AddressItem from '../../../components/AddressItem';
-import { ScrollView } from 'react-native-gesture-handler';
-import { array } from 'yup';
+import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity,StatusBar,ScrollView } from 'react-native';
+import Address from '../../../../dummy-data/Address';
+import AddressItem from '../../../../Components/AddressItem';
+import Colors from '../../../../CommonConfig/Colors';
 
 
 const SavedAddressScreen = props => {
@@ -24,7 +22,7 @@ const SavedAddressScreen = props => {
                     props.navigation.goBack()
                 }}
                 >
-                    <Ionicons name='arrow-back-outline' color='white' size={30} style={styles.back} />
+                    <Ionicons name='arrow-back-outline' color={Colors.white} size={30} style={styles.back} />
                 </TouchableOpacity>
                 {/*Title*/}
                     <View>

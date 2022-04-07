@@ -1,7 +1,7 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity,StatusBar } from 'react-native';
-import Colors from '../CommonConfig/Colors/Colors';
+import Colors from '../CommonConfig/Colors';
 
 const AddressItem = props => {
     return (
@@ -21,10 +21,12 @@ const AddressItem = props => {
                     <Ionicons name='trash-bin-outline' size={25} color={Colors.grey} />
                     <Text style={styles.text} > DELETE </Text>
                 </TouchableOpacity>
-            </View>
+            </View> 
         </View>
     );
 }
+
+
 
 const styles=StyleSheet.create({
     mainContainer: {

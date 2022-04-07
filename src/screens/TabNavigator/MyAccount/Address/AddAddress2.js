@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Colors from '../../../../CommonConfig/Colors/Colors';
-import Searchbar from '../../../../components/SearchBar';
+import Colors from '../../../../CommonConfig/Colors';
+import Images from '../../../../CommonConfig/Images';
+import Searchbar from '../../../../Components/SearchBar';
 
 const AddNewAddress2Screen = (props) => {
   const [value, setValue] = useState();
@@ -36,11 +37,11 @@ const AddNewAddress2Screen = (props) => {
         />
       
       <View style={styles.searchContainer2} onPress={() => { props.navigation.goBack() }} >
-          <Ionicons name="navigate" size={20} color="grey" />
+          <Ionicons name="navigate" size={20} color={Colors.grey} />
           <Text style={styles.text3} onPress={() => { props.navigation.goBack() }} > Use current location </Text>
       </View>
 
-    <Image source={require('../../../../assets/icon/icons8-location-100.png')}
+    <Image source={Images.address2}
         style={styles.image}
     />
 

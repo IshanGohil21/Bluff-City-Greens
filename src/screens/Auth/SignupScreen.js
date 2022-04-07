@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View, Image, TextInput, Modal, SafeAreaView, TouchableOpacity, ScrollView, Button, Dimensions, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import ProfilePicture from 'react-native-profile-picture';
@@ -8,17 +8,21 @@ import { backgroundColor, borderColor } from 'react-native/Libraries/Components/
 import PhoneInput from 'react-native-phone-number-input';
 import PhoneVerificationScreen from './PhoneVerification'
 import ImagePicker from 'react-native-image-crop-picker';
-import SignUpValidationSchema from '../../CommonConfig/Schema/SignUpValidationSchema';
-import Images from '../../CommonConfig/Images/Images';
-import Colors from '../../CommonConfig/Colors/Colors';
+import SignUpValidationSchema from '../../Schema/SignUpValidationSchema';
+import { Colors, Images } from '../../CommonConfig/CommonConfig';
+import RBSheet from "react-native-raw-bottom-sheet";
+import CountryPicker from "react-native-country-codes-picker";
 
 
 const SignUpScreen = props => {
 
+    const [show, setShow] = useState(false);
+    const [countryCode, setCountryCode] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [image, setImage] = useState(Images.ronaldo);
     const [phoneNumber, setphoneNumber] = useState('');
     const phoneInput = useRef(null);
+    const refRBSheet = useRef();
 
     const takePhotoFromCamera = () => {
         ImagePicker.openCamera({
@@ -55,7 +59,7 @@ const SignUpScreen = props => {
                 }
                     style={styles.back}
                 >
-                    <Ionicons name='arrow-back-outline' color='white' size={28} style={styles.backArrow} />
+                    <Ionicons name='arrow-back-outline' color={Colors.white} size={28} style={styles.backArrow} />
                 </TouchableOpacity>
 
                 <Formik
@@ -67,7 +71,7 @@ const SignUpScreen = props => {
                     }}
                     onSubmit={values => Alert.alert(JSON.stringify(values))}
                     validationSchema={SignUpValidationSchema}
-                   
+
                 >
                     {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
                         <View style={styles.mainWrapper}>
@@ -104,13 +108,13 @@ const SignUpScreen = props => {
                                             style={[styles.button, styles.buttonClose]}
                                             onPress={takePhotoFromCamera}
                                         >
-                                        <Text style={styles.textStyle}>Camera</Text>
+                                            <Text style={styles.textStyle}>Camera</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity
                                             style={[styles.button, styles.buttonClose]}
-                                            onPress={() => {setModalVisible(false)}}
+                                            onPress={() => { setModalVisible(false) }}
                                         >
-                                        <Text style={styles.textStyle}>Close</Text>
+                                            <Text style={styles.textStyle}>Close</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -121,11 +125,11 @@ const SignUpScreen = props => {
                                 style={styles.camera}
                                 onPress={() => setModalVisible(true)}
                             >
-                                <Ionicons name='camera' color='#259D57' size={24} />
+                                <Ionicons name='camera' color={Colors.primary} size={24} />
                             </TouchableOpacity>
 
                             <View>
-                                <Text style={{ color: 'white' }}>Name</Text>
+                                <Text style={styles.emailContainer}>Name</Text>
                                 <TextInput
                                     value={values.name}
                                     style={styles.customCss}
@@ -138,7 +142,7 @@ const SignUpScreen = props => {
                                     <Text style={styles.error}>{errors.name}</Text>
                                 }
 
-                                <Text style={{ color: 'white' }} >Email</Text>
+                                <Text style={styles.emailContainer}>Email</Text>
                                 <TextInput
                                     value={values.email}
                                     style={styles.customCss}
@@ -148,50 +152,95 @@ const SignUpScreen = props => {
                                     keyboardType='email-address'
                                 />
                                 {touched.email && errors.email &&
-                                    <Text style={{ fontSize: 11, color: 'red' }}>{errors.email}</Text>
+                                    <Text style={styles.errorEmail}>{errors.email}</Text>
                                 }
 
-                                <Text style={style.phone}>Phone Number</Text>
+                                <Text style={styles.phone}>Phone Number</Text>
+                                
+                                <View style={{flex:1}} >
+                                    <View style={{flex:0.5}} >
+                                    {touched.mobile &&  <RBSheet
+                                    ref={refRBSheet}
+                                    closeOnDragDown={true}
+                                    closeOnPressMask={false}
+                                    customStyles={{
+                                        wrapper: {
+                                            backgroundColor: "transparent"
+                                        },
+                                        draggableIcon: {
+                                            backgroundColor: "#000"
+                                        }
+                                    }}
+                                    >
+                                        <CountryPicker
+                                        show={show}
+                                        // when picker button press you will get the country object with dial code
+                                        pickerButtonOnPress={(item) => {
+                                        setCountryCode(dial_code);
+                                        setShow(false);                                
 
-                                <PhoneInput
-                                    
-                                 ref={phoneInput}
-                                //    style={styles.customCss}
-                                //    defaultValue={phoneNumber}
-                                //    defaultCode="IN"
-                                //    layout="first"
-                                    
+                                        }}
+                                    />
+
+                                </RBSheet>
+                            }
+
+                                    </View>
+
+                                    <View style={{flex: 0.5}}>
+
+                                <TextInput 
+                                    value={values.mobile}
+                                    style={styles.customCss}
+                                    onBlur={() => setFieldTouched('mobile')}
+                                    onChangeText={handleChange('moblie')}
+                                    placeholder= 'Phone Number'
+                                    keyboardType='phone-pad'
+                                />
+                                </View>
+                                
+                                </View>
+
+                                {/* <PhoneInput
+                                onPress={() => {
+
+                                   
+                                }}
+
+                                    ref={phoneInput}
+
                                     containerStyle={styles.phoneContainer}
-                                   textContainerStyle={styles.textInput}
+                                    textContainerStyle={styles.textInput}
                                     onChangeFormattedText={text => {
                                         setphoneNumber(text);
                                     }}
-                                />
-                                
-                                <Text style={styles.password} >Password</Text>
-                                <TextInput
-                                    value={values.password}
-                                    style={styles.customCss}
-                                    placeholder="Password"
-                                    onBlur={() => setFieldTouched('password')}
-                                    onChangeText={handleChange('password')}
-                                    secureTextEntry={true}
-                                />
-                                {touched.password && errors.password &&
-                                    <Text style={{ fontSize: 11, color: 'red' }}>{errors.password}</Text>
-                                }
-                                <Text style={{ color: 'white' }}> Confirm Password </Text>
-                                <TextInput
-                                    value={values.passwordConfirm}
-                                    style={styles.customCss}
-                                    placeholder='confirm Password'
-                                    onBlur={() => setFieldTouched('passwordConfirm')}
-                                    onChangeText={handleChange('passwordConfirm')}
-                                    secureTextEntry={true}
-                                />
-                                {touched.passwordConfirm && errors.passwordConfirm &&
-                                    <Text style={styles.errorPassword} >{errors.passwordConfirm}</Text>
-                                }
+                                /> */}
+
+
+                                    <Text style={styles.password} >Password</Text>
+                                    <TextInput
+                                        value={values.password}
+                                        style={styles.customCss}
+                                        placeholder="Password"
+                                        onBlur={() => setFieldTouched('password')}
+                                        onChangeText={handleChange('password')}
+                                        secureTextEntry={true}
+                                    />
+                                    {touched.password && errors.password &&
+                                        <Text style={styles.passwordContainer}>{errors.password}</Text>
+                                    }
+                                    <Text style={{ color: Colors.white }}> Confirm Password </Text>
+                                    <TextInput
+                                        value={values.passwordConfirm}
+                                        style={styles.customCss}
+                                        placeholder='confirm Password'
+                                        onBlur={() => setFieldTouched('passwordConfirm')}
+                                        onChangeText={handleChange('passwordConfirm')}
+                                        secureTextEntry={true}
+                                    />
+                                    {touched.passwordConfirm && errors.passwordConfirm &&
+                                        <Text style={styles.errorPassword} >{errors.passwordConfirm}</Text>
+                                    }
                             </View>
 
 
@@ -201,8 +250,8 @@ const SignUpScreen = props => {
                                 <Text style={styles.signin}> SIGN UP </Text>
                             </TouchableOpacity>
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 10, marginBottom: 40 }}>
-                                <Text style={{ color: 'white' }}> Already have account? </Text>
+                            <View style={styles.account}>
+                                <Text style={styles.emailContainer}> Already have account? </Text>
                                 <TouchableOpacity onPress={() => {
                                     props.navigation.goBack()
                                 }} >
@@ -229,17 +278,16 @@ const styles = StyleSheet.create({
     customCss: {
         padding: 10,
         marginBottom: 12,
-        borderColor: '#cccccc',
         borderRadius: 10,
         marginTop: 5,
         width: '100%',
-        backgroundColor: 'rgba(50,0,255,0.3)'
+        backgroundColor: 'rgba(50,75,255,0.25)'
     },
     signin: {
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor:Colors.green,
+        backgroundColor: Colors.green,
         textAlign: 'center',
         color: Colors.white,
         fontSize: 23,
@@ -278,19 +326,19 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 50,
         marginBottom: 15,
-        backgroundColor: 'rgba(50,0,255,0.3)'
+        backgroundColor: 'rgba(50,75,255,0.25)'
     },
     textInput: {
         paddingVertical: 0,
-        backgroundColor: 'rgba(50,0,255,0.3)',
+        backgroundColor: 'rgba(50,105,255,0.25)',
         borderColor: '#cccccc'
     },
     centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-      },
-      modalView: {
+    },
+    modalView: {
         backgroundColor: Colors.white,
         borderRadius: 40,
         padding: 25,
@@ -298,65 +346,80 @@ const styles = StyleSheet.create({
         shadowColor: "#000",
         height: 280,
         width: 270,
-      },
-      button: {
+    },
+    button: {
         borderRadius: 50,
         padding: 10,
         elevation: 2,
         marginTop: 20,
         width: 150
-      },
-      buttonOpen: {
+    },
+    buttonOpen: {
         backgroundColor: Colors.primary,
-      },
-      buttonClose: {
+    },
+    buttonClose: {
         backgroundColor: Colors.primary,
         justifyContent: 'center'
-      },
-      textStyle: {
+    },
+    textStyle: {
         color: Colors.white,
         fontWeight: "bold",
         textAlign: "center",
         padding: 5
-      },
-      modalText: {
+    },
+    modalText: {
         marginBottom: 15,
         textAlign: "center",
         fontSize: 20
-      },
-      main: {
+    },
+    main: {
         flex: 1
-      },
-      back: {
+    },
+    back: {
         backgroundColor: Colors.primary
-      },
-      backArrow: {
-        marginTop: 30, 
-        marginLeft: 10 
-      },
-      error: {
-        fontSize: 11, 
-        color: Colors.red
-      },
-      phone: {
-        color: Colors.white,
-        marginBottom: 5 
-      },
-      password: {
-        color: Colors.white
-      },
-      signIn: {
-        color: Colors.lightGreen, 
-        fontWeight: 'bold', 
-        fontSize: 20
-      },
-      errorPassword: {
+    },
+    backArrow: {
+        marginTop: 30,
+        marginLeft: 10
+    },
+    error: {
         fontSize: 11,
-         color: Colors.red
-      }
-
-     
-      
+        color: Colors.red
+    },
+    phone: {
+        color: Colors.white,
+        marginBottom: 5
+    },
+    password: {
+        color: Colors.white
+    },
+    signIn: {
+        color: Colors.lightGreen,
+        fontWeight: 'bold',
+        fontSize: 20
+    },
+    errorPassword: {
+        fontSize: 11,
+        color: Colors.red
+    },
+    errorEmail: {
+        fontSize: 11,
+        color: Colors.red
+    },
+    account: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 40
+    },
+    passwordContainer: {
+        fontSize: 11,
+        color: Colors.red
+    },
+    emailContainer: {
+        color: Colors.white
+    }
 });
 
 export default SignUpScreen;

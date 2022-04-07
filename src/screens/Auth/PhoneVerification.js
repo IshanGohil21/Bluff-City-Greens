@@ -1,17 +1,17 @@
 import React, { useRef,useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import Colors from '../../CommonConfig/Colors/Colors';
+import Colors from '../../CommonConfig/Colors';
+import OTPTextInput from "react-native-otp-textinput"; 
 
 import { StyleSheet, Text, TextInput, View ,TouchableOpacity } from 'react-native';
 
+
 const PhoneVerificationScreen = (props) => {
-  const pin1ref = useRef(null);
-  const pin2ref = useRef(null);
-  const pin3ref = useRef(null);
-  const pin4ref = useRef(null);
+  const otpInput = useRef(null);
 
   return (
     <>
+    <View style={styles.main} >
       <View style={styles.backButton} >
         <TouchableOpacity onPress={() => {
           props.navigation.goBack()
@@ -25,61 +25,24 @@ const PhoneVerificationScreen = (props) => {
 
       <View style={styles.otp}>
         <View style={styles.optContainer}>
-          <TextInput
-          ref={pin1ref}
-            autoFocus={true}
-            maxLength={1}
-            keyboardType='phone-pad'  
-          onKeyPress={({nativeEvent}) => {
-          nativeEvent.key === 'Backspace' ? null : pin2ref.current.focus();
-          }}
-            style={styles.opt}
-          />
-
-          <TextInput
-          ref={pin2ref}
-          maxLength={1}
-          keyboardType='numeric'
-        
-         onKeyPress={({nativeEvent}) => {
-           nativeEvent.key === 'Backspace' ? pin1ref.current.focus() : pin3ref.current.focus();
-       }}
-            style={styles.opt}
-          />
-
-          <TextInput
-          ref={pin3ref}
-          maxLength={1}
-          keyboardType='numeric'
-          onKeyPress={({nativeEvent}) => {
-            nativeEvent.key === 'Backspace' ? pin2ref.current.focus() : pin4ref.current.focus();
-        }}
-            style={styles.opt}
-          />
-
-          <TextInput
-          ref={pin4ref}
-          maxLength={1}
-          keyboardType='numeric'
-          onKeyPress={({nativeEvent}) => {
-            nativeEvent.key === 'Backspace' ? pin3ref.current.focus() : pin4ref.current.blur();
-        }}
-            style={styles.opt}
+          <OTPTextInput 
+          ref={otpInput}
           />
         </View>
 
-        <TouchableOpacity onPress={() => { props.navigation.navigate('DiscountCoupon') }} style={{ marginTop: 50, marginHorizontal: 30 }}>
+        <TouchableOpacity onPress={() => { props.navigation.navigate('DiscountCoupon') }} style={styles.navigate}>
           <Text style={styles.signin}> VERIFY </Text>
         </TouchableOpacity>
 
         <View style={styles.code}>
-          <Text style={{ color: 'grey' }} >Didn't recieved code?</Text>
+          <Text style={styles.codeContainer} >Didn't recieved code?</Text>
           <TouchableOpacity onPress={() => {
             props.navigation.navigate('SignUp')
           }} >
             <Text style={styles.resend} > Resend </Text>
           </TouchableOpacity>
         </View>
+      </View>
       </View>
     </>
   )
@@ -92,7 +55,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   signin: {
-    width: "100%",
+    width: 300,
+   
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.green,
@@ -103,18 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: Colors.green,
     overflow: 'hidden',
-    width: '100%'
-  },
-  opt:{
-    fontWeight: '600', 
-    alignSelf: 'center', 
-    padding: 10, 
-    fontSize: 20, 
-    height: 55, 
-    borderBottomColor: 'grey', 
-    borderBottomWidth: 2, 
-    justifyContent: 'center', 
-    textAlign: 'center'
+    marginTop: 40
   },
   optContainer: {
     flex: 0.6, 
@@ -122,7 +75,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   backButton:{
-    flex: 0.25, 
+    flex: 1.5, 
     backgroundColor:Colors.primary, 
     alignItems: 'flex-start'
   },
@@ -131,7 +84,7 @@ const styles = StyleSheet.create({
     color: Colors.white, 
     fontSize: 25, 
     fontWeight: 'bold', 
-    marginBottom: 10
+    marginTop:50
   },
   optEnter:{
     justifyContent: 'center', 
@@ -139,10 +92,12 @@ const styles = StyleSheet.create({
      fontSize: 18
   },
   otp: {
-    flexDirection: 'row' 
+    justifyContent:'center',
+    alignItems: 'center',
+    flex: 3
   },
   resend: {
-    color: Colors.lightGreen, 
+    color: Colors.green, 
     fontWeight: 'bold', 
     fontSize: 20
   },
@@ -151,6 +106,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     alignItems: 'center', 
     marginTop: 50
+  },
+  codeContainer: {
+    color: Colors.grey
+  },
+  main:{
+    flex:1
+  },
+  navigate:{
+    marginTop: 50, 
+    marginHorizontal: 30
   }
 });
 

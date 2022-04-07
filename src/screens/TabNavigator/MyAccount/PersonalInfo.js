@@ -5,7 +5,7 @@ import { Formik } from "formik";
 import * as yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import User from '../../../dummy-data/User';
-import Colors from '../../../CommonConfig/Colors/Colors';
+import Colors from '../../../CommonConfig/Colors';
 
 const personalInfoScreen = props => {
     const [phoneNumber, setphoneNumber] = useState('');
@@ -19,7 +19,7 @@ const personalInfoScreen = props => {
                     props.navigation.goBack()
                 }}
                 >
-                    <Ionicons name='arrow-back-outline' color='white' size={30} style={{ marginTop: 10 }} />
+                    <Ionicons name='arrow-back-outline' color={Colors.white} size={30} style={styles.icon} />
                 </TouchableOpacity>
                 {/*Title*/}
                     <View>
@@ -41,7 +41,7 @@ const personalInfoScreen = props => {
                                <Text style={styles.number}>{User.phone_number}</Text>
                             </View>
                     
-        <TouchableOpacity onPress={() => {props.navigation.goBack()}} style={{marginLeft:40}}>
+        <TouchableOpacity onPress={() => {props.navigation.goBack()}} style={styles.save}>
                         <Text style={styles.signin}> SAVE </Text>
                     </TouchableOpacity>
                     </View>
@@ -51,7 +51,7 @@ const personalInfoScreen = props => {
 
 const styles = StyleSheet.create({
     title: {
-        color: 'white',
+        color: Colors.white,
         fontWeight: 'bold',
         fontSize: 24,
         marginTop: 50
@@ -65,11 +65,11 @@ const styles = StyleSheet.create({
         width: "90%",
         backgroundColor: Colors.primary,
         textAlign: 'center',
-        color: 'white',
+        color: Colors.white,
         fontSize: 23,
         padding: 10,
         borderRadius: 10,
-        borderColor: 'green',
+        borderColor: Colors.green,
         overflow: 'hidden', 
     },
     number: {
@@ -85,7 +85,14 @@ const styles = StyleSheet.create({
         flex:1
     },
     text:{
-        color: 'grey', marginBottom: 5
+        color: Colors.grey, 
+        marginBottom: 5
+    },
+    save:{
+        marginLeft:40
+    },
+    icon:{
+        marginTop: 10 
     }
 })
 

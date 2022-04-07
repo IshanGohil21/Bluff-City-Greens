@@ -1,7 +1,5 @@
 import * as  yup from 'yup';
 
-
-
 const   SignInValidationSchema= yup.object().shape({
     email: yup
         .string()

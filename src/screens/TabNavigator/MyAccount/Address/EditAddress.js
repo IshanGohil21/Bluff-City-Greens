@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import Colors from '../../../../CommonConfig/Colors/Colors';
+import Colors from '../../../../CommonConfig/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Address from '../../../../dummy-data/Address';
 import { RadioButton } from 'react-native-paper';
-import Images from '../../../../CommonConfig/Images/Images';
+import Images from '../../../../CommonConfig/Images';
 
 const EditAddressScreen = (props) => {
    

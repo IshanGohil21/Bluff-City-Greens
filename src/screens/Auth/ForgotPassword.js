@@ -3,9 +3,9 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik'
-import * as yup from 'yup'
-import Colors from '../../CommonConfig/Colors/Colors';
-import Images from '../../CommonConfig/Images/Images';
+import * as yup from 'yup' 
+import CommonConfig, { Colors, Images, Schema } from '../../CommonConfig/CommonConfig'
+import  ForgotPasswordvalidationSchema from '../../Schema/ForgotPasswordValidationSchema'
 
 const ForgotPasswordScreen = props => {
   return (
@@ -20,7 +20,7 @@ const ForgotPasswordScreen = props => {
         </TouchableOpacity>
         {/*Title*/}
         <View>
-          <View style={{ flexDirection: 'row', marginTop: 30 }}>
+          <View style={styles.forgot}>
             <Text style={styles.title}>Forgot Password </Text>
           </View>
           <View>
@@ -34,12 +34,8 @@ const ForgotPasswordScreen = props => {
           email: '',
         }}
         onSubmit={values => props.navigation.goBack()}
-        validationSchema={yup.object().shape({
-          email: yup
-            .string()
-            .email()
-            .required('Email is required.'),
-        })}
+        validationSchema={ForgotPasswordvalidationSchema}
+        
       >
         {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
           <View style={styles.mainWrapper}>
@@ -145,6 +141,10 @@ const styles = StyleSheet.create({
   emailContainer: {
     fontSize: 11,
     color: 'red'
+  },
+  forgot: {
+    flexDirection: 'row', 
+    marginTop: 30
   }
 });
 

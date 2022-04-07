@@ -17,7 +17,7 @@ import FAQScreen from '../Screens/TabNavigator/FAQ';
 { /* My Account Screens */ }
 import MyAccountScreen from '../Screens/TabNavigator/MyAccount/MyAccount';
 import personalInfoScreen from '../Screens/TabNavigator/MyAccount/PersonalInfo';
-import SavedAddressScreen from '../Screens/TabNavigator/MyAccount/SavedAddressScreen';
+import SavedAddressScreen from '../Screens/TabNavigator/MyAccount/Address/SavedAddressScreen';
 import MyOrdersScreen from '../Screens/TabNavigator/MyAccount/MyOrdersScreen';
 import FavoritesScreen from '../Screens/TabNavigator/MyAccount/FavoritesScreen';
 import PaymentScreen from '../Screens/TabNavigator/MyAccount/PaymentScreen';
