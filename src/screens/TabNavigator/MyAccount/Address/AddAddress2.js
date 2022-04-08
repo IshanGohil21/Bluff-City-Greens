@@ -18,7 +18,7 @@ const AddNewAddress2Screen = (props) => {
       <View style={styles.header} >
         <View style={styles.text} >
         <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-          <Ionicons name='arrow-back-outline' size={30} color={Colors.white} />
+          <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} />
         </TouchableOpacity>
 
       <TouchableOpacity>

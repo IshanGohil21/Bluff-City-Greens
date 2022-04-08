@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Colors } from '../../CommonConfig/CommonConfig';
+import { Colors, Icons } from '../../CommonConfig/CommonConfig';
+
 
 const DiscountCouponScreen = props => {
     return (
@@ -13,7 +14,7 @@ const DiscountCouponScreen = props => {
                     props.navigation.goBack()
                 }} style={styles.main}
                 >
-                    <Ionicons name='arrow-back-outline' color={Colors.white} size={28} style={styles.icon} />
+                    <Ionicons name={Icons.BACK_ARROW}  color={Colors.white} size={28} style={styles.icon} />
                 </TouchableOpacity>
 
                 {/*Title*/}

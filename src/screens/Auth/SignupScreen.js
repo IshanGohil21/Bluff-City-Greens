@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Pressable, StyleSheet, Text, View, Image, TextInput, Modal, SafeAreaView, TouchableOpacity, ScrollView, Button, Dimensions, Alert } from 'react-native';
+import { Pressable, StyleSheet, Text, View, Image, TextInput, Modal, SafeAreaView, TouchableOpacity, ScrollView,  Dimensions, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Formik } from "formik";
 import * as yup from 'yup';
@@ -9,19 +9,22 @@ import PhoneInput from 'react-native-phone-number-input';
 import PhoneVerificationScreen from './PhoneVerification'
 import ImagePicker from 'react-native-image-crop-picker';
 import SignUpValidationSchema from '../../Schema/SignUpValidationSchema';
-import { Colors, Images } from '../../CommonConfig/CommonConfig';
+import { Colors, Images, Icons, Button } from '../../CommonConfig/CommonConfig';
 import RBSheet from "react-native-raw-bottom-sheet";
-import CountryPicker from "react-native-country-codes-picker";
+
+import CountryPicker from 'react-native-country-codes-picker';
+
 
 
 const SignUpScreen = props => {
 
     const [show, setShow] = useState(false);
-    const [countryCode, setCountryCode] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const [image, setImage] = useState(Images.ronaldo);
-    const [phoneNumber, setphoneNumber] = useState('');
-    const phoneInput = useRef(null);
+    // const [phoneNumber, setphoneNumber] = useState('');
+    // const phoneInput = useRef(null);
+    const [countryCode, setCountryCode] = useState('+91');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const refRBSheet = useRef();
 
     const takePhotoFromCamera = () => {
@@ -49,173 +52,128 @@ const SignUpScreen = props => {
     };
 
     return (
-        // <SafeAreaView>
-        <ScrollView>
-            <View style={styles.main}>
+        <>
+            <ScrollView>
+                <View style={styles.main}>
 
-                <TouchableOpacity onPress={() => {
-                    props.navigation.goBack()
-                }
-                }
-                    style={styles.back}
-                >
-                    <Ionicons name='arrow-back-outline' color={Colors.white} size={28} style={styles.backArrow} />
-                </TouchableOpacity>
+                    <TouchableOpacity onPress={() => {
+                        props.navigation.goBack()
+                    }
+                    }
+                        style={styles.back}
+                    >
+                        <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={styles.backArrow} />
+                    </TouchableOpacity>
 
-                <Formik
-                    initialValues={{
-                        name: '',
-                        email: '',
-                        mobile: '',
-                        password: ''
-                    }}
-                    onSubmit={values => Alert.alert(JSON.stringify(values))}
-                    validationSchema={SignUpValidationSchema}
+                    <Formik
+                        initialValues={{
+                            name: '',
+                            email: '',
+                            mobile: '',
+                            password: ''
+                        }}
+                        onSubmit={values => Alert.alert(JSON.stringify(values))}
+                        validationSchema={SignUpValidationSchema}
 
-                >
-                    {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
-                        <View style={styles.mainWrapper}>
+                    >
+                        {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
+                            <View style={styles.mainWrapper}>
 
-                            <View style={styles.profile} >
-                                <View
-                                    style={styles.avatarContainer}
+                                <View style={styles.profile} >
+                                    <View
+                                        style={styles.avatarContainer}
 
-                                >
-                                    <Image
-                                        source={{ uri: image }}
-                                        style={styles.avatar}
-                                    />
-                                </View>
-                            </View>
-
-
-                            <Modal
-                                animationType="slide"
-                                transparent={true}
-                                visible={modalVisible}
-                            >
-                                <View style={styles.centeredView}>
-                                    <View style={styles.modalView}>
-
-                                        <Text style={styles.modalText}>Choose From</Text>
-                                        <TouchableOpacity
-                                            style={[styles.button, styles.buttonClose]}
-                                            onPress={choosePhotoFromLibrary}
-                                        >
-                                            <Text style={styles.textStyle}>Gallery</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            style={[styles.button, styles.buttonClose]}
-                                            onPress={takePhotoFromCamera}
-                                        >
-                                            <Text style={styles.textStyle}>Camera</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity
-                                            style={[styles.button, styles.buttonClose]}
-                                            onPress={() => { setModalVisible(false) }}
-                                        >
-                                            <Text style={styles.textStyle}>Close</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </Modal>
-
-
-                            <TouchableOpacity
-                                style={styles.camera}
-                                onPress={() => setModalVisible(true)}
-                            >
-                                <Ionicons name='camera' color={Colors.primary} size={24} />
-                            </TouchableOpacity>
-
-                            <View>
-                                <Text style={styles.emailContainer}>Name</Text>
-                                <TextInput
-                                    value={values.name}
-                                    style={styles.customCss}
-                                    onBlur={() => setFieldTouched('name')}
-                                    onChangeText={handleChange('name')}
-                                    placeholder="Name"
-
-                                />
-                                {touched.name && errors.name &&
-                                    <Text style={styles.error}>{errors.name}</Text>
-                                }
-
-                                <Text style={styles.emailContainer}>Email</Text>
-                                <TextInput
-                                    value={values.email}
-                                    style={styles.customCss}
-                                    onBlur={() => setFieldTouched('email')}
-                                    onChangeText={handleChange('email')}
-                                    placeholder="E-mail"
-                                    keyboardType='email-address'
-                                />
-                                {touched.email && errors.email &&
-                                    <Text style={styles.errorEmail}>{errors.email}</Text>
-                                }
-
-                                <Text style={styles.phone}>Phone Number</Text>
-                                
-                                <View style={{flex:1}} >
-                                    <View style={{flex:0.5}} >
-                                    {touched.mobile &&  <RBSheet
-                                    ref={refRBSheet}
-                                    closeOnDragDown={true}
-                                    closeOnPressMask={false}
-                                    customStyles={{
-                                        wrapper: {
-                                            backgroundColor: "transparent"
-                                        },
-                                        draggableIcon: {
-                                            backgroundColor: "#000"
-                                        }
-                                    }}
                                     >
-                                        <CountryPicker
-                                        show={show}
-                                        // when picker button press you will get the country object with dial code
-                                        pickerButtonOnPress={(item) => {
-                                        setCountryCode(dial_code);
-                                        setShow(false);                                
-
-                                        }}
-                                    />
-
-                                </RBSheet>
-                            }
-
+                                        <Image
+                                            source={{ uri: image }}
+                                            style={styles.avatar}
+                                        />
                                     </View>
-
-                                    <View style={{flex: 0.5}}>
-
-                                <TextInput 
-                                    value={values.mobile}
-                                    style={styles.customCss}
-                                    onBlur={() => setFieldTouched('mobile')}
-                                    onChangeText={handleChange('moblie')}
-                                    placeholder= 'Phone Number'
-                                    keyboardType='phone-pad'
-                                />
-                                </View>
-                                
                                 </View>
 
-                                {/* <PhoneInput
-                                onPress={() => {
 
-                                   
-                                }}
+                                <Modal
+                                    animationType="slide"
+                                    transparent={true}
+                                    visible={modalVisible}
+                                >
+                                    <View style={styles.centeredView}>
+                                        <View style={styles.modalView}>
 
-                                    ref={phoneInput}
+                                            <Text style={styles.modalText}>Choose From</Text>
+                                            <TouchableOpacity
+                                                style={[styles.button, styles.buttonClose]}
+                                                onPress={choosePhotoFromLibrary}
+                                            >
+                                                <Text style={styles.textStyle}>Gallery</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                style={[styles.button, styles.buttonClose]}
+                                                onPress={takePhotoFromCamera}
+                                            >
+                                                <Text style={styles.textStyle}>Camera</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity
+                                                style={[styles.button, styles.buttonClose]}
+                                                onPress={() => { setModalVisible(false) }}
+                                            >
+                                                <Text style={styles.textStyle}>Close</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </Modal>
 
-                                    containerStyle={styles.phoneContainer}
-                                    textContainerStyle={styles.textInput}
-                                    onChangeFormattedText={text => {
-                                        setphoneNumber(text);
-                                    }}
-                                /> */}
 
+                                <TouchableOpacity
+                                    style={styles.camera}
+                                    onPress={() => setModalVisible(true)}
+                                >
+                                    <Ionicons name='camera' color={Colors.primary} size={24} />
+                                </TouchableOpacity>
+
+                                <View>
+                                    <Text style={styles.emailContainer}>Name</Text>
+                                    <TextInput
+                                        value={values.name}
+                                        style={styles.customCss}
+                                        onBlur={() => setFieldTouched('name')}
+                                        onChangeText={handleChange('name')}
+                                        placeholder="Name"
+
+                                    />
+                                    {touched.name && errors.name &&
+                                        <Text style={styles.error}>{errors.name}</Text>
+                                    }
+
+                                    <Text style={styles.emailContainer}>Email</Text>
+                                    <TextInput
+                                        value={values.email}
+                                        style={styles.customCss}
+                                        onBlur={() => setFieldTouched('email')}
+                                        onChangeText={handleChange('email')}
+                                        placeholder="E-mail"
+                                        keyboardType='email-address'
+                                    />
+                                    {touched.email && errors.email &&
+                                        <Text style={styles.errorEmail}>{errors.email}</Text>
+                                    }
+
+                                    <Text style={styles.phone}>Phone Number</Text>
+
+                                    <View style={{ flexDirection: 'row', marginBottom: 12, borderRadius: 10, padding: 10, backgroundColor: 'rgba(50,75,255,0.25)', alignItems: 'center' }} >
+
+                                        {/* <Ionicons name="call" color={Colors.ORANGE} size={20} style={{flex:0.5}}/> */}
+                                        <Text></Text>
+                                        <TouchableOpacity onPress={() => setShow(true)} style={{ flex: 0.5 }}><Ionicons name="caret-down-outline" size={20} color={Colors.BLACK} /></TouchableOpacity>
+                                        <View style={{ width: 0, borderColor: Colors.grey, borderWidth: 0.7, height: 30, marginRight: 10 }} ></View>
+                                        <Text style={{ flex: 0.5, fontWeight: 'bold' }}>{countryCode}</Text>
+                                        <TextInput
+                                            style={{ flex: 3.5 }}
+                                            keyboardType="phone-pad"
+                                            maxLength={10}
+                                            onChangeText={(val) => { setPhoneNumber(val) }}
+                                        />
+                                    </View>
 
                                     <Text style={styles.password} >Password</Text>
                                     <TextInput
@@ -241,29 +199,66 @@ const SignUpScreen = props => {
                                     {touched.passwordConfirm && errors.passwordConfirm &&
                                         <Text style={styles.errorPassword} >{errors.passwordConfirm}</Text>
                                     }
+                                </View>
+
+
+                                {/* <TouchableOpacity onPress={() => {
+                                    props.navigation.navigate('PhoneVerification')
+                
+                                }}>
+                                    <Text style={styles.signin} > SIGN UP </Text>
+                                </TouchableOpacity> */}
+
+                                <Button 
+                                onPress={() => {props.navigation.navigate('PhoneVerification')}}
+                                label='Sign Up'
+                                disabled={!isValid}
+                                // onPress={handleChange}
+                                    />
+
+                                <View style={styles.account}>
+                                    <Text style={styles.emailContainer}> Already have account? </Text>
+                                    <TouchableOpacity onPress={() => {
+                                        props.navigation.goBack()
+                                    }} >
+                                        <Text style={styles.signIn} >  SignIn </Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
+                        )}
+                    </Formik>
 
+                </View>
+            </ScrollView>
+            <CountryPicker
+                show={show}
+                style={{
+                    modal: {
+                        height: 500,
 
-                            <TouchableOpacity onPress={() => {
-                                props.navigation.navigate('PhoneVerification')
-                            }}>
-                                <Text style={styles.signin}> SIGN UP </Text>
-                            </TouchableOpacity>
-
-                            <View style={styles.account}>
-                                <Text style={styles.emailContainer}> Already have account? </Text>
-                                <TouchableOpacity onPress={() => {
-                                    props.navigation.goBack()
-                                }} >
-                                    <Text style={styles.signIn} >  SignIn </Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    )}
-                </Formik>
-            </View>
-        </ScrollView>
-        //   </SafeAreaView>
+                    },
+                    countryButtonStyles: {
+                        height: 50,
+                        backgroundColor: Colors.white
+                    },
+                    flag: {
+                        fontSize: 20
+                    },
+                    dialCode: {
+                        fontSize: 18,
+                        fontWeight: 'bold'
+                    },
+                    countryName: {
+                        fontSize: 18
+                    },
+                    getFlag: true
+                }}
+                pickerButtonOnPress={(item) => {
+                    setCountryCode(item.dial_code);
+                    setShow(false);
+                }}
+            />
+        </>
     );
 }
 
@@ -283,20 +278,20 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: 'rgba(50,75,255,0.25)'
     },
-    signin: {
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: Colors.green,
-        textAlign: 'center',
-        color: Colors.white,
-        fontSize: 23,
-        padding: 10,
-        borderRadius: 10,
-        borderColor: Colors.green,
-        overflow: 'hidden',
-        width: '100%',
-    },
+    // signin: {
+    //     width: "100%",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    //     backgroundColor: Colors.green,
+    //     textAlign: 'center',
+    //     color: Colors.white,
+    //     fontSize: 23,
+    //     padding: 10,
+    //     borderRadius: 10,
+    //     borderColor: Colors.green,
+    //     overflow: 'hidden',
+    //     width: '100%',
+    // },
     profile: {
 
         alignItems: 'center',

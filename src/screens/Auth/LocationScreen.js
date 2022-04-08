@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, StatusBar} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Searchbar from '../../Components/SearchBar';
-import { Images, Colors }from '../../CommonConfig/CommonConfig';
+import { Images, Colors, Icons }from '../../CommonConfig/CommonConfig';
 
 const LocationScreen = (props) => {
     const [value, setValue] = useState();
@@ -38,13 +38,13 @@ const LocationScreen = (props) => {
                         />
                     </View>
                     <View style={styles.icon} >
-                        <Ionicons  name='location-outline' size={30} color={Colors.white} />
+                        <Ionicons  name={Icons.LOCATION} size={30} color={Colors.white} />
                     </View>
                 </View>
 
                 <View style={styles.searchContainer2}>
                     <View style={styles.vwSearch} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} >
-                        <Ionicons name="navigate" size={20} color={Colors.grey} />
+                        <Ionicons name={Icons.NAVIGATE} size={20} color={Colors.grey} />
                     </View>
 
                     <Text style={styles.text3} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} > Use current location </Text>

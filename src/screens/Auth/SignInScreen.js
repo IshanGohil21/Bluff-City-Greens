@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Button, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 import LinearGradient from "react-native-linear-gradient";
 import { StatusBar } from 'expo-status-bar';
 import SignInValidationSchema from "../../Schema/SignInValidationSchema";
-import {Images, Colors} from '../../CommonConfig/CommonConfig'
+import {Images, Colors, Button} from '../../CommonConfig/CommonConfig'
 
 const SignInScreen = (props) => {
 
@@ -17,7 +17,7 @@ const SignInScreen = (props) => {
                 email: '',
                 password: ''
             }}
-            onSubmit={values => Alert.alert(JSON.stringify(values))}
+            onSubmit={() => {props.navigation.navigate('PhoneVerification')}}
             validationSchema={SignInValidationSchema}
         >
             {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
@@ -82,9 +82,16 @@ const SignInScreen = (props) => {
                         <Text style={styles.remember}> Remember me </Text>
                     </View>
 
-                    <TouchableOpacity onPress={() => { props.navigation.navigate('DiscountCoupon') }} >
+                    <TouchableOpacity onPress={handleSubmit} >
                         <Text style={styles.signin}> SIGN IN </Text>
                     </TouchableOpacity>
+
+                    {/* <Button 
+                        onPress={handleSubmit}
+                        label='Sign In'
+                        disabled={!isValid}
+                        // onPress={handleChange}
+                        /> */}
 
                     <View style={{ alignItems: 'center' }} >
                         <View style={styles.connect}>
@@ -166,7 +173,7 @@ const styles = StyleSheet.create({
     },
     remember: {
         height: 20,
-        marginBottom: 20,
+       // marginBottom: 10,
         textAlign: 'left',
         fontSize: 14,
         color: Colors.white,
@@ -180,7 +187,8 @@ const styles = StyleSheet.create({
     skip: {
         textAlign: 'right',
         color: Colors.white,
-        padding: 10
+        padding: 5,
+        marginTop: 30
     },
     imageContainer: {
         flexDirection: 'row',
@@ -220,7 +228,7 @@ const styles = StyleSheet.create({
     connectContainer: {
         flex: 1,
         height: 1,
-        backgroundColor: Colors.white
+        backgroundColor: Colors.white,
     },
     connectWith: {
         width: 150,

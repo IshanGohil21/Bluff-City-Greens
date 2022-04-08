@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik'
 import * as yup from 'yup' 
-import CommonConfig, { Colors, Images, Schema } from '../../CommonConfig/CommonConfig'
+import  { Colors, Images, Icons } from '../../CommonConfig/CommonConfig'
 import  ForgotPasswordvalidationSchema from '../../Schema/ForgotPasswordValidationSchema'
 
 const ForgotPasswordScreen = props => {
@@ -16,7 +16,7 @@ const ForgotPasswordScreen = props => {
           props.navigation.goBack()
         }}
         >
-          <Ionicons name='arrow-back-outline' color='white' size={28} style={{ marginTop: 10 }} />
+          <Ionicons name={Icons.BACK_ARROW} color='white' size={28} style={{ marginTop: 10 }} />
         </TouchableOpacity>
         {/*Title*/}
         <View>

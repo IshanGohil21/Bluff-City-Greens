@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
-import Colors from '../../CommonConfig/Colors';
+import {Colors, Icons} from '../../CommonConfig/CommonConfig';
 
 const AccessibilityPolicyScreen = (props) => {
   return (
@@ -13,7 +13,7 @@ const AccessibilityPolicyScreen = (props) => {
         <TouchableOpacity onPress={() => {
           props.navigation.goBack()
         }}>
-          <Ionicons name='arrow-back-outline' color={Colors.white} size={28} style={styles.icon} />
+          <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={styles.icon} />
         </TouchableOpacity>
 
         {/* Title */}

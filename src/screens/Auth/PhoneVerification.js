@@ -2,6 +2,7 @@ import React, { useRef,useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../CommonConfig/Colors';
 import OTPTextInput from "react-native-otp-textinput"; 
+import { Icons } from '../../CommonConfig/CommonConfig';
 
 import { StyleSheet, Text, TextInput, View ,TouchableOpacity } from 'react-native';
 
@@ -17,7 +18,7 @@ const PhoneVerificationScreen = (props) => {
           props.navigation.goBack()
         }}
         >
-          <Ionicons name='arrow-back-outline' color={Colors.white} size={28} style={{ marginTop: 30, marginLeft:10 }} />
+          <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={{ marginTop: 30, marginLeft:10 }} />
         </TouchableOpacity>
         <Text style={styles.verify} > Phone Verification</Text>
         <Text style={styles.optEnter} > Enter your OTP code here </Text>

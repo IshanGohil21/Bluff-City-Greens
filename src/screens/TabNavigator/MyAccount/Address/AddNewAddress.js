@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import Colors from '../../../../CommonConfig/Colors';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Address from '../../../../dummy-data/Address';
 import { RadioButton } from 'react-native-paper';
-import Images from '../../../../CommonConfig/Images';
+
+import {Icons , Images, Colors} from '../../../../CommonConfig/CommonConfig'
 
 
 const AddNewAddressScreen = (props) => {
@@ -20,11 +20,11 @@ const AddNewAddressScreen = (props) => {
                props.navigation.goBack()
            }}
            >
-               <Ionicons name='arrow-back-outline' color={Colors.white} size={30} style={styles.back} />
+               <Ionicons name={Icons.BACK_ARROW}  color={Colors.white} size={30} style={styles.back} />
            </TouchableOpacity>
 
            <TouchableOpacity onPress={ () => { props.navigation.navigate('AddNewAddress2') }} >
-                    <Ionicons  name='search-outline' size={28} color={Colors.white} style={styles.back} />
+                    <Ionicons  name={Icons.SEARCH} size={28} color={Colors.white} style={styles.back} />
                </TouchableOpacity>
            </View>
            {/*Title*/}

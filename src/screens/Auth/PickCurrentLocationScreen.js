@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 // import Colors from '../CommonConfig/Colors/Colors';
 // import Images from '../CommonConfig/Images/Images';
-import { Colors, Images } from '../../CommonConfig/CommonConfig';
+import { Colors, Images, Icons } from '../../CommonConfig/CommonConfig';
 
 
 const PickCurrentLocationScreen = (props) => {
@@ -14,7 +14,7 @@ const PickCurrentLocationScreen = (props) => {
           props.navigation.goBack()
         }}
         >
-          <Ionicons name='arrow-back-outline' color={Colors.white} size={28} style={styles.icon} />
+          <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={styles.icon} />
         </TouchableOpacity>
       </View>
       {/* Header */}

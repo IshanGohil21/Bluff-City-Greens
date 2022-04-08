@@ -5,7 +5,8 @@ import { Formik } from "formik";
 import * as yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import User from '../../../dummy-data/User';
-import Colors from '../../../CommonConfig/Colors';
+
+import { Icons, Colors} from '../../../CommonConfig/CommonConfig'
 
 const personalInfoScreen = props => {
     const [phoneNumber, setphoneNumber] = useState('');
@@ -19,7 +20,7 @@ const personalInfoScreen = props => {
                     props.navigation.goBack()
                 }}
                 >
-                    <Ionicons name='arrow-back-outline' color={Colors.white} size={30} style={styles.icon} />
+                    <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.icon} />
                 </TouchableOpacity>
                 {/*Title*/}
                     <View>
