@@ -5,10 +5,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { Image, StyleSheet } from 'react-native'
 import { Icon } from 'react-native-vector-icons';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from '../Screens/TabNavigator/HomeScreen';
 import CheckoutScreen from '../Screens/TabNavigator/Checkout';
 import ShopScreen from '../Screens/TabNavigator/Shop';
+import DeliveryLocationScreen from '../Screens/TabNavigator/DeliveryLocationScreen';
+import FilterScreen from '../Screens/TabNavigator/FilterScreen';
+import NotificationScreen from '../Screens/TabNavigator/NotificationScreen';
 
 { /* Contact US Screen */ }
 import ContactScreen from '../Screens/TabNavigator/Contact';
@@ -39,7 +43,7 @@ const MainTabScreen = () => {
         <Tab.Navigator tabBarOptions={{activeTintColor: 'green'}}>
             <Tab.Screen 
             name='Home' 
-            component={HomeStackScreen} 
+            component={HomeDrawerScreen} 
             options={{
                 tabBarIcon: ({color}) => (
                     <Ionicons name='home' size={24} color={color}/>
@@ -88,6 +92,18 @@ const MainTabScreen = () => {
 }
 
 export default MainTabScreen;
+
+const HomeDrawer = createDrawerNavigator();
+const HomeDrawerScreen = () => {
+    return (
+        <HomeDrawer.Navigator >
+            <HomeDrawer.Screen name='Home' component={HomeStackScreen} />
+            <HomeDrawer.Screen name='DeliveryLocation' component={DeliveryLocationScreen} />
+            <HomeDrawer.Screen name='Filter' component={FilterScreen} />
+            <HomeDrawer.Screen name='Notification' component={NotificationScreen} />
+        </HomeDrawer.Navigator>   
+        )
+}
 
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => {

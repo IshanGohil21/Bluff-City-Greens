@@ -3,10 +3,14 @@ let Address = [
         id:1,
         tag: 'Home',
         name: 'Deo House',
+        Home: '132',
         address: '132, My Street, Kingston, New York 12401 United States',
         icon: 'home-outline',
         zip: 395007,
-        landmark: 'Culture Tea Bar'
+        landmark: 'Culture Tea Bar, Brodaway',
+        city: 'New York',
+        country: 'United States'
+
     },
 
     {

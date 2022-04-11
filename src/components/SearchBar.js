@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     },
     container: {
         height: 20,
-        marginBottom: 50,
+        marginBottom: 20,
         alignItems: 'center',
         borderColor: 'white'
         // height: '100%', width: '100%' 

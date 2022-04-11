@@ -12,5 +12,8 @@ export default {
     HELP: 'help-circle-outline',
     LOG_OUT: 'log-out-outline',
     SEARCH: 'search-outline',
-    DOWN_ARROW: 'chevron-down-outline'
+    DOWN_ARROW: 'chevron-down-outline',
+    NOTIFICATION: 'notifications-outline',
+    CART:'cart-outline',
+    OPTIONS:'options-outline',
 }
