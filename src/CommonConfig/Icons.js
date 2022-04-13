@@ -16,4 +16,6 @@ export default {
     NOTIFICATION: 'notifications-outline',
     CART:'cart-outline',
     OPTIONS:'options-outline',
+    ADD:'add-circle-outline',
+    SUB:'remove-circle-outline'
 }

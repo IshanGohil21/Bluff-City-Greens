@@ -5,7 +5,7 @@ import Address from '../../../../dummy-data/Address';
 import { RadioButton } from 'react-native-paper';
 
 import {Icons , Images, Colors} from '../../../../CommonConfig/CommonConfig'
-
+// import RadioButtonScreen from '../../../../Components/RadioButton';
 
 const AddNewAddressScreen = (props) => {
    
@@ -52,7 +52,11 @@ const AddNewAddressScreen = (props) => {
                 <Text style={styles.radioContainer} > Tag this address as: </Text>
                
                {/* <TouchableOpacity style={styles.radio} > */}
-               <View style={styles.radio} >
+               <View style={styles.radio} > 
+                   {/* <RadioButtonScreen  
+                   label="Home"
+                   status={props.checked}
+                   /> */} 
                <RadioButton
                         value="first"
                         color={Colors.primary}

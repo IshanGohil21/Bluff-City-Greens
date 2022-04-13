@@ -100,6 +100,10 @@ const MyAccountScreen = props => {
                                     draggableIcon: {
                                         backgroundColor: Colors.grey,
                                         width: 80,
+                                    },
+                                    container: {
+                                        borderTopLeftRadius: 30,
+                                        borderTopRightRadius: 30, 
                                     }
                                 }}
                             >

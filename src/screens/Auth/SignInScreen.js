@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Dimensions 
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
-import LinearGradient from "react-native-linear-gradient";
 import { StatusBar } from 'expo-status-bar';
 import SignInValidationSchema from "../../Schema/SignInValidationSchema";
 import {Images, Colors, Button} from '../../CommonConfig/CommonConfig'
@@ -90,7 +89,7 @@ const SignInScreen = (props) => {
                         onPress={handleSubmit}
                         label='Sign In'
                         disabled={!isValid}
-                        // onPress={handleChange}
+                         //onPress={handleChange}
                         /> */}
 
                     <View style={{ alignItems: 'center' }} >

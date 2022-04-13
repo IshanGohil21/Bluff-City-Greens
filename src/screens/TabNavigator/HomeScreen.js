@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions, FlatList } from 'react-native';
 
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,6 +9,7 @@ import CouponImages from '../../dummy-data/Imagess';
 import Categories from '../../dummy-data/Categories';
 import PastOrder from '../../dummy-data/PastOrders';
 import RecommendedProducts from '../../dummy-data/RecommendedProducts';
+import Orders from '../../Components/Orders';
 
 const { width } = Dimensions.get('window')
 
@@ -127,45 +128,25 @@ const HomeScreen = (props) => {
             <Text style={styles.view} >View All</Text>
             </View>
             <View style={styles.heading}>
-              <ScrollView
+              <FlatList 
+                data={PastOrder}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-              >
-                {
-                  PastOrder.map((item) => {
-                    return (
-                      <View key={item.id} >
-                        <TouchableOpacity style={styles.orders} >
-                          <Ionicons name='heart' size={30} color={Colors.red} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={ styles.orderContainer} onPress={() => { props.navigation.navigate('Past_Orders', { id:item.id }) }} >
-                          <View  style={{alignItems:'center', padding: 10}}>
-                          <Image source={item.fruitimages[0]} style={styles.image2} />
-                          {/* Text Container */}
-                          <View style={{ flexDirection: 'row', }} >
-                            {/* Title Weight */}
-                            <View>
-                              <Text style={styles.text} >{item.name}</Text>
-                              <Text style={styles.text2}>Net wt. {item.weight[0]}</Text>
-                            </View>
-                            {/* Price */}
-                            <View>
-                              <Text style={styles.price1} >{item.price}</Text>
-                            </View>
-                          </View>
-                          </View>
-                          {/* Button */}
-                          <View style={styles.addButton} >
-                            <Ionicons  name={Icons.CART} size={24} color={Colors.white}/>
-                            <Text style={styles.button} >ADD</Text>
-                          </View>
-                        </TouchableOpacity>
-                      </View>
-                    )
-                  }
+                renderItem={ ({ item }) => {
+                  return(
+                    <View key={item.id}>
+                    <Orders 
+                          image={item.fruitimages[0]}
+                          name={item.name}
+                          weight={item.weight[0]}
+                          price={item.discountedPrice}
+                          onClick={() => { props.navigation.navigate('Past_Orders', { id:item.id }) }}
+                          onHeart={() => {}}
+                        />
+                    </View>
                   )
-                }
-              </ScrollView>
+                } }
+              />
             </View>
           </View>
           {/* Recommended Products */}
