@@ -1,79 +1,222 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions } from 'react-native';
-import { ToggleButton } from 'react-native-paper';
+
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Colors, Icons } from '../../CommonConfig/CommonConfig';
+import { Colors, Icons, Images } from '../../CommonConfig/CommonConfig';
 import Address from '../../dummy-data/Address';
-import Images from '../../dummy-data/Images';
+import CouponImages from '../../dummy-data/Imagess';
+import Categories from '../../dummy-data/Categories';
+import PastOrder from '../../dummy-data/PastOrders';
+import RecommendedProducts from '../../dummy-data/RecommendedProducts';
+
+const { width } = Dimensions.get('window')
 
 const HomeScreen = (props) => {
-  const {width} = Dimensions.get('window')
+
   const height = width * 100 / 0.6
+  const [active, setActive] = useState(0);
+
+  const change = ({ nativeEvent }) => {
+    const slide = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
+    if (slide !== active) {
+      setActive(slide);
+    }
+  }
 
   return (
     <ScrollView>
       <StatusBar backgroundColor={Colors.primary} />
       {/* <StatusBar backgroundColor={Colors.primary} /> */}
-      <View>
-        
-          <View style={styles.main} >
+      <View style={{ backgroundColor: Colors.white }} >
+
+        <View style={styles.main} >
           { /* Header */}
           <View style={styles.title}>
             <View style={styles.header} >
-            <TouchableOpacity >
-              <Ionicons name='menu-outline' color={Colors.white} size={30} style={styles.drawer} />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryLocation') }} >
-              <Text style={styles.deliver} > Deliver to </Text>
-              <View style={styles.location} >
-                <Text style={styles.address} > {Address[0].landmark}</Text>
-                <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.white} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {props.navigation.navigate('Notification')}} >
-              <Ionicons name={Icons.NOTIFICATION} size={24} color={Colors.white} style={styles.notify} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
-            </TouchableOpacity>
-          </View> 
-            <View style={styles.filter} >
-          <View style={styles.searchContainer}>
-            <View style={styles.vwSearch}>
-                <Ionicons name="search-outline" size={20} color="grey" />
+              <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}  >
+                <Ionicons name='menu-outline' color={Colors.white} size={30} style={styles.drawer} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryLocation') }} >
+                <Text style={styles.deliver} > Deliver to </Text>
+                <View style={styles.location} >
+                  <Text style={styles.address} > {Address[0].landmark}</Text>
+                  <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.white} />
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => { props.navigation.navigate('Notification') }} >
+                <Ionicons name={Icons.NOTIFICATION} size={24} color={Colors.white} style={styles.notify} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
+              </TouchableOpacity>
             </View>
+            <View style={styles.filter} >
+              <View style={styles.searchContainer}>
+                <View style={styles.vwSearch}>
+                  <Ionicons name="search-outline" size={20} color="grey" />
+                </View>
 
-            <TextInput
-              //  value={query}
-                placeholder="Search"
-                style={styles.textInput}
-            />
-        </View>
-        <TouchableOpacity onPress={() => { props.navigation.navigate('Filter')}}>
-          <Ionicons name={Icons.OPTIONS} size={30}  color={Colors.white} />
-          </TouchableOpacity>
-        </View>
+                <TextInput
+                  //  value={query}
+                  placeholder="Search"
+                  style={styles.textInput}
+                />
+              </View>
+              <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }}>
+                <Ionicons name={Icons.OPTIONS} size={30} color={Colors.white} />
+              </TouchableOpacity>
+            </View>
           </View>
-          </View> 
-          { /* Body */}
-          <View >
-            <ScrollView 
-            pagingEnabled 
-            horizontal 
-            showsHorizontalScrollIndicator={false}
-             
+        </View>
+        { /* Body */}
+        <View >
+
+          <View>
+            <ScrollView
+              pagingEnabled
+              horizontal
+              onScroll={change}
+              showsHorizontalScrollIndicator={false}
             >
               {
-                Images.map((image, index) => (
-                  <Image  
+                CouponImages.map((image, index) => (
+                  <Image
                     key={index}
-                    source={{uri: image}}
-                    style= {{height: 200 , width: width}}
+                    source={{ uri: image }}
+                    style={{ height: 150, width: width, resizeMode: 'cover' }}
                   />
                 ))
               }
-              </ScrollView>
+            </ScrollView>
+            <View style={styles.scroll} >
+              {
+                CouponImages.map((i, k) => (
+                  <Text key={k} style={k == active ? styles.pagingActive : styles.paging} > ⬤ </Text>
+                ))
+              }
+            </View>
           </View>
+          <View>
+            <Image source={Images.discount} style={styles.discount} />
+          </View>
+          {/* Categories */}
+          <View style={styles.commonContainer} >
+            <Text style={styles.common} >Categories</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            >
+              {
+                Categories.map((item) => {
+                  return (
+                    <TouchableOpacity key={item.id} style={styles.categories}>
+                      <Image source={item.image} style={{ height: 50, width: 50 }} />
+                      <Text style={{ color: item.color }} > {item.name} </Text>
+                    </TouchableOpacity>
+                  )
+                }
+                )
+              }
+            </ScrollView>
+          </View>
+          {/* Past Orders */}
+          <View style={styles.commonContainer} >
+            <View style={{flexDirection: 'row' , justifyContent: 'space-between'}} >
+            <Text style={styles.common} >Past Orders</Text>
+            <Text style={styles.view} >View All</Text>
+            </View>
+            <View style={styles.heading}>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              >
+                {
+                  PastOrder.map((item) => {
+                    return (
+                      <View key={item.id} >
+                        <TouchableOpacity style={styles.orders} >
+                          <Ionicons name='heart' size={30} color={Colors.red} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={ styles.orderContainer} onPress={() => { props.navigation.navigate('Past_Orders', { id:item.id }) }} >
+                          <View  style={{alignItems:'center', padding: 10}}>
+                          <Image source={item.fruitimages[0]} style={styles.image2} />
+                          {/* Text Container */}
+                          <View style={{ flexDirection: 'row', }} >
+                            {/* Title Weight */}
+                            <View>
+                              <Text style={styles.text} >{item.name}</Text>
+                              <Text style={styles.text2}>Net wt. {item.weight[0]}</Text>
+                            </View>
+                            {/* Price */}
+                            <View>
+                              <Text style={styles.price1} >{item.price}</Text>
+                            </View>
+                          </View>
+                          </View>
+                          {/* Button */}
+                          <View style={styles.addButton} >
+                            <Ionicons  name={Icons.CART} size={24} color={Colors.white}/>
+                            <Text style={styles.button} >ADD</Text>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    )
+                  }
+                  )
+                }
+              </ScrollView>
+            </View>
+          </View>
+          {/* Recommended Products */}
+          <View style={styles.commonContainer} >
+            <View  style={{flexDirection: 'row' , justifyContent: 'space-between'}} >
+            <Text style={styles.common} >Recommended Products</Text>
+            <Text style={styles.view} >View All</Text>
+            </View>
+            <View style={styles.heading} >
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+              >
+                {
+                  RecommendedProducts.map((item) => {
+                    return (
+                      <View key={item.id} >
+                        <TouchableOpacity style={styles.orders} >
+                          <Ionicons name='heart' size={30} color={Colors.red} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.orderContainer} >
+                          <View  style={{alignItems:'center', padding: 10}}>
+                          <Image source={item.fruitimages[0]} style={styles.image2} />
+                          {/* Text Container */}
+                          <View style={{ flexDirection: 'row', }} >
+                            {/* Title Weight */}
+                            <View>
+                              <Text style={styles.text} >{item.name}</Text>
+                              <Text style={styles.text2}>Net wt. {item.weight[0]}</Text>
+                            </View>
+                            {/* Price */}
+                            <View>
+                              <Text style={styles.price1} >{item.price}</Text>
+                            </View>
+                          </View>
+                          </View>
+                          {/* Button */}
+                          <TouchableOpacity style={styles.addButton} >
+                          <Ionicons  name={Icons.CART} size={24} color={Colors.white}/>
+                            <Text style={styles.button} >ADD</Text>
+                          </TouchableOpacity>
+                        </TouchableOpacity>
+                      </View>
+                    )
+                  }
+                  )
+                }
+              </ScrollView>
+            </View>
+          </View>
+        </View>
       </View>
 
     </ScrollView>
@@ -96,7 +239,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     backgroundColor: Colors.primary,
-    
+
   },
   drawer: {
     padding: 20
@@ -118,39 +261,129 @@ const styles = StyleSheet.create({
     marginLeft: 10
   },
   searchContainer:
-    {
-        width: '80%',
-        height: 30,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        backgroundColor: Colors.white,
-        //marginTop: 10,
-        borderRadius: 5,
-        marginBottom:10
-    },
-    vwSearch: {
-        flex: 0.2,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
-    textInput: {
-        // backgroundColor: 'green',
-        flex: 1,
-    },
-    filter: {
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      marginTop: 10,
-      padding: 5
-    },
-    body:{
-      flex: 3
-    },
-    imageContainer: {
-      width: '100%',
-      height: 300
-    }
+  {
+    width: '80%',
+    height: 30,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
+    //marginTop: 10,
+    borderRadius: 5,
+    marginBottom: 10
+  },
+  vwSearch: {
+    flex: 0.2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  textInput: {
+    // backgroundColor: 'green',
+    flex: 1,
+  },
+  filter: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginTop: 10,
+    padding: 5
+  },
+  body: {
+    flex: 3
+  },
+  imageContainer: {
+    width: '100%',
+    height: 300
+  },
+  paging: {
+    color: Colors.grey,
+    margin: 5,
+  },
+  pagingActive: {
+    color: Colors.white,
+    margin: 5,
+  },
+  scroll: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
+    zIndex: 10
+  },
+  discount: {
+    width: '100%',
+    height: 160,
+  },
+  common: {
+    fontSize: 20,
+    fontWeight: '900',
+  },
+  commonContainer: {
+    padding: 10
+  },
+  categories: {
+    alignItems: 'center',
+    padding: 10,
+    marginHorizontal: 10,
+    backgroundColor: Colors.white
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: Colors.grey
+  },
+  text2: {
+    color: Colors.grey,
+    fontWeight: '300',
+    fontSize: 12
+  },
+  price1: {
+    fontSize: 20,
+    marginHorizontal: 30,
+    fontWeight: 'bold'
+  },
+  orders: {
+    position: 'absolute', 
+    bottom: 170, 
+    left: width * 0.5 - 15, 
+    zIndex: 10  
+  },
+  orderContainer: {
+    flex: 1, 
+    width: width * 0.50, 
+    height: 200, 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    marginHorizontal: 15, 
+    borderBottomRightRadius: 15, 
+    borderBottomLeftRadius: 15 
+  },
+  addButton: {
+    flexDirection: 'row',
+    backgroundColor: Colors.primary, 
+    width: '100%', 
+    alignItems:'center', 
+    justifyContent:'center',
+    padding: 10,  
+    borderBottomRightRadius: 15, 
+    borderBottomLeftRadius: 15
+  },
+  button: {
+    color:Colors.white, 
+    fontSize: 20,
+    fontWeight: '700'
+  },
+  image2: {
+    width: width * 0.25, 
+    height: width * 0.25 
+  },
+  heading: {
+    flexDirection: 'row', 
+    padding: 10 
+  },
+  view: {
+    color: Colors.primary,
+    fontSize: 16
+  }
 });
 
 export default HomeScreen;

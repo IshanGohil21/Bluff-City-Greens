@@ -30,12 +30,13 @@ import ChangePasswordScreen from '../Screens/TabNavigator/MyAccount/ChangePasswo
 import AddNewAddressScreen from '../Screens/TabNavigator/MyAccount/Address/AddNewAddress';
 import EditAddressScreen from '../Screens/TabNavigator/MyAccount/Address/EditAddress';
 import AddNewAddress2Screen from '../Screens/TabNavigator/MyAccount/Address/AddAddress2';
+import PastOrderScreen from '../Screens/TabNavigator/Home/PastOrderScreen';
 
 const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
     const getTabBarVisibility = (route) => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2']
+        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders']
         if(hideOnScreens.indexOf(routeName) > -1) return false;
         return true;
     };
@@ -43,12 +44,13 @@ const MainTabScreen = () => {
         <Tab.Navigator tabBarOptions={{activeTintColor: 'green'}}>
             <Tab.Screen 
             name='Home' 
-            component={HomeDrawerScreen} 
-            options={{
+            component={HomeStackScreen} 
+            options={ ({route}) => ({ 
+                tabBarVisible: getTabBarVisibility(route),
                 tabBarIcon: ({color}) => (
                     <Ionicons name='home' size={24} color={color}/>
                     )
-                }} 
+                })} 
             />
             <Tab.Screen 
             name='Shop' 
@@ -97,10 +99,7 @@ const HomeDrawer = createDrawerNavigator();
 const HomeDrawerScreen = () => {
     return (
         <HomeDrawer.Navigator >
-            <HomeDrawer.Screen name='Home' component={HomeStackScreen} />
-            <HomeDrawer.Screen name='DeliveryLocation' component={DeliveryLocationScreen} />
-            <HomeDrawer.Screen name='Filter' component={FilterScreen} />
-            <HomeDrawer.Screen name='Notification' component={NotificationScreen} />
+            <HomeDrawer.Screen name='Home' component={HomeScreen} />
         </HomeDrawer.Navigator>   
         )
 }
@@ -111,12 +110,16 @@ const HomeStackScreen = () => {
         <HomeStack.Navigator  headerMode='none'>
             <HomeStack.Screen 
                 name='Home' 
-                component={HomeScreen} 
+                component={HomeDrawerScreen} 
                 options={{
                     headerLeft: () => null,
                     color:"green"
                 }}
             />
+            <HomeStack.Screen name='DeliveryLocation' component={DeliveryLocationScreen} />
+            <HomeStack.Screen name='Filter' component={FilterScreen} />
+            <HomeStack.Screen name='Notification' component={NotificationScreen} />
+            <HomeStack.Screen name='Past_Orders' component={PastOrderScreen} />
         </HomeStack.Navigator>
     )
 }
