@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, ScrollView, ImageBackground, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-// import Images from '../../../CommonConfig/Images';
-// import Colors from '../../../CommonConfig/Colors';
+
 import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import RBSheet from "react-native-raw-bottom-sheet";
 import ProfileOption from '../../../Components/ProfileOption';
@@ -12,30 +11,29 @@ const MyAccountScreen = props => {
     const refRBSheet = useRef();
 
     return (
+        <>
+        <View  style={{flex:1}}>
+        <ScrollView>
         <View>
-            <ScrollView>
-                {/* Header */}
-                <View style={styles.container} >
-                    <View style={styles.header} >
+           <StatusBar backgroundColor='rgba(0,0,0,0)'/>
                         <ImageBackground source={{ uri: Images.ronaldo }} resizeMode='cover' style={styles.image} >
-                            <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
-                                <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.object} />
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <Ionicons name='create-outline' size={30} color={Colors.white} style={styles.object} />
-                            </TouchableOpacity>
-                        </ImageBackground>
-                    </View>
-                    { /*  Body */}
-                    <View style={styles.bodyContainer}>
-
+                            <View style={{flexDirection:'row' , justifyContent:'space-between' ,paddingHorizontal: 10}} >
+                                <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
+                                    <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.object} />
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Ionicons name='create-outline' size={30} color={Colors.white} style={styles.object} />
+                                </TouchableOpacity>
+                            </View>
+                        <View style={{borderTopRightRadius:30,borderTopLeftRadius:30, overflow:'hidden'}}>
                         <ProfileOption 
                             name = 'Personal Information'
                             onPress={() => { props.navigation.navigate('personalInfo') }}
                             iconLeft = {Icons.PERSON}
                             iconRight = {Icons.PROFILE_FORWARD}
                         />
-
+                        </View>
+                        </ImageBackground>
                         <ProfileOption 
                             name = 'Saved Address'
                             onPress={() => { props.navigation.navigate('SavedAddress') }}
@@ -88,80 +86,79 @@ const MyAccountScreen = props => {
                             onPress={() => refRBSheet.current.open()}
                             iconLeft = {Icons.LOG_OUT}
                         />
-                            <View style={styles.rb} >
-                            <RBSheet
-                                ref={refRBSheet}
-                                closeOnDragDown={true}
-                                closeOnPressMask={false}
-                                customStyles={{
-                                    wrapper: {
-                                        backgroundColor: "transparent",
-                                    },
-                                    draggableIcon: {
-                                        backgroundColor: Colors.grey,
-                                        width: 80,
-                                    },
-                                    container: {
-                                        borderTopLeftRadius: 30,
-                                        borderTopRightRadius: 30, 
-                                    }
-                                }}
-                            >
-                                <Ionicons  name={Icons.LOG_OUT} size={60} color={Colors.grey} style={styles.logo} />
-                            <Text style={styles.bottom} >Are you sure you want to logout?</Text>
-                            <TouchableOpacity onPress={() => {props.navigation.navigate('SignIn')}} style={styles.logout} >
-                                <Text style={styles.signin} > Logout </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity  onPress={() => refRBSheet.current.close()}  style={{ alignItems: 'center'}}>
-
-                            <Text style={styles.signin2} > Cancel </Text>
-                            </TouchableOpacity>
-                            </RBSheet>
-                            </View>
-
-                    </View>
-                </View>
-            </ScrollView>
+        </View>
+        </ScrollView>
         </View>
 
+        <View>
+        <RBSheet
+            ref={refRBSheet}
+            closeOnDragDown={true}
+            closeOnPressMask={false}
+            customStyles={{
+                wrapper: {
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                },
+                draggableIcon: {
+                    backgroundColor: Colors.grey,
+                    width: 80,
+                },
+                container: {
+                    borderTopLeftRadius: 30,
+                    borderTopRightRadius: 30, 
+                }
+            }}
+        >
+            <Ionicons  name={Icons.LOG_OUT} size={60} color={Colors.grey} style={styles.logo} />
+        <Text style={styles.bottom} >Are you sure you want to logout?</Text>
+        <TouchableOpacity onPress={() => {props.navigation.navigate('SignIn')}} style={styles.logout} >
+            <Text style={styles.signin} > Logout </Text>
+        </TouchableOpacity>
+        <TouchableOpacity  onPress={() => refRBSheet.current.close()}  style={{ alignItems: 'center'}}>
+
+        <Text style={styles.signin2} > Cancel </Text>
+        </TouchableOpacity>
+        </RBSheet>
+        </View>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
     },
     header: {
-        flex: 1,
-        flexDirection: 'row',
+        // flex: 1,
+        // flexDirection: 'row',
         justifyContent: 'center',
     },
     image: {
-        flex: 1,
+        
         justifyContent: 'space-between',
-        height: 305,
-        flexDirection: 'row',
-        padding: 15,
+        height:Dimensions.get('window').height*0.45,
+        // flexDirection: 'row'
+        paddingTop: 15,
     },
-    body: {
-        backgroundColor: 'white',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        borderBottomColor: Colors.grey,
-        borderBottomWidth: 0.5,
-        paddingHorizontal: 15,
-        marginLeft: 15,
-    },
+    // body: {
+    //     backgroundColor: 'white',
+    //     flexDirection: 'row',
+    //     alignItems: 'center',
+    //     justifyContent: 'space-evenly',
+    //     borderBottomColor: Colors.grey,
+    //     borderBottomWidth: 0.5,
+    //     paddingHorizontal: 15,
+    //     marginLeft: 15,
+    // },
     text: {
         padding: 15,
         fontSize: 17,
         color: 'black'
     },
     bodyContainer: {
+        // flex: 3,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
-        borderWidth: 1
     },
     
     signin: {
@@ -174,7 +171,7 @@ const styles = StyleSheet.create({
         fontSize: 23,
         padding: 10,
         borderRadius: 10,
-        borderColor: Colors.green,
+        // borderColor: Colors.green,
         overflow: 'hidden',
     },
     logout: {
@@ -190,8 +187,8 @@ const styles = StyleSheet.create({
         color: Colors.primary,
         fontSize: 18,
         padding: 10,
-        borderRadius: 10,
-        borderColor: Colors.green,
+        // borderRadius: 10,
+        // borderColor: Colors.green,
         overflow: 'hidden',
         
     },  
@@ -204,25 +201,11 @@ const styles = StyleSheet.create({
         marginLeft: 60,
         marginBottom:20,
     },
-    rb: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        borderWidth: 3,
-    },
     logo: {
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
         marginLeft: 150
-    },
-    sheet: {
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        borderWidth: 3,
-        borderColor: Colors.red
     },
     object:{
         marginTop: 20, 

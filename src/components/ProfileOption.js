@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react'
 import { Colors, Icons } from '../CommonConfig/CommonConfig'
+
 
 const ProfileOption = (props) => {
     return (
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.grey,
         borderBottomWidth: 0.5,
         paddingHorizontal: 15,
-        marginLeft: 15,
+        height: (Dimensions.get('window').height-40)*0.55/ 8
     },
     text: {
         padding: 15,

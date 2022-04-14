@@ -156,45 +156,26 @@ const HomeScreen = (props) => {
             <Text style={styles.view} >View All</Text>
             </View>
             <View style={styles.heading} >
-              <ScrollView
+            <FlatList 
+                data={RecommendedProducts}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-              >
-                {
-                  RecommendedProducts.map((item) => {
-                    return (
-                      <View key={item.id} >
-                        <TouchableOpacity style={styles.orders} >
-                          <Ionicons name='heart' size={30} color={Colors.red} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.orderContainer} >
-                          <View  style={{alignItems:'center', padding: 10}}>
-                          <Image source={item.fruitimages[0]} style={styles.image2} />
-                          {/* Text Container */}
-                          <View style={{ flexDirection: 'row', }} >
-                            {/* Title Weight */}
-                            <View>
-                              <Text style={styles.text} >{item.name}</Text>
-                              <Text style={styles.text2}>Net wt. {item.weight[0]}</Text>
-                            </View>
-                            {/* Price */}
-                            <View>
-                              <Text style={styles.price1} >{item.price}</Text>
-                            </View>
-                          </View>
-                          </View>
-                          {/* Button */}
-                          <TouchableOpacity style={styles.addButton} >
-                          <Ionicons  name={Icons.CART} size={24} color={Colors.white}/>
-                            <Text style={styles.button} >ADD</Text>
-                          </TouchableOpacity>
-                        </TouchableOpacity>
-                      </View>
-                    )
-                  }
+                renderItem={ ({ item }) => {
+                  return(
+                    <View key={item.id}>
+                    <Orders 
+                          image={item.fruitimages[0]}
+                          name={item.name}
+                          weight={item.weight[0]}
+                          price={item.discountedPrice}
+                          onClick={() => { props.navigation.navigate('Recommended_Products', { id:item.id }) }}
+                          onHeart={() => {}}
+                        />
+                    </View>
                   )
-                }
-              </ScrollView>
+                } }
+              />
+
             </View>
           </View>
         </View>

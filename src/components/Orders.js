@@ -15,10 +15,10 @@ const Orders = (props) => {
         <Ionicons name='heart' size={30} color={Colors.red} />
     </TouchableOpacity>
     <TouchableOpacity style={ styles.orderContainer} onPress={props.onClick} >
-        <View  style={{alignItems:'center', padding: 10}}>
+        <View  style={styles.ordersScreen}>
         <Image source={props.image} style={styles.image2} />
         {/* Text Container */}
-        <View style={{ flexDirection: 'row', }} >
+        <View style={styles.textContainer} >
         {/* Title Weight */}
         <View>
             <Text style={styles.text} >{props.name}</Text>
@@ -202,5 +202,12 @@ const styles = StyleSheet.create({
     view: {
       color: Colors.primary,
       fontSize: 16
+    },
+    textContainer: {
+      flexDirection: 'row',
+    },
+    ordersScreen: {
+      alignItems:'center', 
+      padding: 10
     }
   });

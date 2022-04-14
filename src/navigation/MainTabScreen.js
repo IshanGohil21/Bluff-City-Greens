@@ -31,12 +31,13 @@ import AddNewAddressScreen from '../Screens/TabNavigator/MyAccount/Address/AddNe
 import EditAddressScreen from '../Screens/TabNavigator/MyAccount/Address/EditAddress';
 import AddNewAddress2Screen from '../Screens/TabNavigator/MyAccount/Address/AddAddress2';
 import PastOrderScreen from '../Screens/TabNavigator/Home/PastOrderScreen';
+import RecommendedProducts from '../Screens/TabNavigator/Home/RecommendedProducts';
 
 const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
     const getTabBarVisibility = (route) => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders']
+        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products']
         if(hideOnScreens.indexOf(routeName) > -1) return false;
         return true;
     };
@@ -120,6 +121,7 @@ const HomeStackScreen = () => {
             <HomeStack.Screen name='Filter' component={FilterScreen} />
             <HomeStack.Screen name='Notification' component={NotificationScreen} />
             <HomeStack.Screen name='Past_Orders' component={PastOrderScreen} />
+            <HomeStack.Screen name='Recommended_Products' component={RecommendedProducts} />
         </HomeStack.Navigator>
     )
 }

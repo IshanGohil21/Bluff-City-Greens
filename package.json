@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-community/slider": "^4.2.1",
     "@react-navigation/bottom-tabs": "^5.11.15",
     "@react-navigation/drawer": "^5.12.9",
     "@react-navigation/native": "^5.9.8",
@@ -47,6 +48,7 @@
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.1",
     "react-redux": "^7.2.6",
+    "rn-range-slider": "^2.1.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {

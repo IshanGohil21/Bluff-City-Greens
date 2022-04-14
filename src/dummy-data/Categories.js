@@ -51,12 +51,4 @@ let Categories = [
     },
 ]
 
-
-
-
-
-
-
-
-
 export default Categories;

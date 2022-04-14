@@ -17,5 +17,7 @@ export default {
     CART:'cart-outline',
     OPTIONS:'options-outline',
     ADD:'add-circle-outline',
-    SUB:'remove-circle-outline'
+    SUB:'remove-circle-outline',
+    DELIVERY: 'subway-outline',
+    HEART_FILLED: 'heart'
 }

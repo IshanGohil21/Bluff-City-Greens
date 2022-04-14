@@ -13,7 +13,8 @@ let RecommendedProducts = [
         discountedPrice: '$2.40',
         name: 'Carrot',
         details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        isFavorite: true
+        isFavorite: true,
+        bgColor: '#ed9121'
     },
 
     {
@@ -28,7 +29,8 @@ let RecommendedProducts = [
         discountedPrice: '$1.40',
         name: 'Lettuce',
         details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
-        isFavorite: true
+        isFavorite: true,
+        bgColor: '#d5df80'
     }
 ]
 
