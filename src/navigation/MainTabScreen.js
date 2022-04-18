@@ -13,6 +13,9 @@ import ShopScreen from '../Screens/TabNavigator/Shop';
 import DeliveryLocationScreen from '../Screens/TabNavigator/DeliveryLocationScreen';
 import FilterScreen from '../Screens/TabNavigator/FilterScreen';
 import NotificationScreen from '../Screens/TabNavigator/NotificationScreen';
+import DrawerContentScreen from './DrawerContent';
+import SearchScreen from '../Screens/TabNavigator/Search';
+import FiltersScreen2  from '../Screens/TabNavigator/FiltersScreen2';
 
 { /* Contact US Screen */ }
 import ContactScreen from '../Screens/TabNavigator/Contact';
@@ -32,12 +35,13 @@ import EditAddressScreen from '../Screens/TabNavigator/MyAccount/Address/EditAdd
 import AddNewAddress2Screen from '../Screens/TabNavigator/MyAccount/Address/AddAddress2';
 import PastOrderScreen from '../Screens/TabNavigator/Home/PastOrderScreen';
 import RecommendedProducts from '../Screens/TabNavigator/Home/RecommendedProducts';
+import Icons from '../CommonConfig/Icons';
 
 const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
     const getTabBarVisibility = (route) => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products']
+        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer']
         if(hideOnScreens.indexOf(routeName) > -1) return false;
         return true;
     };
@@ -99,11 +103,15 @@ export default MainTabScreen;
 const HomeDrawer = createDrawerNavigator();
 const HomeDrawerScreen = () => {
     return (
-        <HomeDrawer.Navigator >
-            <HomeDrawer.Screen name='Home' component={HomeScreen} />
+        <HomeDrawer.Navigator  drawerContent={ props => <DrawerContentScreen {...props} />  } >
+            <HomeDrawer.Screen
+                name='Home' 
+                component={HomeScreen}
+            />
         </HomeDrawer.Navigator>   
         )
 }
+
 
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => {
@@ -122,6 +130,8 @@ const HomeStackScreen = () => {
             <HomeStack.Screen name='Notification' component={NotificationScreen} />
             <HomeStack.Screen name='Past_Orders' component={PastOrderScreen} />
             <HomeStack.Screen name='Recommended_Products' component={RecommendedProducts} />
+            <HomeStack.Screen name='Search' component={SearchScreen} />
+            <HomeStack.Screen name='Filter2' component={FiltersScreen2} />
         </HomeStack.Navigator>
     )
 }

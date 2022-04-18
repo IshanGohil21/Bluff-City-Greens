@@ -19,5 +19,6 @@ export default {
     ADD:'add-circle-outline',
     SUB:'remove-circle-outline',
     DELIVERY: 'subway-outline',
-    HEART_FILLED: 'heart'
+    HEART_FILLED: 'heart',
+    MENU: 'menu-outline'
 }

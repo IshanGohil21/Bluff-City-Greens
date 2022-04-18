@@ -10,10 +10,7 @@ import { RadioButton } from 'react-native-paper';
 import Categories from '../../dummy-data/Categories';
 import InputRangeScreen from '../../Components/Slider/InputRange';
 
-//  import Slider from '@react-native-community/slider';
 
-// import RangeSlider from 'rn-range-slider';
-// import { Label, Notch, Rail, RailSelected, Thumb, TextButton } from '../../Components/Slider';
 
 
 const { width } = Dimensions.get('window')
@@ -32,37 +29,12 @@ const FilterScreen = (props) => {
 
   const refRBSheet = useRef();
 
-  // const [rangeDisabled, setRangeDisabled] = useState(false);
-  // const [low, setLow] = useState(0);
-  // const [high, setHigh] = useState(100);
-  // const [min, setMin] = useState(0);
-  // const [max, setMax] = useState(100);
-  // const [floatingLabel, setFloatingLabel] = useState(false);
-
-  // const renderThumb = useCallback(() => <Thumb/>, []);
-  // const renderRail = useCallback(() => <Rail/>, []);
-  // const renderRailSelected = useCallback(() => <RailSelected/>, []);
-  // const renderLabel = useCallback(value => <Label text={value}/>, []);
-  // const renderNotch = useCallback(() => <Notch/>, []);
-  // const handleValueChange = useCallback((low, high) => {
-  //   setLow(low);
-  //   setHigh(high);
-  // }, []);
-
+  
   const onValueSChange = (values) => {
     setValue(values)
   }
 
-  // const customMarkerLeft=(e) => {
-  //   return (<CustomSliderMarkerLeft
-  //    currentValue={e.currentValue}/>)
-  //    }
-
-  //    const customMarkerRight=(e) => {
-  //     return (<CustomSliderMarkerRight
-  //     currentValue={e.currentValue}/>)
-  //     }
-
+ 
   return (
     <View style={styles.main} >
       <StatusBar backgroundColor={Colors.primary} />
@@ -111,28 +83,8 @@ const FilterScreen = (props) => {
               {/* Range Slider */}
               <View style={styles.priceRange} >
                 <Text style={styles.priceRange2} >Price Range</Text>
-                {/* <MultiSlider
-                  onValuesChangeStart={setDisable}
-                  onValuesChangeFinish={setEnable}
-                  isMarkersSeparated={true}
-                  min={0}
-                  max={50}
-                  step={1}
-                  valuePrefix={0}
-                  valueSuffix={50}
-                  enabledOne={true}
-                  enabledTwo={true}
-                  sliderLength={350}
-                  style={styles.sliderLenght}
-                  oneMarkerLeftPosition={0}
-                  touchDimensions={{
-                    height: 40,
-                    width: 40,
-                    borderRadius: 20,
-                    slipDisplacement: 40,
-                  }}
-                /> */}
-                <View style={{marginTop: 40}} >
+               
+                <View style={styles.rangeSlider} >
                 <InputRangeScreen 
                   minValue={0}
                   maxValue={50}
@@ -140,33 +92,16 @@ const FilterScreen = (props) => {
                   onChangeMax={(z) => console.log(z)}
                 />
                 </View>
-                {/* 
-            <Slider
-              style={styles.slider}
-              min={min}
-              max={max}
-              step={1}
-              disableRange={rangeDisabled}
-              floatingLabel={floatingLabel}
-              renderThumb={renderThumb}
-              renderRail={renderRail}
-              renderRailSelected={renderRailSelected}
-              renderLabel={renderLabel}
-              renderNotch={renderNotch}
-              onValueChanged={handleValueChange}
-            /> */}
-
-                {/* <Slider 
-                    style={{width:300, height: 100}}
-                    onValueChange={(value) => setRange(value)}
-                    minimumValue={0}
-                    maximumValue={50}
-                    thumbTintColor={Colors.red}
-                  /> */}
+                <View style={styles.priceTag} >
+                <Text style={styles.txt1} > $0 </Text>
+                <Text style={styles.txt2} > $50 </Text>
+                </View>
               </View>
+              <View style={styles.applyButton} >
               <TouchableOpacity style={styles.signin} onPress={() => {props.navigation.navigate('Home')}} >
                 <Text style={styles.apply} >APPLY</Text>
               </TouchableOpacity>
+              </View>
             </View>
 
             :
@@ -230,7 +165,7 @@ const FilterScreen = (props) => {
                               status={checked === 'second' ? 'checked' : 'unchecked'}
                               onPress={() => setChecked('second')}
                             />
-                    <Text>07:00 AM to 9:30 AM</Text>
+                    <Text>9:30 AM to 11:00 AM</Text>
                   </View>
 
 
@@ -241,7 +176,7 @@ const FilterScreen = (props) => {
                               status={checked === 'third' ? 'checked' : 'unchecked'}
                               onPress={() => setChecked('third')}
                             />
-                    <Text>07:00 AM to 9:30 AM</Text>
+                    <Text>5:00 PM to 7:30 PM</Text>
                   </View>
 
 
@@ -252,7 +187,7 @@ const FilterScreen = (props) => {
                               status={checked === 'fourth' ? 'checked' : 'unchecked'}
                               onPress={() => setChecked('fourth')}
                             />
-                    <Text>07:00 AM to 9:30 AM</Text>
+                    <Text>07:30 PM to 10:00 PM</Text>
                   </View>
                       </RBSheet>
                   </View>
@@ -482,4 +417,25 @@ const styles = StyleSheet.create({
       alignItems: 'center',
        padding: 5
   },
+  priceTag: {
+    // padding: 15,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  txt1: {
+    marginLeft: 30,
+    color: Colors.grey
+  },
+  txt2: {
+    marginRight: 30,
+    color: Colors.grey
+  },
+  applyButton: {
+    marginTop: 80
+  },
+  rangeSlider: {
+    marginTop: 40
+  }
 })

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions, FlatList } from 'react-native';
-
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+
+
 import { Colors, Icons, Images } from '../../CommonConfig/CommonConfig';
 import Address from '../../dummy-data/Address';
 import CouponImages from '../../dummy-data/Imagess';
@@ -10,6 +11,8 @@ import Categories from '../../dummy-data/Categories';
 import PastOrder from '../../dummy-data/PastOrders';
 import RecommendedProducts from '../../dummy-data/RecommendedProducts';
 import Orders from '../../Components/Orders';
+import SearchBarScreen from '../../Components/Slider/SearchBar2';
+import CategoriesScreen from '../../Components/Categories';
 
 const { width } = Dimensions.get('window')
 
@@ -53,17 +56,9 @@ const HomeScreen = (props) => {
               </TouchableOpacity>
             </View>
             <View style={styles.filter} >
-              <View style={styles.searchContainer}>
-                <View style={styles.vwSearch}>
-                  <Ionicons name="search-outline" size={20} color="grey" />
-                </View>
-
-                <TextInput
-                  //  value={query}
-                  placeholder="Search"
-                  style={styles.textInput}
-                />
-              </View>
+              <TouchableOpacity onPress={() => {props.navigation.navigate('Search')}} >
+              <SearchBarScreen />
+              </TouchableOpacity>
               <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }}>
                 <Ionicons name={Icons.OPTIONS} size={30} color={Colors.white} />
               </TouchableOpacity>
@@ -104,22 +99,23 @@ const HomeScreen = (props) => {
           {/* Categories */}
           <View style={styles.commonContainer} >
             <Text style={styles.common} >Categories</Text>
-            <ScrollView
+            <FlatList 
+              data={Categories}
               horizontal
               showsHorizontalScrollIndicator={false}
-            >
-              {
-                Categories.map((item) => {
-                  return (
-                    <TouchableOpacity key={item.id} style={styles.categories}>
-                      <Image source={item.image} style={{ height: 50, width: 50 }} />
-                      <Text style={{ color: item.color }} > {item.name} </Text>
-                    </TouchableOpacity>
-                  )
-                }
+              renderItem={ ({ item }) => {
+                return(
+                  <View key={item.id} >
+                    <CategoriesScreen
+                      image={item.image}
+                      name={item.name}
+                      color={item.color}
+                      // onClick={() => {}}
+                    />
+                  </View>
                 )
-              }
-            </ScrollView>
+              } }
+            />
           </View>
           {/* Past Orders */}
           <View style={styles.commonContainer} >
@@ -286,6 +282,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     marginHorizontal: 10,
+    elevation: 1.5,
     backgroundColor: Colors.white
   },
   text: {
@@ -345,6 +342,10 @@ const styles = StyleSheet.create({
   view: {
     color: Colors.primary,
     fontSize: 16
+  },
+  catoContainer: {
+    height: 50, 
+    width: 50,
   }
 });
 

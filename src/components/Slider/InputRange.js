@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, Text, View, TextInput } from 'react-native';
 import React, { useMemo, useRef } from 'react';
 import Svg , {Line} from 'react-native-svg';
 import {PanGestureHandler, State} from 'react-native-gesture-handler'; 
@@ -14,11 +14,13 @@ const WIDTH = width - 110;
 
 const MAX_WIDTH = WIDTH - 20;
 
-const  ALine = createAnimatedComponent(Line)
+const  ALine = createAnimatedComponent(Line);
 
-const usePanGesture = () => {
-    const transX = useRef(new Value(0)).current;
-    const offsetX = useRef(new Value(0)).current;
+const  AText = createAnimatedComponent(TextInput);
+
+const usePanGesture = (initialPos) => {
+    const transX = useRef(new Value(initialPos)).current;
+    const offsetX = useRef(new Value(initialPos)).current;
 
     const onGestureHandle = useMemo(() => {
         return event([
@@ -42,8 +44,8 @@ const usePanGesture = () => {
     return {transX, onGestureHandle}
 };
 
-const PanComponent = () => {
-    const {transX, onGestureHandle} = usePanGesture() 
+const PanComponent = (initialPos) => {
+    const {transX, onGestureHandle} = usePanGesture(initialPos);
 
     const Pan = () => (
         <PanGestureHandler onGestureEvent={onGestureHandle} onHandlerStateChange={onGestureHandle} > 
@@ -55,16 +57,37 @@ const PanComponent = () => {
 }
 
 const InputRangeScreen = (minValue, maxValue, onChangeMin, onChangeMax) => {
-    const {Pan:Pan1, transX:x1} = PanComponent();
-    const {Pan:Pan2, transX:x2} = PanComponent();
+    const min = useRef(null);
+    const max = useRef(null);
+    
+    
+    const {Pan:Pan1, transX:x1} = PanComponent(0);
+    const {Pan:Pan2, transX:x2} = PanComponent(MAX_WIDTH);
 
   return (
     <View style={styles.container} >
       <View style={styles.trilho} />
+        {/* <View style={styles.txtContainer} >
+            <AText 
+                defaultValue="0" 
+                editable={false} 
+                ref={min} 
+                style={styles.label}
+            />
+            
+            <Text style={styles.label} >{ ' - ' }</Text>
+
+            <AText 
+                defaultValue={MAX_WIDTH} 
+                editable={false} 
+                ref={max} 
+                style={styles.label} 
+            />
+        </View> */}
       <View style={{position: 'absolute'}} >
           <Svg height='6' width={WIDTH} >
             <ALine 
-            stroke='#D3D3D3' 
+            stroke='#00008B' 
             strokeWidth='12' 
             x1={x1} 
             y1={0} 
@@ -86,7 +109,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     trilho: {
-        backgroundColor: Colors.grey,
+        backgroundColor: 	'#C0C0C0',
         position: 'absolute',
         height: 6,
         borderRadius: 6,
@@ -106,7 +129,7 @@ const styles = StyleSheet.create({
            width:0,
        },
        shadowOpacity: 0.3
-    }
+    },
 });
 
 

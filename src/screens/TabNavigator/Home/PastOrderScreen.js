@@ -51,7 +51,7 @@ const PastOrderScreen = (props) => {
                     >
                         {selectedItem.fruitimages.map(item => {
                             return (
-                                <View style={styles.fruit}>
+                                <View style={styles.fruit} key={item}>
                                     <Image source={item} style={styles.imageContainer} />
                                 </View>
                             )
