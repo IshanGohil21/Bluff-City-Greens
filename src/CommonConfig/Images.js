@@ -42,4 +42,19 @@ export default {
     lettuce1: require('./Assets/icon/001-lettuce.png'),
     lettuce2: require('./Assets/icon/002-lettuce-1.png'),
     lettuce3: require('./Assets/icon/003-lettuce-2.png'),
+
+    beans: require('./Assets/icon/beans.jpg'),
+    oranges: require('./Assets/icon/orange.jpg'),
+    strawberries: require('./Assets/icon/strawberries.jpg'),
+    juice: require('./Assets/icon/juice.jpg'),
+    milk: require('./Assets/icon/milk.jpg'),
+
+    organic: require('./Assets/icon/organic.jpg'),
+    
+    freshV: require('./Assets/icon/fresh_vegetables.jpg'),
+    freshF: require('./Assets/icon/fresh_fruits.jpg'),
+    seasonal: require('./Assets/icon/Seasonal.jpg'),
+    exotic: require('./Assets/icon/exotic.jpg'),
+    herbs: require('./Assets/icon/Herbs.jpg'),
+    organicV: require('./Assets/icon/organicVeggies.jpg'),
 }

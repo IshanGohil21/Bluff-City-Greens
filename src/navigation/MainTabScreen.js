@@ -9,13 +9,14 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from '../Screens/TabNavigator/HomeScreen';
 import CheckoutScreen from '../Screens/TabNavigator/Checkout';
-import ShopScreen from '../Screens/TabNavigator/Shop';
+import ShopScreen from '../Screens/TabNavigator/Shop/Shop';
 import DeliveryLocationScreen from '../Screens/TabNavigator/DeliveryLocationScreen';
 import FilterScreen from '../Screens/TabNavigator/FilterScreen';
 import NotificationScreen from '../Screens/TabNavigator/NotificationScreen';
 import DrawerContentScreen from './DrawerContent';
 import SearchScreen from '../Screens/TabNavigator/Search';
 import FiltersScreen2  from '../Screens/TabNavigator/FiltersScreen2';
+import FruitShopScreen  from '../Screens/TabNavigator/Shop/Fruits';
 
 { /* Contact US Screen */ }
 import ContactScreen from '../Screens/TabNavigator/Contact';
@@ -36,6 +37,7 @@ import AddNewAddress2Screen from '../Screens/TabNavigator/MyAccount/Address/AddA
 import PastOrderScreen from '../Screens/TabNavigator/Home/PastOrderScreen';
 import RecommendedProducts from '../Screens/TabNavigator/Home/RecommendedProducts';
 import Icons from '../CommonConfig/Icons';
+
 
 const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
@@ -141,6 +143,7 @@ const ShopStackScreen = () => {
     return (
         <ShopStack.Navigator  headerMode='none'>
             <ShopStack.Screen name='Shop' component={ShopScreen} />
+            <ShopStack.Screen name='Fruits' component={FruitShopScreen} />
         </ShopStack.Navigator>
     )
 }

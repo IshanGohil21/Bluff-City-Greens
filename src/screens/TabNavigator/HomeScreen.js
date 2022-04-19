@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions, FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-
-
 import { Colors, Icons, Images } from '../../CommonConfig/CommonConfig';
 import Address from '../../dummy-data/Address';
 import CouponImages from '../../dummy-data/Imagess';
@@ -32,7 +30,7 @@ const HomeScreen = (props) => {
     <ScrollView>
       <StatusBar backgroundColor={Colors.primary} />
       {/* <StatusBar backgroundColor={Colors.primary} /> */}
-      <View style={{ backgroundColor: Colors.white }} >
+      <View>
 
         <View style={styles.main} >
           { /* Header */}
@@ -56,8 +54,8 @@ const HomeScreen = (props) => {
               </TouchableOpacity>
             </View>
             <View style={styles.filter} >
-              <TouchableOpacity onPress={() => {props.navigation.navigate('Search')}} >
-              <SearchBarScreen />
+              <TouchableOpacity onPress={() => { props.navigation.navigate('Search') }} >
+                <SearchBarScreen />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }}>
                 <Ionicons name={Icons.OPTIONS} size={30} color={Colors.white} />
@@ -99,77 +97,77 @@ const HomeScreen = (props) => {
           {/* Categories */}
           <View style={styles.commonContainer} >
             <Text style={styles.common} >Categories</Text>
-            <FlatList 
+            <FlatList
               data={Categories}
               horizontal
               showsHorizontalScrollIndicator={false}
-              renderItem={ ({ item }) => {
-                return(
+              renderItem={({ item }) => {
+                return (
                   <View key={item.id} >
                     <CategoriesScreen
                       image={item.image}
                       name={item.name}
                       color={item.color}
-                      // onClick={() => {}}
+                    // onClick={() => {}}
                     />
                   </View>
                 )
-              } }
+              }}
             />
           </View>
           {/* Past Orders */}
           <View style={styles.commonContainer} >
-            <View style={{flexDirection: 'row' , justifyContent: 'space-between'}} >
-            <Text style={styles.common} >Past Orders</Text>
-            <Text style={styles.view} >View All</Text>
+            <View style={styles.past} >
+              <Text style={styles.common} >Past Orders</Text>
+              <Text style={styles.view} >View All</Text>
             </View>
             <View style={styles.heading}>
-              <FlatList 
+              <FlatList
                 data={PastOrder}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                renderItem={ ({ item }) => {
-                  return(
+                renderItem={({ item }) => {
+                  return (
                     <View key={item.id}>
-                    <Orders 
-                          image={item.fruitimages[0]}
-                          name={item.name}
-                          weight={item.weight[0]}
-                          price={item.discountedPrice}
-                          onClick={() => { props.navigation.navigate('Past_Orders', { id:item.id }) }}
-                          onHeart={() => {}}
-                        />
+                      <Orders
+                        image={item.fruitimages[0]}
+                        name={item.name}
+                        weight={item.weight[0]}
+                        price={item.discountedPrice}
+                        onClick={() => { props.navigation.navigate('Past_Orders', { id: item.id }) }}
+                        onHeart={() => { }}
+                      />
                     </View>
                   )
-                } }
+                }}
               />
             </View>
           </View>
           {/* Recommended Products */}
           <View style={styles.commonContainer} >
-            <View  style={{flexDirection: 'row' , justifyContent: 'space-between'}} >
-            <Text style={styles.common} >Recommended Products</Text>
-            <Text style={styles.view} >View All</Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+              <Text style={styles.common} >Recommended Products</Text>
+              <Text style={styles.view} >View All</Text>
             </View>
             <View style={styles.heading} >
-            <FlatList 
+              <FlatList
                 data={RecommendedProducts}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                renderItem={ ({ item }) => {
-                  return(
+                renderItem={({ item }) => {
+                  return (
                     <View key={item.id}>
-                    <Orders 
-                          image={item.fruitimages[0]}
-                          name={item.name}
-                          weight={item.weight[0]}
-                          price={item.discountedPrice}
-                          onClick={() => { props.navigation.navigate('Recommended_Products', { id:item.id }) }}
-                          onHeart={() => {}}
-                        />
+                      <Orders
+                        image={item.fruitimages[0]}
+                        name={item.name}
+                        weight={item.weight[0]}
+                        price={item.discountedPrice}
+                        onClick={() => { props.navigation.navigate('Recommended_Products', { id: item.id }) }}
+                        onHeart={() => { }}
+                      />
                     </View>
                   )
-                } }
+                }}
               />
 
             </View>
@@ -301,51 +299,56 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   orders: {
-    position: 'absolute', 
-    bottom: 170, 
-    left: width * 0.5 - 15, 
-    zIndex: 10  
+    position: 'absolute',
+    bottom: 170,
+    left: width * 0.5 - 15,
+    zIndex: 10
   },
   orderContainer: {
-    flex: 1, 
-    width: width * 0.50, 
-    height: 200, 
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
-    marginHorizontal: 15, 
-    borderBottomRightRadius: 15, 
-    borderBottomLeftRadius: 15 
+    flex: 1,
+    width: width * 0.50,
+    height: 200,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 15,
+    borderBottomRightRadius: 15,
+    borderBottomLeftRadius: 15
   },
   addButton: {
     flexDirection: 'row',
-    backgroundColor: Colors.primary, 
-    width: '100%', 
-    alignItems:'center', 
-    justifyContent:'center',
-    padding: 10,  
-    borderBottomRightRadius: 15, 
+    backgroundColor: Colors.primary,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 10,
+    borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15
   },
   button: {
-    color:Colors.white, 
+    color: Colors.white,
     fontSize: 20,
     fontWeight: '700'
   },
   image2: {
-    width: width * 0.25, 
-    height: width * 0.25 
+    width: width * 0.25,
+    height: width * 0.25
   },
   heading: {
-    flexDirection: 'row', 
-    padding: 10 
+    flexDirection: 'row',
+    padding: 10,
+    backgroundColor: Colors.white
   },
   view: {
     color: Colors.primary,
     fontSize: 16
   },
   catoContainer: {
-    height: 50, 
+    height: 50,
     width: 50,
+  },
+  past: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 });
 

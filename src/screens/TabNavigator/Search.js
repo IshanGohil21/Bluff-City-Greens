@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View , StatusBar, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View , StatusBar, TouchableOpacity, FlatList} from 'react-native';
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Colors, Icons, Images } from '../../CommonConfig/CommonConfig';
 import SearchBarScreen from '../../Components/Slider/SearchBar2';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import MostPopularProductScreen from '../../dummy-data/MostPopular';
+import Popular from '../../Components/Popular';
 
 const SearchScreen = (props) => {
   return (
@@ -35,6 +37,24 @@ const SearchScreen = (props) => {
         <View style={styles.popular} >
             <Text style={styles.most} >Most Popular</Text>
         </View>
+        <View>
+        <FlatList 
+                data={MostPopularProductScreen}
+                renderItem={ ({ item }) => {
+                  return(
+                    <View key={item.id}>
+                    <Popular
+                          image={item.image}
+                          name={item.name}
+                          weight={item.weight}
+                          price={item.price}
+                          onHeart={() => {}}
+                        />
+                    </View>
+                  )
+                } }
+              />
+        </View>
       </View>
     </View>
     </KeyboardAwareScrollView>
@@ -46,7 +66,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        flex: 0.80,
+        flex: 0.1,
         backgroundColor: Colors.primary
     },
     body: {
