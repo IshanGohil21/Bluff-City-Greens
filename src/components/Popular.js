@@ -12,7 +12,7 @@ const Popular = (props) => {
     return (
     <View style={styles.popularMain} >
             {/* Image Container */}
-        <View style={{flexDirection: 'row', alignItems: 'center'}} >
+        <View style={styles.imageContainer} >
         <View  style={styles.ordersScreen}>
             <Image source={props.image} style={styles.image2} />
         </View>
@@ -74,4 +74,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: Colors.grey
     },
+    imageContainer: {
+        flexDirection: 'row', 
+        alignItems: 'center'
+    }
 });

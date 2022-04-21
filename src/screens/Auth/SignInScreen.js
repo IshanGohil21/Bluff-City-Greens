@@ -1,13 +1,40 @@
-import React, { useState, useRef } from "react";
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import React, { useState, useRef, useEffect } from "react";
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Dimensions, Alert, ActivityIndicator } from 'react-native';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import SignInValidationSchema from "../../Schema/SignInValidationSchema";
-import {Images, Colors, Button} from '../../CommonConfig/CommonConfig'
+import { Images, Colors, Button } from '../../CommonConfig/CommonConfig'
+import { postRequest } from '../../Helper/ApiHelper';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignInScreen = (props) => {
+    const [isLoading, setisLoading] = useState(false);
+
+    const onPressLogin = async (values) => {
+        setisLoading(true);
+        const data = {
+            email: values.email,
+            password: values.password,
+        };
+        const response = await postRequest('/users/login', data);
+        //console.log(response);
+        if (!response.success) {
+            setisLoading(false);
+            let errorMessage = "Something went wrong!";
+            if (response.data.error === "User does not exist!") {
+                errorMessage = "User does not exist!"
+            }
+            if (response.data.error === "Invalid Password!") {
+                errorMessage = "Invalid Password!"
+            }
+            Alert.alert('Error', errorMessage, [{ text: "Okay" }])
+        } else {
+            setisLoading(false);
+            props.navigation.navigate('PhoneVerification')
+        }
+    }
 
     const [rememberMe, setRememberMe] = useState(false);
     return (
@@ -16,7 +43,7 @@ const SignInScreen = (props) => {
                 email: '',
                 password: ''
             }}
-            onSubmit={() => {props.navigation.navigate('PhoneVerification')}}
+            onSubmit={(values) => onPressLogin(values)}
             validationSchema={SignInValidationSchema}
         >
             {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
@@ -25,7 +52,7 @@ const SignInScreen = (props) => {
                         <StatusBar style="auto" />
                     </View>
                     <View>
-                        <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab',{screen: 'Home' } )}}>
+                        <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab', { screen: 'Home' }) }}>
                             <Text style={styles.skip} > SKIP </Text>
                         </TouchableOpacity>
                     </View>
@@ -82,15 +109,11 @@ const SignInScreen = (props) => {
                     </View>
 
                     <TouchableOpacity onPress={handleSubmit} >
-                        <Text style={styles.signin}> SIGN IN </Text>
+                        <View  style={styles.signin}>
+                    {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
+                        <Text  style={{fontSize: 24, color: Colors.white}} >  SIGN IN </Text>}
+                        </View> 
                     </TouchableOpacity>
-
-                    {/* <Button 
-                        onPress={handleSubmit}
-                        label='Sign In'
-                        disabled={!isValid}
-                         //onPress={handleChange}
-                        /> */}
 
                     <View style={{ alignItems: 'center' }} >
                         <View style={styles.connect}>
@@ -172,11 +195,11 @@ const styles = StyleSheet.create({
     },
     remember: {
         height: 20,
-       // marginBottom: 10,
+        // marginBottom: 10,
         textAlign: 'left',
         fontSize: 14,
         color: Colors.white,
-        
+
     },
     image: {
         flexDirection: 'row',

@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { ref } from 'yup';
 
 const SignUpValidationSchema= yup.object().shape({
     name: yup

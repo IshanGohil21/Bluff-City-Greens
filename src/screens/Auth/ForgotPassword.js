@@ -1,13 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 
-import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik'
 import * as yup from 'yup' 
 import  { Colors, Images, Icons } from '../../CommonConfig/CommonConfig'
 import  ForgotPasswordvalidationSchema from '../../Schema/ForgotPasswordValidationSchema'
+import { postRequest } from '../../Helper/ApiHelper';
 
 const ForgotPasswordScreen = props => {
+  const [isLoading, setisLoading] = useState(false);
+
+  const onPressLogin = async (values) => {
+    setisLoading(true);
+    const data = {
+        email: values.email,
+        // password: values.password,
+    };
+
+    const response = await postRequest('/users/reset', data);
+    console.log(response);
+    if (!response.success) {
+        setisLoading(false);
+    
+        let errorMessage = "Something went wrong!";
+        if (response.data.error === "No account found for this email!") {
+            errorMessage = "No account found for this email!"
+        }
+        // if (response.data.error === "Invalid Password!") {
+        //     errorMessage = "Invalid Password!"
+        // }
+        Alert.alert('Error', errorMessage, [{ text: "Okay" }])
+    } else{
+        setisLoading(false);
+        props.navigation.navigate('SignIn')
+    }
+}
+
   return (
     <>
       {/* Header */}
@@ -33,7 +62,8 @@ const ForgotPasswordScreen = props => {
         initialValues={{
           email: '',
         }}
-        onSubmit={values => props.navigation.goBack()}
+        // onSubmit={values => props.navigation.goBack()}
+        onSubmit={ (values) => onPressLogin(values) }
         validationSchema={ForgotPasswordvalidationSchema}
         
       >
@@ -64,7 +94,10 @@ const ForgotPasswordScreen = props => {
             }
             <View>
               <TouchableOpacity onPress={handleSubmit} style={{ marginTop: 50 }}>
-                <Text style={styles.signin}> SUBMIT </Text>
+                <View style={styles.signin} >
+                { isLoading ? <ActivityIndicator size='small' color={Colors.white} /> :
+                <Text style={{fontSize: 24, color: Colors.white}}> SUBMIT </Text> }
+                </View>
               </TouchableOpacity>
             </View>
           </View>

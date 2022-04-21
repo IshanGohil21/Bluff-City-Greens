@@ -4,13 +4,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {Images, Colors, Icons} from '../../../CommonConfig/CommonConfig';
 import Fruits from '../../../dummy-data/Fruits';
-import fruitsComp from '../../../Components/fruits';
+import FruitsComp from '../../../Components/Fruits';
+import { ScrollView } from 'react-native-gesture-handler';
+
 
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
+
+const numColumns = 2
+
 const FruitShopScreen = (props) => {
   return (
+       <ScrollView>
     <View style={styles.main} >
         <StatusBar backgroundColor={Colors.primary} />
         {/* Header */}
@@ -45,28 +51,33 @@ const FruitShopScreen = (props) => {
                 <Text style={styles.by} > SHOP BY CATEGORY </Text>
             </View>
 
-            <View>
+            <View >
                 <FlatList
-                    data={Fruits}
+                    data={Fruits.subname}
+                    numColumns= {2}
                     renderItem={({ item }) => {
-                        <fruitsComp 
-                            nameF={item.nameF}
-                            img={item.img}
-                        />
+                        return(
+                            <View key={item.id} >
+                                <FruitsComp 
+                                    img={item.img}
+                                    nameF={item.nameF}
+                                    onClick={() => {props.navigation.navigate('Vegetables')}}
+                                
+                                />
+                            </View>
+                        )
                     }
                 }
                 />
             </View>
-
-        </View>
-       
-      
+        </View>    
     </View>
+     </ScrollView>
   )
 }
 const styles = StyleSheet.create({
     main: {
-        flex: 1
+        flex: 1,
     },
     header: {
         flex: 1,
@@ -116,6 +127,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color:Colors.white,
         fontWeight: 'bold'
+    },
+    imageCato: {
+        height: 150,
+        width: 150,
+        borderRadius: 10,
+    },
+    mappingComp:{
+        padding: 5,
+        marginTop: 10,
+        flex: 1,
     }
 })
 

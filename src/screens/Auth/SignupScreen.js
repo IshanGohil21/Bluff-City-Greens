@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Pressable, StyleSheet, Text, View, Image, TextInput, Modal, SafeAreaView, TouchableOpacity, ScrollView,  Dimensions, Alert } from 'react-native';
+import { Pressable, StyleSheet, Text, View, Image, TextInput, Modal, SafeAreaView, TouchableOpacity, ScrollView, Dimensions, Alert, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Formik } from "formik";
 import * as yup from 'yup';
@@ -11,20 +11,20 @@ import ImagePicker from 'react-native-image-crop-picker';
 import SignUpValidationSchema from '../../Schema/SignUpValidationSchema';
 import { Colors, Images, Icons, Button } from '../../CommonConfig/CommonConfig';
 import RBSheet from "react-native-raw-bottom-sheet";
-
 import CountryPicker from 'react-native-country-codes-picker';
 
-
+import * as AuthAction from '../../Redux/Action/AuthAction';
+import { useDispatch } from 'react-redux';
+import { postRequest } from '../../Helper/ApiHelper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUpScreen = props => {
 
     const [show, setShow] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
     const [image, setImage] = useState(Images.ronaldo);
-    // const [phoneNumber, setphoneNumber] = useState('');
-    // const phoneInput = useRef(null);
     const [countryCode, setCountryCode] = useState('+91');
-    const [phoneNumber, setPhoneNumber] = useState('');
+    const [isLoading, setisLoading] = useState(false);
     const refRBSheet = useRef();
 
     const takePhotoFromCamera = () => {
@@ -34,6 +34,7 @@ const SignUpScreen = props => {
             cropping: true,
         }).then(image => {
             console.log(image);
+            dispatch(AuthAction.addImage(image))
             setImage(image.path)
             setModalVisible(!modalVisible)
         });
@@ -46,10 +47,25 @@ const SignUpScreen = props => {
             cropping: true
         }).then(image => {
             console.log(image);
+            dispatch(AuthAction.addImage(image))
             setImage(image.path)
             setModalVisible(!modalVisible)
         });
     };
+
+    const dispatch = useDispatch();
+
+    const onPressSignUp = async (countryCode, values) => {
+        setisLoading(true);
+        const OTPdata = {
+            country_code: countryCode,
+            phone_number: values.mobile,
+            channel: "sms"
+        };
+        const response = await postRequest('/users/generateOTP', OTPdata);
+        setisLoading(false);
+        console.log(response);
+    }
 
     return (
         <>
@@ -70,11 +86,17 @@ const SignUpScreen = props => {
                             name: '',
                             email: '',
                             mobile: '',
-                            password: ''
+                            password: '',
+                            passwordConfirm: '',
                         }}
-                        onSubmit={values => Alert.alert(JSON.stringify(values))}
-                        validationSchema={SignUpValidationSchema}
-
+                        // onSubmit={() => {props.navigation.navigate('PhoneVerification')} }
+                        // onSubmit={(values) =>  onPressSignUp(values)}
+                            //const data = {name: values.name, email: values.email, password: values.password, country_code:values.country_code, phone_number:values.phone_number}
+                            // dispatch(AuthAction.addDetails(data));
+                            // props.navigation.navigate('PhoneVerification')
+                            onSubmit={(values) => onPressSignUp(countryCode,values)}
+                            validationSchema={SignUpValidationSchema}
+                        //onPressSignUp(countryCode,values)
                     >
                         {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
                             <View style={styles.mainWrapper}>
@@ -82,7 +104,6 @@ const SignUpScreen = props => {
                                 <View style={styles.profile} >
                                     <View
                                         style={styles.avatarContainer}
-
                                     >
                                         <Image
                                             source={{ uri: image }}
@@ -160,7 +181,7 @@ const SignUpScreen = props => {
 
                                     <Text style={styles.phone}>Phone Number</Text>
 
-                                    <View style={{ flexDirection: 'row', marginBottom: 12, borderRadius: 10, padding: 10, backgroundColor: 'rgba(50,75,255,0.25)', alignItems: 'center' }} >
+                                    <View style={styles.phoneCont} >
 
                                         {/* <Ionicons name="call" color={Colors.ORANGE} size={20} style={{flex:0.5}}/> */}
                                         <Text></Text>
@@ -171,7 +192,8 @@ const SignUpScreen = props => {
                                             style={{ flex: 3.5 }}
                                             keyboardType="phone-pad"
                                             maxLength={10}
-                                            onChangeText={(val) => { setPhoneNumber(val) }}
+                                            onBlur={() => setFieldTouched('mobile')}
+                                            onChangeText={handleChange('mobile')}
                                         />
                                     </View>
 
@@ -201,20 +223,22 @@ const SignUpScreen = props => {
                                     }
                                 </View>
 
+                                    {/* <View  style={styles.signin}>
+                                <TouchableOpacity onPress={console.log('hhfdh')}>
+                                        {isLoading ? <ActivityIndicator size='small' color={Colors.white} /> :
+                                       <Text style={{ fontSize: 24, color: Colors.white }}  > SIGN UP </Text>}
+                                </TouchableOpacity>
+                                </View> */}
 
-                                {/* <TouchableOpacity onPress={() => {
-                                    props.navigation.navigate('PhoneVerification')
-                
-                                }}>
-                                    <Text style={styles.signin} > SIGN UP </Text>
-                                </TouchableOpacity> */}
+                                
+                                    <TouchableOpacity onPress={handleSubmit}  style={styles.signin}  >
+                                        {/* {isLoading ? <ActivityIndicator size='small' color={Colors.white} /> : */}
+                                        <Text style={{fontSize: 24, color: Colors.white}} > SIGN UP </Text>
+                                        {/* } */}
+                                    </TouchableOpacity>
+                              
 
-                                <Button 
-                                onPress={() => {props.navigation.navigate('PhoneVerification')}}
-                                label='Sign Up'
-                                disabled={!isValid}
-                                // onPress={handleChange}
-                                    />
+
 
                                 <View style={styles.account}>
                                     <Text style={styles.emailContainer}> Already have account? </Text>
@@ -278,20 +302,20 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: 'rgba(50,75,255,0.25)'
     },
-    // signin: {
-    //     width: "100%",
-    //     alignItems: "center",
-    //     justifyContent: "center",
-    //     backgroundColor: Colors.green,
-    //     textAlign: 'center',
-    //     color: Colors.white,
-    //     fontSize: 23,
-    //     padding: 10,
-    //     borderRadius: 10,
-    //     borderColor: Colors.green,
-    //     overflow: 'hidden',
-    //     width: '100%',
-    // },
+    signin: {
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: Colors.green,
+        textAlign: 'center',
+        color: Colors.white,
+        fontSize: 23,
+        padding: 10,
+        borderRadius: 10,
+        borderColor: Colors.green,
+        overflow: 'hidden',
+        width: '100%',
+    },
     profile: {
 
         alignItems: 'center',
@@ -414,6 +438,14 @@ const styles = StyleSheet.create({
     },
     emailContainer: {
         color: Colors.white
+    },
+    phoneCont: {
+        flexDirection: 'row',
+        marginBottom: 12,
+        borderRadius: 10,
+        padding: 10,
+        backgroundColor: 'rgba(50,75,255,0.25)',
+        alignItems: 'center'
     }
 });
 

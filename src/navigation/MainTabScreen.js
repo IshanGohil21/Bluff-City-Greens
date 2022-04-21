@@ -17,6 +17,7 @@ import DrawerContentScreen from './DrawerContent';
 import SearchScreen from '../Screens/TabNavigator/Search';
 import FiltersScreen2  from '../Screens/TabNavigator/FiltersScreen2';
 import FruitShopScreen  from '../Screens/TabNavigator/Shop/Fruits';
+import Vegetables from '../Screens/TabNavigator/Shop/Vegetables'
 
 { /* Contact US Screen */ }
 import ContactScreen from '../Screens/TabNavigator/Contact';
@@ -144,6 +145,7 @@ const ShopStackScreen = () => {
         <ShopStack.Navigator  headerMode='none'>
             <ShopStack.Screen name='Shop' component={ShopScreen} />
             <ShopStack.Screen name='Fruits' component={FruitShopScreen} />
+            <ShopStack.Screen name='Vegetables' component={Vegetables} />
         </ShopStack.Navigator>
     )
 }
