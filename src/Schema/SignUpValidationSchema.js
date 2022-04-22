@@ -11,7 +11,7 @@ const SignUpValidationSchema= yup.object().shape({
         .required('Email is required.'),
     mobile: yup
         .number()
-        .max(10)
+        .min(999999999,'Mobile should be exactly 10 digits')
         .required(),
     password: yup
         .string()

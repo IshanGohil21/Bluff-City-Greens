@@ -13,7 +13,7 @@ import { Colors, Images, Icons, Button } from '../../CommonConfig/CommonConfig';
 import RBSheet from "react-native-raw-bottom-sheet";
 import CountryPicker from 'react-native-country-codes-picker';
 
-import * as AuthAction from '../../Redux/Action/AuthAction';
+import * as AuthActions from '../../Redux/Action/AuthAction';
 import { useDispatch } from 'react-redux';
 import { postRequest } from '../../Helper/ApiHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -33,7 +33,7 @@ const SignUpScreen = props => {
             height: 400,
             cropping: true,
         }).then(image => {
-            console.log(image);
+            // console.log(image);
             dispatch(AuthAction.addImage(image))
             setImage(image.path)
             setModalVisible(!modalVisible)
@@ -46,7 +46,7 @@ const SignUpScreen = props => {
             height: 400,
             cropping: true
         }).then(image => {
-            console.log(image);
+            // console.log(image);
             dispatch(AuthAction.addImage(image))
             setImage(image.path)
             setModalVisible(!modalVisible)
@@ -55,16 +55,25 @@ const SignUpScreen = props => {
 
     const dispatch = useDispatch();
 
-    const onPressSignUp = async (countryCode, values) => {
+    const pressHandler = async (countryCode, mobile, xyz) => {
         setisLoading(true);
-        const OTPdata = {
+        
+        const OTPData = {
             country_code: countryCode,
-            phone_number: values.mobile,
+            phone_number: mobile,
             channel: "sms"
-        };
-        const response = await postRequest('/users/generateOTP', OTPdata);
-        setisLoading(false);
-        console.log(response);
+        }
+        const response = await postRequest('/users/generateOTP', OTPData);
+        console.log(response)
+        let errorMsg = 'Something went wrong!';
+        if (response.success) {
+            setisLoading(false);
+            dispatch(AuthActions.addDetails(xyz));
+            props.navigation.navigate('PhoneVerification', { countryCode: countryCode, mobile: mobile })
+        } else {
+            setisLoading(false);
+            Alert.alert("Error", errorMsg, [{ text: "Okay" }])
+        }
     }
 
     return (
@@ -89,14 +98,17 @@ const SignUpScreen = props => {
                             password: '',
                             passwordConfirm: '',
                         }}
-                        // onSubmit={() => {props.navigation.navigate('PhoneVerification')} }
-                        // onSubmit={(values) =>  onPressSignUp(values)}
-                            //const data = {name: values.name, email: values.email, password: values.password, country_code:values.country_code, phone_number:values.phone_number}
-                            // dispatch(AuthAction.addDetails(data));
-                            // props.navigation.navigate('PhoneVerification')
-                            onSubmit={(values) => onPressSignUp(countryCode,values)}
-                            validationSchema={SignUpValidationSchema}
-                        //onPressSignUp(countryCode,values)
+
+                        onSubmit={values => {
+                            const xyz = { name: values.name, email: values.email, password: values.password, country_code: countryCode, phone_number: values.mobile }
+                            
+                            // console.log(data);
+                            // props.navigation.navigate('PhoneVerification');
+                            pressHandler(countryCode, values.mobile, xyz)
+                        }}
+                        validationSchema={SignUpValidationSchema}
+                        // validationSchema={null}
+
                     >
                         {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
                             <View style={styles.mainWrapper}>
@@ -223,22 +235,12 @@ const SignUpScreen = props => {
                                     }
                                 </View>
 
-                                    {/* <View  style={styles.signin}>
-                                <TouchableOpacity onPress={console.log('hhfdh')}>
+                                <View style={styles.signin}>
+                                    <TouchableOpacity onPress={handleSubmit} disabled={!isValid} >
                                         {isLoading ? <ActivityIndicator size='small' color={Colors.white} /> :
-                                       <Text style={{ fontSize: 24, color: Colors.white }}  > SIGN UP </Text>}
-                                </TouchableOpacity>
-                                </View> */}
-
-                                
-                                    <TouchableOpacity onPress={handleSubmit}  style={styles.signin}  >
-                                        {/* {isLoading ? <ActivityIndicator size='small' color={Colors.white} /> : */}
-                                        <Text style={{fontSize: 24, color: Colors.white}} > SIGN UP </Text>
-                                        {/* } */}
+                                            <Text style={{ fontSize: 24, color: Colors.white }}  > SIGN UP </Text>}
                                     </TouchableOpacity>
-                              
-
-
+                                </View>
 
                                 <View style={styles.account}>
                                     <Text style={styles.emailContainer}> Already have account? </Text>
@@ -285,7 +287,6 @@ const SignUpScreen = props => {
         </>
     );
 }
-
 
 const styles = StyleSheet.create({
     mainWrapper: {
