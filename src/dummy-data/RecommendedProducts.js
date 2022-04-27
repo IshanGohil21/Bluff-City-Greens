@@ -9,8 +9,8 @@ let RecommendedProducts = [
         Images.carrot2, 
         Images.carrot3
         ],
-        price: '$3.83',
-        discountedPrice: '$2.40',
+        price: 3.83,
+        discountedPrice: 2.40,
         name: 'Carrot',
         details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         isFavorite: true,
@@ -25,8 +25,8 @@ let RecommendedProducts = [
         Images.lettuce2, 
         Images.lettuce3
         ],
-        price: '$2.83',
-        discountedPrice: '$1.40',
+        price: 2.83,
+        discountedPrice: 1.40,
         name: 'Lettuce',
         details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         isFavorite: true,

@@ -22,5 +22,6 @@ export default {
     HEART_FILLED: 'heart',
     MENU: 'menu-outline',
     ADD: 'add-outline',
-    RIGHT:'arrow-forward-outline'
+    RIGHT:'arrow-forward-outline',
+    TRASH: 'trash-outline',
 }

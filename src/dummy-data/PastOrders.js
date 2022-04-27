@@ -9,8 +9,8 @@ let PastOrder = [
             Images.lychee2, 
             Images.lychee3
         ],
-        price: '$4.83',
-        discountedPrice: '$4.40',
+        price: 4.83,
+        discountedPrice: 4.40,
         name: 'Lychee',
         details: 'Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
         isFavorite: true,
@@ -25,8 +25,8 @@ let PastOrder = [
         Images.orange2, 
         Images.orange3
         ],
-        price: '$4.83',
-        discountedPrice: '$3.40',
+        price: 4.83,
+        discountedPrice: 3.40,
         name: 'Oranges',
         details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
         isFavorite: true,

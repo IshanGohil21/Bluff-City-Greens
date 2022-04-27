@@ -4,7 +4,7 @@ const initialState = {
     email: '',
 	password: '',
 	name: '',
-    image: {},
+    // image: {},
     country_code: '',
     phone_number: '',
 }
@@ -12,6 +12,7 @@ const initialState = {
 export default (state = initialState , action ) => {
     switch(action.type) {
         case ADD_DETAILS:
+            console.log(action.data);
             const name = action.data.name;
             const email = action.data.email;
             const password = action.data.password;
@@ -25,20 +26,12 @@ export default (state = initialState , action ) => {
                 phone_number: phone_number,
                 country_code: country_code,
             }
-        // case ADD_NUMBER: 
-        //     const phone_number = action.data.phone_number;
-        //     const country_code = action.data.country_code;
+        // case ADD_IMAGE:
+        //     const imageObj = action.dataObj;
         //     return {
         //         ...state,
-        //         phone_number: phone_number,
-        //         country_code: country_code,
+        //          image: imageObj,
         //     }
-        case ADD_IMAGE:
-            const imageObj = action.dataObj;
-            return {
-                ...state,
-                 image: imageObj,
-            }
             default:
                 return state;
     }

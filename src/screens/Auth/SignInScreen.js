@@ -18,7 +18,7 @@ const SignInScreen = (props) => {
             email: values.email,
             password: values.password,
         };
-        const response = await postRequest('/users/login', data);
+        const response = await postRequest('/login', data);
         //console.log(response);
         if (!response.success) {
             setisLoading(false);

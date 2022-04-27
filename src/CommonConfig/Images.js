@@ -57,4 +57,12 @@ export default {
     exotic: require('./Assets/icon/exotic.jpg'),
     herbs: require('./Assets/icon/Herbs.jpg'),
     organicV: require('./Assets/icon/organicVeggies.jpg'),
+
+    carrot: require('./Assets/icon/carrot.jpg'),
+    chilli: require('./Assets/icon/chilli.jpg'),
+    lettuce: require('./Assets/icon/lettuce.jpg'),
+    corn: require('./Assets/icon/corn.jpg'),
+    tomato: require('./Assets/icon/tomato.jpg'),
+    peas: require('./Assets/icon/peas.jpg'),
+    potato: require('./Assets/icon/potato.jpg')
 }

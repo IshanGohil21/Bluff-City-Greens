@@ -34,7 +34,6 @@ const FilterScreen = (props) => {
     setValue(values)
   }
 
- 
   return (
     <View style={styles.main} >
       <StatusBar backgroundColor={Colors.primary} />
@@ -126,7 +125,6 @@ const FilterScreen = (props) => {
                       <Text style={styles.select} >-Select Time-</Text>
                       <Ionicons name={Icons.DOWN_ARROW} size={30} color={Colors.grey} />
                     </TouchableOpacity>
-
 
                     <RBSheet
                             ref={refRBSheet}

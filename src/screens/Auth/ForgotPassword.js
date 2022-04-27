@@ -18,7 +18,7 @@ const ForgotPasswordScreen = props => {
         // password: values.password,
     };
 
-    const response = await postRequest('/users/reset', data);
+    const response = await postRequest('/reset', data);
     console.log(response);
     if (!response.success) {
         setisLoading(false);

@@ -34,7 +34,7 @@ const SignUpScreen = props => {
             cropping: true,
         }).then(image => {
             // console.log(image);
-            dispatch(AuthAction.addImage(image))
+            // dispatch(AuthAction.addImage(image))
             setImage(image.path)
             setModalVisible(!modalVisible)
         });
@@ -47,7 +47,7 @@ const SignUpScreen = props => {
             cropping: true
         }).then(image => {
             // console.log(image);
-            dispatch(AuthAction.addImage(image))
+            // dispatch(AuthAction.addImage(image))
             setImage(image.path)
             setModalVisible(!modalVisible)
         });
@@ -63,7 +63,7 @@ const SignUpScreen = props => {
             phone_number: mobile,
             channel: "sms"
         }
-        const response = await postRequest('/users/generateOTP', OTPData);
+        const response = await postRequest('/generateOTP', OTPData);
         console.log(response)
         let errorMsg = 'Something went wrong!';
         if (response.success) {
@@ -75,6 +75,34 @@ const SignUpScreen = props => {
             Alert.alert("Error", errorMsg, [{ text: "Okay" }])
         }
     }
+
+    // const onPressRegister = async ( countryCode,mobile, xyz ) => {
+    //     setisLoading(true);
+
+    //     const RegisterUser = {
+    //         email: "",
+    //         password: "",
+    //         name: "",
+    //         country_code: "",
+    //         phone: ""
+    //     }
+
+    //     const registerResponse = await postRequest('/register', RegisterUser)
+    //   console.log(registerResponse);
+    //   if (!registerResponse.success) {
+    //     if (registerResponse.data.error === 'USER ALERADY EXISTS') {
+    //       errorMsg = "The credentials entered already exist. Please check the details.";
+    //     }
+    //     Alert.alert("Error!", errorMsg, [{text: "Okay"}]);
+    //   }else{
+    //     props.navigation.navigate('DiscountCoupon');
+    //   }
+    //   else{
+    //     if (resData.error === "Invalid OTP entered!") {
+    //       errorMsg = "Invalid OTP entered!"
+    //     }
+    //     Alert.alert("Error", errorMsg, [{ text: "Okay" }])
+    //   }
 
     return (
         <>
@@ -100,15 +128,12 @@ const SignUpScreen = props => {
                         }}
 
                         onSubmit={values => {
-                            const xyz = { name: values.name, email: values.email, password: values.password, country_code: countryCode, phone_number: values.mobile }
-                            
-                            // console.log(data);
-                            // props.navigation.navigate('PhoneVerification');
+                            const xyz = { name: values.name, email: values.email, password: values.password, country_code: countryCode, phone: values.mobile}
+                            dispatch(AuthActions.addDetails(xyz));
                             pressHandler(countryCode, values.mobile, xyz)
+                            // onPressRegister(countryCode,values.mobile,xyz)
                         }}
                         validationSchema={SignUpValidationSchema}
-                        // validationSchema={null}
-
                     >
                         {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
                             <View style={styles.mainWrapper}>
@@ -195,8 +220,8 @@ const SignUpScreen = props => {
 
                                     <View style={styles.phoneCont} >
 
-                                        {/* <Ionicons name="call" color={Colors.ORANGE} size={20} style={{flex:0.5}}/> */}
-                                        <Text></Text>
+                                        
+                                       
                                         <TouchableOpacity onPress={() => setShow(true)} style={{ flex: 0.5 }}><Ionicons name="caret-down-outline" size={20} color={Colors.BLACK} /></TouchableOpacity>
                                         <View style={{ width: 0, borderColor: Colors.grey, borderWidth: 0.7, height: 30, marginRight: 10 }} ></View>
                                         <Text style={{ flex: 0.5, fontWeight: 'bold' }}>{countryCode}</Text>
@@ -234,14 +259,14 @@ const SignUpScreen = props => {
                                         <Text style={styles.errorPassword} >{errors.passwordConfirm}</Text>
                                     }
                                 </View>
-
-                                <View style={styles.signin}>
+                               
                                     <TouchableOpacity onPress={handleSubmit} disabled={!isValid} >
-                                        {isLoading ? <ActivityIndicator size='small' color={Colors.white} /> :
-                                            <Text style={{ fontSize: 24, color: Colors.white }}  > SIGN UP </Text>}
+                                        <View style={styles.signin}>
+                                            {isLoading ? <ActivityIndicator size='small' color={Colors.white} /> :
+                                                <Text style={{ fontSize: 24, color: Colors.white }}  > SIGN UP </Text>}
+                                        </View>
                                     </TouchableOpacity>
-                                </View>
-
+                             
                                 <View style={styles.account}>
                                     <Text style={styles.emailContainer}> Already have account? </Text>
                                     <TouchableOpacity onPress={() => {

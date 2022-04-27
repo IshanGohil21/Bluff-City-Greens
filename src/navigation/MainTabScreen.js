@@ -8,7 +8,7 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import HomeScreen from '../Screens/TabNavigator/HomeScreen';
-import CheckoutScreen from '../Screens/TabNavigator/Checkout';
+import CheckoutScreen from '../Screens/TabNavigator/MyAccount/Checkout/Checkout';
 import ShopScreen from '../Screens/TabNavigator/Shop/Shop';
 import DeliveryLocationScreen from '../Screens/TabNavigator/DeliveryLocationScreen';
 import FilterScreen from '../Screens/TabNavigator/FilterScreen';

@@ -49,7 +49,7 @@ const HomeScreen = (props) => {
               <TouchableOpacity onPress={() => { props.navigation.navigate('Notification') }} >
                 <Ionicons name={Icons.NOTIFICATION} size={24} color={Colors.white} style={styles.notify} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {props.navigation.navigate('Checkout')}} >
                 <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
               </TouchableOpacity>
             </View>

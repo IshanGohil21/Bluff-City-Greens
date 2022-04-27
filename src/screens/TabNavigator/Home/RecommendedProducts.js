@@ -6,11 +6,15 @@ import { RadioButton } from 'react-native-paper';
 
 import RecommendedProducts from '../../../dummy-data/RecommendedProducts';
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
+import { useSelector, useDispatch } from 'react-redux';
+import * as CartActions from '../../../Redux/Action/Cart';
 
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
 const PastOrderScreen = (props) => {
+    const dispatch = useDispatch();
+
     const [checked, setChecked] = useState('first')
     const refRBSheet = useRef();
     const pid = props.route.params.id
@@ -25,6 +29,18 @@ const PastOrderScreen = (props) => {
       setActive(slide);
     }
   }
+  const cartItems = useSelector( state => {
+    const updatedCartItems = [];
+    for ( const key in state.Cart.items ) {
+        updatedCartItems.push({
+            ...state.Cart.items[key]
+        });
+    }
+    return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
+})
+    console.log(cartItems);
+     const y = cartItems.find(item => item.id  === selectedItem.id)
+    console.log(y);
 
     return (
         <View style={styles.screen} >
@@ -73,29 +89,29 @@ const PastOrderScreen = (props) => {
                 <View style={styles.body} >
                     <View style={styles.bodyHeading} >
                         <Text style={styles.fruitName}>Fresho {selectedItem.name}</Text>
-                        <Text style={styles.priceBefore} >{selectedItem.price}</Text>
+                        <Text style={styles.priceBefore} >${selectedItem.price}</Text>
                     </View>
                     <View style={styles.bodyHeading} >
                         <Text style={styles.weightContainer} >
                             Net wt. {selectedItem.weight[0]}
                         </Text>
-                        <Text style={styles.nonOriginalPrice} >{selectedItem.discountedPrice}</Text>
+                        <Text style={styles.nonOriginalPrice} >${selectedItem.discountedPrice}</Text>
                     </View>
                     <View style={styles.detailContainer} >
                         <Text style={styles.details} >{selectedItem.details}</Text>
                     </View>
-                    <View style={styles.quantity} >
+                     <View style={styles.quantity} >
                         <Text style={styles.quantityContainer} >Quantity</Text>
                         <View style={styles.addQuantity} >
-                        <TouchableOpacity style={styles.addition} >
+                        <TouchableOpacity style={styles.addition}  onPress={() => {dispatch(CartActions.addToCart(selectedItem))} }  >
                         <Ionicons name={Icons.ADD} color={Colors.grey} size={24} />
                         </TouchableOpacity>
-                        <Text style={styles.number} > 01 </Text>
-                        <TouchableOpacity>
+                        <Text style={styles.number} > </Text>
+                        <TouchableOpacity onPress={() => {dispatch(CartActions.removeFromCart(selectedItem))} }  >
                         <Ionicons name={Icons.SUB} color={Colors.grey} size={24}  />
                         </TouchableOpacity>
-                        </View>
-                    </View>
+                        </View> 
+                    </View> 
                     {/* Size Bottom Sheet */}
                     <View>
                         <Text style={styles.sizeContainer} >Size</Text>

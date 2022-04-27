@@ -4,11 +4,24 @@ import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors, Icons, Images } from '../CommonConfig/CommonConfig';
 
+import { useSelector, useDispatch } from 'react-redux';
+import * as CartActions from '../Redux/Action/Cart';
+
 
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
 const Orders = (props) => {
+  const cartItems = useSelector( state => {
+    const updatedCartItems = [];
+    for ( const key in state.Cart.items ) {
+        updatedCartItems.push({
+            ...state.Cart.items[key]
+        });
+    }
+    return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
+})
+
     return (
         <View>
     <TouchableOpacity style={styles.orders} onPress={props.onHeart} >
@@ -31,10 +44,10 @@ const Orders = (props) => {
         </View>
         </View>
         {/* Button */}
-        <View style={styles.addButton} >
-        <Ionicons  name={Icons.CART} size={24} color={Colors.white}/>
-        <Text style={styles.button} >ADD</Text>
-        </View>
+         <TouchableOpacity style={styles.addButton}  >
+            <Ionicons  name={Icons.CART} size={24} color={Colors.white}/>
+            <Text style={styles.button} >ADD</Text>
+        </TouchableOpacity> 
     </TouchableOpacity>
     </View>
     )
