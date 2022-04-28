@@ -15,6 +15,8 @@ const height = width * 100 / 0.6
 const VeggiComp = (props) => {
     const dispatch = useDispatch();
 
+    const [isTouched, setIsTouched] = useState(props.initialState);
+
     const refRBSheet = useRef();
     const [checked, setChecked] = useState('first')
 
@@ -28,9 +30,12 @@ const VeggiComp = (props) => {
         return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
     })
 
-    const qty = (cartItems.length ? cartItems.reduce( (a,c) =>  a + c.qty, 0 ) : 0)
-    console.log(qty);
+    // const qty = (cartItems.length ? cartItems.reduce( (a,c) =>  a + c.qty, 0 ) : 0)
+    // console.log(qty);
+    const x = cartItems.find(item => item.id  === props.id)
+    // console.log(x);
 
+    
     return (
         <View style={styles.main} >
             <View style={{ flexDirection: 'row', flex: 1 }}>
@@ -40,58 +45,41 @@ const VeggiComp = (props) => {
             <View style={{ flex: 3, paddingHorizontal: 5,padding: 5}} >
                 <Text style={{ marginBottom: 10, color: Colors.grey, fontSize: 16, fontWeight: 'bold' }} >{props.name}</Text>
             <View>
-                <TouchableOpacity style={styles.weight} onPress={props.onPress} >
+                <TouchableOpacity style={styles.weight} onPress={() => refRBSheet.current.open()} >
                     <Text style={styles.weight0} >{props.weight[0]}</Text>
                     <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.grey} />
                 </TouchableOpacity>
 
-                    <RBSheet
-                        ref={refRBSheet}
-                        closeOnDragDown={true}
-                        closeOnPressMask={false}
-                        customStyles={{
-                            wrapper: {
-                                backgroundColor: 'rgba(0,0,0,0.5)',
-                            },
-                            draggableIcon: {
-                                backgroundColor: Colors.grey,
-                                width: 80,
-                            },
-                            container: {
-                                borderTopLeftRadius: 30,
-                                borderTopRightRadius: 30,
-                            }
-                        }}
-                    >
-                        <View style={styles.button} >
-                            <RadioButton
-                                value="first"
-                                color={Colors.primary}
-                                status={checked === 'first' ? 'checked' : 'unchecked'}
-                                onPress={() => setChecked('first')}
-                            />
-                            <Text>{props.weight[0]}</Text>
-                        </View>
-                    </RBSheet>
 
             </View>
                 <Text style={styles.Oprice} >${props.price}</Text>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}} >
                 <Text style={styles.discount} >${props.disPrice}</Text>
 
-                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item)) }}  >
-                    <View style={styles.signin} >
-                    <Ionicons name={Icons.CART} size={24} color={Colors.white}  style={styles.cart} />
-                    <Text style={styles.add}>Add</Text>
-                    </View>
-                </TouchableOpacity>
+                
 
-                {/*                 
-                <View>
-                    <Ionicons/>
-                    <Text></Text>
-                    <Ionicons />
-                </View> */}
+                <View >
+                {x ?
+                    <View  style={styles.signin2}>
+                    <TouchableOpacity  onPress={() => { dispatch(CartActions.addToCart(props.item)) }}>
+                        <Ionicons  name={Icons.ADD} size={20} color={Colors.white}/>
+                    </TouchableOpacity>
+
+                        <Text style={styles.qtyText} > {x.qty} </Text>
+
+                    <TouchableOpacity  onPress={() => { dispatch(CartActions.removeFromCart(props.item)) }}>
+                        <Ionicons name={Icons.SUB} size={20} color={Colors.white} />
+                        </TouchableOpacity>
+                        </View>
+                :
+                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item)) }}  >
+                <View style={styles.signin} >
+                <Ionicons name={Icons.CART} size={24} color={Colors.white}  style={styles.cart} />
+                <Text style={styles.add}>Add</Text>
+                </View>
+                </TouchableOpacity>
+                }
+                </View>
 
                 </View>
 
@@ -104,7 +92,62 @@ const VeggiComp = (props) => {
                 </TouchableOpacity> */}
 
             </View>
+            <View>
 
+            <RBSheet
+                            ref={refRBSheet}
+                            closeOnDragDown={true}
+                            closeOnPressMask={false}
+                            customStyles={{
+                                wrapper: {
+                                    backgroundColor: 'rgba(0,0,0,0.5)',
+                                },
+                                draggableIcon: {
+                                    backgroundColor: Colors.grey,
+                                    width: 80,
+                                },
+                                container: {
+                                    padding:10,
+                                    borderTopLeftRadius: 30,
+                                    borderTopRightRadius: 30,
+                                }
+                            }}
+                        >
+
+                            <Text style={styles.bottom} >Available Sizes</Text>
+                            <View style={styles.radio} >
+                                <View style={styles.button} >
+                                    <RadioButton
+                                        value="first"
+                                        color={Colors.primary}
+                                        status={checked === 'first' ? 'checked' : 'unchecked'}
+                                        onPress={() => setChecked('first')}
+                                    />
+                                    <Text>{props.weight[0]}</Text>
+                                </View>
+
+                                <View style={styles.button} >
+                                    <RadioButton
+                                        value="second"
+                                        color={Colors.primary}
+                                        status={checked === 'second' ? 'checked' : 'unchecked'}
+                                        onPress={() => setChecked('second')}
+                                    />
+                                    <Text>{props.weight[1]}</Text>
+                                </View>
+
+                                <View style={styles.button} >
+                                    <RadioButton
+                                        value="third"
+                                        color={Colors.primary}
+                                        status={checked === 'third' ? 'checked' : 'unchecked'}
+                                        onPress={() => setChecked('third')}
+                                    />
+                                    <Text>{props.weight[2]}</Text>
+                                </View>
+                            </View>
+                        </RBSheet>
+            </View>
         </View>
     )
 }
@@ -155,7 +198,30 @@ const styles = StyleSheet.create({
     },
     weight0:{
         color: Colors.grey
-    }
+    },
+    signin2: {
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        backgroundColor: Colors.primary,
+        textAlign: 'center',
+        padding: 10,
+        borderRadius: 10,
+        flexDirection: 'row',
+        width: 150,
+        marginRight: 20
+    },
+    qtyText: {
+        color: Colors.white
+    },
+    bottom: {
+        fontSize: 20,
+        padding: 10
+    },
+    button: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 15
+    },
 });
 
 export default VeggiComp;

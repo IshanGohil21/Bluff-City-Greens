@@ -5,6 +5,7 @@ export const CLEAR_CART = 'CLEAR_CART';
 // export const ADD_DISCOUNT = 'ADD_DISCOUNT';
 // export const REMOVE_DISCOUNT = 'REMOVE_DISCOUNT';
 export const SET_TOTAL_AMOUNT = 'SET_TOTAL_AMOUNT'
+export const DELETE_ITEM = 'DELETE_ITEM'
 
 export const addToCart = (greens) => {
   return { type: ADD_TO_CART, greens: greens};
@@ -17,6 +18,10 @@ export const removeFromCart = (greens) => {
 export const clearCart = () => {
   return { type: CLEAR_CART }
 };
+
+export const deleteItem = (greens) => {
+  return { type: DELETE_ITEM, greens }
+}
 
 // export const setOrderType = ( orderType ) => {
 //   return { type : ORDER_TYPE, orderType: orderType };

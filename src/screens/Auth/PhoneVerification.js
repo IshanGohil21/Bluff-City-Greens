@@ -17,22 +17,23 @@ const PhoneVerificationScreen = (props) => {
   const country_code = props.route.params.countryCode;
   const mobile = props.route.params.mobile;
 
+
   const users = useSelector( state => state.Auth)
   // console.log(users);
-  const userFormData = new FormData();
-  userFormData.append("name", users.name)
-  userFormData.append("email", users.email)
-  userFormData.append("password", users.password)
-  userFormData.append("country_code", country_code)
-  userFormData.append("phone_number", mobile)
-  console.log(userFormData);
+  // const userFormData = new FormData();
+  // userFormData.append("name", users.name)
+  // userFormData.append("email", users.email)
+  // userFormData.append("password", users.password)
+  // userFormData.append("country_code", country_code)
+  // userFormData.append("phone_number", mobile)
+  // console.log(userFormData);
   
   const onPressVerify = async () => {
     setisLoading(true);
     const data = {
       otpValue: otpValue,
       country_code: country_code,
-      phone_number: mobile
+      phone_number: mobile,
     }
     console.log(data);
 
@@ -41,7 +42,15 @@ const PhoneVerificationScreen = (props) => {
   let errorMsg = 'Something went wrong';
   console.log(response);
     if (response.success) {
-      const registerResponse = await postFormDataRequest('/register', userFormData)
+      const registerData = {
+        email: users.email,
+        password:users.password,
+        name: users.name,
+        country_code: country_code,
+        phone:mobile,
+      }
+      console.log(registerData);
+      const registerResponse = await postRequest('/register', registerData)
       console.log(registerResponse);
       if (!registerResponse.success) {
         if (registerResponse.data.error === 'USER ALERADY EXISTS') {

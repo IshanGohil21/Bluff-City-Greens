@@ -38,9 +38,9 @@ const PastOrderScreen = (props) => {
     }
     return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
 })
-    console.log(cartItems);
-     const y = cartItems.find(item => item.id  === selectedItem.id)
-    console.log(y);
+    // console.log(cartItems);
+     const x = cartItems.find(item => item.id  === selectedItem.id)
+    
 
     return (
         <View style={styles.screen} >
@@ -100,18 +100,18 @@ const PastOrderScreen = (props) => {
                     <View style={styles.detailContainer} >
                         <Text style={styles.details} >{selectedItem.details}</Text>
                     </View>
-                     <View style={styles.quantity} >
+                    {x ? <View style={styles.quantity} >
                         <Text style={styles.quantityContainer} >Quantity</Text>
                         <View style={styles.addQuantity} >
                         <TouchableOpacity style={styles.addition}  onPress={() => {dispatch(CartActions.addToCart(selectedItem))} }  >
                         <Ionicons name={Icons.ADD} color={Colors.grey} size={24} />
                         </TouchableOpacity>
-                        <Text style={styles.number} > </Text>
+                        <Text style={styles.number} > {x.qty} </Text>
                         <TouchableOpacity onPress={() => {dispatch(CartActions.removeFromCart(selectedItem))} }  >
                         <Ionicons name={Icons.SUB} color={Colors.grey} size={24}  />
                         </TouchableOpacity>
                         </View> 
-                    </View> 
+                    </View> : null }
                     {/* Size Bottom Sheet */}
                     <View>
                         <Text style={styles.sizeContainer} >Size</Text>
@@ -185,7 +185,7 @@ const PastOrderScreen = (props) => {
                     <TouchableOpacity  onPress={() => {}}>
                         <Ionicons name={Icons.HEART} color={Colors.grey}  size={30}  style={styles.heartFilled} />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.signin} >
+                    <TouchableOpacity style={styles.signin}  onPress={() => {dispatch(CartActions.addToCart(selectedItem))} } >
                         <Ionicons name={Icons.CART} size={24} color={Colors.white} />
                         <Text style={styles.textCart} >Add to Cart</Text>
                     </TouchableOpacity>

@@ -185,7 +185,8 @@ const PastOrderScreen = (props) => {
                     {/* Heart and Add to Cart */}
                     <View style={styles.addToCart} >
                         <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)}>
-                           {isFavorite ? <Ionicons name={Icons.HEART} color={Colors.grey} size={30} style={styles.heartFilled} /> :
+                           {isFavorite ? 
+                                <Ionicons name={Icons.HEART} color={Colors.grey} size={30} style={styles.heartFilled} /> :
                                 <Ionicons name={Icons.HEART_FILLED} color={Colors.red} size={30} style={styles.heartFilled} /> 
                             }
                         </TouchableOpacity>

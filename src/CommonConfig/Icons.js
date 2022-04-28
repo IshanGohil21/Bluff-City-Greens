@@ -21,7 +21,7 @@ export default {
     DELIVERY: 'subway-outline',
     HEART_FILLED: 'heart',
     MENU: 'menu-outline',
-    ADD: 'add-outline',
+    ADD1: 'add-outline',
     RIGHT:'arrow-forward-outline',
     TRASH: 'trash-outline',
 }

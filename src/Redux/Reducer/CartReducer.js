@@ -7,6 +7,7 @@ import {
     SET_TOTAL_AMOUNT,
     ORDER_TYPE,
     ADD_DISCOUNT, 
+    DELETE_ITEM
 } from '../Action/Cart';
 
 const initialState = {
@@ -31,7 +32,7 @@ export default (state = initialState, action) => {
                 
                 cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.price }
             }
-            console.log(cartItem);
+            
             return {
                 ...state,
                 items: { ...state.items, [addedGreens.id]: cartItem }
@@ -67,7 +68,25 @@ export default (state = initialState, action) => {
                     return {
                         ...initialState
                     }
+                
+                case DELETE_ITEM:
+                    const GreensDelete = action.greens;
+                   
+                    const id0 = GreensDelete.id
+                    const temp0 = state.items
 
+                    let cartItemss
+
+                    if(temp0[id0].qty  > 1){
+                    cartItemss = { ...state.items }
+                    delete cartItemss[GreensDelete.id]
+                    }
+
+                    return {
+                        ...state,
+                        items: cartItemss
+                    }
+                
             //     case ORDER_TYPE:
             //         const orderType = action.orderType;
             //         return {

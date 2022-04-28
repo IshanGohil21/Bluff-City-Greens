@@ -130,6 +130,8 @@ const HomeScreen = (props) => {
                   return (
                     <View key={item.id}>
                       <Orders
+                        item={item}
+                        id={item.id}
                         image={item.fruitimages[0]}
                         name={item.name}
                         weight={item.weight[0]}
@@ -158,6 +160,8 @@ const HomeScreen = (props) => {
                   return (
                     <View key={item.id}>
                       <Orders
+                        item={item}
+                        id={item.id}
                         image={item.fruitimages[0]}
                         name={item.name}
                         weight={item.weight[0]}

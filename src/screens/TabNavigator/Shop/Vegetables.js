@@ -69,13 +69,14 @@ const VegetableScreen = (props) => {
                                     return (
                                         <View key={item.id} >
                                              <VeggiComp 
-                                                item = {item}
+                                               item={item}
+                                               id={item.id}
                                                 image={item.image}
                                                 name={item.name}
                                                 weight={item.weight}
                                                 price={item.price}
                                                 disPrice={item.disPrice}  
-                                                onPress={ () =>{}}
+                                                onPress={ () => {}}
                                             />
                                             
                                         </View> 
@@ -130,5 +131,5 @@ const styles = StyleSheet.create({
     },
     search: {
         padding: 20
-    }
+    },
 })

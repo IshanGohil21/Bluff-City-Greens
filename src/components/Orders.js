@@ -1,12 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions } from 'react-native';
-import React from 'react'
+import React,{ useState } from 'react'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors, Icons, Images } from '../CommonConfig/CommonConfig';
 
 import { useSelector, useDispatch } from 'react-redux';
 import * as CartActions from '../Redux/Action/Cart';
-
+import Icon from 'react-native-ionicons';
 
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
@@ -21,12 +21,29 @@ const Orders = (props) => {
     }
     return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
 })
+  // console.log(cartItems);
+
+  const dispatch = useDispatch();
+
+  const x = cartItems.find(item => item.id  === props.id)
+
+  const [isTouched, setIsTouched] = useState(props.initialState) ;
+
+  const [isFavorite, setIsFavorite] = useState(props.initialState);
 
     return (
         <View>
-    <TouchableOpacity style={styles.orders} onPress={props.onHeart} >
-        <Ionicons name='heart' size={30} color={Colors.red} />
+          {/* Favorite */}
+    <TouchableOpacity style={styles.orders}  onPress={props.onHeart}>
+        <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)} >
+        { isFavorite ?
+            <Ionicons name={Icons.HEART} size={30} color={Colors.black} /> :
+            <Ionicons name={Icons.HEART_FILLED} size={30} color={Colors.red} />
+        }
+      </TouchableOpacity>
     </TouchableOpacity>
+
+        {/* Image Containers */}
     <TouchableOpacity style={ styles.orderContainer} onPress={props.onClick} >
         <View  style={styles.ordersScreen}>
         <Image source={props.image} style={styles.image2} />
@@ -44,11 +61,28 @@ const Orders = (props) => {
         </View>
         </View>
         {/* Button */}
-         <TouchableOpacity style={styles.addButton}  >
-            <Ionicons  name={Icons.CART} size={24} color={Colors.white}/>
-            <Text style={styles.button} >ADD</Text>
-        </TouchableOpacity> 
+         
+          { x ?
+
+                <View style={styles.signin2} >
+                <TouchableOpacity onPress={() => {dispatch(CartActions.addToCart(props.item))}} >
+                <Ionicons name={Icons.ADD} size={24} color={Colors.white}/>
+                </TouchableOpacity>
+
+                <Text style={styles.qtyText} > {x.qty} </Text>
+
+                <TouchableOpacity  onPress={() => { dispatch(CartActions.removeFromCart(props.item))  }} >
+                <Ionicons name={Icons.SUB} size={24} color={Colors.white} />
+                </TouchableOpacity>
+                </View>
+                  :
+              <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item)) }} style={styles.addButton} >
+              <Ionicons  name={Icons.CART} size={24} color={Colors.white}/>
+              <Text style={styles.button} >ADD</Text>
+            </TouchableOpacity> 
+          }    
     </TouchableOpacity>
+    
     </View>
     )
 }
@@ -222,5 +256,20 @@ const styles = StyleSheet.create({
     ordersScreen: {
       alignItems:'center', 
       padding: 10
-    }
+    },
+    signin2: {
+      flexDirection: 'row',
+      backgroundColor: Colors.primary, 
+      width: '100%', 
+      alignItems:'center', 
+      justifyContent:'space-around',
+      padding: 10,  
+      borderBottomRightRadius: 15, 
+      borderBottomLeftRadius: 15,
+    },
+    qtyText: {
+      color: Colors.white,
+      fontSize: 18,
+      fontWeight: 'bold'
+    },
   });
