@@ -17,7 +17,9 @@ import DrawerContentScreen from './DrawerContent';
 import SearchScreen from '../Screens/TabNavigator/Search';
 import FiltersScreen2  from '../Screens/TabNavigator/FiltersScreen2';
 import FruitShopScreen  from '../Screens/TabNavigator/Shop/Fruits';
-import Vegetables from '../Screens/TabNavigator/Shop/Vegetables'
+import Vegetables from '../Screens/TabNavigator/Shop/Vegetables';
+import DeliveryAddressScreen from '../Screens/TabNavigator/MyAccount/Checkout/DeliveryAddress';
+
 
 { /* Contact US Screen */ }
 import ContactScreen from '../Screens/TabNavigator/Contact';
@@ -44,7 +46,7 @@ const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
     const getTabBarVisibility = (route) => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer']
+        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer', 'DeliveryCheckout']
         if(hideOnScreens.indexOf(routeName) > -1) return false;
         return true;
     };
@@ -146,6 +148,8 @@ const ShopStackScreen = () => {
             <ShopStack.Screen name='Shop' component={ShopScreen} />
             <ShopStack.Screen name='Fruits' component={FruitShopScreen} />
             <ShopStack.Screen name='Vegetables' component={Vegetables} />
+            
+            
         </ShopStack.Navigator>
     )
 }
@@ -155,6 +159,7 @@ const CheckoutStackScreen = () => {
     return (
         <CheckoutStack.Navigator  headerMode='none'>
             <CheckoutStack.Screen name='Checkout' component={CheckoutScreen} />
+            <CheckoutStack.Screen name='DeliveryCheckout' component={DeliveryAddressScreen} />
         </CheckoutStack.Navigator>
     )
 }

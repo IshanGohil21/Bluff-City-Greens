@@ -32,7 +32,7 @@ const SignInScreen = (props) => {
             Alert.alert('Error', errorMessage, [{ text: "Okay" }])
         } else {
             setisLoading(false);
-            props.navigation.navigate('PhoneVerification')
+             props.navigation.navigate('MainTab', { screen: 'Home' })
         }
     }
 

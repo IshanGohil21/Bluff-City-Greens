@@ -12,6 +12,8 @@ import Orders from '../../Components/Orders';
 import SearchBarScreen from '../../Components/Slider/SearchBar2';
 import CategoriesScreen from '../../Components/Categories';
 
+import { useSelector, useDispatch } from 'react-redux';
+
 const { width } = Dimensions.get('window')
 
 const HomeScreen = (props) => {
@@ -26,6 +28,21 @@ const HomeScreen = (props) => {
     }
   }
 
+  const cartItems = useSelector(state => {
+    const updatedCartItems = [];
+    for (const key in state.Cart.items) {
+      updatedCartItems.push({
+        ...state.Cart.items[key]
+      });
+    }
+    return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
+  })
+  // console.log(cartItems);
+
+  const dispatch = useDispatch();
+
+  const x = cartItems.find(item => item.id === props.id)
+
   return (
     <ScrollView>
       <StatusBar backgroundColor={Colors.primary} />
@@ -39,6 +56,8 @@ const HomeScreen = (props) => {
               <TouchableOpacity onPress={() => props.navigation.toggleDrawer()}  >
                 <Ionicons name='menu-outline' color={Colors.white} size={30} style={styles.drawer} />
               </TouchableOpacity>
+
+              {/* Delivery Logo */}
               <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryLocation') }} >
                 <Text style={styles.deliver} > Deliver to </Text>
                 <View style={styles.location} >
@@ -46,17 +65,26 @@ const HomeScreen = (props) => {
                   <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.white} />
                 </View>
               </TouchableOpacity>
+
+              {/* Notification Logo */}
               <TouchableOpacity onPress={() => { props.navigation.navigate('Notification') }} >
                 <Ionicons name={Icons.NOTIFICATION} size={24} color={Colors.white} style={styles.notify} />
               </TouchableOpacity>
+
+              {/* Cart */}
               <TouchableOpacity onPress={() => {props.navigation.navigate('Checkout')}} >
+              {/* {x ? null : <Text  style={{fontSize: 50}}>{x.qty}</Text> } */}
                 <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
               </TouchableOpacity>
             </View>
+
+            {/* Serach bar */}
             <View style={styles.filter} >
               <TouchableOpacity onPress={() => { props.navigation.navigate('Search') }} >
                 <SearchBarScreen />
               </TouchableOpacity>
+
+              {/* Filers Screen */}
               <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }}>
                 <Ionicons name={Icons.OPTIONS} size={30} color={Colors.white} />
               </TouchableOpacity>

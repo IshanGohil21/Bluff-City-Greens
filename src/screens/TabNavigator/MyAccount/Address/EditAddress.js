@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Address from '../../../../dummy-data/Address';
 import { RadioButton } from 'react-native-paper';
-import { Images, Colors } from '../../../../CommonConfig/CommonConfig'
+import { Images, Colors, Icons } from '../../../../CommonConfig/CommonConfig'
 
 const EditAddressScreen = (props) => {
    

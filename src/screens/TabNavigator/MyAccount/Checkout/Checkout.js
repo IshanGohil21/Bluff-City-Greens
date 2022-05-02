@@ -41,8 +41,9 @@ const CheckoutScreen = props => {
             {/* Body */}
             <View style={styles.body} >
                 <View>
+
                     <FlatList
-                        data={Vegetables}
+                        data={cartItems}
                         renderItem={({ item }) => {
                             return (
                                 <View key={item.id} >
@@ -75,11 +76,11 @@ const CheckoutScreen = props => {
                     </View>
 
                     <View style={styles.final} >
-                    <TouchableOpacity style={styles.signin} >
+                    <TouchableOpacity style={styles.signin} onPress={() => {props.navigation.navigate('DeliveryCheckout')} } >
                         <Text style={styles.CheckboxButton} >CHECKOUT</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.buttonContinue} >
+                    <TouchableOpacity style={styles.buttonContinue}  onPress={() => {props.navigation.navigate('Home')}} >
                         <Text style={styles.continue} >Continue Shopping</Text>
                     </TouchableOpacity>
                     </View>

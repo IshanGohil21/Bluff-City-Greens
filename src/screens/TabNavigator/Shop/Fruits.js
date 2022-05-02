@@ -29,7 +29,7 @@ const FruitShopScreen = (props) => {
                 <TouchableOpacity>
                     <Ionicons name={Icons.SEARCH} size={28} color={Colors.white} style={styles.back} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => {props.navigation.navigate('Checkout')} } >
                     <Ionicons name={Icons.CART} size={28} color={Colors.white} style={styles.back} />
                 </TouchableOpacity>
             </View>
@@ -62,7 +62,6 @@ const FruitShopScreen = (props) => {
                                     img={item.img}
                                     nameF={item.nameF}
                                     onClick={() => {props.navigation.navigate('Vegetables')}}
-                                
                                 />
                             </View>
                         )

@@ -14,9 +14,8 @@ const PhoneVerificationScreen = (props) => {
   const [isLoading, setisLoading] = useState(false);
   const [otpValue, setotpValue] = useState('');
 
-  const country_code = props.route.params.countryCode;
-  const mobile = props.route.params.mobile;
-
+  // const country_code = props.route.params.countryCode;
+  // const mobile = props.route.params.mobile;
 
   const users = useSelector( state => state.Auth)
   // console.log(users);
@@ -46,8 +45,8 @@ const PhoneVerificationScreen = (props) => {
         email: users.email,
         password:users.password,
         name: users.name,
-        country_code: country_code,
-        phone:mobile,
+        country_code: users.country_code,
+        phone:users.mobile,
       }
       console.log(registerData);
       const registerResponse = await postRequest('/register', registerData)

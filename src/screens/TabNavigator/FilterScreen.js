@@ -10,9 +10,6 @@ import { RadioButton } from 'react-native-paper';
 import Categories from '../../dummy-data/Categories';
 import InputRangeScreen from '../../Components/Slider/InputRange';
 
-
-
-
 const { width } = Dimensions.get('window')
 
 const FilterScreen = (props) => {
@@ -29,7 +26,6 @@ const FilterScreen = (props) => {
 
   const refRBSheet = useRef();
 
-  
   const onValueSChange = (values) => {
     setValue(values)
   }

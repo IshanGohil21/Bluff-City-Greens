@@ -64,5 +64,11 @@ export default {
     corn: require('./Assets/icon/corn.jpg'),
     tomato: require('./Assets/icon/tomato.jpg'),
     peas: require('./Assets/icon/peas.jpg'),
-    potato: require('./Assets/icon/potato.jpg')
+    potato: require('./Assets/icon/potato.jpg'),
+
+    // Cards
+
+    visa: require('./Assets/icon/visa.png'),
+    UsaExpress: require('./Assets/icon/american-express.png'),
+    mastercard: require('./Assets/icon/discover.png'),
 }

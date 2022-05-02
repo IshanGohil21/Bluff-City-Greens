@@ -76,34 +76,6 @@ const SignUpScreen = props => {
         }
     }
 
-    // const onPressRegister = async ( countryCode,mobile, xyz ) => {
-    //     setisLoading(true);
-
-    //     const RegisterUser = {
-    //         email: "",
-    //         password: "",
-    //         name: "",
-    //         country_code: "",
-    //         phone: ""
-    //     }
-
-    //     const registerResponse = await postRequest('/register', RegisterUser)
-    //   console.log(registerResponse);
-    //   if (!registerResponse.success) {
-    //     if (registerResponse.data.error === 'USER ALERADY EXISTS') {
-    //       errorMsg = "The credentials entered already exist. Please check the details.";
-    //     }
-    //     Alert.alert("Error!", errorMsg, [{text: "Okay"}]);
-    //   }else{
-    //     props.navigation.navigate('DiscountCoupon');
-    //   }
-    //   else{
-    //     if (resData.error === "Invalid OTP entered!") {
-    //       errorMsg = "Invalid OTP entered!"
-    //     }
-    //     Alert.alert("Error", errorMsg, [{ text: "Okay" }])
-    //   }
-
     return (
         <>
             <ScrollView>
@@ -293,7 +265,7 @@ const SignUpScreen = props => {
                         backgroundColor: Colors.white
                     },
                     flag: {
-                        fontSize: 20
+                        fontSize: 20,
                     },
                     dialCode: {
                         fontSize: 18,
@@ -302,7 +274,7 @@ const SignUpScreen = props => {
                     countryName: {
                         fontSize: 18
                     },
-                    getFlag: true
+                     getFlag: true
                 }}
                 pickerButtonOnPress={(item) => {
                     setCountryCode(item.dial_code);

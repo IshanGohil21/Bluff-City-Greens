@@ -24,4 +24,8 @@ export default {
     ADD1: 'add-outline',
     RIGHT:'arrow-forward-outline',
     TRASH: 'trash-outline',
+    CALANDER: 'calendar-outline',
+    PIN:'pin-outline',
+    PIN_FILLED: 'pin',
+    SCHEDULE:'calendar-outline',
 }

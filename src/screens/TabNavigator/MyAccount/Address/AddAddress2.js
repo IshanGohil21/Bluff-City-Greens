@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Colors from '../../../../CommonConfig/Colors';
-import Images from '../../../../CommonConfig/Images';
 import Searchbar from '../../../../Components/SearchBar';
+
+import { Colors, Images, Icons } from '../../../../CommonConfig/CommonConfig';
 
 const AddNewAddress2Screen = (props) => {
   const [value, setValue] = useState();

@@ -58,7 +58,7 @@ const Cartcomp = (props) => {
                 </View>
                 <Text style={styles.Oprice} >${props.price}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                    <Text style={styles.discount} >${(props.disPrice).toFixed(2)}</Text>
+                    <Text style={styles.discount} >${props.disPrice}</Text>
 
                     <View >
                         {x ?
