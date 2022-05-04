@@ -1,16 +1,16 @@
 import React from 'react';
 import { View,Text, StyleSheet, TouchableOpacity, StatusBar, FlatList, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Icons, Colors } from '../../../../CommonConfig/CommonConfig';
-import Vegetables  from '../../../../dummy-data/Vegetables';
-import Cartcomp from '../../../../Components/Cartcomp';
+import { Icons, Colors } from '../../../CommonConfig/CommonConfig';
+import Vegetables  from '../../../dummy-data/Vegetables';
+import Cartcomp from '../../../Components/Cartcomp';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { sub } from 'react-native-reanimated';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { Checkbox } from 'react-native-paper';
 
-const CheckoutScreen = props => {
+const CheckoutScreen = (props) => {
     const cartItems = useSelector( state => {
         const updatedCartItems = [];
         for ( const key in state.Cart.items ) {

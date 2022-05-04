@@ -27,10 +27,10 @@ const VegetableScreen = (props) => {
         }
         return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
     })
-    console.log(cartItems);
+    // console.log(cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce( (a,c) => a + c.itemTotal, 0 ) : 0)
-    console.log(subTotal);
+    // console.log(subTotal);
 
     return (
 

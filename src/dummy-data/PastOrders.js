@@ -7,7 +7,8 @@ let PastOrder = [
         fruitimages: [
             Images.lychee1,
             Images.lychee2, 
-            Images.lychee3
+            Images.lychee3,
+            
         ],
         price: 4.83,
         discountedPrice: 4.40,

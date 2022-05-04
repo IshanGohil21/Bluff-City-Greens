@@ -71,4 +71,6 @@ export default {
     visa: require('./Assets/icon/visa.png'),
     UsaExpress: require('./Assets/icon/american-express.png'),
     mastercard: require('./Assets/icon/discover.png'),
+    money: require('../CommonConfig/Assets/icon/money.png'),
+    timetable: require('../CommonConfig/Assets/icon/timetable.png'),
 }

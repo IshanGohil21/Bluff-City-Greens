@@ -33,10 +33,11 @@ const PhoneVerificationScreen = (props) => {
       otpValue: otpValue,
       country_code: country_code,
       phone_number: mobile,
+      // country_code:countryCode
     }
     console.log(data);
 
-  const response = await postRequest('/verifyOTP', data);
+  const response = await postRequest('/verify-OTP', data);
   const resData = response.data;
   let errorMsg = 'Something went wrong';
   console.log(response);

@@ -63,7 +63,7 @@ const SignUpScreen = props => {
             phone_number: mobile,
             channel: "sms"
         }
-        const response = await postRequest('/generateOTP', OTPData);
+        const response = await postRequest('/generate-OTP', OTPData);
         console.log(response)
         let errorMsg = 'Something went wrong!';
         if (response.success) {

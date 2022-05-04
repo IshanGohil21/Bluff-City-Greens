@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions, FlatList } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Colors, Icons, Images } from '../../CommonConfig/CommonConfig';
-import Address from '../../dummy-data/Address';
-import CouponImages from '../../dummy-data/Imagess';
-import Categories from '../../dummy-data/Categories';
-import PastOrder from '../../dummy-data/PastOrders';
-import RecommendedProducts from '../../dummy-data/RecommendedProducts';
-import Orders from '../../Components/Orders';
-import SearchBarScreen from '../../Components/Slider/SearchBar2';
-import CategoriesScreen from '../../Components/Categories';
+import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
+import Address from '../../../dummy-data/Address';
+import CouponImages from '../../../dummy-data/Imagess';
+import Categories from '../../../dummy-data/Categories';
+import PastOrder from '../../../dummy-data/PastOrders';
+import RecommendedProducts from '../../../dummy-data/RecommendedProducts';
+import Orders from '../../../Components/Orders';
+import SearchBarScreen from '../../../Components/Slider/SearchBar2';
+import CategoriesScreen from '../../../Components/Categories';
 
 import { useSelector, useDispatch } from 'react-redux';
 

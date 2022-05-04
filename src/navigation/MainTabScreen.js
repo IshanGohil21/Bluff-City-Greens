@@ -7,8 +7,8 @@ import { Icon } from 'react-native-vector-icons';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import HomeScreen from '../Screens/TabNavigator/HomeScreen';
-import CheckoutScreen from '../Screens/TabNavigator/MyAccount/Checkout/Checkout';
+import HomeScreen from '../Screens/TabNavigator/Home/HomeScreen';
+import CheckoutScreen from '../Screens/TabNavigator/Checkout/Checkout';
 import ShopScreen from '../Screens/TabNavigator/Shop/Shop';
 import DeliveryLocationScreen from '../Screens/TabNavigator/DeliveryLocationScreen';
 import FilterScreen from '../Screens/TabNavigator/FilterScreen';
@@ -18,7 +18,6 @@ import SearchScreen from '../Screens/TabNavigator/Search';
 import FiltersScreen2  from '../Screens/TabNavigator/FiltersScreen2';
 import FruitShopScreen  from '../Screens/TabNavigator/Shop/Fruits';
 import Vegetables from '../Screens/TabNavigator/Shop/Vegetables';
-import DeliveryAddressScreen from '../Screens/TabNavigator/MyAccount/Checkout/DeliveryAddress';
 
 
 { /* Contact US Screen */ }
@@ -39,14 +38,20 @@ import EditAddressScreen from '../Screens/TabNavigator/MyAccount/Address/EditAdd
 import AddNewAddress2Screen from '../Screens/TabNavigator/MyAccount/Address/AddAddress2';
 import PastOrderScreen from '../Screens/TabNavigator/Home/PastOrderScreen';
 import RecommendedProducts from '../Screens/TabNavigator/Home/RecommendedProducts';
-import Icons from '../CommonConfig/Icons';
+import DeliveryAddressScreen from '../Screens/TabNavigator/Checkout/DeliveryAddress';
+import OrderDetailsScreen from '../Screens/TabNavigator/Checkout/OrderDetails';
+import TrackOrderScreen from '../Screens/TabNavigator/Checkout/TrackOrder';
 
+import AddCard from '../Screens/TabNavigator/Checkout/AddCard';
+import AddAddressScreen from '../Screens/TabNavigator/Checkout/AddAddress';
+
+import Icons from '../CommonConfig/Icons';
 
 const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
     const getTabBarVisibility = (route) => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer', 'DeliveryCheckout']
+        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer', 'DeliveryCheckout','Orders', 'TrackOrder']
         if(hideOnScreens.indexOf(routeName) > -1) return false;
         return true;
     };
@@ -74,11 +79,12 @@ const MainTabScreen = () => {
             <Tab.Screen 
             name='Checkout' 
             component={CheckoutStackScreen} 
-            options={{
+            options={ ({route}) => ({ 
+                tabBarVisible: getTabBarVisibility(route),
                 tabBarIcon: ({color}) => (
                     <Ionicons name='cart' size={24} color={color} />
                     )
-                }} 
+                })} 
             />
             <Tab.Screen 
             name='Contact' 
@@ -117,7 +123,6 @@ const HomeDrawerScreen = () => {
         )
 }
 
-
 const HomeStack = createStackNavigator();
 const HomeStackScreen = () => {
     return (
@@ -149,7 +154,6 @@ const ShopStackScreen = () => {
             <ShopStack.Screen name='Fruits' component={FruitShopScreen} />
             <ShopStack.Screen name='Vegetables' component={Vegetables} />
             
-            
         </ShopStack.Navigator>
     )
 }
@@ -160,6 +164,10 @@ const CheckoutStackScreen = () => {
         <CheckoutStack.Navigator  headerMode='none'>
             <CheckoutStack.Screen name='Checkout' component={CheckoutScreen} />
             <CheckoutStack.Screen name='DeliveryCheckout' component={DeliveryAddressScreen} />
+            <CheckoutStack.Screen name='Orders' component={OrderDetailsScreen} />
+            <CheckoutStack.Screen name='AddCard' component={AddCard} />
+            <CheckoutStack.Screen  name='AddAddress' component={AddAddressScreen} />
+            <CheckoutStack.Screen name='TrackOrder' component={TrackOrderScreen} />
         </CheckoutStack.Navigator>
     )
 }

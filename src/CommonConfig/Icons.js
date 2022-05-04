@@ -28,4 +28,8 @@ export default {
     PIN:'pin-outline',
     PIN_FILLED: 'pin',
     SCHEDULE:'calendar-outline',
+    TIME:'time-outline',
+    CHECKMARK: 'checkmark-circle',
+    CALL: 'call',
+    PERSON:'person-circle',
 }
