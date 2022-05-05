@@ -1,14 +1,43 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, ScrollView, ImageBackground, Dimensions } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import RBSheet from "react-native-raw-bottom-sheet";
 import ProfileOption from '../../../Components/ProfileOption';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { getRequest } from '../../../Helper/ApiHelper';
 
 
 const MyAccountScreen = props => {
+
+    const [isLoading, setIsLoading] = useState(true)
+    const [user, setUser] = useState({})
+
+    useEffect( () => {
+        getProfile()
+        setIsLoading(false)
+    },[])
+    
+    const getProfile = async() => {
+        setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))   
+    }
+
     const refRBSheet = useRef();
+
+    const onPressLogout = async () => {
+        setIsLoading(true);
+        
+        const response = await getRequest('/logout');
+        console.log(response);
+             {
+            setIsLoading(false);
+            AsyncStorage.clear()
+            props.navigation.navigate('SignIn');
+            
+        }
+    }
 
     return (
         <>
@@ -16,7 +45,7 @@ const MyAccountScreen = props => {
         <ScrollView>
         <View>
            <StatusBar backgroundColor='rgba(0,0,0,0)'/>
-                        <ImageBackground source={{ uri: Images.ronaldo }} resizeMode='cover' style={styles.image} >
+                        <ImageBackground source={{ uri: user.picture }} resizeMode='cover' style={styles.image} >
                             <View style={{flexDirection:'row' , justifyContent:'space-between' ,paddingHorizontal: 10}} >
                                 <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                                     <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.object} />
@@ -28,7 +57,7 @@ const MyAccountScreen = props => {
                         <View style={{borderTopRightRadius:30,borderTopLeftRadius:30, overflow:'hidden'}}>
                         <ProfileOption 
                             name = 'Personal Information'
-                            onPress={() => { props.navigation.navigate('personalInfo') }}
+                            onPress={() => { props.navigation.navigate('personalInfo',{user}) }}
                             iconLeft = {Icons.PERSON}
                             iconRight = {Icons.PROFILE_FORWARD}
                         />
@@ -111,7 +140,7 @@ const MyAccountScreen = props => {
         >
             <Ionicons  name={Icons.LOG_OUT} size={60} color={Colors.grey} style={styles.logo} />
         <Text style={styles.bottom} >Are you sure you want to logout?</Text>
-        <TouchableOpacity onPress={() => {props.navigation.navigate('SignIn')}} style={styles.logout} >
+        <TouchableOpacity onPress={onPressLogout} style={styles.logout} >
             <Text style={styles.signin} > Logout </Text>
         </TouchableOpacity>
         <TouchableOpacity  onPress={() => refRBSheet.current.close()}  style={{ alignItems: 'center'}}>

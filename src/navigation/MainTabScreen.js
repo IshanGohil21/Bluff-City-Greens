@@ -43,7 +43,7 @@ import OrderDetailsScreen from '../Screens/TabNavigator/Checkout/OrderDetails';
 import TrackOrderScreen from '../Screens/TabNavigator/Checkout/TrackOrder';
 
 import AddCard from '../Screens/TabNavigator/Checkout/AddCard';
-import AddAddressScreen from '../Screens/TabNavigator/Checkout/AddAddress';
+import ScheduleDelivery from '../Screens/TabNavigator/Checkout/ScheduleDelivery';
 
 import Icons from '../CommonConfig/Icons';
 
@@ -51,7 +51,7 @@ const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
     const getTabBarVisibility = (route) => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer', 'DeliveryCheckout','Orders', 'TrackOrder']
+        const hideOnScreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer', 'DeliveryCheckout','Orders', 'TrackOrder', 'ScheduleDelivery']
         if(hideOnScreens.indexOf(routeName) > -1) return false;
         return true;
     };
@@ -166,7 +166,7 @@ const CheckoutStackScreen = () => {
             <CheckoutStack.Screen name='DeliveryCheckout' component={DeliveryAddressScreen} />
             <CheckoutStack.Screen name='Orders' component={OrderDetailsScreen} />
             <CheckoutStack.Screen name='AddCard' component={AddCard} />
-            <CheckoutStack.Screen  name='AddAddress' component={AddAddressScreen} />
+            <CheckoutStack.Screen  name='ScheduleDelivery' component={ScheduleDelivery} />
             <CheckoutStack.Screen name='TrackOrder' component={TrackOrderScreen} />
         </CheckoutStack.Navigator>
     )

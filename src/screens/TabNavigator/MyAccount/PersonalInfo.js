@@ -9,6 +9,8 @@ import User from '../../../dummy-data/User';
 import { Icons, Colors} from '../../../CommonConfig/CommonConfig'
 
 const personalInfoScreen = props => {
+    const user = props.route.params.user
+    console.log("                    ",user);
     const [phoneNumber, setphoneNumber] = useState('');
     const phoneInput = useRef(null);
 
@@ -32,14 +34,14 @@ const personalInfoScreen = props => {
                         <View style={styles.mainWrapper}>
                         <View  >
                             <Text style={styles.text}>Full Name</Text>
-                              <Text style={styles.number} >{User.username}</Text>
+                              <Text style={styles.number} >{user.name}</Text>
 
                             <Text style={styles.text} >Email</Text>
-                                <Text style={styles.number} >{ User.email }</Text>
+                                <Text style={styles.number} >{ user.email }</Text>
                             
                             <Text style={styles.text}>Contact Number</Text>
 
-                               <Text style={styles.number}>{User.phone_number}</Text>
+                               <Text style={styles.number}>{user.country_code} {user.phone}</Text>
                             </View>
                     
         <TouchableOpacity onPress={() => {props.navigation.goBack()}} style={styles.save}>

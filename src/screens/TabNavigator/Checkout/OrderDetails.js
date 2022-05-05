@@ -35,6 +35,11 @@ const x = cartItems.find(item => item.id  === props.id)
 const subTotal = (cartItems.length ? cartItems.reduce((a, c) => a + c.itemTotal, 0) : 0);
 const delivery = 0.5;
 
+const activeId = useSelector(state => state.Address.activeAddress)
+const addList = useSelector(state => state.Address.activeId)
+
+// console.log(activeId);
+
   useEffect(() => {
     let today = new Date();
     var monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];

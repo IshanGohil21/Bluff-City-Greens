@@ -298,7 +298,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         width: '100%',
-        backgroundColor: 'rgba(50,75,255,0.25)'
+        backgroundColor: 'rgba(50,75,255,0.25)',
+        color:Colors.white
     },
     signin: {
         width: "100%",

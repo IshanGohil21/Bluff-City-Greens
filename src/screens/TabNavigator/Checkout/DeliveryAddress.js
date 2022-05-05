@@ -59,7 +59,7 @@ const DeliveryAddressScreen = (props) => {
                 <View style={styles.body} >
                     <View style={styles.headings} >
                         <Text style={styles.deliveryText} >Delivery Address</Text>
-                        <TouchableOpacity   onPress={() =>  {}} >
+                        <TouchableOpacity   onPress={() =>  {props.navigation.navigate('AddNewAddress')}} >
                             <Text style={styles.newAdd} >Add New</Text>
                         </TouchableOpacity>
                     </View>
@@ -89,7 +89,7 @@ const DeliveryAddressScreen = (props) => {
                     <View style={styles.delivery} >
                         <Text style={styles.schedule} >Schedule Delivery</Text>
                     </View>
-                    <TouchableOpacity style={styles.deliveryTime} >
+                    <TouchableOpacity style={styles.deliveryTime} onPress={() => {props.navigation.navigate('ScheduleDelivery')} }  >
                         <Image source={Images.timetable} style={styles.timetable} />
                         <Text>Date</Text>
                         <Text>Time</Text>

@@ -19,7 +19,7 @@ const SignInScreen = (props) => {
             password: values.password,
         };
         const response = await postRequest('/login', data);
-        //console.log(response);
+        // console.log(response);
         if (!response.success) {
             setisLoading(false);
             let errorMessage = "Something went wrong!";
@@ -32,6 +32,11 @@ const SignInScreen = (props) => {
             Alert.alert('Error', errorMessage, [{ text: "Okay" }])
         } else {
             setisLoading(false);
+            await AsyncStorage.setItem('token', response.data.access_token)
+            await AsyncStorage.setItem('refreshToken', response.data.refresh_token)
+            await AsyncStorage.setItem('userInfo', JSON.stringify(response.data.user))
+            await AsyncStorage.setItem('isLogin', "true")
+
              props.navigation.navigate('MainTab', { screen: 'Home' })
         }
     }
@@ -70,7 +75,7 @@ const SignInScreen = (props) => {
                         </View>
                     </View>
 
-                    <Text style={{ textAlign: 'left', paddingVertical: 10, color: 'white' }}>Email id</Text>
+                    <Text style={{ textAlign: 'left', paddingVertical: 10, color: Colors.white }}>Email id</Text>
                     <TextInput
                         value={values.email}
                         style={styles.customCss}
