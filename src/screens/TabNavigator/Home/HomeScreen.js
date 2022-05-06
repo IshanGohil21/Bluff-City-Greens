@@ -38,10 +38,9 @@ const HomeScreen = (props) => {
     return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
   })
   // console.log(cartItems);
+  const y = cartItems?.length;
 
   const dispatch = useDispatch();
-
-  const x = cartItems.find(item => item.id === props.id)
 
   return (
     <ScrollView>
@@ -73,8 +72,8 @@ const HomeScreen = (props) => {
 
               {/* Cart */}
               <TouchableOpacity onPress={() => {props.navigation.navigate('Checkout')}} >
-              {/* {x ? null : <Text  style={{fontSize: 50}}>{x.qty}</Text> } */}
-                <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
+                  <Text style={styles.xyz} >{y}</Text> 
+                  <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
               </TouchableOpacity>
             </View>
 
@@ -381,7 +380,33 @@ const styles = StyleSheet.create({
   past: {
     flexDirection: 'row',
     justifyContent: 'space-between'
-  }
+  },
+  cart:{
+        position:'absolute',
+        // right: Dimensions.get('window').width * 500,
+        // top: Dimensions.get('window').width * 350,
+        overflow: 'hidden',
+        backgroundColor: Colors.red,
+        height: 20,
+        width: 20,
+        borderRadius: 50,
+        marginTop:30,
+        marginLeft: 10 ,
+        color:Colors.white
+    },
+    xyz:{
+      color: Colors.white, 
+      position:'absolute', 
+      justifyContent:'center', 
+      alignItems:'center',  
+      fontWeight: 'bold', 
+      marginTop: 30, 
+      marginLeft: 25, 
+      backgroundColor: Colors.yellow, 
+      borderRadius: 20, 
+      width:15, 
+      height: 20, 
+    }
 });
 
 export default HomeScreen;

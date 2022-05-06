@@ -16,8 +16,6 @@ const VegetableScreen = (props) => {
     const refRBSheet = useRef();
     const [checked, setChecked] = useState('first')
 
-    // const cartItems = useSelector(state => state.Cart.items)
-
     const cartItems = useSelector( state => {
         const updatedCartItems = [];
         for ( const key in state.Cart.items ) {

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView, FlatList } from 'react-native';
 import React,{ useState, useEffect, useRef } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'react-moment';
@@ -8,6 +8,9 @@ import * as CartActions from '../../../Redux/Action/Cart';
 import { useSelector } from 'react-redux';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { CardStyleInterpolators } from '@react-navigation/stack';
+import Address from '../../../dummy-data/Address';
+
+import SelectAddComp from '../../../Components/SelectAddComp';
 
 const OrderDetailsScreen = (props) => {
   const refRBSheet = useRef()
@@ -27,18 +30,15 @@ const OrderDetailsScreen = (props) => {
         });
     }
     return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
-})
+});
+// const x = Address.find(item => item.id  === activeId)
+// // console.log(x);
 
-const x = cartItems.find(item => item.id  === props.id)
-// console.log(x);
+
+const total = useSelector(state => state.Cart.qty)
 
 const subTotal = (cartItems.length ? cartItems.reduce((a, c) => a + c.itemTotal, 0) : 0);
 const delivery = 0.5;
-
-const activeId = useSelector(state => state.Address.activeAddress)
-const addList = useSelector(state => state.Address.activeId)
-
-// console.log(activeId);
 
   useEffect(() => {
     let today = new Date();
@@ -51,6 +51,10 @@ const addList = useSelector(state => state.Address.activeId)
     setDate(date);
   }, []);
 
+  const activeId = useSelector(state => state.Address.activeAddress)
+
+  const x = Address.find( item => item.id === activeId )
+  // console.log(x);
 
   return (
      <ScrollView>
@@ -78,9 +82,22 @@ const addList = useSelector(state => state.Address.activeId)
           </View>
           <Text style={styles.add} >Delivery Address</Text>
 
-          <View>
-            <Ionicons  name={Icons.PIN_FILLED} size={30} color={Colors.primary} />
+         {x ? 
+         <View style={styles.overall} >
+             <Ionicons  name={Icons.PIN_FILLED} size={35} color={Colors.primary} /> 
+            <View style={{padding:10}} >
+              <Text style={styles.heading1} >  {x.tag} - {x.name}</Text>  
+              <Text style={styles.texting} > {x.address} </Text>
+              <Text style={styles.texting} > { x.country } </Text>
+            </View>
+           
           </View>
+          :  
+            <TouchableOpacity style={styles.other} onPress={()  => {props.navigation.goBack()}}>
+              <Text style={styles.please} >Please Select Address</Text> 
+            </TouchableOpacity>
+          }        
+            
             <Text style={styles.add} >Delivery Date and Time</Text>
           <View>
               <View style={styles.delivery} >
@@ -110,7 +127,9 @@ const addList = useSelector(state => state.Address.activeId)
 
               <View style={styles.details} >
                 <Text  style={styles.invoice} >Order Items</Text>
-               <Text style={styles.randomNum} > 6 items</Text> 
+              {/* {y  ?   */}
+              <Text style={styles.randomNum} >  6 items</Text> 
+              {/* // : null } */}
               </View>
 
               <View style={styles.details} >
@@ -324,7 +343,32 @@ const styles = StyleSheet.create({
   signin3:{
     alignItems: 'center',
     marginTop: 10
-  }
+  },
+  overall: {
+    flexDirection: 'row',
+    // padding: 20,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    padding: 15
+  },
+heading1: {
+  fontSize: 18,
+  fontWeight: 'bold',
+  marginBottom: 10
+},
+texting: {
+  fontSize: 13,
+  color: Colors.grey,
+},
+other:{
+  justifyContent:'center',
+  alignItems: 'center'
+},
+please:{
+  fontSize: 20,
+  fontWeight: '800',
+  color: Colors.red,
+}
 
 });
 
