@@ -6,11 +6,23 @@ import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import SignInValidationSchema from "../../Schema/SignInValidationSchema";
 import { Images, Colors, Button } from '../../CommonConfig/CommonConfig'
-import { postRequest } from '../../Helper/ApiHelper';
+import { postRequest, getRequest } from '../../Helper/ApiHelper';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignInScreen = (props) => {
     const [isLoading, setisLoading] = useState(false);
+
+    const onPressSkip = async() => {
+        setisLoading(true);
+
+        const response = await getRequest('/customer/get-homepage')
+        //   console.log( "hi             "  ,response);
+        {
+            setisLoading(false);
+             AsyncStorage.clear()
+            props.navigation.navigate( 'MainTab' ,{ screen: 'Home' })
+        }
+    }
 
     const onPressLogin = async (values) => {
         setisLoading(true);
@@ -19,7 +31,7 @@ const SignInScreen = (props) => {
             password: values.password,
         };
         const response = await postRequest('/login', data);
-        // console.log(response);
+        //  console.log( "helooooooo",response);
         if (!response.success) {
             setisLoading(false);
             let errorMessage = "Something went wrong!";
@@ -57,7 +69,7 @@ const SignInScreen = (props) => {
                         <StatusBar style="auto" />
                     </View>
                     <View>
-                        <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab', { screen: 'Home' }) }}>
+                        <TouchableOpacity onPress={onPressSkip}>
                             <Text style={styles.skip} > SKIP </Text>
                         </TouchableOpacity>
                     </View>

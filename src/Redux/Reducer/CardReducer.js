@@ -15,10 +15,11 @@ export default (state = initialState, action ) => {
             }
         case ADD_CARD:
             const data = action.data
-            console.log(data);
+            // console.log(data);
             const exp_month = data.expiryDate.substring(0,2)
             const exp_year = data.expiryDate.substring(3)
-            
+            console.log(exp_month);
+            console.log(exp_year);
 
             const cardObj = {
                 // brand: data.brand,
@@ -28,18 +29,18 @@ export default (state = initialState, action ) => {
                 // id: data.id,
                 // last4: data.last4,
                 // name: data.name
+                number: data.number,
                 name: data.name,
                 exp_year: exp_year,
                 exp_month: exp_month,
                 // expiryDate: data.expiryDate,
-                number: data.number,
                 cvv: data.cvv,
                 isActive: data.isActive
             }
 
             const tempArray = state.paymentMethods
             tempArray.push(cardObj)
-            console.log("fromm reducer:",tempArray);
+            // console.log("from reducer:",tempArray);
             return {
                 ...state,
                 paymentMethods: tempArray

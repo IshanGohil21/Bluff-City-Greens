@@ -10,10 +10,10 @@ export default (state = initialState, action) => {
         case ADD_ADDRESS:
             const tag = action.tag;
             const address = action.address;
-            const icon = action.icon;
+            const zip = action.zip
 
             let newAddress;
-            newAddress = { tag,address,icon }
+            newAddress = { tag,address,zip }
             const addressList = [];
             for( const key in state.addresses ) {
                 addressList.push({

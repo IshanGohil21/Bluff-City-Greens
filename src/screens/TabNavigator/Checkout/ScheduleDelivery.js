@@ -7,43 +7,18 @@ import moment from 'moment';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import { FlatList } from 'react-native-gesture-handler';
 import { Month } from 'react-native-month';
+import { log } from 'react-native-reanimated';
 
-import WeeklyCalendar from 'react-native-weekly-calendar';
 
 const ScheduleDelivery = (props) => {
-//   const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-
-// const d = new Date();
-// let name = month[d.getMonth()];
-
-// const [isMoment,setisMoment ] = useState('');
-
-// var result = moment("2020-02", "YYYY-MM").daysInMonth() 
   
-// console.log("No of days in 2020-02 is:", result)
-// useEffect(() => {
-// // var result = moment().add(30, 'days') ;
-// var result = moment().format('dddd MMM Mo YYYY ')
-//                     //  .utcOffset('+5:30') 
-//                     //  .format('hh:mm:ss a')
 
-//   setisMoment(result)
-//     }, [])
+  const [expanded, setExpanded] = useState(false);
 
-    // var result = moment().format('dddd MMM Mo YYYY ')
+    const toggleExpanded = () => {
+        setExpanded(!expanded)
+    }
 
-    //  const created_at = moment(created_at).format('YYY/MM/DD HH:mm');
-     
-    // var Month = moment.months()
-
-    // var weekDays = moment.weekdays()
-
-    // const dateStr = '';
-
-    // for (let i = 0; i < 7; i++) {
-    //   console.log(week);
-    //   const week = moment().startOf('week').add(i, 'days').format('ddd, MMM Do')
-    // }
 
     let date = []
    for (let i = 0; i <= 31; i++) {
@@ -51,8 +26,30 @@ const ScheduleDelivery = (props) => {
       const week = moment().startOf('day').add(i, 'days').format('ddd, MMM Do')
       date.push(week)
     }
-    console.log(date);
-    
+    // console.log(date);
+
+       //Data
+let x = {
+  slotInterval: 2,
+  openTime: '6:00 ',
+  closeTime: '14:00 '
+};
+
+let startTime = moment(x.openTime, "HH:mm");
+
+let endTime = moment(x.closeTime, "HH:mm").add(1, 'hour');
+
+let allTimes = [];
+
+while (startTime < endTime) {
+  
+  allTimes.push(startTime.format("HH:mm")); 
+ 
+  startTime.add(x.slotInterval, 'hour');
+}
+
+//  console.log(allTimes);
+
 return (
     <View style={styles.main} >
       <ScrollView>
@@ -65,13 +62,7 @@ return (
       </View>
       {/* Body */}
       <View style={styles.body} >
-      {/* <CalendarList
-       horizontal={true}
-      /> */}
-      {/* <Text> {isMoment} </Text> */}
-      {/* <Text> {result} </Text> */}
 
-{/* <WeeklyCalendar/> */}
       <FlatList 
         data={date}
         keyExtractor={(item, index) => index}
@@ -79,24 +70,47 @@ return (
           const day = item.substring(0,3)
           const month = item.substring(5,8)
           const monthdate = item.substring(9,13)
-          
           return(
-            <View style={{flexDirection:'row', padding: 10}} >
-              <View style={{flex:1}} >  
-                <Text>{month}</Text>
-                <Text> {monthdate} </Text>
+            <View>
+              <TouchableOpacity style={styles.sche}  onPress={ () => {toggleExpanded()} } >
+              <View style={{flex:0.5,backgroundColor: Colors.blue, alignItems: 'center', justifyContent:'center'  }} >  
+                <Text style={{fontSize: 16, color: Colors.white, fontWeight:'bold'}} >{month}</Text>
+                <Text style={{fontSize: 12, color:Colors.white, fontWeight:'bold'}} > {monthdate} </Text>
               </View>
-                <View style={{flex:3}} >
-                <Text>{day}</Text>
+                <View style={{flex:3,}} >
+                <Text style={{fontSize: 18, marginHorizontal: 20}} >{day}</Text>
                 </View>
+                <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
+                </TouchableOpacity>
+
+                {expanded &&
+                  <FlatList 
+                    data={allTimes}
+                    keyExtractor={( item, index )  => index}
+                    renderItem ={ ({ item }) => {
+                      const time = item.substring(0,10)
+                      return (
+                        <View style={styles.select} >
+                          <Text style={styles.times} >{time} to {time} </Text>
+                          <TouchableOpacity onPress={() => {}} style={styles.signin}> 
+                            <Text style={styles.select0} >SELECT </Text>
+                          </TouchableOpacity>
+                        </View>
+                      )
+                    } }
+                  /> 
+                }
                 
               </View>
           )
-        } }
+        } 
+      }
       />
-
-
       </View>
+
+      <TouchableOpacity style={styles.continue} onPress={() => {props.navigation.navigate('Home')}} >
+        <Text style={styles.select1} >CONTINUE SHOPPING</Text>
+      </TouchableOpacity>
       </ScrollView>
     </View> 
   )
@@ -123,5 +137,54 @@ const styles = StyleSheet.create({
   },
   body:{
     flex: 3,
+  },
+  sche:{
+    flexDirection:'row', height:60
+  },
+  select:{
+    flexDirection: 'row',
+    justifyContent:'space-between',
+    padding: 10
+  },
+  signin:{
+      width: "25%",
+      alignItems: "center",
+      backgroundColor: Colors.primary,
+      textAlign: 'center',
+      color: Colors.white,
+      fontSize: 23,
+      padding: 10,
+      borderRadius: 10,
+      overflow: 'hidden',
+  },
+  select0:{
+    fontSize:16,
+    fontWeight:'bold',
+    color: Colors.white
+  },
+  times:{
+    padding:5,
+    marginHorizontal: 20,
+    fontSize: 14,
+    fontWeight:'900'
+  },
+  continue:{
+      width: "85%",
+      alignItems: "center",
+      backgroundColor: Colors.primary,
+      textAlign: 'center',
+      color: Colors.white,
+      fontSize: 23,
+      padding: 15,
+      borderRadius: 10,
+      overflow: 'hidden',
+      padding: 10,
+      marginHorizontal: 30,
+      marginTop: 30
+  },
+  select1:{
+    fontSize:20,
+    fontWeight:'bold',
+    color: Colors.white
   }
 });

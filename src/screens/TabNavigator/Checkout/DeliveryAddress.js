@@ -59,7 +59,7 @@ const DeliveryAddressScreen = (props) => {
                 <View style={styles.body} >
                     <View style={styles.headings} >
                         <Text style={styles.deliveryText} >Delivery Address</Text>
-                        <TouchableOpacity   onPress={() =>  {props.navigation.navigate('AddNewAddress')}} >
+                        <TouchableOpacity   onPress={() =>  {props.navigation.navigate('MyAccount', {screen: 'AddNewAddress'})}} >
                             <Text style={styles.newAdd} >Add New</Text>
                         </TouchableOpacity>
                     </View>
