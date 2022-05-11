@@ -4,10 +4,10 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Icons, Images, Colors } from '../CommonConfig/CommonConfig'
-import SearchBarScreen from '../Components/Slider/SearchBar2';
 import AccordianProducts from '../Components/Accordian(PRODUCTS)';
 import Products from '../dummy-data/Products';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import SearchBarScreen3 from '../Components/SearchBar3';
 
 const DrawerContentScreen = (props) => {
     const renderAccordiansProducts = () => {
@@ -39,7 +39,7 @@ const DrawerContentScreen = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.search} >
-                    <SearchBarScreen />
+                    <SearchBarScreen3 />
                 </View>
             </View>
 

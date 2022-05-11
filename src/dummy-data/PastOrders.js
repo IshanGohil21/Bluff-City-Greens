@@ -2,7 +2,7 @@ import { Images } from '../CommonConfig/CommonConfig'
 
 let PastOrder = [
     {
-        id: 1, 
+        id: 0, 
         weight: ['1 Kg', '2 Kg', '3 Kg'],
         fruitimages: [
             Images.lychee1,
@@ -19,7 +19,7 @@ let PastOrder = [
     },
 
     {
-        id: 2, 
+        id: 1, 
         weight: ['1 Kg', '2 Kg', '3 Kg'],
         fruitimages: [
         Images.orange1,

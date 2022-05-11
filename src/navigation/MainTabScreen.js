@@ -14,7 +14,7 @@ import DeliveryLocationScreen from '../Screens/TabNavigator/DeliveryLocationScre
 import FilterScreen from '../Screens/TabNavigator/FilterScreen';
 import NotificationScreen from '../Screens/TabNavigator/NotificationScreen';
 import DrawerContentScreen from './DrawerContent';
-import SearchScreen from '../Screens/TabNavigator/Search';
+import SearchScreen from '../Screens/TabNavigator/Home/Search';
 import FiltersScreen2  from '../Screens/TabNavigator/FiltersScreen2';
 import FruitShopScreen  from '../Screens/TabNavigator/Shop/Fruits';
 import Vegetables from '../Screens/TabNavigator/Shop/Vegetables';

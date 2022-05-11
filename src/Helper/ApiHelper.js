@@ -75,7 +75,7 @@ export const postFormDataRequest = async( url, data ) => {
 
  export const getRequest = async( url ) => {
    return await axios
-   .get( baseUrl, { 
+   .get( baseUrl + url, { 
      headers:  {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer '+(await AsyncStorage.getItem('token'))
@@ -90,7 +90,7 @@ export const postFormDataRequest = async( url, data ) => {
       };
   } else {
       return {
-        success: '123',
+        success: false,
         data: response.data,
         statusCode: response.status,
       };
@@ -103,4 +103,37 @@ export const postFormDataRequest = async( url, data ) => {
       statusCode: error.response.status,
   };
 })}
+
+
+export const getMainRequest = async( url ) => {
+  return await axios
+  .get( baseUrl + url, { 
+    headers:  {
+     'Content-Type': 'application/json',
+   }
+})
+.then( (response) => {
+  // console.log("HELPER RESPONSE     \n",response.status);
+ if(response.status === 200) {
+     return {
+       success: true,
+       data: response.data,
+       statusCode: response.status,
+     };
+ } else {
+     return {
+       success: false,
+       data: response.data,
+       statusCode: response.status,
+     };
+ }
+})
+.catch((error) => {
+   return {
+     success: false,
+     data: error.response.data,
+     statusCode: error.response.status,
+ };
+})}
+ 
   

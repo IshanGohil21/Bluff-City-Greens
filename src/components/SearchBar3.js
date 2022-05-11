@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, TextInput, Dimensions } from 'react-native';
 import React from 'react';
-import { Colors, Icons, Images } from '../../CommonConfig/CommonConfig';
+import { Colors, Icons, Images } from '../CommonConfig/CommonConfig'
 import  Ionicons  from 'react-native-vector-icons/Ionicons';
 
-const SearchBarScreen = () => {
+const SearchBarScreen3 = () => {
   return (
     <View style={styles.searchContainer}>
                 <View style={styles.vwSearch}>
@@ -19,14 +19,14 @@ const SearchBarScreen = () => {
   )
 }
 
-export default SearchBarScreen;
+export default SearchBarScreen3;
 
 const styles = StyleSheet.create({
     searchContainer:
   {
     // width: Dimensions.get('window').width,
     // width: '100%',
-    width: Dimensions.get('window').width*0.75,
+    width: Dimensions.get('window').width*0.6,
     height: 40,
     flexDirection: 'row',
     justifyContent: 'flex-start',

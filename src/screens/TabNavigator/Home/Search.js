@@ -2,13 +2,14 @@ import { StyleSheet, Text, View , StatusBar, TouchableOpacity, FlatList} from 'r
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import { Colors, Icons, Images } from '../../CommonConfig/CommonConfig';
-import SearchBarScreen from '../../Components/Slider/SearchBar2';
+import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MostPopularProductScreen from '../../dummy-data/MostPopular';
-import Popular from '../../Components/Popular';
+import MostPopularProductScreen from '../../../dummy-data/MostPopular';
+import Popular from '../../../Components/Popular';
+import SearchBarScreen3 from '../../../Components/SearchBar3';
 
 const SearchScreen = (props) => {
+
   return (
       <KeyboardAwareScrollView>
     <View style={styles.main} >
@@ -29,7 +30,7 @@ const SearchScreen = (props) => {
       {/* Body */} 
       <View style={styles.body} >
         <View style={styles.searchButton} >
-            <SearchBarScreen />
+            <SearchBarScreen3 />
             <TouchableOpacity style={styles.filter} onPress={() => {props.navigation.navigate('Filter2')}} >
             <Ionicons name={Icons.OPTIONS} size={30} color={Colors.white} backgroundColor={Colors.primary} />
             </TouchableOpacity>

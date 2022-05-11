@@ -12,17 +12,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SignInScreen = (props) => {
     const [isLoading, setisLoading] = useState(false);
 
-    const onPressSkip = async() => {
-        setisLoading(true);
-
-        const response = await getRequest('/customer/get-homepage')
-        //   console.log( "hi             "  ,response);
-        {
-            setisLoading(false);
-             AsyncStorage.clear()
-            props.navigation.navigate( 'MainTab' ,{ screen: 'Home' })
-        }
-    }
+    
 
     const onPressLogin = async (values) => {
         setisLoading(true);
@@ -69,7 +59,7 @@ const SignInScreen = (props) => {
                         <StatusBar style="auto" />
                     </View>
                     <View>
-                        <TouchableOpacity onPress={onPressSkip}>
+                        <TouchableOpacity onPress={() =>  props.navigation.navigate( 'MainTab' ,{ screen: 'Home' })}>
                             <Text style={styles.skip} > SKIP </Text>
                         </TouchableOpacity>
                     </View>

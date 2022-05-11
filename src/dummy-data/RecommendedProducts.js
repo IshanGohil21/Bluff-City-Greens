@@ -2,7 +2,7 @@ import { Images } from '../CommonConfig/CommonConfig'
 
 let RecommendedProducts = [
     {
-        id: 0, 
+        id: 2, 
         weight: ['1 Kg', '2 Kg', '3 Kg'],
         fruitimages: [
         Images.carrot1,
@@ -18,7 +18,7 @@ let RecommendedProducts = [
     },
 
     {
-        id: 1, 
+        id: 3, 
         weight: ['1 Kg', '2 Kg', '3 Kg'],
         fruitimages: [
         Images.lettuce1,

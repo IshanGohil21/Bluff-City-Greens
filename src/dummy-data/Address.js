@@ -4,7 +4,7 @@ let Address = [
         tag: 'Home',
         name: 'Deo House',
         Home: '132',
-        address: '132, My Street, Kingston, New York 12401',
+        address: '132,My Street,Kingston',
         icon: 'home-outline',
         zip: 395007,
         landmark: 'Culture Tea Bar, Brodaway',

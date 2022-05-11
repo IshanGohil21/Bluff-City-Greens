@@ -29,9 +29,13 @@ const AddCard = (props) => {
 
     const onPressAddCard = async(details) => {
         setIsLoading(true)
+        const arr = details.expiryDate.split('/')
+        // console.log(arr);
+        const year = arr[1].substring(2)
         const data = {
             number: details.cardNumber,
-            expire: details.expiryDate,
+            exp_month: arr[0],
+            exp_year: year,
             cvv: details.cvv,
         }
         console.log(data);
@@ -252,8 +256,8 @@ const styles = StyleSheet.create({
     },
     container: {
     marginTop:10,
-    elevation: 2,
-    borderRadius: 1,
+    elevation: 1,
+    borderRadius: 0.5,
     //borderWidth: 0.1,
     padding:5
     },
@@ -277,8 +281,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         height: '100%',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        
+        backgroundColor: 'rgba(0,0,0,0.5)', 
     },
     content: {
         backgroundColor: '#fff',

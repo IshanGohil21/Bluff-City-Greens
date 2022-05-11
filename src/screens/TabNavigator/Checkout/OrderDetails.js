@@ -7,7 +7,6 @@ import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import * as CartActions from '../../../Redux/Action/Cart';
 import { useSelector } from 'react-redux';
 import RBSheet from "react-native-raw-bottom-sheet";
-import { CardStyleInterpolators } from '@react-navigation/stack';
 import Address from '../../../dummy-data/Address';
 
 import SelectAddComp from '../../../Components/SelectAddComp';

@@ -19,7 +19,6 @@ const ScheduleDelivery = (props) => {
         setExpanded(!expanded)
     }
 
-
     let date = []
    for (let i = 0; i <= 31; i++) {
       // console.log(week);
@@ -52,7 +51,7 @@ while (startTime < endTime) {
 
 return (
     <View style={styles.main} >
-      <ScrollView>
+      {/* <ScrollView> */}
       {/* Header & Back Button */}
       <View style={styles.head} >
         <TouchableOpacity onPress={() => {props.navigation.goBack()}} >
@@ -111,7 +110,7 @@ return (
       <TouchableOpacity style={styles.continue} onPress={() => {props.navigation.navigate('Home')}} >
         <Text style={styles.select1} >CONTINUE SHOPPING</Text>
       </TouchableOpacity>
-      </ScrollView>
+      {/* </ScrollView> */}
     </View> 
   )
 }
@@ -123,7 +122,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   head:{
-    flex:1,
+    flex:0.5,
     backgroundColor: Colors.primary,
     justifyContent: 'space-between'
   },
@@ -175,7 +174,7 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       color: Colors.white,
       fontSize: 23,
-      padding: 15,
+      padding: 10,
       borderRadius: 10,
       overflow: 'hidden',
       padding: 10,
@@ -183,7 +182,7 @@ const styles = StyleSheet.create({
       marginTop: 30
   },
   select1:{
-    fontSize:20,
+    fontSize:19,
     fontWeight:'bold',
     color: Colors.white
   }
