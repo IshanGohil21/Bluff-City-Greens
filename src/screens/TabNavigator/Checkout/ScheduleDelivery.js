@@ -1,17 +1,14 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
 import React, {  useEffect, useState  } from 'react';
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import moment from 'moment';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import { FlatList } from 'react-native-gesture-handler';
-import { Month } from 'react-native-month';
-import { log } from 'react-native-reanimated';
+import AccordianDeliveryTime from '../../../Components/Accordian(DeliveryTime)';  
 
 
 const ScheduleDelivery = (props) => {
-  
 
   const [expanded, setExpanded] = useState(false);
 
@@ -19,15 +16,17 @@ const ScheduleDelivery = (props) => {
         setExpanded(!expanded)
     }
 
+// Date For the whole Month 
+
     let date = []
    for (let i = 0; i <= 31; i++) {
       // console.log(week);
       const week = moment().startOf('day').add(i, 'days').format('ddd, MMM Do')
       date.push(week)
     }
-    // console.log(date);
+   // console.log(date);
 
-       //Data
+//Time Data For 2 Hours Diff
 let x = {
   slotInterval: 2,
   openTime: '6:00 ',
@@ -66,44 +65,48 @@ return (
         data={date}
         keyExtractor={(item, index) => index}
         renderItem={({ item }) => {
-          const day = item.substring(0,3)
-          const month = item.substring(5,8)
-          const monthdate = item.substring(9,13)
-          return(
-            <View>
-              <TouchableOpacity style={styles.sche}  onPress={ () => {toggleExpanded()} } >
-              <View style={{flex:0.5,backgroundColor: Colors.blue, alignItems: 'center', justifyContent:'center'  }} >  
-                <Text style={{fontSize: 16, color: Colors.white, fontWeight:'bold'}} >{month}</Text>
-                <Text style={{fontSize: 12, color:Colors.white, fontWeight:'bold'}} > {monthdate} </Text>
-              </View>
-                <View style={{flex:3,}} >
-                <Text style={{fontSize: 18, marginHorizontal: 20}} >{day}</Text>
-                </View>
-                <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
-                </TouchableOpacity>
+          <AccordianDeliveryTime 
+          item ={item}
+          />
+        //   const day = item.substring(0,3)
+        //   const month = item.substring(5,8)
+        //   const monthdate = item.substring(9,13)
+        //   return(
+        //     <View>
+        //       <TouchableOpacity style={styles.sche}  onPress={ () => {toggleExpanded()} } >
+        //       <View style={{flex:0.5,backgroundColor: Colors.blue, alignItems: 'center', justifyContent:'center'  }} >  
+        //         <Text style={{fontSize: 16, color: Colors.white, fontWeight:'bold'}} >{month}</Text>
+        //         <Text style={{fontSize: 12, color:Colors.white, fontWeight:'bold'}} > {monthdate} </Text>
+        //       </View>
+        //         <View style={{flex:3,}} >
+        //         <Text style={{fontSize: 18, marginHorizontal: 20}} >{day}</Text>
+        //         </View>
+        //         <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
+        //         </TouchableOpacity>
 
-                {expanded &&
-                  <FlatList 
-                    data={allTimes}
-                    keyExtractor={( item, index )  => index}
-                    renderItem ={ ({ item }) => {
-                      const time = item.substring(0,10)
-                      return (
-                        <View style={styles.select} >
-                          <Text style={styles.times} >{time} to {time} </Text>
-                          <TouchableOpacity onPress={() => {}} style={styles.signin}> 
-                            <Text style={styles.select0} >SELECT </Text>
-                          </TouchableOpacity>
-                        </View>
-                      )
-                    } }
-                  /> 
-                }
+        //         {expanded &&
+        //           <FlatList 
+        //             data={allTimes}
+        //             keyExtractor={( item, index )  => index}
+        //             renderItem ={ ({ item }) => {
+        //               const time = item.substring(0,10)
+        //               return (
+        //                 <View style={styles.select} >
+        //                   <Text style={styles.times} >{time} to {time} </Text>
+        //                   <TouchableOpacity onPress={() => {}} style={styles.signin}> 
+        //                     <Text style={styles.select0} >SELECT </Text>
+        //                   </TouchableOpacity>
+        //                 </View>
+        //               )
+        //             } }
+        //           /> 
+        //         }
                 
-              </View>
-          )
-        } 
+        //       </View>
+        //   )
+        // } 
       }
+    }
       />
       </View>
 

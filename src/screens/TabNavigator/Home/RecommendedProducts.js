@@ -22,8 +22,8 @@ const RecommendedProductsScreen = (props) => {
     
 
     const recommendId = props.route.params.recommendId
-    const current = props.route.params.recommended
-    // console.log(current);
+    const current= props.route.params.recommended
+     console.log( "\n\n\n  Current        " ,current);
     
 
     const height = width * 100 / 0.6
@@ -48,6 +48,7 @@ const RecommendedProductsScreen = (props) => {
     // console.log(cartItems);
      const x = cartItems.find(item => item.id  === current.id)
     
+     const [show, setShow] = useState(current);
 
     return (
         <View style={styles.screen} >
@@ -66,30 +67,33 @@ const RecommendedProductsScreen = (props) => {
                 
                 {/* Images ScrollView */}
                 <View style={{alignItems:'center', padding: 10}} >
-                {/* <ScrollView
+                
+                <ScrollView
                     pagingEnabled
                     horizontal
                     onScroll={change}
                     showsHorizontalScrollIndicator={false}
                 >
-                        {current.map( item => {
-                            return (
-                                <View style={styles.fruit}>
-                                    <Image source={current.item} style={styles.imageContainer}/>
+                        {current.item_images.map(  (item,index) => {
+                            console.log(item);
+                                return (
+                                <View style={styles.fruit} key={index} >
+                                    <Image source={{ uri : item.image}} style={styles.imageContainer}/>
                                 </View>
                             )
                         } )}
                     
-                </ScrollView> */}
+                </ScrollView> 
+                    
                 </View>
-                {/* <View style={styles.scroll} >
+                  <View style={styles.scroll} >
                 {
-                    current.map((i, k) => (
+                    current.item_images.map((i, k) => (
                     <Text key={k} style={k == active ? styles.pagingActive : styles.paging} > ⬤ </Text>
                   ))
                 }
-            </View> */}
             </View>
+            </View> 
 
             {/* Body */}
             <View style={{ ...styles.header, backgroundColor: current.bgColor }} >

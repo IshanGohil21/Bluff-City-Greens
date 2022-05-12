@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, StatusBar} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Searchbar from '../../Components/SearchBar';
+import Searchbar3 from '../../Components/SearchBar3';
 import { Images, Colors, Icons }from '../../CommonConfig/CommonConfig';
 
 const LocationScreen = (props) => {
@@ -19,6 +19,7 @@ const LocationScreen = (props) => {
                 {/*Title*/}
 
                 <View>
+                    
                     <View style={styles.titleContainer}>
                         <Text style={styles.title}>Location </Text>
                     </View>
@@ -32,14 +33,15 @@ const LocationScreen = (props) => {
 
             <View style={styles.body} >
                 <View style={styles.search} >
-                    <View>
-                        <Searchbar
+                    <View style={{marginHorizontal: 30}} >
+                        <Searchbar3
                             value={value}
                         />
-                    </View>
-                    <View style={styles.icon} >
-                        <Ionicons  name={Icons.LOCATION} size={30} color={Colors.white} />
-                    </View>
+                    </View  >
+                        <View style={{marginHorizontal: 30}} >
+                        <Ionicons  name={Icons.LOCATION} size={30} color={Colors.white} style={styles.icon} />
+                        </View>
+                    
                 </View>
 
                 <View style={styles.searchContainer2}>
@@ -153,6 +155,7 @@ const styles = StyleSheet.create({
     },
     body: {
         alignItems: 'center',
+        
     },
     textInput: {
         // backgroundColor: 'green',
@@ -165,16 +168,17 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     search: {
-        flexGrow: 1,
+        // flexGrow: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 10,
-        marginHorizontal: 15
+        padding: 20,
+        // marginHorizontal: 15,
+        
+      
     },
     icon:{
         backgroundColor: Colors.primary,
-        borderRadius: 5,
-        padding: 5,
+        borderRadius: 10,
+        padding: 10,
         height: 50,
         width: 50,
         alignItems: 'center',
@@ -183,10 +187,10 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row', 
         padding: 10, 
-        backgroundColor: '#259D57'
+        backgroundColor: Colors.primary
     },
     titleContainer: {
-        flexDirection: 'row' 
+    
     },
     signup: {
         color: Colors.green , 

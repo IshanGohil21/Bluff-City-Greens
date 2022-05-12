@@ -5,14 +5,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors, Icons, Images } from '../CommonConfig/CommonConfig';
 
 const CategoriesScreen = (props) => {
-    // const catogeriesId = props.route.params.catogeriesId;
-    // console.log(catogeriesId);
-    // const cato = props.route.params.catogeries;
-
   return (
     <View>
       <TouchableOpacity key={props.id} style={styles.categories} onPress={props.onClick} >
-        <Image source={props.image} style={styles.catoContainer} />
+        <Image source={{  uri : props.image}} style={styles.catoContainer} />
         <Text style={{ color: props.color }} > {props.name} </Text>
       </TouchableOpacity>
     </View>

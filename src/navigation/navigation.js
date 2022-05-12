@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AuthStackScreen from "./AuthStackScreen";
 import MainTabScreen from "./MainTabScreen";
 
+
 const AppStack = createStackNavigator();
 
 const AppNavigator = props => {
@@ -13,6 +14,7 @@ const AppNavigator = props => {
             <AppStack.Navigator headerMode='none'>
                 <AppStack.Screen name='Auth' component={AuthStackScreen} />
                 <AppStack.Screen name='MainTab' component={MainTabScreen} />
+             
             </AppStack.Navigator>
         </NavigationContainer>
     )

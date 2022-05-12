@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const baseUrl = Constants.BASE_URL;
 
+// Post API 
 
 export const postRequest = async (url, data) => {
 
@@ -40,6 +41,8 @@ export const postRequest = async (url, data) => {
     });
 };
 
+// Form Data for Image (Currently not working)
+
 export const postFormDataRequest = async( url, data ) => {
   // console.log("Data: ",data)
   return await axios
@@ -73,6 +76,8 @@ export const postFormDataRequest = async( url, data ) => {
   });
 }
 
+// Get API for Logout
+
  export const getRequest = async( url ) => {
    return await axios
    .get( baseUrl + url, { 
@@ -104,6 +109,7 @@ export const postFormDataRequest = async( url, data ) => {
   };
 })}
 
+// Get API 
 
 export const getMainRequest = async( url ) => {
   return await axios
@@ -135,5 +141,38 @@ export const getMainRequest = async( url ) => {
      statusCode: error.response.status,
  };
 })}
+
+// Refresh Token
+
+export const refreshToken = async(data) => {
+  return await axios
+  .post( apiBaseUrl + '/refresh-token' , data,{
+      headers: {
+          'Content-Type': 'application/json',
+        } 
+  })
+  .then( (response) => {
+      if(response.data.status===1) {
+          return {
+            success: true,
+            data: response.data,
+            statusCode: response.status,
+          };
+      } else {
+          return {
+            success: false,
+            data: response.data,
+            statusCode: response.status,
+          };
+      }
+  })
+  .catch((error) => {
+        return {
+          success: false,
+          data: error.response.data,
+          statusCode: error.response.status,
+      };
+  });
+}
  
   

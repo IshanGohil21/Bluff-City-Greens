@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions, FlatList, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -13,6 +13,7 @@ import SearchBarScreen from '../../../Components/Slider/SearchBar2';
 import CategoriesScreen from '../../../Components/Categories';
 import { getMainRequest } from '../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
+import RecommendedProductsCommon from '../../../Components/RecommendedProducts';
 
 const { width } = Dimensions.get('window')
 
@@ -55,26 +56,20 @@ const HomeScreen = (props) => {
   useEffect(() => {
     // getPastOrders();
      getRecommendedOrders();
-      getBanners();
+      getBanner();
      getCategories();
     setIsLoading(false)
   }, [])
 
-  // useEffect( () => {
-  //   console.log(recommendedOrders);
-  // }, [recommendedOrders])
-
-
-
-
     // Banners API
-  const [banners, setBanners] = useState([]);
-  const getBanners = async() => {
-    const response = await getMainRequest('/customer/get-banner')
-     //console.log("Banners   ", response.data );
+  const [banner, setBanner] = useState([]);
+  const getBanner = async() => {
+    const response = await getMainRequest('/customer/get-homepage')
+    // console.log("Banners   ", response.data );
 
      if(response.success){
-       setBanners(response.data.banner);
+       setBanner(response.data.banners);
+      // console.log(response.data.banners);
      } else {
        Toast.show('No Banners to Show Currently!')
      }
@@ -82,12 +77,12 @@ const HomeScreen = (props) => {
 
   // Recommended APIs
   const getRecommendedOrders = async() => {
-    const response = await getMainRequest('/customer/get-rec')
+    const response = await getMainRequest('/customer/get-homepage')
     //  console.log('get Recommended   ', response)
 
     if(response.success){
-      setRecommendedOrders(response.data)
-      //  console.log('Recommended' , response.data);
+      setRecommendedOrders(response.data.recommended_products)
+      //  console.log('Recommended' , response.data.recommended_products);
     }
     else {
       Toast.show('No Recommended Orders Available Currently');
@@ -102,22 +97,13 @@ const HomeScreen = (props) => {
     // console.log("Categories   ", response);
 
     if (response.success) {
-      setCatogeries(response.data.recommended)
-        // console.log('Categories      ', response.data);
+      setCatogeries(response.data.categories)
+     //    console.log('Categories      ', response.data.categories);
     }
     else {
       Toast.show('No Categories Available Currently');
     }
   }
-  
-  const  renderImage = itemData => {
-    return (
-      <View>
-        <Image style={{uri: itemData.item.image}} style={{height: 50, width:50}} />
-      </View>
-    )
-  }
-
 
 return (
   <ScrollView>
@@ -176,8 +162,13 @@ return (
         </View>
       </View>
       { /* Body */}
+      { isLoading ?
+            <View style={styles.loader}>
+                <StatusBar backgroundColor={Colors.white} barStyle='light-content'/>
+                <ActivityIndicator size={100} color={Colors.primary} />
+            </View> 
+            :
       <View >
-
         {/* Banners */}
         <View>
           <ScrollView
@@ -186,9 +177,8 @@ return (
             onScroll={change}
             showsHorizontalScrollIndicator={false}
           >
-            
             {
-              banners.map( (item,index) => {
+              banner.map( (item,index) => {
                 // console.log("\n\nITEM:      ",item);
                 return( 
                   <View key={index}> 
@@ -200,7 +190,7 @@ return (
           </ScrollView>
           <View style={styles.scroll} >
             {
-              banners.map((i, k) => (
+              banner.map((i, k) => (
                 <Text key={k} style={k == active ? styles.pagingActive : styles.paging} > ⬤ </Text>
               ))
             }
@@ -217,14 +207,14 @@ return (
             data={categories}
             horizontal
             showsHorizontalScrollIndicator={false}
-            renderItem={( item ) => {
-                // console.log("Heloooooooo        ",itemData.item);
+            renderItem={( itemData ) => {
+                // console.log(" \n\n\n\Categories ITEMS        ",itemData.item);
               return (
-                <View key={item.id}>
+                <View key={itemData.item.id}>
                   <CategoriesScreen
-                    image={item.item_images[0].image}
-                    id={item.id}
-                    name={item.name}
+                    image={itemData.item.image}
+                    id={itemData.item.id}
+                    name={itemData.item.title}
                    // color={item.color}
                     onClick={() => { props.navigation.navigate( 'Shop' , {screen:'Fruits' }) }}
                   />
@@ -264,63 +254,43 @@ return (
           </View>
         </View>
 
-        {/* Recommended Products */}
+        {/* Recommended Products render by API */}
         <View style={styles.commonContainer} >
           <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
             <Text style={styles.common} >Recommended Products</Text>
             <Text style={styles.view} >View All</Text>
           </View>
-          {/* <View style={styles.heading} >
-            <FlatList
-              data={recommendedOrders}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={(itemData) => {
-                // console.log(itemData.item);
-                return (
-                  <View key={itemData.item.id}>
-                    <Orders
-                      
-                      // image= {itemData.item.item_images.image}
-                      item={itemData.item}
-                      id={itemData.item.id}
-                      name={itemData.item.name}
-                      weight={itemData.item.item_sizes[0].size}
-                      price={itemData.item.item_sizes[0].price}
-                      onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: itemData.item, recommendId: itemData.item.id }) }}
-                      onHeart={() => { }}
-                    />
-                    
-                  </View>
-                )
-              }}
-            />
-            
-          </View> */}
+         
+          <View style={styles.heading} >
+          <FlatList 
+            data={recommendedOrders}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={(itemData) => {
+              //console.log(itemData.item);
+              return (
+                <View key={itemData.item.id} >
+                  <RecommendedProductsCommon 
+                  item={itemData.item}
+                  name={itemData.item.name}
+                  image={itemData.item.item_images[0].image}
+                  weight={itemData.item.item_sizes[0].size}
+                  price={itemData.item.item_sizes[0].price}
+                  onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: itemData.item, recommendId: itemData.item.id }) }}
+                  />
+                </View>
 
-            <ScrollView>
-              <View>
-                {
-                  recommendedOrders.map((item) => {
-                    // console.log(item);  
-                    return (
-                      <View key={item.id} >
-
-                        <Text>{item.name}</Text>
-                        <Image source={{uri: item.item_images[0].image }} style={{height:50, width:50}} />
-
-                      </View>
-                    )
-                  })
-                }
-              </View>
-            </ScrollView>
+              )
+            }}          
+          />
           </View>
-        
+          </View>
       </View>
+  }
     </View>
-
+          
   </ScrollView>
+          
 )
 };
 
@@ -520,7 +490,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: 15,
     height: 20,
-  }
+  },
+  loader:{
+    justifyContent:'center',
+    alignItems:'center',
+    flex:1,
+},
 });
 
 export default HomeScreen;

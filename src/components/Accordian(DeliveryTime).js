@@ -4,74 +4,49 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../CommonConfig/CommonConfig';
 
 const AccordianDeliveryTime = (props) => {
+    const item = props.item
+    // console.log(item);
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpanded = () => {
         setExpanded(!expanded)
     }
-
-    let date = []
-    for (let i = 0; i <= 31; i++) {
-        // console.log(week);
-        const week = moment().startOf('day').add(i, 'days').format('ddd, MMM Do')
-        date.push(week)
-    }
-    // console.log(date);
-
-    //Data
-let x = {
-    slotInterval: 2,
-    openTime: '6:00 ',
-    closeTime: '14:00 '
-  };
+        
+            const day = item.substring(0,3)
+            const month = item.substring(5,8)
+            const monthdate = item.substring(9,13)
+            return(
+              <View>
+                <TouchableOpacity style={styles.sche}  onPress={ () => {toggleExpanded()} } >
+                <View style={{flex:0.5,backgroundColor: Colors.blue, alignItems: 'center', justifyContent:'center'  }} >  
+                  <Text style={{fontSize: 16, color: Colors.white, fontWeight:'bold'}} >{month}</Text>
+                  <Text style={{fontSize: 12, color:Colors.white, fontWeight:'bold'}} > {monthdate} </Text>
+                </View>
+                  <View style={{flex:3,}} >
+                  <Text style={{fontSize: 18, marginHorizontal: 20}} >{day}</Text>
+                  </View>
+                  <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
+                  </TouchableOpacity>
   
-  //Format the time
-  let startTime = moment(x.openTime, "HH:mm");
-  
-  //Format the end time and the next day to it 
-  let endTime = moment(x.closeTime, "HH:mm").add(1, 'hour');
-  
-  //Times
-  let allTimes = [];
-  
-  //Loop over the times - only pushes time with 30 minutes interval
-  while (startTime < endTime) {
-    //Push times
-    allTimes.push(startTime.format("HH:mm")); 
-    //Add interval of 30 minutes
-    startTime.add(x.slotInterval, 'hour');
-  }
-  
-  // console.log(allTimes);
-
-    return (
-        <View>
-            <FlatList
-                data={date}
-                keyExtractor={(item, index) => index}
-                renderItem={({ item }) => {
-                    const day = item.substring(0, 3)
-                    const month = item.substring(5, 8)
-                    const monthdate = item.substring(9, 13)
-                    return (
-                        <TouchableOpacity style={{ flexDirection: 'row', padding: 5, }} onPress={() => {toggleExpanded()}} >
-                            <View style={{ flex: 0.5, }} >
-                                <Text>{month}</Text>
-                                <Text> {monthdate} </Text>
-                            </View>
-                            <View style={{ flex: 3, }} >
-                                <Text>{day}</Text>
-                                <Ionicons  name={expanded ?  'chevron-up-outline' : 'chevron-down-outline'} size={24} color={Colors.grey} />
-                            </View>
-
-                        </TouchableOpacity>
-                    )
-                }
-                }
-            />
-
-        </View>
-    )
+                  {expanded &&
+                    <FlatList 
+                      data={allTimes}
+                      keyExtractor={( item, index )  => index}
+                      renderItem ={ ({ item }) => {
+                        const time = item.substring(0,10)
+                        return (
+                          <View style={styles.select} >
+                            <Text style={styles.times} >{time} to {time} </Text>
+                            <TouchableOpacity onPress={() => {}} style={styles.signin}> 
+                              <Text style={styles.select0} >SELECT </Text>
+                            </TouchableOpacity>
+                          </View>
+                        )
+                      } }
+                    /> 
+                  }
+                  </View>
+        )
 }
 
 const styles = StyleSheet.create({
