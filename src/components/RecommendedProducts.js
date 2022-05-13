@@ -11,7 +11,9 @@ const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
 const RecommendedProductsCommon = (props) => {
-  
+  // const item = props.item
+  // console.log("Item:      ",item);
+
     const cartItems = useSelector(state => {
         const updatedCartItems = [];
         for (const key in state.Cart.items) {

@@ -54,12 +54,10 @@ const HomeScreen = (props) => {
   const [isLoading, setIsLoading] = useState({});
 
   useEffect(() => {
-    // getPastOrders();
-    // getAccess();
-    getRecommendedOrders();
     getBanner();
     getCategories();
     getPastOrders();
+    getRecommendedOrders();
     setIsLoading(false)
   }, [])
 
@@ -71,7 +69,7 @@ const HomeScreen = (props) => {
 //     setToken(await AsyncStorage.getItem("token"))  
 // }
 
-    // Banners API
+    // Banners API (common Home Page)
   const [banner, setBanner] = useState([]);
   const getBanner = async() => {
     const response = await getMainRequest('/customer/get-homepage')
@@ -85,7 +83,7 @@ const HomeScreen = (props) => {
      }
   }
 
-  // Recommended APIs
+  // Recommended APIs (common Home Page)
   const getRecommendedOrders = async() => {
     const response = await getMainRequest('/customer/get-homepage')
     //  console.log('get Recommended   ', response)
@@ -99,7 +97,7 @@ const HomeScreen = (props) => {
     }
   }
 
-  // Categories API
+  // Categories API (common Home Page)
   const [categories, setCatogeries] = useState([]);
 
   const getCategories = async () => {
@@ -114,6 +112,8 @@ const HomeScreen = (props) => {
       Toast.show('No Categories Available Currently');
     }
   }
+
+// Past Orders API (common Home Page)
 
   const [pastOrders, setPastOrders] = useState([]);
 
@@ -258,46 +258,29 @@ return (
             <Text style={styles.view} >View All</Text>
           </View>
           <View style={styles.heading}>
-            {/* <FlatList
+            <FlatList
               data={pastOrders}
               horizontal
               showsHorizontalScrollIndicator={false}
-              renderItem={({ itemData }) => {
-                console.log(itemData);
+              renderItem={(itemData) => {
+                console.log("\n\n",itemData);
                 return (
-                  <View key={itemData.id}>
-                    <Orders
-                     // id={item.id}
-                      // image={item.fruitimages[0]}
-                      // name={item.name}
-                      // weight={item.weight[0]}
-                      // price={item.discountedPrice}
-                      // onClick={() => { props.navigation.navigate('Past_Orders', { id: item.id }) }}
+                  <View key={itemData.item.id}>
+                    <RecommendedProductsCommon
+                    item={itemData.item}
+
+                      name={itemData.item.order_items[0].item.name}
+                      // id={itemData.id}
+                      image={itemData.item.order_items[0].sub_category.image}
+                      weight={itemData.item.order_items[0].item_size.size}
+                      price={itemData.item.order_items[0].item_size.price}
+                       onClick={() => { props.navigation.navigate('Past_Orders', { past: itemData.item, pastId: itemData.item.id }) }}
                       // onHeart={() => { }}
                     />
                   </View>
                 )
               }}
-            /> */}
-            <ScrollView
-            horizontal
-            pagingEnabled={true}
-            onScroll={change}
-            showsHorizontalScrollIndicator={false}
-            >
-              {
-                pastOrders.map( (item) => {
-                  return(
-                    <View>
-                      <Text>No Past Orders Currently</Text>
-                    </View>
-                  )
-                } )
-              }
-
-            </ScrollView>
-
-             
+            />
           </View>
         </View>
 
@@ -314,7 +297,7 @@ return (
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={(itemData) => {
-              //console.log(itemData.item);
+             // console.log(itemData.item);
               return (
                 <View key={itemData.item.id} >
                   <RecommendedProductsCommon 

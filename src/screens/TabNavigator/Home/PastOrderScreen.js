@@ -15,12 +15,16 @@ const height = width * 100 / 0.6
 const PastOrderScreen = (props) => {
     const dispatch = useDispatch();
 
+    const pastId = props.route.params.pastId
+    const past = props.route.params.past
+    console.log(past);
+
     const [isFavorite, setIsFavorite] = useState(props.initialState) ;
 
     const [checked, setChecked] = useState('first')
     const refRBSheet = useRef();
     const pid = props.route.params.id
-    const selectedItem = PastOrder.find(item => item.id === pid)
+    // const past = PastOrder.find(item => item.id === pid)
 
     const height = width * 100 / 0.6
     const [active, setActive] = useState(0);
@@ -42,14 +46,14 @@ const PastOrderScreen = (props) => {
         return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
     })
     
-    const x = cartItems.find(item => item.id  === selectedItem.id)
+    const x = cartItems.find(item => item.id  === past.id)
 
     return (
         <View style={styles.screen} >
-            <StatusBar backgroundColor={selectedItem.bgColor} barStyle='light-content' />
+            <StatusBar backgroundColor={past.bgColor} barStyle='light-content' />
 
             {/* Header */}
-            <View style={{ ...styles.header, backgroundColor: selectedItem.bgColor }} >
+            <View style={{ ...styles.header, backgroundColor: past.bgColor }} >
                 <View style={styles.back} >
                     <TouchableOpacity onPress={() => { props.navigation.goBack() }}  >
                         <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.titleIcons} />
@@ -61,13 +65,13 @@ const PastOrderScreen = (props) => {
 
                 {/* Images ScrollView */}
                 <View style={{ alignItems: 'center', padding: 10 }} >
-                    <ScrollView
+                    {/* <ScrollView
                         pagingEnabled
                         horizontal
                         onScroll={change}
                         showsHorizontalScrollIndicator={false}
                     >
-                        {selectedItem.fruitimages.map(item => {
+                        {past..map(item => {
                             return (
                                 <View style={styles.fruit} key={item}>
                                     <Image source={item} style={styles.imageContainer} />
@@ -75,41 +79,41 @@ const PastOrderScreen = (props) => {
                             )
                         })}
 
-                    </ScrollView>
+                    </ScrollView> */}
                 </View>
                 <View style={styles.scroll} >
-                    {
-                        selectedItem.fruitimages.map((i, k) => (
+                    {/* {
+                        past.fruitimages.map((i, k) => (
                             <Text key={k} style={k == active ? styles.pagingActive : styles.paging} > ⬤ </Text>
                         ))
-                    }
+                    } */}
                 </View>
             </View>
 
             {/* Body */}
-            <View style={{ ...styles.header, backgroundColor: selectedItem.bgColor }} >
+            <View style={{ ...styles.header, backgroundColor: past.bgColor }} >
                 <View style={styles.body} >
                     <View style={styles.bodyHeading} >
-                        <Text style={styles.fruitName}>Fresho {selectedItem.name}</Text>
-                        <Text style={styles.priceBefore} >${selectedItem.price}</Text>
+                        <Text style={styles.fruitName}>Fresho {past.name}</Text>
+                        <Text style={styles.priceBefore} >${past.item.order_items[0].item_size[0].price}</Text>
                     </View>
                     <View style={styles.bodyHeading} >
                         <Text style={styles.weightContainer} >
-                            Net wt. {selectedItem.weight[0]}
+                            Net wt. {past.order_items[0].item_size[0].size}
                         </Text>
-                        <Text style={styles.nonOriginalPrice} >${selectedItem.discountedPrice}</Text>
+                        <Text style={styles.nonOriginalPrice} >${past.item.order_items[0].item_size.price}</Text>
                     </View>
                     <View style={styles.detailContainer} >
-                        <Text style={styles.details} >{selectedItem.details}</Text>
+                        <Text style={styles.details} >{past.details}</Text>
                     </View>
                     {x ? <View style={styles.quantity} >
                         <Text style={styles.quantityContainer} >Quantity</Text>
                         <View style={styles.addQuantity} >
-                            <TouchableOpacity style={styles.addition} onPress={() => {dispatch(CartActions.addToCart(selectedItem))} }  >
+                            <TouchableOpacity style={styles.addition} onPress={() => {dispatch(CartActions.addToCart(past))} }  >
                                 <Ionicons name={Icons.ADD} color={Colors.grey} size={24} />
                             </TouchableOpacity>
                             <Text style={styles.number} > {x.qty} </Text>
-                            <TouchableOpacity onPress={() => {dispatch(CartActions.removeFromCart(selectedItem))} } >
+                            <TouchableOpacity onPress={() => {dispatch(CartActions.removeFromCart(past))} } >
                                 <Ionicons name={Icons.SUB} color={Colors.grey} size={24} />
                             </TouchableOpacity>
                         </View>
@@ -151,7 +155,7 @@ const PastOrderScreen = (props) => {
                                         status={checked === 'first' ? 'checked' : 'unchecked'}
                                         onPress={() => setChecked('first')}
                                     />
-                                    <Text>{selectedItem.weight[0]}</Text>
+                                    <Text>{past.order_items[0].item_size[0].size}</Text>
                                 </View>
 
                                 <View style={styles.button} >
@@ -161,7 +165,7 @@ const PastOrderScreen = (props) => {
                                         status={checked === 'second' ? 'checked' : 'unchecked'}
                                         onPress={() => setChecked('second')}
                                     />
-                                    <Text>{selectedItem.weight[1]}</Text>
+                                    <Text>{past.order_items[0].item_size[0].size}</Text>
                                 </View>
 
                                 <View style={styles.button} >
@@ -171,7 +175,7 @@ const PastOrderScreen = (props) => {
                                         status={checked === 'third' ? 'checked' : 'unchecked'}
                                         onPress={() => setChecked('third')}
                                     />
-                                    <Text>{selectedItem.weight[2]}</Text>
+                                    <Text>{past.order_items[0].item_size[0].size}</Text>
                                 </View>
                             </View>
                         </RBSheet>
@@ -190,7 +194,7 @@ const PastOrderScreen = (props) => {
                                 <Ionicons name={Icons.HEART_FILLED} color={Colors.red} size={30} style={styles.heartFilled} /> 
                             }
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.signin}   onPress={() => {dispatch(CartActions.addToCart(selectedItem))} } >
+                        <TouchableOpacity style={styles.signin}   onPress={() => {dispatch(CartActions.addToCart(past))} } >
                             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
                             <Text style={styles.textCart} >Add to Cart</Text>
                         </TouchableOpacity>

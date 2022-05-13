@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginHorizontal: 10,
         elevation: 1.5,
-        backgroundColor: Colors.white,
+        // backgroundColor: Colors.white,
       },
       catoContainer: {
         height: 50, 
