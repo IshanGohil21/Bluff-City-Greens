@@ -11,9 +11,10 @@ import PastOrder from '../../../dummy-data/PastOrders';
 import Orders from '../../../Components/Orders';
 import SearchBarScreen from '../../../Components/Slider/SearchBar2';
 import CategoriesScreen from '../../../Components/Categories';
-import { getMainRequest } from '../../../Helper/ApiHelper';
+import { getMainRequest, getRequest } from '../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
 import RecommendedProductsCommon from '../../../Components/RecommendedProducts';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window')
 
@@ -47,19 +48,28 @@ const HomeScreen = (props) => {
 
   const x = Address.find(item => item.id === activeId)
 
-  const [pastOrders, setPastOrders] = useState([]);
   const [recommendedOrders, setRecommendedOrders] = useState([]);
+  // const [token, setToken] = useState('')
   
-  
-  const [isLoading, setIsLoading] = useState([]);
+  const [isLoading, setIsLoading] = useState({});
 
   useEffect(() => {
     // getPastOrders();
-     getRecommendedOrders();
-      getBanner();
-     getCategories();
+    // getAccess();
+    getRecommendedOrders();
+    getBanner();
+    getCategories();
+    getPastOrders();
     setIsLoading(false)
   }, [])
+
+  // useEffect(() => {
+  //   console.log("USER      ",token)
+  // },[token])
+
+//   const getAccess = async() => {
+//     setToken(await AsyncStorage.getItem("token"))  
+// }
 
     // Banners API
   const [banner, setBanner] = useState([]);
@@ -102,6 +112,24 @@ const HomeScreen = (props) => {
     }
     else {
       Toast.show('No Categories Available Currently');
+    }
+  }
+
+  const [pastOrders, setPastOrders] = useState([]);
+
+  const getPastOrders = async () => {
+    
+    const response = await getRequest('/customer/get-homepage')
+    
+   // console.log("\n\n\n\nAll      ", response);
+
+    if(response.success){
+      setPastOrders(response.data.past_orders)
+     // console.log("\n\n\n\nPastOrders       ", response.data.past_orders);
+    // console.log("\n\n\n\n\ALL     ", response.data);
+    }
+    else {
+      Toast.show('No Past Orders')
     }
   }
 
@@ -230,27 +258,46 @@ return (
             <Text style={styles.view} >View All</Text>
           </View>
           <View style={styles.heading}>
-            <FlatList
-              data={PastOrder}
+            {/* <FlatList
+              data={pastOrders}
               horizontal
               showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => {
+              renderItem={({ itemData }) => {
+                console.log(itemData);
                 return (
-                  <View key={item.id}>
+                  <View key={itemData.id}>
                     <Orders
-                      item={item}
-                      id={item.id}
-                      image={item.fruitimages[0]}
-                      name={item.name}
-                      weight={item.weight[0]}
-                      price={item.discountedPrice}
-                      onClick={() => { props.navigation.navigate('Past_Orders', { id: item.id }) }}
-                      onHeart={() => { }}
+                     // id={item.id}
+                      // image={item.fruitimages[0]}
+                      // name={item.name}
+                      // weight={item.weight[0]}
+                      // price={item.discountedPrice}
+                      // onClick={() => { props.navigation.navigate('Past_Orders', { id: item.id }) }}
+                      // onHeart={() => { }}
                     />
                   </View>
                 )
               }}
-            />
+            /> */}
+            <ScrollView
+            horizontal
+            pagingEnabled={true}
+            onScroll={change}
+            showsHorizontalScrollIndicator={false}
+            >
+              {
+                pastOrders.map( (item) => {
+                  return(
+                    <View>
+                      <Text>No Past Orders Currently</Text>
+                    </View>
+                  )
+                } )
+              }
+
+            </ScrollView>
+
+             
           </View>
         </View>
 

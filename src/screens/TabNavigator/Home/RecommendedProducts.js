@@ -12,6 +12,9 @@ import * as CartActions from '../../../Redux/Action/Cart';
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
+var randomColor = Math.floor(Math.random()*16111215).toString(16);
+//console.log(randomColor);
+
 const RecommendedProductsScreen = (props) => {
     const dispatch = useDispatch();
 
@@ -23,9 +26,8 @@ const RecommendedProductsScreen = (props) => {
 
     const recommendId = props.route.params.recommendId
     const current= props.route.params.recommended
-     console.log( "\n\n\n  Current        " ,current);
+    // console.log( "\n\n\n  Current        " ,current);
     
-
     const height = width * 100 / 0.6
     const [active, setActive] = useState(0);
 
@@ -52,16 +54,16 @@ const RecommendedProductsScreen = (props) => {
 
     return (
         <View style={styles.screen} >
-            <StatusBar backgroundColor={current.bgColor} barStyle='light-content' />
+            <StatusBar backgroundColor={`#${randomColor}`} barStyle='light-content' />
 
             {/* Header */}
-            <View style={{ ...styles.header, backgroundColor: current.bgColor }} >
+            <View style={{ ...styles.header, backgroundColor: current.bgColor, backgroundColor: `#${randomColor}`}} >
                 <View style={styles.back} >
                     <TouchableOpacity onPress={() => { props.navigation.goBack() }}  >
-                        <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.red} style={styles.titleIcons} />
+                        <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.titleIcons} />
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Ionicons name={Icons.CART} size={30} color={Colors.red} style={styles.titleIcons} />
+                    <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
+                        <Ionicons name={Icons.CART} size={30} color={Colors.white} style={styles.titleIcons} />
                     </TouchableOpacity>
                 </View>
                 
@@ -75,7 +77,7 @@ const RecommendedProductsScreen = (props) => {
                     showsHorizontalScrollIndicator={false}
                 >
                         {current.item_images.map(  (item,index) => {
-                            console.log(item);
+                           // console.log(item);
                                 return (
                                 <View style={styles.fruit} key={index} >
                                     <Image source={{ uri : item.image}} style={styles.imageContainer}/>
@@ -96,7 +98,7 @@ const RecommendedProductsScreen = (props) => {
             </View> 
 
             {/* Body */}
-            <View style={{ ...styles.header, backgroundColor: current.bgColor }} >
+            <View style={{ ...styles.header, backgroundColor: `#${randomColor}` }} >
                 <View style={styles.body} >
                     <View style={styles.bodyHeading} >
                         <Text style={styles.fruitName}>{current.name}</Text>

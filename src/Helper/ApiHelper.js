@@ -17,7 +17,7 @@ export const postRequest = async (url, data) => {
             }
       })
       .then((response) => {
-          //console.log("RESP          ",response.status)
+          console.log("RESP          ",response.status)
         if (response.status === 200) {
           return {
             success: true,

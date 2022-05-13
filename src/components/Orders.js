@@ -47,7 +47,7 @@ const Orders = (props) => {
       {/* Image Containers */}
       <TouchableOpacity style={styles.orderContainer} onPress={props.onClick} >
         <View style={styles.ordersScreen}>
-          <Image source={props.image} style={styles.image2}  />
+          <Image source={{uri :props.image}} style={styles.image2}  />
           
           {/* Text Container */}
           <View style={styles.textContainer} >

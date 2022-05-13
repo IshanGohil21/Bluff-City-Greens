@@ -35,8 +35,12 @@ const SignInScreen = (props) => {
         } else {
             setisLoading(false);
             await AsyncStorage.setItem('token', response.data.access_token)
+            // console.log("\n\n\n\n\ALL DATA             ", response.data);
+            // console.log("\n\n\n\n\nACCESS             ", response.data.access_token) 
             await AsyncStorage.setItem('refreshToken', response.data.refresh_token)
+           // console.log("\n\n\n\n\nREFRESH            ", response.refresh_token);
             await AsyncStorage.setItem('userInfo', JSON.stringify(response.data.user))
+           // console.log("\n\n\n\n\n USER        ", response.data.user);
             await AsyncStorage.setItem('isLogin', "true")
 
              props.navigation.navigate('MainTab', { screen: 'Home' })

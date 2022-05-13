@@ -30,10 +30,8 @@ const Cartcomp = (props) => {
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
 
-
     const x = cartItems.find(item => item.id === props.id)
     // console.log(x);
-
 
     return (
         <View style={styles.main} >
@@ -50,7 +48,7 @@ const Cartcomp = (props) => {
                 </View>
                 <View>
                     <TouchableOpacity style={styles.weight} onPress={() => refRBSheet.current.open()} >
-                        <Text style={styles.weight0} >{props.weight[0]}</Text>
+                        <Text style={styles.weight0} >{props.weight}</Text>
                         <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.grey} />
                     </TouchableOpacity>
 
@@ -58,7 +56,7 @@ const Cartcomp = (props) => {
                 </View>
                 <Text style={styles.Oprice} >${props.price}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                    <Text style={styles.discount} >${props.disPrice}</Text>
+                    <Text style={styles.discount} >${props.price}</Text>
 
                     <View >
                         {x ?
@@ -115,7 +113,7 @@ const Cartcomp = (props) => {
                                 status={checked === 'first' ? 'checked' : 'unchecked'}
                                 onPress={() => setChecked('first')}
                             />
-                            <Text>{props.weight[0]}</Text>
+                            <Text>{props.size[0]}</Text>
                         </View>
 
                         <View style={styles.button} >
@@ -125,7 +123,7 @@ const Cartcomp = (props) => {
                                 status={checked === 'second' ? 'checked' : 'unchecked'}
                                 onPress={() => setChecked('second')}
                             />
-                            <Text>{props.weight[1]}</Text>
+                            <Text>{props.size[1]}</Text>
                         </View>
 
                         <View style={styles.button} >
@@ -135,7 +133,7 @@ const Cartcomp = (props) => {
                                 status={checked === 'third' ? 'checked' : 'unchecked'}
                                 onPress={() => setChecked('third')}
                             />
-                            <Text>{props.weight[2]}</Text>
+                            <Text>{props.size[2]}</Text>
                         </View>
                     </View>
                 </RBSheet>
