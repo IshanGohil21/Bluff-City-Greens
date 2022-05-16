@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View , StatusBar, TouchableOpacity, FlatList} from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
@@ -7,6 +7,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import MostPopularProductScreen from '../../../dummy-data/MostPopular';
 import Popular from '../../../Components/Popular';
 import SearchBarScreen3 from '../../../Components/SearchBar3';
+import { getMainRequest } from '../../../Helper/ApiHelper';
 
 const SearchScreen = (props) => {
 

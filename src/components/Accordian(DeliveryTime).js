@@ -2,9 +2,35 @@ import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, FlatList }
 import React, { useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../CommonConfig/CommonConfig';
+import { date } from 'yup';
 
 const AccordianDeliveryTime = (props) => {
-    const item = props.item
+  //Time Data For 2 Hours Diff
+let x = {
+  slotInterval: 2,
+  openTime: '6:00 ',
+  closeTime: '14:00 '
+};
+
+let startTime = moment(x.openTime, "HH:mm");
+
+let endTime = moment(x.closeTime, "HH:mm").add(1, 'hour');
+
+let allTimes = [];
+
+while (startTime < endTime) {
+  
+  allTimes.push(startTime.format("HH:mm")); 
+ 
+  startTime.add(x.slotInterval, 'hour');
+}
+
+//  console.log(allTimes);
+
+
+
+
+    const itemsss = props.item
     // console.log(item);
     const [expanded, setExpanded] = useState(false);
 
@@ -12,9 +38,9 @@ const AccordianDeliveryTime = (props) => {
         setExpanded(!expanded)
     }
         
-            const day = item.substring(0,3)
-            const month = item.substring(5,8)
-            const monthdate = item.substring(9,13)
+            const day = itemsss.substring(0,3)
+            const month = itemsss.substring(5,8)
+            const monthdate = itemsss.substring(9,13)
             return(
               <View>
                 <TouchableOpacity style={styles.sche}  onPress={ () => {toggleExpanded()} } >

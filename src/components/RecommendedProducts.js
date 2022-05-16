@@ -11,8 +11,8 @@ const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
 const RecommendedProductsCommon = (props) => {
-  // const item = props.item
-  // console.log("Item:      ",item);
+   const itemW = props.item
+    //console.log("Item:      ",itemW);
 
     const cartItems = useSelector(state => {
         const updatedCartItems = [];
@@ -23,11 +23,11 @@ const RecommendedProductsCommon = (props) => {
         }
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
       })
-      // console.log(cartItems);
+       //console.log(cartItems);
     
       const dispatch = useDispatch();
     
-      const x = cartItems.find(item => item.id === props.id)
+      const x = cartItems.find(item => item.id === props.id);
     
       const [isTouched, setIsTouched] = useState(props.initialState);
     
@@ -69,18 +69,18 @@ const RecommendedProductsCommon = (props) => {
         {x ?
 
           <View style={styles.signin2} >
-            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item)) }} >
+            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW)) }} >
               <Ionicons name={Icons.ADD} size={24} color={Colors.white} />
             </TouchableOpacity>
 
             <Text style={styles.qtyText} > {x.qty} </Text>
 
-            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item)) }} >
+            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(itemW)) }} >
               <Ionicons name={Icons.SUB} size={24} color={Colors.white} />
             </TouchableOpacity>
           </View>
           :
-          <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item)) }} style={styles.addButton} >
+          <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW)) }} style={styles.addButton} >
             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
             <Text style={styles.button} >ADD</Text>
           </TouchableOpacity>

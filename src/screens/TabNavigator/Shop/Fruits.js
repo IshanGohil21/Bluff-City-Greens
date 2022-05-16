@@ -11,10 +11,19 @@ import { ScrollView } from 'react-native-gesture-handler';
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
-
 const numColumns = 2
 
 const FruitShopScreen = (props) => {
+    // const  shopId = props.route.params.shopId
+    // const currentShop = props.route.params.shop
+    // console.log(currentShop);
+
+    const shopID = props.route.params.shopId
+    // console.log(shopID);
+
+    const shopSub = props.route.params.shop
+    console.log("\n\n\n\n Sub_Categories for each             ",shopSub);
+
   return (
        <ScrollView>
     <View style={styles.main} >
@@ -51,16 +60,17 @@ const FruitShopScreen = (props) => {
                 <Text style={styles.by} > SHOP BY CATEGORY </Text>
             </View>
 
-            <View >
+            <View>
                 <FlatList
-                    data={Fruits.subname}
+                    data={shopSub.sub_categories}
                     numColumns= {2}
                     renderItem={({ item }) => {
+                        console.log(item);
                         return(
                             <View key={item.id} >
                                 <FruitsComp 
-                                    img={item.img}
-                                    nameF={item.nameF}
+                                    img={item.image}
+                                    nameF={item.title}
                                     onClick={() => {props.navigation.navigate('Vegetables')}}
                                 />
                             </View>

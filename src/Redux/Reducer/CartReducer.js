@@ -22,17 +22,18 @@ export default (state = initialState, action) => {
         case ADD_TO_CART:
 
             const addedGreens = action.greens;
-             //console.log(addedGreens);
+            // console.log(addedGreens);
             let cartItem;
-
 
             if (state.items[addedGreens.id]) {
                 cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal + addedGreens.price }
             } else {
-                
                 cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.price }
             }
+            console.log(cartItem.price);
+            console.log(cartItem.qty);
             console.log(cartItem);
+            
             return {
                 ...state,
                 items: { ...state.items, [addedGreens.id]: cartItem }

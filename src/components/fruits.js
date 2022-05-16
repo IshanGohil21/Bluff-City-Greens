@@ -13,7 +13,7 @@ const FruitsComp = (props) => {
   return (
     <View key={props.id} style={styles.mappingComp} >
         <TouchableOpacity  onPress={props.onClick} >
-        <Image source={props.img} style={styles.imageCato} />
+        <Image source={{uri : props.img}} style={styles.imageCato} />
         </TouchableOpacity>
         <Text>{props.nameF}</Text>
     </View>

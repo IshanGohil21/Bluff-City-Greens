@@ -119,7 +119,9 @@ const RecommendedProductsScreen = (props) => {
                         <TouchableOpacity style={styles.addition}  onPress={() => {dispatch(CartActions.addToCart(current))} }  >
                         <Ionicons name={Icons.ADD} color={Colors.grey} size={24} />
                         </TouchableOpacity>
+
                         <Text style={styles.number} > {x.qty} </Text>
+                        
                         <TouchableOpacity onPress={() => {dispatch(CartActions.removeFromCart(current))} }  >
                         <Ionicons name={Icons.SUB} color={Colors.grey} size={24}  />
                         </TouchableOpacity>

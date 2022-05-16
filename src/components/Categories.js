@@ -28,13 +28,14 @@ export default CategoriesScreen
 const styles = StyleSheet.create({
     categories: {
         alignItems: 'center',
-        padding: 10,
-        marginHorizontal: 10,
-        elevation: 1.5,
-        // backgroundColor: Colors.white,
+        padding: 5,
+        marginHorizontal: 5,
+        marginVertical: 10,
       },
       catoContainer: {
         height: 50, 
-        width: 50,
+        width: 40,
+        borderRadius: 10,
+        borderWidth: 30,
       }
 })

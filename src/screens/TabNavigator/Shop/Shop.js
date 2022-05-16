@@ -1,13 +1,33 @@
-import React from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, FlatList, Alert, ScrollView , Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import SearchBarScreen from '../../../Components/Slider/SearchBar2';
 import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import Products from '../../../dummy-data/Products';
 import ShopProductScreen from '../../../Components/Shop';
+import { getMainRequest } from '../../../Helper/ApiHelper';
 
 const ShopScreen = (props) => {
+    const [categories, setCategories] = useState({});
+        
+    useEffect( () => {
+        getCategoriesShop();
+    }, []);
+
+    const getCategoriesShop = async() => {
+        const response = await getMainRequest('/customer/get-homepage')
+        //    console.log("\n\n\n\nShop    ", response.data.categories); 
+        let errorMsg = "No Categories to show Right Now"
+    
+    if (response.success) {
+        setCategories(response.data.categories)
+    }
+    else{
+        Alert.alert("Error", errorMsg, [{ text: "Okay" }])
+    }
+}
+
     return (
         <View style={styles.main} >
             <StatusBar backgroundColor={Colors.primary} />
@@ -25,29 +45,41 @@ const ShopScreen = (props) => {
                 </View>
                 {/* Flatlist */}
                 <View>
-                    <ShopProductScreen
-                        images={Products[0].images}
-                        Pname={Products[0].Pname}
-                        color={Products[0].color}
-                        onPress={() => { props.navigation.navigate('Fruits', { id: Products[0].id }) }}
-                    />
-
-                    <FlatList
-                        data={Products}
-                        renderItem={({ item }) => {
+                     <FlatList
+                        data={categories}
+                        renderItem={({ item, index }) => {
+                            console.log("\n\n\n\n\nShop Cato     ",item);
                             return (
-                                <View key={item.id}>
+                                <View key={index}> 
                                     <ShopProductScreen
-                                        images={item.images}
-                                        Pname={item.Pname}
+                                        item={item}
+                                        id={item.id}
+                                        images={item.image}
+                                        Pname={item.title}
                                         color={item.color}
-                                        onPress={() => { }}
+                                        onPress={() => {props.navigation.navigate('Fruits') }}
                                     />
                                 </View>
                             )
                         }}
-                    />
+                    /> 
                 </View>
+                {/* ScrollView to test wether the called API is running or not */}
+                {/* <ScrollView>
+                        {
+                            categories.map( (item, index) => {
+                                console.log("\n\n\n\nHeloooo       ",item);
+                                return (
+                                    <View key={index} >
+                                        <Text>{item.title}</Text>
+                                        <Text>{item.items}</Text>
+                                        {/* <Image source={{ uri:item.image }} /> */}
+                                    {/* </View> */}
+                                {/* )
+
+                            } )
+                        } */}
+                {/* </ScrollView>  */}
 
             </View>
         </View>

@@ -53,6 +53,8 @@ const HomeScreen = (props) => {
   
   const [isLoading, setIsLoading] = useState({});
 
+  const z = cartItems.find(item => item.id === props.id)
+
   useEffect(() => {
     getBanner();
     getCategories();
@@ -126,7 +128,6 @@ const HomeScreen = (props) => {
     if(response.success){
       setPastOrders(response.data.past_orders)
      // console.log("\n\n\n\nPastOrders       ", response.data.past_orders);
-    // console.log("\n\n\n\n\ALL     ", response.data);
     }
     else {
       Toast.show('No Past Orders')
@@ -225,10 +226,11 @@ return (
           </View>
         </View>
         {/* Discount Coupon Image */}
-        <View>
+        {/* <View>
           <Image source={Images.discount} style={styles.discount} />
-        </View>
+        </View> */}
         {/* Categories */}
+
         <View style={styles.commonContainer} >
           <Text style={styles.common} >Categories</Text>
           <FlatList
@@ -244,7 +246,7 @@ return (
                     id={itemData.item.id}
                     name={itemData.item.title}
                    // color={item.color}
-                    onClick={() => { props.navigation.navigate( 'Shop' , {screen:'Fruits' }) }}
+                    onClick={() => { props.navigation.navigate('Fruits' ,{ shop: itemData.item, shopId: itemData.item.id }) }}
                   />
                 </View>
               )
@@ -263,7 +265,7 @@ return (
               horizontal
               showsHorizontalScrollIndicator={false}
               renderItem={(itemData) => {
-                console.log("\n\n",itemData);
+               // console.log("\n\n",itemData.item.order_items[0].item.name);
                 return (
                   <View key={itemData.item.id}>
                     <RecommendedProductsCommon

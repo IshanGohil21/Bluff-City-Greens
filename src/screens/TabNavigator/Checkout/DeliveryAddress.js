@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, TouchableOpacity, Image } from 'react-native'
-import React, { useState } from 'react'
+import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, TouchableOpacity, Image, Alert } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RadioButton } from 'react-native-paper';
 import { useSelector } from 'react-redux';
@@ -9,11 +9,15 @@ import Address from '../../../dummy-data/Address';
 import SelectAddComp from '../../../Components/SelectAddComp';
 import Card from '../../../dummy-data/Card';
 import CardsComp from '../../../Components/CardsComp';
+import { getRequest } from '../../../Helper/ApiHelper';
+import { Toast } from 'react-native-simple-toast';
 
 const DeliveryAddressScreen = (props) => {
     const [checked, setChecked] = useState('first');
 
     const [state, setState] = useState('Card');
+
+    const [isLoading, setIsLoading] = useState({});
 
     const cartItems = useSelector(state => {
         const updatedCartItems = [];
@@ -21,6 +25,7 @@ const DeliveryAddressScreen = (props) => {
             updatedCartItems.push({
                 ...state.Cart.items[key]
             });
+
         }
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
@@ -41,7 +46,27 @@ const DeliveryAddressScreen = (props) => {
         return updatedCardItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
 
-    // console.log("",cardItems);
+    // console.log("CARD_ITEMS         ",cardItems);
+    useEffect(() => {
+        getCard();
+        setIsLoading(false);
+    },[]);
+
+    const [credit, setCredit] = useState([]);
+    const getCard = async() => {
+        const response = await getRequest('/customer/get-card');
+        //console.log("n\n\n\n\n\nCARD     ",response.data );
+        let errorMsg = 'No Credit Cards to Show!';
+
+        if(response.success){
+            setCredit(response.data.cards.data);
+           // console.log("\n\n\n\nMAIN_CARD_DETAILS"        ,response.data.cards.data);
+        }
+        else {
+            // Toast.show('Initially add card to save & access the card ')
+            Alert.alert("Error", errorMsg, [{ text: "Okay" }])
+        }
+    }
 
     return (
         <ScrollView>
@@ -136,16 +161,19 @@ const DeliveryAddressScreen = (props) => {
                         <FlatList
                             horizontal
                             showsHorizontalScrollIndicator={false}
-                            data={Card}
-                            renderItem={({ item }) => {
+                            data={credit}
+                            renderItem={({ item, index }) => {
+                             //   console.log("\n\n\n\n\nCARD_ITEMDATA         ",item);
                                 return (
-                                    <View key={item.id}  >
+                                    <View key={index} >
                                         <CardsComp
                                             item={item}
                                             id={item.id}
-                                            number={item.number}
+                                            number={item.last4}
                                             image={item.image}
-                                        />
+                                            brand={item.brand}
+                                        /> 
+                                       
                                     </View>
                                 )
                             }}
@@ -157,6 +185,23 @@ const DeliveryAddressScreen = (props) => {
                             <Text style={styles.codText} >Cash on Delivery</Text>
                         </View>
                     }
+
+                        {/* To Test Wether the API Called is running or not */}
+                    {/* <ScrollView>
+                        {
+                            credit.map( (item, index) => {
+                              //  console.log(item);
+                                return (
+                                    <View key={index} style={{flexDirection:'row'}} >
+                                        <Text>{item.last4}</Text>
+                                        <Text>{item.brand}</Text>
+                                    </View>
+                                )
+                            }
+
+                            )
+                        }
+                    </ScrollView> */}
                     {/* Total */}
                     <View style={styles.total} >
                         <Text style={styles.text2} >Sub Total</Text>
