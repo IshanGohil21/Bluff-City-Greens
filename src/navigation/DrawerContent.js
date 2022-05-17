@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList, ScrollView } from 'react-native'
-import React from 'react'
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList, ScrollView, Alert } from 'react-native'
+import React,{ useState, useEffect } from 'react'
+import { DrawerContentScrollView, DrawerItem, getIsDrawerOpenFromState } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Icons, Images, Colors } from '../CommonConfig/CommonConfig'
@@ -8,16 +8,43 @@ import AccordianProducts from '../Components/Accordian(PRODUCTS)';
 import Products from '../dummy-data/Products';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import SearchBarScreen3 from '../Components/SearchBar3';
+import { getRequest } from '../Helper/ApiHelper';
 
 const DrawerContentScreen = (props) => {
+    const [isLoading, setIsLoading] = useState({});
+
+    useEffect( () => {
+        getDrawer();
+        setIsLoading(false);
+    },[])
+
+    const [categories, setCategories] = useState([]);
+
+    const getDrawer = async() => {
+        const response = await getRequest('/customer/get-homepage');
+        // console.log("\n\n\nDrawer Content                 ", response.data);
+        let errorMsg = "Something Went Wrong Cant find Home Screen APIs"
+
+        if(response.success){
+            setCategories(response.data.categories)
+            console.log("\n\n\nDrawer and Categories         ", response.data.categories);
+        }
+        else {
+            Alert.alert("Error", errorMsg, [{text: 'Okay'}])
+        }
+    }
+
+
+
+
     const renderAccordiansProducts = () => {
         const products = [];
-        for (const item of Products) {
+        for (const item of categories) {
             products.push(
                 <AccordianProducts
-                    Pname={item.Pname}
-                    subname={item.subname}
-                    image={item.images}
+                    Pname={item.title}
+                    sub_categories={item.sub_categories}
+                    image={item.image}
                     color={item.color}
                 />
             )

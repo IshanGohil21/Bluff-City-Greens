@@ -23,7 +23,7 @@ const ShopProductsScreen = (props) => {
         {/* Name */}
         <Text style={styles.pname} >{props.Pname}</Text>
         {/* Button */}
-        <Ionicons name={Icons.RIGHT} size={30} color={Colors.grey} />
+        <Ionicons name={Icons.RIGHT} size={28} color={Colors.grey} />
             </TouchableOpacity>
     </View>
     )
@@ -34,8 +34,8 @@ export default ShopProductsScreen;
 const styles = StyleSheet.create({
     
     image2: {
-      width: width * 0.20, 
-      height: width * 0.20,
+      width: width * 0.13, 
+      height: width * 0.13,
       
     },
     ordersScreen: { 
@@ -48,14 +48,16 @@ const styles = StyleSheet.create({
     images:{
         flexDirection: 'row', 
         alignItems: 'center',
-        padding:15,
+        padding:10,
         justifyContent: 'space-between',
         paddingRight: 30,
         paddingLeft: 5,
     },
     pname:{
-        fontSize: 20,
-        fontWeight: '600', 
+        fontSize: 16,
+        fontWeight: '800',
+        color: Colors.black 
+
     },
 });
 

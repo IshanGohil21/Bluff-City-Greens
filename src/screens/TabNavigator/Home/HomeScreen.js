@@ -67,10 +67,6 @@ const HomeScreen = (props) => {
   //   console.log("USER      ",token)
   // },[token])
 
-//   const getAccess = async() => {
-//     setToken(await AsyncStorage.getItem("token"))  
-// }
-
     // Banners API (common Home Page)
   const [banner, setBanner] = useState([]);
   const getBanner = async() => {
@@ -246,7 +242,7 @@ return (
                     id={itemData.item.id}
                     name={itemData.item.title}
                    // color={item.color}
-                    onClick={() => { props.navigation.navigate('Fruits' ,{ shop: itemData.item, shopId: itemData.item.id }) }}
+                    onClick={() => { props.navigation.navigate( 'Shop' , {screen:'Fruits', params:{ shop: itemData.item, shopId: itemData.item.id }}) }}
                   />
                 </View>
               )
@@ -260,29 +256,79 @@ return (
             <Text style={styles.view} >View All</Text>
           </View>
           <View style={styles.heading}>
-            <FlatList
-              data={pastOrders}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={(itemData) => {
-               // console.log("\n\n",itemData.item.order_items[0].item.name);
-                return (
-                  <View key={itemData.item.id}>
-                    <RecommendedProductsCommon
-                    item={itemData.item}
-
-                      name={itemData.item.order_items[0].item.name}
-                      // id={itemData.id}
-                      image={itemData.item.order_items[0].sub_category.image}
-                      weight={itemData.item.order_items[0].item_size.size}
-                      price={itemData.item.order_items[0].item_size.price}
-                       onClick={() => { props.navigation.navigate('Past_Orders', { past: itemData.item, pastId: itemData.item.id }) }}
-                      // onHeart={() => { }}
-                    />
-                  </View>
-                )
-              }}
+            
+            <FlatList 
+            data={pastOrders}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={( item, index ) => {
+            //  console.log("\n\n\n\n\nOnly for FlatList    ",item.item.order_items);
+              return(
+                <View key={index}  style={{flex:1,flexDirection:'row'}} >
+                  {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
+                  {
+                    item.item.order_items.map((indi) => {
+                     // console.log("\n\n\n\n\nNest FlatList:   ",indi);
+                      return(
+                        <View  >
+                          <RecommendedProductsCommon 
+                          name = {indi.item.name}
+                          id={indi.id}
+                          item={indi}
+                          price={indi.item_size.price}
+                          weight= {indi.item_size.size}
+                          image={indi.sub_category.image}
+                          onClick={() => {props.navigation.navigate('Past_Orders', {past: indi, pastId: indi.id})}}
+                          />
+                          {/* <Text>{indi.item_size.price}</Text> */}
+                          {/* <Text>Nest</Text> */}
+                          {/* <Text> {indi.item.name} </Text> */}
+                          {/* <Image source={{ uri: indi.sub_category.image}} style={{height: 50, width: 50}} /> */}
+                        </View>
+                      )
+                    }
+                  )
+                  }
+                </View>
+              )
+            }}
+            
             />
+
+            {/* Nested Scrollview for the Past Order API calling check */}
+            {/* <ScrollView
+              pagingEnabled
+              horizontal
+              onScroll={change}
+              showsHorizontalScrollIndicator={false}
+            >
+              {
+                pastOrders.map( (item) => {
+                 // console.log("\n\n\n\nTest      ",item.order_items);
+                    return(
+                      <View  >
+                        <Text>
+                         {
+                           item.order_items.map( (index) => {
+                           //  console.log("\n\n\n\n\nTest for nested mapping     ",  index);
+                             return (
+                               <View >
+                                 <TouchableOpacity onPress={()  => {props.navigation.navigate('Past_Orders', {past: item, pastId: item.id})} } >
+                                 <Text>{index.item.name}</Text>
+                                 <Text>{index.item_size.price}</Text>
+                                 <Text>{index.item_size.size}</Text>
+                                 </TouchableOpacity>
+                               </View>
+                             )
+                           } )
+                         }
+                       </Text>
+                      </View>
+                    )
+                } )
+              }
+            </ScrollView> */}
+
           </View>
         </View>
 
@@ -308,7 +354,7 @@ return (
                   image={itemData.item.item_images[0].image}
                   weight={itemData.item.item_sizes[0].size}
                   price={itemData.item.item_sizes[0].price}
-                  onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: itemData.item, recommendId: itemData.item.id }) }}
+                  onClick={() => { props.navigation.navigate('Recommended_Products',  { recommended: itemData.item, recommendId: itemData.item.id }) }}
                   />
                 </View>
 
@@ -421,7 +467,7 @@ const styles = StyleSheet.create({
     fontWeight: '900',
   },
   commonContainer: {
-    padding: 10
+    padding: 10,
   },
   categories: {
     alignItems: 'center',

@@ -12,8 +12,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const SignInScreen = (props) => {
     const [isLoading, setisLoading] = useState(false);
 
-    
-
     const onPressLogin = async (values) => {
         setisLoading(true);
         const data = {

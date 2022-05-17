@@ -1,11 +1,10 @@
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, Dimensions,FlatList } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, Dimensions,FlatList, ScrollView } from 'react-native'
 import React from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {Images, Colors, Icons} from '../../../CommonConfig/CommonConfig';
 import Fruits from '../../../dummy-data/Fruits';
 import FruitsComp from '../../../Components/Fruits';
-import { ScrollView } from 'react-native-gesture-handler';
 
 
 const { width } = Dimensions.get('window')
@@ -14,15 +13,12 @@ const height = width * 100 / 0.6
 const numColumns = 2
 
 const FruitShopScreen = (props) => {
-    // const  shopId = props.route.params.shopId
-    // const currentShop = props.route.params.shop
-    // console.log(currentShop);
 
     const shopID = props.route.params.shopId
     // console.log(shopID);
 
     const shopSub = props.route.params.shop
-    console.log("\n\n\n\n Sub_Categories for each             ",shopSub);
+    console.log("\n\n\n\n Sub_Categories for each  products           ",shopSub.sub_categories);
 
   return (
        <ScrollView>
@@ -32,19 +28,19 @@ const FruitShopScreen = (props) => {
         <View style={styles.header} >
             <View style={styles.row} >
                 <TouchableOpacity onPress={() => {props.navigation.goBack()}} >
-                    <Ionicons name={Icons.BACK_ARROW} size={28} color={Colors.white} style={styles.back} />
+                    <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={styles.back} />
                 </TouchableOpacity>
             <View style={styles.title} >
                 <TouchableOpacity>
-                    <Ionicons name={Icons.SEARCH} size={28} color={Colors.white} style={styles.back} />
+                    <Ionicons name={Icons.SEARCH} size={24} color={Colors.white} style={styles.back} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {props.navigation.navigate('Checkout')} } >
-                    <Ionicons name={Icons.CART} size={28} color={Colors.white} style={styles.back} />
+                    <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.back} />
                 </TouchableOpacity>
             </View>
         </View>
             <View style={styles.heading} >
-                <Text style={styles.titleFruit} >Fruits & Vegetables</Text>
+                <Text style={styles.titleFruit} >{shopSub.title}</Text>
             <TouchableOpacity onPress={() => {props.navigation.navigate('Filter')}} >
                 <Ionicons name={Icons.OPTIONS} size={35} color={Colors.white} />
             </TouchableOpacity>
@@ -54,20 +50,21 @@ const FruitShopScreen = (props) => {
         <View style={styles.body} >
             <View>
                 <Image source={Images.organic}  style={styles.images}/>
+                {/* <Image source={{ uri: shopSub.sub_categories.image  }} /> */}
             </View>
 
             <View style={styles.cato}>
                 <Text style={styles.by} > SHOP BY CATEGORY </Text>
             </View>
 
-            <View>
+            <View style={{flex:1, justifyContent:'space-between'}} >
                 <FlatList
                     data={shopSub.sub_categories}
                     numColumns= {2}
                     renderItem={({ item }) => {
-                        console.log(item);
+                       // console.log(item);
                         return(
-                            <View key={item.id} >
+                            <View key={item.id}   >
                                 <FruitsComp 
                                     img={item.image}
                                     nameF={item.title}
@@ -103,7 +100,7 @@ const styles = StyleSheet.create({
         justifyContent:'flex-end',
     },
     titleFruit:{
-        fontSize: 30,
+        fontSize: 24,
         fontWeight: 'bold',
         color: Colors.white
     },
@@ -121,16 +118,19 @@ const styles = StyleSheet.create({
     },
     images: {
         width: '100%',
-    height: 160,
+        height: 150,
     },
     cato:{
-        borderRadius: 15,
-        padding: 15,
+        borderRadius: 10,
+        padding: 10,
         alignItems:'center', 
         backgroundColor: Colors.primary, 
         marginTop: 15, 
-        width: '90%',
-        marginLeft: 20
+         width: '80%',
+        // marginLeft: 20,
+         marginHorizontal:40,
+        justifyContent:'center',
+        
     },
     by: {
         fontSize: 20,

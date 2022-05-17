@@ -12,7 +12,7 @@ const WIDTH = Dimensions.get('window').width
 const FruitsComp = (props) => {
   return (
     <View key={props.id} style={styles.mappingComp} >
-        <TouchableOpacity  onPress={props.onClick} >
+        <TouchableOpacity  onPress={props.onClick}  >
         <Image source={{uri : props.img}} style={styles.imageCato} />
         </TouchableOpacity>
         <Text>{props.nameF}</Text>
@@ -24,14 +24,15 @@ export default FruitsComp;
 
 const styles = StyleSheet.create({
   imageCato: {
-    height: 150,
-    width: 150,
+    height: 100,
+    width: 100,
     borderRadius: 10,
+    
 },
-mappingComp:{
-    padding: 5,
-    marginTop: 10,
-    alignItems: 'center',
-    margin:10,
-}
+  mappingComp:{
+    alignItems:'center',
+    padding: 10,
+    marginVertical: 10,
+
+  }
 })

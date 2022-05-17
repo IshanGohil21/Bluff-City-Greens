@@ -57,7 +57,7 @@ const ShopScreen = (props) => {
                                         images={item.image}
                                         Pname={item.title}
                                         color={item.color}
-                                        onPress={() => {props.navigation.navigate('Fruits') }}
+                                        onPress={() => {props.navigation.navigate('Fruits',  {shop: item, shopId: item.id }) }}
                                     />
                                 </View>
                             )
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
         paddingBottom: 65,
     },
     header: {
-        flex: 0.7,
+        flex: 0.6,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between'
     },

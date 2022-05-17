@@ -16,7 +16,7 @@ const AccordianProducts = (props) => {
     <View style={styles.accordian} >
      <TouchableOpacity style={styles.row} onPress={() => {toggleExpanded()}} >
          <View style={{...styles.imageContainer, borderColor: props.color }} >
-         <Image source={props.image} style={{...styles.imageDimensions, borderColor: props.color }}/>
+         <Image source={{ uri : props.image}} style={{...styles.imageDimensions, borderColor: props.color }}/>
          </View>
          <Text style={styles.title} >{props.Pname}</Text>
          <Ionicons  name={expanded ? 'chevron-up-outline' : 'chevron-down-outline' } size={24} color={Colors.grey} />
@@ -24,7 +24,8 @@ const AccordianProducts = (props) => {
      <View style={styles.parentHr} />
          {
              expanded && 
-             props.subname.map(item => {
+             props.sub_categories.map(item => {
+                // console.log(item);
                  return (
                      <TouchableOpacity key={item} style={styles.containerText} >
                          <Text style={styles.productStyles} >{item}</Text>
