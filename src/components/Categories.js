@@ -17,7 +17,7 @@ const CategoriesScreen = (props) => {
     <View>
       <TouchableOpacity key={props.id} style={styles.categories} onPress={props.onClick} >
         <Image source={{  uri : props.image}} style={styles.catoContainer} />
-        <Text style={{ color: `#${randomColor}` }} > {props.name} </Text>
+        <Text style={{ color:Colors.black , marginVertical: 5 }} > {props.name} </Text>
       </TouchableOpacity>
     </View>
   )

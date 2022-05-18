@@ -34,7 +34,7 @@ const RecommendedProductsCommon = (props) => {
       const [isFavorite, setIsFavorite] = useState(props.initialState);
 
   return (
-    <View>
+    <View  >
       {/* Favorite */}
       <TouchableOpacity style={styles.orders} onPress={props.onHeart}>
         <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)} >
@@ -111,46 +111,12 @@ const styles = StyleSheet.create({
       backgroundColor: Colors.primary,
   
     },
-    drawer: {
-      padding: 20
-    },
-    deliver: {
-      color: Colors.white,
-      marginTop: 25,
-    },
-    address: {
-      fontWeight: 'bold',
-      fontSize: 18,
-      color: Colors.white
-    },
-    location: {
-      flexDirection: 'row'
-    },
+    
     notify: {
       marginTop: 40,
       marginLeft: 10
     },
-    searchContainer:
-    {
-      width: '80%',
-      height: 30,
-      flexDirection: 'row',
-      justifyContent: 'center',
-      backgroundColor: Colors.white,
-      //marginTop: 10,
-      borderRadius: 5,
-      marginBottom: 10
-    },
-    vwSearch: {
-      flex: 0.2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'row',
-    },
-    textInput: {
-      // backgroundColor: 'green',
-      flex: 1,
-    },
+   
     filter: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
@@ -168,10 +134,7 @@ const styles = StyleSheet.create({
       color: Colors.grey,
       margin: 5,
     },
-    pagingActive: {
-      color: Colors.white,
-      margin: 5,
-    },
+    
     scroll: {
       flexDirection: 'row',
       position: 'absolute',
@@ -190,12 +153,7 @@ const styles = StyleSheet.create({
     commonContainer: {
       padding: 10
     },
-    categories: {
-      alignItems: 'center',
-      padding: 10,
-      marginHorizontal: 10,
-      backgroundColor: Colors.white
-    },
+   
     text: {
       fontSize: 16,
       fontWeight: '600',
@@ -213,19 +171,22 @@ const styles = StyleSheet.create({
     },
     orders: {
       position: 'absolute',
-      bottom: 170,
-      left: width * 0.5 - 15,
-      zIndex: 10
+      bottom: 165,
+      left: width * 0.5 - 20,
+      zIndex: 10,
     },
     orderContainer: {
       flex: 1,
-      width: width * 0.50,
+      width: width * 0.5,
       height: 200,
       justifyContent: 'space-between',
       alignItems: 'center',
       marginHorizontal: 15,
       borderBottomRightRadius: 15,
-      borderBottomLeftRadius: 15
+      borderBottomLeftRadius: 15,
+       backgroundColor: Colors.white,
+       borderRadius: 5,
+      //  elevation: 5
     },
     addButton: {
       flexDirection: 'row',
@@ -256,6 +217,7 @@ const styles = StyleSheet.create({
     },
     textContainer: {
       flexDirection: 'row',
+      marginLeft: 30
     },
     ordersScreen: {
       alignItems: 'center',

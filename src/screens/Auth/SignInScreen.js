@@ -68,12 +68,12 @@ const SignInScreen = (props) => {
 
                     <View style={styles.imageContainer}>
                         <Image
-                            source={Images.spinach}
+                            source={Images.logo1}
                             style={styles.image}
                             resizeMode='contain'
                         />
-                        <View>
-                            <View style={{ flexDirection: 'row' }}>
+                        <View style={{alignItems:'center', justifyContent:'center', marginRight: 60}} >
+                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={styles.bluff}>Bluff City </Text></View>
                             <View><Text style={styles.greens}> GREENS </Text></View>
                         </View>
@@ -97,6 +97,7 @@ const SignInScreen = (props) => {
                         value={values.password}
                         style={styles.customCss}
                         placeholder="Password"
+                        color="white"
                         onBlur={() => setFieldTouched('password')}
                         onChangeText={handleChange('password')}
                         secureTextEntry={true}
@@ -104,25 +105,22 @@ const SignInScreen = (props) => {
                     {touched.password && errors.password &&
                         <Text style={styles.errors}>{errors.password}</Text>
                     }
+                    <View style={styles.rememberContainer} >
+
+                    <View style={{flexDirection:'row'}} >
+                    <TouchableOpacity onPress={() => { setRememberMe(!rememberMe) }}>
+                            {rememberMe ? <Ionicons name="checkbox-outline" size={20} color='white' /> : <Ionicons name="square-outline" size={20} color='white' />}
+                        </TouchableOpacity>
+                        <Text style={styles.remember}> Remember me </Text>
+                    </View>
+
                     <TouchableOpacity onPress={() => {
                         props.navigation.navigate('ForgotPassword')
                     }} >
                         <Text style={styles.forgot_password}> Forgot Password ? </Text>
                     </TouchableOpacity>
 
-                    <View style={styles.rememberContainer}>
-                        <TouchableOpacity onPress={() => { setRememberMe(!rememberMe) }}>
-                            {rememberMe ? <Ionicons name="checkbox-outline" size={20} color='white' /> : <Ionicons name="square-outline" size={20} color='white' />}
-                        </TouchableOpacity>
-                        <Text style={styles.remember}> Remember me </Text>
                     </View>
-
-                    <TouchableOpacity onPress={handleSubmit} >
-                        <View  style={styles.signin}>
-                    {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
-                        <Text  style={{fontSize: 24, color: Colors.white}} >  SIGN IN </Text>}
-                        </View> 
-                    </TouchableOpacity>
 
                     <View style={{ alignItems: 'center' }} >
                         <View style={styles.connect}>
@@ -148,6 +146,15 @@ const SignInScreen = (props) => {
                             </TouchableOpacity>
                         </View>
                     </View>
+
+                    <TouchableOpacity onPress={handleSubmit} >
+                        <View  style={styles.signin}>
+                    {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
+                        <Text  style={{fontSize: 24, color: Colors.white}} >  SIGN IN </Text>}
+                        </View> 
+                    </TouchableOpacity>
+
+                    
                     <View style={styles.account}>
                         <Text style={{ color: Colors.white }}>Don't have account?</Text>
                         <TouchableOpacity onPress={() => {
@@ -168,7 +175,7 @@ const SignInScreen = (props) => {
 const styles = StyleSheet.create({
     mainWrapper: {
         flex: 1,
-        padding: 40,
+        padding: 30,
         justifyContent: 'center',
         backgroundColor: Colors.primary
     },
@@ -179,28 +186,25 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         width: '100%',
-        backgroundColor: 'rgba(50,75,255,0.25)'
+        backgroundColor: 'rgba(25,20,200,0.35)'
     },
     forgot_password: {
         height: 30,
-        marginBottom: 30,
+       // marginBottom: 5,
         textAlign: 'right',
         fontSize: 14,
         color: Colors.white
     },
     signin: {
-        width: "100%",
+        width: "90%",
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: Colors.green,
         textAlign: 'center',
-        color: Colors.white,
-        fontSize: 23,
         padding: 10,
         borderRadius: 10,
-        borderColor: Colors.green,
-        overflow: 'hidden',
-        width: '100%'
+       marginHorizontal: 20,
+       marginVertical: 40
     },
     remember: {
         height: 20,
@@ -212,30 +216,32 @@ const styles = StyleSheet.create({
     },
     image: {
         flexDirection: 'row',
-        width: 120,
-        height: 120,
+        width: 140,
+        height: 140,
+        marginLeft: 15
     },
     skip: {
         textAlign: 'right',
         color: Colors.white,
         padding: 5,
-        marginTop: 30
     },
     imageContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 70
+        marginBottom: 20,
+        padding: 20
     },
     bluff: {
         color: Colors.white,
-        fontSize: 40,
-        padding: 10,
-        fontWeight: '600'
+        fontSize: 30,
+        padding: 5,
+        fontWeight: '600',
+        marginRight: 30
     },
     greens: {
         color: Colors.white,
-        fontSize: 50,
+        fontSize: 45,
         fontWeight: 'bold'
     },
     errors: {
@@ -244,7 +250,9 @@ const styles = StyleSheet.create({
     },
     rememberContainer: {
         flexDirection: 'row',
-        marginBottom: 40
+       // marginBottom: 30,
+        justifyContent:'space-between',
+        paddingVertical: 5
     },
     connect: {
         flexDirection: 'row',

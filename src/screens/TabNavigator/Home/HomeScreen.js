@@ -146,7 +146,7 @@ return (
 
             {/* Delivery Logo */}
 
-            <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryLocation') }} >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryLocation') }}  >
               <Text style={styles.deliver} > Deliver to </Text>
               {x ?
                 <View style={styles.location} >
@@ -162,12 +162,12 @@ return (
             </TouchableOpacity>
 
             {/* Notification Logo */}
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Notification') }} >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Notification') }}  style={{marginLeft: 35}} >
               <Ionicons name={Icons.NOTIFICATION} size={24} color={Colors.white} style={styles.notify} />
             </TouchableOpacity>
 
             {/* Cart */}
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{marginRight:20}}  >
               <Text style={styles.xyz} >{y}</Text>
               <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
             </TouchableOpacity>
@@ -379,10 +379,11 @@ const styles = StyleSheet.create({
   },
   header: {
     // flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     backgroundColor: Colors.primary,
     flexDirection: 'row',
-    marginTop: 20
+    marginTop: 20,
+   // marginHorizontal :10
   },
   title: {
     flex: 1,
@@ -529,7 +530,7 @@ const styles = StyleSheet.create({
   heading: {
     flexDirection: 'row',
     padding: 10,
-    backgroundColor: Colors.white
+    //backgroundColor: Colors.white
   },
   view: {
     color: Colors.primary,

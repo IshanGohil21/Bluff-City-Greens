@@ -33,12 +33,12 @@ const LocationScreen = (props) => {
 
             <View style={styles.body} >
                 <View style={styles.search} >
-                    <View style={{marginHorizontal: 30}} >
+                    <View style={{marginHorizontal: 10}} >
                         <Searchbar3
                             value={value}
                         />
                     </View  >
-                        <View style={{marginHorizontal: 30}} >
+                        <View style={{marginHorizontal: 10}} >
                         <Ionicons  name={Icons.LOCATION} size={30} color={Colors.white} style={styles.icon} />
                         </View>
                     
@@ -52,7 +52,7 @@ const LocationScreen = (props) => {
                     <Text style={styles.text3} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} > Use current location </Text>
                 </View>
 
-                <Image source={Images.currentLocation}
+                <Image source={Images.location}
                     style={styles.image}
                 />
                 <Text style={styles.text} >
@@ -84,9 +84,9 @@ const styles = StyleSheet.create({
     title: {
         color: 'white',
         fontSize: 30,
-        padding: 20,
+        padding: 10,
         fontWeight: '600',
-        marginTop: 20,
+        marginTop: 10,
         fontWeight: 'bold'
     },
     service: {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'flex-start',
         flexDirection: 'row',
-        width: 40,
+        width: 20,
     },
     image: {
         height: 250,
@@ -189,9 +189,7 @@ const styles = StyleSheet.create({
         padding: 10, 
         backgroundColor: Colors.primary
     },
-    titleContainer: {
     
-    },
     signup: {
         color: Colors.green , 
         fontWeight: 'bold', 

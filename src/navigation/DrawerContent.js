@@ -44,6 +44,7 @@ const DrawerContentScreen = (props) => {
                 <AccordianProducts
                     Pname={item.title}
                     sub_categories={item.sub_categories}
+                    item={item}
                     image={item.image}
                     color={item.color}
                 />

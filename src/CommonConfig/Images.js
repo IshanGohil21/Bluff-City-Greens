@@ -73,4 +73,21 @@ export default {
     mastercard: require('./Assets/icon/discover.png'),
     money: require('../CommonConfig/Assets/icon/money.png'),
     timetable: require('../CommonConfig/Assets/icon/timetable.png'),
+
+   // Location 
+   location: require('./Assets/icon/location_4.png'),
+   location0: require('./Assets/icon/location_3.png'),
+   location1: require('./Assets/icon/traveler.png'),
+
+   // Logo for Bluff
+
+   logo: require('./Assets/icon/leaf.png'),
+   logo0: require('./Assets/icon/bluff.jpeg'),
+   logo1: require('./Assets/icon/think-green.png'),
+
+    //    Placeholder image for profile photo 
+
+    userPic: require('./Assets/icon/placeholder.jpeg'),
+    userPic0: 'https://as2.ftcdn.net/v2/jpg/02/17/34/67/1000_F_217346782_7XpCTt8bLNJqvVAaDZJwvZjm0epQmj6j.jpg'
+
 }

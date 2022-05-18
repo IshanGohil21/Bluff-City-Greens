@@ -22,7 +22,7 @@ const SignUpScreen = props => {
 
     const [show, setShow] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const [image, setImage] = useState(Images.ronaldo);
+    const [image, setImage] = useState(Images.userPic0);
     const [countryCode, setCountryCode] = useState('+91');
     const [isLoading, setisLoading] = useState(false);
     const refRBSheet = useRef();
@@ -120,8 +120,7 @@ const SignUpScreen = props => {
                                         />
                                     </View>
                                 </View>
-
-
+                                
                                 <Modal
                                     animationType="slide"
                                     transparent={true}
@@ -192,15 +191,15 @@ const SignUpScreen = props => {
 
                                     <View style={styles.phoneCont} >
 
-                                        
-                                       
                                         <TouchableOpacity onPress={() => setShow(true)} style={{ flex: 0.5 }}><Ionicons name="caret-down-outline" size={20} color={Colors.BLACK} /></TouchableOpacity>
-                                        <View style={{ width: 0, borderColor: Colors.grey, borderWidth: 0.7, height: 30, marginRight: 10 }} ></View>
+                                        
                                         <Text style={{ flex: 0.5, fontWeight: 'bold' }}>{countryCode}</Text>
                                         <TextInput
-                                            style={{ flex: 3.5 }}
+                                            style={{ flex: 3.5,}}
+                                            // style={styles.customCss}
                                             keyboardType="phone-pad"
                                             maxLength={10}
+                                            color="white"
                                             onBlur={() => setFieldTouched('mobile')}
                                             onChangeText={handleChange('mobile')}
                                         />
@@ -222,7 +221,7 @@ const SignUpScreen = props => {
                                     <TextInput
                                         value={values.passwordConfirm}
                                         style={styles.customCss}
-                                        placeholder='confirm Password'
+                                        placeholder='Confirm Password'
                                         onBlur={() => setFieldTouched('passwordConfirm')}
                                         onChangeText={handleChange('passwordConfirm')}
                                         secureTextEntry={true}
@@ -288,7 +287,7 @@ const SignUpScreen = props => {
 const styles = StyleSheet.create({
     mainWrapper: {
         flex: 1,
-        padding: 25,
+        padding: 20,
         justifyContent: 'center',
         backgroundColor: Colors.primary
     },
@@ -298,7 +297,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         width: '100%',
-        backgroundColor: 'rgba(50,75,255,0.25)',
+        backgroundColor: 'rgba(25,20,200,0.35)',
         color:Colors.white
     },
     signin: {
@@ -311,9 +310,7 @@ const styles = StyleSheet.create({
         fontSize: 23,
         padding: 10,
         borderRadius: 10,
-        borderColor: Colors.green,
-        overflow: 'hidden',
-        width: '100%',
+        marginVertical: 10
     },
     profile: {
 
@@ -344,11 +341,11 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 50,
         marginBottom: 15,
-        backgroundColor: 'rgba(50,75,255,0.25)'
+        backgroundColor: 'rgba(25,20,200,0.35)',
     },
     textInput: {
         paddingVertical: 0,
-        backgroundColor: 'rgba(50,105,255,0.25)',
+        backgroundColor: 'rgba(25,20,200,0.35)',
         borderColor: '#cccccc'
     },
     centeredView: {
@@ -443,7 +440,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         borderRadius: 10,
         padding: 10,
-        backgroundColor: 'rgba(50,75,255,0.25)',
+        backgroundColor: 'rgba(25,20,200,0.35)',
         alignItems: 'center'
     }
 });

@@ -25,7 +25,7 @@ export default FruitsComp;
 const styles = StyleSheet.create({
   imageCato: {
     height: 100,
-    width: 100,
+    width: WIDTH*0.4,
     borderRadius: 10,
     
 },
@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     padding: 10,
     marginVertical: 10,
+
 
   }
 })

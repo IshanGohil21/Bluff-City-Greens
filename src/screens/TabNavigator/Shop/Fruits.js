@@ -57,7 +57,7 @@ const FruitShopScreen = (props) => {
                 <Text style={styles.by} > SHOP BY CATEGORY </Text>
             </View>
 
-            <View style={{flex:1, justifyContent:'space-between'}} >
+            <View style={{flex:1, justifyContent:'center', alignItems: 'center'}} >
                 <FlatList
                     data={shopSub.sub_categories}
                     numColumns= {2}

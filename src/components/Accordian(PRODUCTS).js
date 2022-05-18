@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {Colors} from '../CommonConfig/CommonConfig';
 
-
 const AccordianProducts = (props) => {
-
+    const item = props.item
+        // console.log("\n\n\n\nhelooooooo    ",item);
     const[expanded, setExpanded] = useState(false);
 
     const toggleExpanded = () => {
@@ -24,11 +24,11 @@ const AccordianProducts = (props) => {
      <View style={styles.parentHr} />
          {
              expanded && 
-             props.sub_categories.map(item => {
+             item.sub_categories.map(item => {
                 // console.log(item);
                  return (
-                     <TouchableOpacity key={item} style={styles.containerText} >
-                         <Text style={styles.productStyles} >{item}</Text>
+                     <TouchableOpacity key={item.id} style={styles.containerText}  onPress={() => {}} >
+                         <Text style={styles.productStyles} >{item.title}</Text>
                      </TouchableOpacity>
                  )
              })
