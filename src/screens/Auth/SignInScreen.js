@@ -8,8 +8,13 @@ import SignInValidationSchema from "../../Schema/SignInValidationSchema";
 import { Images, Colors, Button } from '../../CommonConfig/CommonConfig'
 import { postRequest, getRequest } from '../../Helper/ApiHelper';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
+import { LinearGradient } from "react-native-svg";
 
 const SignInScreen = (props) => {
+
+   
+
     const [isLoading, setisLoading] = useState(false);
 
     const onPressLogin = async (values) => {
@@ -147,12 +152,17 @@ const SignInScreen = (props) => {
                         </View>
                     </View>
 
+                    
+                    
+                   
                     <TouchableOpacity onPress={handleSubmit} >
                         <View  style={styles.signin}>
                     {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
                         <Text  style={{fontSize: 24, color: Colors.white}} >  SIGN IN </Text>}
                         </View> 
                     </TouchableOpacity>
+                    
+                   
 
                     
                     <View style={styles.account}>

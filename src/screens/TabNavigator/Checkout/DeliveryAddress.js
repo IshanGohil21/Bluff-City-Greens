@@ -89,14 +89,14 @@ const DeliveryAddressScreen = (props) => {
                         </TouchableOpacity>
                     </View>
 
-                    <View>
+                    <View  >
                         <FlatList
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             data={Address}
                             renderItem={({ item }) => {
                                 return (
-                                    <View key={item.id}  >
+                                    <View key={item.id}   >
                                         <SelectAddComp
                                             item={item}
                                             id={item.id}
