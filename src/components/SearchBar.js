@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     searchContainer:
     {
-        width: '90%',
+        width: '40%',
         height: 40,
         flexDirection: 'row',
         justifyContent: 'flex-start',

@@ -7,7 +7,7 @@ import { Icons, Images, Colors } from '../CommonConfig/CommonConfig'
 import AccordianProducts from '../Components/Accordian(PRODUCTS)';
 import Products from '../dummy-data/Products';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import SearchBarScreen3 from '../Components/SearchBar3';
+import SearchBarScreen2 from '../Components/SearchBar3';
 import { getRequest } from '../Helper/ApiHelper';
 
 const DrawerContentScreen = (props) => {
@@ -27,15 +27,12 @@ const DrawerContentScreen = (props) => {
 
         if(response.success){
             setCategories(response.data.categories)
-            console.log("\n\n\nDrawer and Categories         ", response.data.categories);
+          //  console.log("\n\n\nDrawer and Categories         ", response.data.categories);
         }
         else {
             Alert.alert("Error", errorMsg, [{text: 'Okay'}])
         }
     }
-
-
-
 
     const renderAccordiansProducts = () => {
         const products = [];
@@ -47,6 +44,7 @@ const DrawerContentScreen = (props) => {
                     item={item}
                     image={item.image}
                     color={item.color}
+                    onClick={() => { props.navigation.navigate('Shop',{ screen: 'Fruits', params:{ shop:item, shopId: item.id  } } ) } }
                 />
             )
         }
@@ -67,7 +65,7 @@ const DrawerContentScreen = (props) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.search} >
-                    <SearchBarScreen3 />
+                    <SearchBarScreen2 />
                 </View>
             </View>
 

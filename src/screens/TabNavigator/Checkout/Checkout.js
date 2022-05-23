@@ -17,7 +17,7 @@ const CheckoutScreen = (props) => {
         }
         return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
     })
-    // console.log(cartItems);
+     console.log("\n\n\n\nCart    ",cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce( (a,c) => a + c.itemTotal, 0 ) : 0)
     // console.log(subTotal);
@@ -25,33 +25,35 @@ const CheckoutScreen = (props) => {
     const Delivery = 0.5
 
     return (
-        <ScrollView>
+        
         <View style={styles.main} >
             <StatusBar backgroundColor={Colors.primary} />
             {/* Header */}
             <View style={styles.header} >
                 <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
-                    <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} />
+                    <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={styles.back} />
                 </TouchableOpacity>
                 <Text style={styles.cartext} >Cart</Text>
             </View>
             {/* Body */}
             <View style={styles.body} >
+            <ScrollView>
                 <View>
 
                     <FlatList
                         data={cartItems}
                         renderItem={({ item }) => {
+                            console.log("\n\n\n\n\nCart Items  ", item );
                             return (
                                 <View key={item.id} >
                                     <Cartcomp
                                         item={item}
                                         id={item.id}
-                                        image={item.image}
+                                        image={item.item_images[0].image}
                                         name={item.name}
-                                        weight={item.weight}
-                                        price={item.price}
-                                        disPrice={item.disPrice}
+                                        weight={item.item_sizes[0].size}
+                                        price={item.item_sizes[0].price}
+                                        disPrice={item.item_sizes[0].price}
                                         onPress={() => { }}
                                     />
                                 </View>
@@ -84,9 +86,10 @@ const CheckoutScreen = (props) => {
 
 
                 </View> 
+                </ScrollView>
             </View>
         </View>
-        </ScrollView>
+        
     );
 };
 
@@ -95,16 +98,25 @@ const styles = StyleSheet.create({
         flex:1
     },
     header:{
-        flex: 1,
+        flex: 0.5,
         backgroundColor: Colors.primary,
         justifyContent:'space-between',
-        padding:10,
-        marginTop: 20
+        //padding:10,
+       // marginTop: 20,
+      paddingVertical:15
+    },
+    back: {
+        marginTop: 20,
+        //  paddingVertical:10,
+         paddingHorizontal:10,
+        // padding:10,
+        paddingHorizontal:10
     },
     cartext:{
         fontSize:24,
         color:Colors.white,
-        fontWeight:'bold'
+        fontWeight:'bold',
+        paddingHorizontal:10
     },
     body:{
         flex: 3

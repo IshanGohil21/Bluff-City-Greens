@@ -200,6 +200,7 @@ const SignUpScreen = props => {
                                             keyboardType="phone-pad"
                                             maxLength={10}
                                             color="white"
+                                            placeholder='Enter your Phone Number'
                                             onBlur={() => setFieldTouched('mobile')}
                                             onChangeText={handleChange('mobile')}
                                         />

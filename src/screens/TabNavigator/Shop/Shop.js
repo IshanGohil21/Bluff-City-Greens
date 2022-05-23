@@ -94,16 +94,19 @@ const styles = StyleSheet.create({
     header: {
         flex: 0.6,
         backgroundColor: Colors.primary,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingVertical: 10
     },
     back: {
         marginTop: 20,
-        padding: 10
+        // paddingVertical:10,
+        // paddingHorizontal:10,
+        padding:10
     },
     shop: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: Colors.white
+        color: Colors.white,
     },
     body: {
         flex: 3

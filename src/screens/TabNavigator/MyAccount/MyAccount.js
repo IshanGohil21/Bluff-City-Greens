@@ -72,7 +72,7 @@ const MyAccountScreen = props => {
 
                         <ProfileOption 
                             name = 'Payment'
-                            onPress={() => { props.navigation.navigate('Payment') }}
+                            onPress={() => { props.navigation.navigate('Checkout', {screen: 'AddCard' }) }}
                             iconLeft = {Icons.CARD}
                             iconRight = {Icons.PROFILE_FORWARD}
                         />

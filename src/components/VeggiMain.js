@@ -15,6 +15,9 @@ const height = width * 100 / 0.6
 const VeggiComp = (props) => {
     const dispatch = useDispatch();
 
+    const veggies = props.item
+  // console.log("\n\n\nFull Description of Vegetable Products       " ,veggies.item_sizes[0].size);
+
     const [isTouched, setIsTouched] = useState(props.initialState);
 
     const refRBSheet = useRef();
@@ -39,14 +42,14 @@ const VeggiComp = (props) => {
     return (
         <View style={styles.main} >
             <View style={{ flexDirection: 'row', flex: 1 }}>
-                <Image source={props.image} style={styles.img} />
+                <Image source={{ uri: props.image}} style={styles.img} />
             </View>
 
             <View style={{ flex: 3, paddingHorizontal: 5,padding: 5}} >
                 <Text style={{ marginBottom: 10, color: Colors.grey, fontSize: 16, fontWeight: 'bold' }} >{props.name}</Text>
             <View>
                 <TouchableOpacity style={styles.weight} onPress={() => refRBSheet.current.open()} >
-                    <Text style={styles.weight0} >{props.weight[0]}</Text>
+                    <Text style={styles.weight0} >{props.weight}</Text>
                     <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.grey} />
                 </TouchableOpacity>
 
@@ -85,9 +88,9 @@ const VeggiComp = (props) => {
 
                 {/* <TouchableOpacity  onPress={() => {dispatch(CartActions.removeFromCart(props.item))}}  >
                     <Ionicons name={Icons.TRASH} size={30} color={Colors.green} />
-                </TouchableOpacity> */}
+                </TouchableOpacity>  */}
 
-                {/* <TouchableOpacity onPress={() => {dispatch(CartActions.clearCart(props.item))}} >
+                 {/* <TouchableOpacity onPress={() => {dispatch(CartActions.clearCart(props.item))}} >
                 <Ionicons name={Icons.TRASH} size={30} color={Colors.green} />
                 </TouchableOpacity> */}
 
@@ -123,7 +126,7 @@ const VeggiComp = (props) => {
                                         status={checked === 'first' ? 'checked' : 'unchecked'}
                                         onPress={() => setChecked('first')}
                                     />
-                                    <Text>{props.weight[0]}</Text>
+                                    <Text>{veggies.item_sizes[0].size}</Text>
                                 </View>
 
                                 <View style={styles.button} >
@@ -133,7 +136,7 @@ const VeggiComp = (props) => {
                                         status={checked === 'second' ? 'checked' : 'unchecked'}
                                         onPress={() => setChecked('second')}
                                     />
-                                    <Text>{props.weight[1]}</Text>
+                                    <Text>{veggies.item_sizes[1].size}</Text>
                                 </View>
 
                                 <View style={styles.button} >
@@ -143,7 +146,7 @@ const VeggiComp = (props) => {
                                         status={checked === 'third' ? 'checked' : 'unchecked'}
                                         onPress={() => setChecked('third')}
                                     />
-                                    <Text>{props.weight[2]}</Text>
+                                    <Text>{veggies.item_sizes[2].size}</Text>
                                 </View>
                             </View>
                         </RBSheet>

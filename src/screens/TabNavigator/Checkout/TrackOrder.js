@@ -68,9 +68,11 @@ const styles = StyleSheet.create({
         flex:1,
     },
     header:{
-        flex: 1,
+        flex: 0.5,
         backgroundColor : Colors.primary,
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        padding:10,
+        
     },
     back:{
         marginTop: 30

@@ -21,7 +21,7 @@ const FruitShopScreen = (props) => {
     console.log("\n\n\n\n Sub_Categories for each  products           ",shopSub.sub_categories);
 
   return (
-       <ScrollView>
+       
     <View style={styles.main} >
         <StatusBar backgroundColor={Colors.primary} />
         {/* Header */}
@@ -47,12 +47,14 @@ const FruitShopScreen = (props) => {
         </View>
         </View>
         {/* Body  */}
+        
         <View style={styles.body} >
+        <ScrollView>
             <View>
                 <Image source={Images.organic}  style={styles.images}/>
                 {/* <Image source={{ uri: shopSub.sub_categories.image  }} /> */}
             </View>
-
+            
             <View style={styles.cato}>
                 <Text style={styles.by} > SHOP BY CATEGORY </Text>
             </View>
@@ -62,13 +64,14 @@ const FruitShopScreen = (props) => {
                     data={shopSub.sub_categories}
                     numColumns= {2}
                     renderItem={({ item }) => {
-                       // console.log(item);
+                       // console.log("\n\n\n Vegetables        ",item);
                         return(
                             <View key={item.id}   >
                                 <FruitsComp 
                                     img={item.image}
+                                    item={item}
                                     nameF={item.title}
-                                    onClick={() => {props.navigation.navigate('Vegetables')}}
+                                    onClick={() => {props.navigation.navigate('Vegetables', { vegi:item, vegiId: item.id }  )}}
                                 />
                             </View>
                         )
@@ -76,9 +79,11 @@ const FruitShopScreen = (props) => {
                 }
                 />
             </View>
-        </View>    
+            </ScrollView>
+        </View>
+            
     </View>
-     </ScrollView>
+     
   )
 }
 const styles = StyleSheet.create({
@@ -86,9 +91,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        flex: 1,
+        flex: 0.5,
         backgroundColor: Colors.primary,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingVertical:10
+        
     },
     back:{
         marginTop: 20,

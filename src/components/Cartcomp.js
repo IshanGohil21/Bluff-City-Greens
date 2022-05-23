@@ -15,6 +15,9 @@ const height = width * 100 / 0.6
 const Cartcomp = (props) => {
     const dispatch = useDispatch();
 
+    const WeightProducts = props.item
+    console.log(WeightProducts.item_sizes[1].size);
+
     const [isTouched, setIsTouched] = useState(props.initialState);
 
     const refRBSheet = useRef();
@@ -36,7 +39,7 @@ const Cartcomp = (props) => {
     return (
         <View style={styles.main} >
             <View style={{ flexDirection: 'row', flex: 1 }}>
-                <Image source={props.image} style={styles.img} />
+                <Image source={{ uri: props.image}} style={styles.img} />
             </View>
 
             <View style={{ flex: 3, paddingHorizontal: 5, padding: 10 }} >
@@ -113,7 +116,7 @@ const Cartcomp = (props) => {
                                 status={checked === 'first' ? 'checked' : 'unchecked'}
                                 onPress={() => setChecked('first')}
                             />
-                            <Text>{props.size[0]}</Text>
+                            <Text>{WeightProducts.item_sizes[0].size}</Text>
                         </View>
 
                         <View style={styles.button} >
@@ -123,7 +126,7 @@ const Cartcomp = (props) => {
                                 status={checked === 'second' ? 'checked' : 'unchecked'}
                                 onPress={() => setChecked('second')}
                             />
-                            <Text>{props.size[1]}</Text>
+                            <Text>{WeightProducts.item_sizes[1].size}</Text>
                         </View>
 
                         <View style={styles.button} >
@@ -133,7 +136,7 @@ const Cartcomp = (props) => {
                                 status={checked === 'third' ? 'checked' : 'unchecked'}
                                 onPress={() => setChecked('third')}
                             />
-                            <Text>{props.size[2]}</Text>
+                            <Text>{WeightProducts.item_sizes[2].size}</Text>
                         </View>
                     </View>
                 </RBSheet>

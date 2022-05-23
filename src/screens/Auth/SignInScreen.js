@@ -13,8 +13,6 @@ import { LinearGradient } from "react-native-svg";
 
 const SignInScreen = (props) => {
 
-   
-
     const [isLoading, setisLoading] = useState(false);
 
     const onPressLogin = async (values) => {

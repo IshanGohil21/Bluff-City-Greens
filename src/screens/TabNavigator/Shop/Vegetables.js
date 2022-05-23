@@ -30,10 +30,15 @@ const VegetableScreen = (props) => {
     const subTotal = (cartItems.length ? cartItems.reduce( (a,c) => a + c.itemTotal, 0 ) : 0)
     // console.log(subTotal);
 
+    const veggieId = props.route.params.vegiId
+    // console.log(veggieId);
+
+    const veggiAll = props.route.params.vegi
+        //console.log("\n\n\n\nAll Products    "  ,veggiAll.items);
+
     return (
 
         <>
-            <ScrollView>
                 <View style={styles.main} >
                     <StatusBar backgroundColor={Colors.primary} />
                     {/* Header */}
@@ -56,24 +61,27 @@ const VegetableScreen = (props) => {
                     </View>
                     {/* Body */}
                     <View style={styles.body} >
+                        <ScrollView>
                         <View style={styles.search} >
                             <SearchBarScreen />
                             
                         </View>
                         <View>
                             <FlatList
-                                data={Vegetables}
+                                data={veggiAll.items}
                                 renderItem={({ item }) => {
+                                   // console.log("\n\n\n\nFinal Products "        , item);
                                     return (
                                         <View key={item.id} >
+                                            
                                              <VeggiComp 
-                                               item={item}
-                                               id={item.id}
-                                                image={item.image}
-                                                name={item.name}
-                                                weight={item.weight}
-                                                price={item.price}
-                                                disPrice={item.disPrice}  
+                                                item={item}
+                                                id={item.id}
+                                                 image={item.item_images[0].image}
+                                                 name={item.name}
+                                                 weight={item.item_sizes[0].size}
+                                                 price={item.item_sizes[0].price}
+                                                 disPrice={item.item_sizes[0].price}  
                                                 onPress={ () => {}}
                                             />
                                             
@@ -82,9 +90,10 @@ const VegetableScreen = (props) => {
                                 }}
                             />
                         </View>
+                        </ScrollView>
                     </View>
                 </View>
-            </ScrollView>
+            
         </>
     )
 }
@@ -96,9 +105,10 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        flex: 1,
+        flex: 0.5,
         backgroundColor: Colors.primary,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingVertical:10
     },
     back: {
         marginTop: 20,

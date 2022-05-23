@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ScrollView, TextInput, Image, Dimensions, FlatList, ActivityIndicator } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,14 +11,41 @@ import PastOrder from '../../../dummy-data/PastOrders';
 import Orders from '../../../Components/Orders';
 import SearchBarScreen from '../../../Components/Slider/SearchBar2';
 import CategoriesScreen from '../../../Components/Categories';
-import { getMainRequest, getRequest } from '../../../Helper/ApiHelper';
+import { getMainRequest, getRequest, postRequest } from '../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
 import RecommendedProductsCommon from '../../../Components/RecommendedProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// import LinearGradient from 'react-native-linear-gradient';
+// import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
+
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+import LinearGradient from 'react-native-linear-gradient';
+import Animated, { Value } from 'react-native-reanimated';
+
+import Shimmer from 'react-native-shimmer';
+import { validateYupSchema } from 'formik';
+
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
+
 const { width } = Dimensions.get('window')
 
 const HomeScreen = (props) => {
+
+  const avatarRef = useRef()
+  const firstLineRef = useRef()
+  const secondLineRef = useRef()
+  const thirdLineRef = useRef()
+
+  // useEffect( () => {
+  //   const animation = Animated.stagger(
+  //     400,
+  //     [
+  //       avatarRef.current.getAnimated(),
+  //     ]
+  //   )
+  //   Animated.loop(animation).start();
+  // },[] )
 
   const height = width * 100 / 0.6
   const [active, setActive] = useState(0);
@@ -129,7 +156,7 @@ const HomeScreen = (props) => {
       Toast.show('No Past Orders')
     }
   }
-
+  
 return (
   <ScrollView>
     <StatusBar backgroundColor={Colors.primary} />
@@ -187,6 +214,12 @@ return (
         </View>
       </View>
       { /* Body */}
+  
+
+              {/* Shimmer Effect */}
+      {/* <ShimmerPlaceHolder
+        LinearGradient={LinearGradient}
+      /> */}
       { isLoading ?
             <View style={styles.loader}>
                 <StatusBar backgroundColor={Colors.white} barStyle='light-content'/>

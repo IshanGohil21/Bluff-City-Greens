@@ -56,7 +56,7 @@ const delivery = 0.5;
   // console.log(x);
 
   return (
-     <ScrollView>
+    
       <View style={styles.main} >
         {/* Header & Back Button */}
         <View style={styles.title} >
@@ -68,6 +68,7 @@ const delivery = 0.5;
 
          {/* Body */}
       <View style={styles.body} > 
+      <ScrollView>
           <View style={styles.orderMain} > 
           <View  style={styles.order}>
             <Text style={styles.orderIn} >Order Date :          </Text>
@@ -193,11 +194,9 @@ const delivery = 0.5;
               </RBSheet>
             </View>
 
-
+                </ScrollView>
       </View>
       </View>
-      
-     </ScrollView>
   )
 }
 
@@ -206,9 +205,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    flex: 1,
+    flex: 0.5,
     justifyContent: 'space-between',
-    backgroundColor: Colors.primary
+    backgroundColor: Colors.primary,
+    paddingVertical:10,
+    padding:10
   },
   back: {
     marginTop: 30

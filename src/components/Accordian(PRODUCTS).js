@@ -14,6 +14,7 @@ const AccordianProducts = (props) => {
 
   return (
     <View style={styles.accordian} >
+        
      <TouchableOpacity style={styles.row} onPress={() => {toggleExpanded()}} >
          <View style={{...styles.imageContainer, borderColor: props.color }} >
          <Image source={{ uri : props.image}} style={{...styles.imageDimensions, borderColor: props.color }}/>
@@ -27,7 +28,7 @@ const AccordianProducts = (props) => {
              item.sub_categories.map(item => {
                 // console.log(item);
                  return (
-                     <TouchableOpacity key={item.id} style={styles.containerText}  onPress={() => {}} >
+                     <TouchableOpacity key={item.id} style={styles.containerText}  onPress={props.onClick} >
                          <Text style={styles.productStyles} >{item.title}</Text>
                      </TouchableOpacity>
                  )

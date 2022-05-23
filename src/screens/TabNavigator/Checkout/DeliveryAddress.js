@@ -69,9 +69,10 @@ const DeliveryAddressScreen = (props) => {
     }
 
     return (
-        <ScrollView>
-            {/* // Main Screen Styling */}
+       
+            
             <View style={styles.main} >
+                {/* // Main Screen Styling */}
                 <StatusBar backgroundColor={Colors.primary} />
                 {/* Header */}
                 <View style={styles.header} >
@@ -82,6 +83,7 @@ const DeliveryAddressScreen = (props) => {
                 </View>
                 {/* Body */}
                 <View style={styles.body} >
+                    <ScrollView>
                     <View style={styles.headings} >
                         <Text style={styles.deliveryText} >Delivery Address</Text>
                         <TouchableOpacity   onPress={() =>  {props.navigation.navigate('MyAccount', {screen: 'AddNewAddress'})}} >
@@ -220,10 +222,10 @@ const DeliveryAddressScreen = (props) => {
                     <TouchableOpacity style={styles.signin}  onPress={() => {props.navigation.navigate('Orders')} } >
                         <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                     </TouchableOpacity>
-
+                    </ScrollView>
                 </View>
             </View>
-        </ScrollView>
+       
     )
 }
 
@@ -232,10 +234,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        flex: 1,
+        flex: 0.5,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
-        marginTop: 10
+        marginTop: 5,
+        paddingVertical:10
     },
     checkout: {
         fontSize: 24,
