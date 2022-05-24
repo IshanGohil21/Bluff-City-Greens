@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Searchbar from '../../../../Components/SearchBar';
+import Searchbar from '../../../../components/SearchBar';
 
 import { Colors, Images, Icons } from '../../../../CommonConfig/CommonConfig';
 

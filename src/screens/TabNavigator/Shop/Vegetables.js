@@ -3,10 +3,10 @@ import React, { useRef, useState } from 'react'
 
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import SearchBarScreen from '../../../Components/Slider/SearchBar2';
+import SearchBarScreen from '../../../components/Slider/SearchBar2';
 import Vegetables from '../../../dummy-data/Vegetables';
-import VegetablesComp from '../../../Components/Vegetables';
-import VeggiComp from '../../../Components/VeggiMain';
+import VegetablesComp from '../../../components/Vegetables';
+import VeggiComp from '../../../components/VeggiMain';
 
 import RBSheet from "react-native-raw-bottom-sheet";
 import { RadioButton } from 'react-native-paper';

@@ -8,12 +8,12 @@ import Address from '../../../dummy-data/Address';
 import CouponImages from '../../../dummy-data/Imagess';
 import Categories from '../../../dummy-data/Categories';
 import PastOrder from '../../../dummy-data/PastOrders';
-import Orders from '../../../Components/Orders';
-import SearchBarScreen from '../../../Components/Slider/SearchBar2';
-import CategoriesScreen from '../../../Components/Categories';
+import Orders from '../../../components/Orders';
+import SearchBarScreen from '../../../components/Slider/SearchBar2';
+import CategoriesScreen from '../../../components/Categories';
 import { getMainRequest, getRequest, postRequest } from '../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
-import RecommendedProductsCommon from '../../../Components/RecommendedProducts';
+import RecommendedProductsCommon from '../../../components/RecommendedProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // import LinearGradient from 'react-native-linear-gradient';

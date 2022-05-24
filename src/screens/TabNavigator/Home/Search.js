@@ -5,8 +5,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors, Icons, Images} from '../../../CommonConfig/CommonConfig';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MostPopularProductScreen from '../../../dummy-data/MostPopular';
-import Popular from '../../../Components/Popular';
-import SearchBarScreen3 from '../../../Components/SearchBar3';
+import Popular from '../../../components/Popular';
+import SearchBarScreen3 from '../../../components/SearchBar3';
 import { getRequest } from '../../../Helper/ApiHelper';
 
 const SearchScreen = (props) => {

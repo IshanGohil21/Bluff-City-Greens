@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import Address from '../../../dummy-data/Address';
-import SelectAddComp from '../../../Components/SelectAddComp';
+import SelectAddComp from '../../../components/SelectAddComp';
 import Card from '../../../dummy-data/Card';
-import CardsComp from '../../../Components/CardsComp';
+import CardsComp from '../../../components/CardsComp';
 import { getRequest } from '../../../Helper/ApiHelper';
 import { Toast } from 'react-native-simple-toast';
 

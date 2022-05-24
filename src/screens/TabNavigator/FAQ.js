@@ -5,7 +5,7 @@ import {Icons, Colors} from '../../CommonConfig/CommonConfig';
 import FAQ from '../../dummy-data/FAQ';
 import Collapsible from 'react-native-collapsible';
 import * as Animatable from 'react-native-animatable';
-import Accordian from '../../Components/Accordian(FAQ)';
+import Accordian from '../../components/Accordian(FAQ)';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const FAQScreen = (props) => {

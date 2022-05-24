@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity,StatusBar,ScrollView } from 'react-native';
 import Address from '../../../../dummy-data/Address';
-import AddressItem from '../../../../Components/AddressItem';
+import AddressItem from '../../../../components/AddressItem';
 
 import { Icons, Colors } from '../../../../CommonConfig/CommonConfig'
 

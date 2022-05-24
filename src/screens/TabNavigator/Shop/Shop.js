@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, StatusBar, TouchableOpacity, FlatList, Alert, ScrollView , Image} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import SearchBarScreen from '../../../Components/Slider/SearchBar2';
+import SearchBarScreen from '../../../components/Slider/SearchBar2';
 import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import Products from '../../../dummy-data/Products';
-import ShopProductScreen from '../../../Components/Shop';
+import ShopProductScreen from '../../../components/Shop';
 import { getMainRequest } from '../../../Helper/ApiHelper';
 
 const ShopScreen = (props) => {

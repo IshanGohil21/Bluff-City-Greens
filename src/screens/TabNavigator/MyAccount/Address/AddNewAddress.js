@@ -6,7 +6,7 @@ import { ActivityIndicator, RadioButton, TextInput } from 'react-native-paper';
 
 import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
 import { ScrollView } from 'react-native-gesture-handler';
-// import RadioButtonScreen from '../../../../Components/RadioButton';
+// import RadioButtonScreen from '../../../../components/RadioButton';
 import { postRequest } from '../../../../Helper/ApiHelper';
 import AddressValidationSchema from '../../../../Schema/AddressValidationSchema';
 import { Formik } from 'formik';

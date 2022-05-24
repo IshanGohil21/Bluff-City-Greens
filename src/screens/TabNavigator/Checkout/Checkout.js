@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Icons, Colors } from '../../../CommonConfig/CommonConfig';
 import Vegetables  from '../../../dummy-data/Vegetables';
-import Cartcomp from '../../../Components/Cartcomp';
+import Cartcomp from '../../../components/Cartcomp';
 import { useDispatch, useSelector } from 'react-redux';
 
 const CheckoutScreen = (props) => {

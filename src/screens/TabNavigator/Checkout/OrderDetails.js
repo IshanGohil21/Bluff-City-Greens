@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Address from '../../../dummy-data/Address';
 
-import SelectAddComp from '../../../Components/SelectAddComp';
+import SelectAddComp from '../../../components/SelectAddComp';
 
 const OrderDetailsScreen = (props) => {
   const refRBSheet = useRef()

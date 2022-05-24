@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import RBSheet from "react-native-raw-bottom-sheet";
-import ProfileOption from '../../../Components/ProfileOption';
+import ProfileOption from '../../../components/ProfileOption';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { getRequest } from '../../../Helper/ApiHelper';

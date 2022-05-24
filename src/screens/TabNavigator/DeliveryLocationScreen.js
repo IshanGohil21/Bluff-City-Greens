@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 // import Images from '../CommonConfig/Images/Images';
 import { Colors, Images, Icons } from '../../CommonConfig/CommonConfig';
 import Address from '../../dummy-data/Address';
-import Searchbar from '../../Components/SearchBar';
+import Searchbar from '../../components/SearchBar';
 
 
 

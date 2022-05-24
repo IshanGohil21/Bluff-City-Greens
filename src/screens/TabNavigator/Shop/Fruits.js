@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {Images, Colors, Icons} from '../../../CommonConfig/CommonConfig';
 import Fruits from '../../../dummy-data/Fruits';
-import FruitsComp from '../../../Components/Fruits';
+import FruitsComp from '../../../components/fruits';
 
 
 const { width } = Dimensions.get('window')

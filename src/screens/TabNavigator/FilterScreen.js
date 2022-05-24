@@ -8,7 +8,7 @@ import { RadioButton } from 'react-native-paper';
 
 
 import Categories from '../../dummy-data/Categories';
-import InputRangeScreen from '../../Components/Slider/InputRange';
+import InputRangeScreen from '../../components/Slider/InputRange';
 
 const { width } = Dimensions.get('window')
 

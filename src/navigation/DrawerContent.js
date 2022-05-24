@@ -4,10 +4,10 @@ import { DrawerContentScrollView, DrawerItem, getIsDrawerOpenFromState } from '@
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Icons, Images, Colors } from '../CommonConfig/CommonConfig'
-import AccordianProducts from '../Components/Accordian(PRODUCTS)';
+import AccordianProducts from '../components/Accordian(PRODUCTS)';
 import Products from '../dummy-data/Products';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import SearchBarScreen2 from '../Components/SearchBar3';
+import SearchBarScreen2 from '../components/SearchBar3';
 import { getRequest } from '../Helper/ApiHelper';
 
 const DrawerContentScreen = (props) => {

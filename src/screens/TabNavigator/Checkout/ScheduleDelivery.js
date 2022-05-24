@@ -5,7 +5,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import moment from 'moment';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import AccordianDeliveryTime from '../../../Components/Accordian(DeliveryTime)';  
+import AccordianDeliveryTime from '../../../components/Accordian(DeliveryTime)';  
 
 
 const ScheduleDelivery = (props) => {
