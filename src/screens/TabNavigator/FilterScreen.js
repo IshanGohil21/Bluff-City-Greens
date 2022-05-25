@@ -29,6 +29,7 @@ const FilterScreen = (props) => {
   const onValueSChange = (values) => {
     setValue(values)
   }
+  
 
   return (
     <View style={styles.main} >
