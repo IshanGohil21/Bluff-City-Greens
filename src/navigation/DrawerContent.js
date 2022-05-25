@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList, ScrollView, Alert } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, FlatList, ScrollView, Alert, Dimensions } from 'react-native'
 import React,{ useState, useEffect } from 'react'
 import { DrawerContentScrollView, DrawerItem, getIsDrawerOpenFromState } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,12 +10,22 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import SearchBarScreen2 from '../components/SearchBar3';
 import { getRequest } from '../Helper/ApiHelper';
 
+import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+
+const { width } = Dimensions.get('window')
+
 const DrawerContentScreen = (props) => {
     const [isLoading, setIsLoading] = useState({});
 
     useEffect( () => {
         getDrawer();
-        setIsLoading(false);
+    },[])
+
+    useEffect( () => {
+        setTimeout( () => {
+            setIsLoading(false)
+        },6000 )
     },[])
 
     const [categories, setCategories] = useState([]);
@@ -32,6 +42,7 @@ const DrawerContentScreen = (props) => {
         else {
             Alert.alert("Error", errorMsg, [{text: 'Okay'}])
         }
+        
     }
 
     const renderAccordiansProducts = () => {
@@ -48,15 +59,18 @@ const DrawerContentScreen = (props) => {
                 />
             )
         }
+        
         return products
     }
 
     return (
 
         <View style={styles.main} >
+           
             <ScrollView showsVerticalScrollIndicator={false}>
             <StatusBar backgroundColor={Colors.primary} />
             {/* Header */}
+            
             <View style={styles.mainHeader} >
                 <View style={styles.header} >
                     <Text style={styles.categories} >Categories</Text>
@@ -70,11 +84,13 @@ const DrawerContentScreen = (props) => {
             </View>
 
             {/* Body */}
-            
+                { isLoading ?  <ShimmerPlaceholder LinearGradient={LinearGradient} height={600} width={width} />    : 
                 <View style={styles.body} >
                     {renderAccordiansProducts()}
                 </View>
+            }
             </ScrollView>
+            
         </View>
     )
 }

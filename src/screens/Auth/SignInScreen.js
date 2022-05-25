@@ -150,19 +150,13 @@ const SignInScreen = (props) => {
                         </View>
                     </View>
 
-                    
-                    
-                   
                     <TouchableOpacity onPress={handleSubmit} >
                         <View  style={styles.signin}>
                     {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
                         <Text  style={{fontSize: 24, color: Colors.white}} >  SIGN IN </Text>}
                         </View> 
                     </TouchableOpacity>
-                    
                    
-
-                    
                     <View style={styles.account}>
                         <Text style={{ color: Colors.white }}>Don't have account?</Text>
                         <TouchableOpacity onPress={() => {

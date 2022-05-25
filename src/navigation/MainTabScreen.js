@@ -51,7 +51,7 @@ const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
     const getTabBarVisibility = (route) => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        const hideOnscreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer', 'DeliveryCheckout','Orders', 'TrackOrder', 'ScheduleDelivery']
+        const hideOnscreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer', 'DeliveryCheckout','Orders', 'TrackOrder', 'ScheduleDelivery','ReferFriend']
         if(hideOnscreens.indexOf(routeName) > -1) return false;
         return true;
     };

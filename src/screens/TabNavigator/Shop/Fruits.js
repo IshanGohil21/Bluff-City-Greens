@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Image, Dimensions,FlatList, ScrollView } from 'react-native'
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {Images, Colors, Icons} from '../../../CommonConfig/CommonConfig';
 import Fruits from '../../../dummy-data/Fruits';
 import FruitsComp from '../../../components/fruits';
+
+import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 
 const { width } = Dimensions.get('window')
@@ -14,11 +17,19 @@ const numColumns = 2
 
 const FruitShopScreen = (props) => {
 
+    const [isLoading, setIsLoading] = useState(true);
+
     const shopID = props.route.params.shopId
     // console.log(shopID);
 
     const shopSub = props.route.params.shop
     console.log("\n\n\n\n Sub_Categories for each  products           ",shopSub.sub_categories);
+
+    useEffect( () => {
+        setTimeout( () => {
+            setIsLoading(false)
+        },5000)
+    },[] )
 
   return (
        
@@ -50,10 +61,12 @@ const FruitShopScreen = (props) => {
         
         <View style={styles.body} >
         <ScrollView>
+            { isLoading ?  <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content}  /> : 
             <View>
                 <Image source={Images.organic}  style={styles.images}/>
                 {/* <Image source={{ uri: shopSub.sub_categories.image  }} /> */}
             </View>
+            }
             
             <View style={styles.cato}>
                 <Text style={styles.by} > SHOP BY CATEGORY </Text>
@@ -67,12 +80,14 @@ const FruitShopScreen = (props) => {
                        // console.log("\n\n\n Vegetables        ",item);
                         return(
                             <View key={item.id}   >
+                                { isLoading ?  <ShimmerPlaceholder LinearGradient={LinearGradient} height={height} width={width} /> : 
                                 <FruitsComp 
                                     img={item.image}
                                     item={item}
                                     nameF={item.title}
                                     onClick={() => {props.navigation.navigate('Vegetables', { vegi:item, vegiId: item.id }  )}}
                                 />
+                            }
                             </View>
                         )
                     }
@@ -153,6 +168,9 @@ const styles = StyleSheet.create({
         padding: 5,
         marginTop: 10,
         flex: 1,
+    },
+    content:{
+        borderRadius:10
     }
 })
 

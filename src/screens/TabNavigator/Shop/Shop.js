@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, StatusBar, TouchableOpacity, FlatList, Alert, ScrollView , Image} from 'react-native';
+import { View, Text, StyleSheet, StatusBar, TouchableOpacity, FlatList, Alert, ScrollView , Image, Dimensions} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import SearchBarScreen from '../../../components/Slider/SearchBar2';
@@ -7,13 +7,24 @@ import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import Products from '../../../dummy-data/Products';
 import ShopProductScreen from '../../../components/Shop';
 import { getMainRequest } from '../../../Helper/ApiHelper';
+import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+
+const { width } = Dimensions.get('window')
 
 const ShopScreen = (props) => {
     const [categories, setCategories] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
         
     useEffect( () => {
         getCategoriesShop();
     }, []);
+
+    useEffect( () => {
+        setTimeout( () => {
+            setIsLoading(false)
+        },5000 )
+    },[])
 
     const getCategoriesShop = async() => {
         const response = await getMainRequest('/customer/get-homepage')
@@ -44,6 +55,7 @@ const ShopScreen = (props) => {
                     <SearchBarScreen />
                 </View>
                 {/* Flatlist */}
+                  
                 <View>
                      <FlatList
                         data={categories}
@@ -51,6 +63,7 @@ const ShopScreen = (props) => {
                             console.log("\n\n\n\n\nShop Cato     ",item);
                             return (
                                 <View key={index}> 
+                                 { isLoading ?  <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width}   /> :
                                     <ShopProductScreen
                                         item={item}
                                         id={item.id}
@@ -58,12 +71,13 @@ const ShopScreen = (props) => {
                                         Pname={item.title}
                                         color={item.color}
                                         onPress={() => {props.navigation.navigate('Fruits',  {shop: item, shopId: item.id }) }}
-                                    />
+                                    />}
                                 </View>
                             )
                         }}
                     /> 
                 </View>
+                    
                 {/* ScrollView to test wether the called API is running or not */}
                 {/* <ScrollView>
                         {

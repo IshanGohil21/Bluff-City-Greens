@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, TouchableOpacity, Image, Alert } from 'react-native'
+import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, TouchableOpacity, Image, Alert, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RadioButton } from 'react-native-paper';
@@ -11,6 +11,11 @@ import Card from '../../../dummy-data/Card';
 import CardsComp from '../../../components/CardsComp';
 import { getRequest } from '../../../Helper/ApiHelper';
 import { Toast } from 'react-native-simple-toast';
+
+import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+
+const { width } = Dimensions.get('window')
 
 const DeliveryAddressScreen = (props) => {
     const [checked, setChecked] = useState('first');
@@ -49,44 +54,48 @@ const DeliveryAddressScreen = (props) => {
     // console.log("CARD_ITEMS         ",cardItems);
     useEffect(() => {
         getCard();
-        setIsLoading(false);
-    },[]);
+    }, []);
 
     const [credit, setCredit] = useState([]);
-    const getCard = async() => {
+    const getCard = async () => {
         const response = await getRequest('/customer/get-card');
         //console.log("n\n\n\n\n\nCARD     ",response.data );
         let errorMsg = 'No Credit Cards to Show!';
 
-        if(response.success){
+        if (response.success) {
             setCredit(response.data.cards.data);
-           // console.log("\n\n\n\nMAIN_CARD_DETAILS"        ,response.data.cards.data);
+            // console.log("\n\n\n\nMAIN_CARD_DETAILS"        ,response.data.cards.data);
         }
         else {
             // Toast.show('Initially add card to save & access the card ')
             Alert.alert("Error", errorMsg, [{ text: "Okay" }])
         }
     }
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 3000)
+    }, [])
 
     return (
-       
-            
-            <View style={styles.main} >
-                {/* // Main Screen Styling */}
-                <StatusBar backgroundColor={Colors.primary} />
-                {/* Header */}
-                <View style={styles.header} >
-                    <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-                        <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.back} />
-                    </TouchableOpacity>
-                    <Text style={styles.checkout} >Checkout</Text>
-                </View>
-                {/* Body */}
-                <View style={styles.body} >
-                    <ScrollView>
+
+
+        <View style={styles.main} >
+            {/* // Main Screen Styling */}
+            <StatusBar backgroundColor={Colors.primary} />
+            {/* Header */}
+            <View style={styles.header} >
+                <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
+                    <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.back} />
+                </TouchableOpacity>
+                <Text style={styles.checkout} >Checkout</Text>
+            </View>
+            {/* Body */}
+            <View style={styles.body} >
+                <ScrollView>
                     <View style={styles.headings} >
                         <Text style={styles.deliveryText} >Delivery Address</Text>
-                        <TouchableOpacity   onPress={() =>  {props.navigation.navigate('MyAccount', {screen: 'AddNewAddress'})}} >
+                        <TouchableOpacity onPress={() => { props.navigation.navigate('MyAccount', { screen: 'AddNewAddress' }) }} >
                             <Text style={styles.newAdd} >Add New</Text>
                         </TouchableOpacity>
                     </View>
@@ -99,14 +108,16 @@ const DeliveryAddressScreen = (props) => {
                             renderItem={({ item }) => {
                                 return (
                                     <View key={item.id}   >
-                                        <SelectAddComp
-                                            item={item}
-                                            id={item.id}
-                                            tag={item.tag}
-                                            name={item.name}
-                                            address={item.address}
-                                            country={item.country}
-                                        />
+                                        {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
+                                            <SelectAddComp
+                                                item={item}
+                                                id={item.id}
+                                                tag={item.tag}
+                                                name={item.name}
+                                                address={item.address}
+                                                country={item.country}
+                                            />
+                                        }
                                     </View>
                                 )
                             }}
@@ -116,7 +127,7 @@ const DeliveryAddressScreen = (props) => {
                     <View style={styles.delivery} >
                         <Text style={styles.schedule} >Schedule Delivery</Text>
                     </View>
-                    <TouchableOpacity style={styles.deliveryTime} onPress={() => {props.navigation.navigate('ScheduleDelivery')} }  >
+                    <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
                         <Image source={Images.timetable} style={styles.timetable} />
                         <Text>Date</Text>
                         <Text>Time</Text>
@@ -126,7 +137,7 @@ const DeliveryAddressScreen = (props) => {
                     {/* Payment Method */}
                     <View style={styles.deliver0} >
                         <Text style={styles.schedule} >Payment Method</Text>
-                        <TouchableOpacity onPress={()  => {props.navigation.navigate('AddCard')} } >
+                        <TouchableOpacity onPress={() => { props.navigation.navigate('AddCard') }} >
                             <Text style={styles.newAdd} >Add New</Text>
                         </TouchableOpacity>
                     </View>
@@ -165,17 +176,18 @@ const DeliveryAddressScreen = (props) => {
                             showsHorizontalScrollIndicator={false}
                             data={credit}
                             renderItem={({ item, index }) => {
-                             //   console.log("\n\n\n\n\nCARD_ITEMDATA         ",item);
+                                //   console.log("\n\n\n\n\nCARD_ITEMDATA         ",item);
                                 return (
                                     <View key={index} >
-                                        <CardsComp
-                                            item={item}
-                                            id={item.id}
-                                            number={item.last4}
-                                            image={item.image}
-                                            brand={item.brand}
-                                        /> 
-                                       
+                                        {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} contentStyle={styles.content} /> :
+                                            <CardsComp
+                                                item={item}
+                                                id={item.id}
+                                                number={item.last4}
+                                                image={item.image}
+                                                brand={item.brand}
+                                            />
+                                        }
                                     </View>
                                 )
                             }}
@@ -188,7 +200,7 @@ const DeliveryAddressScreen = (props) => {
                         </View>
                     }
 
-                        {/* To Test Wether the API Called is running or not */}
+                    {/* To Test Wether the API Called is running or not */}
                     {/* <ScrollView>
                         {
                             credit.map( (item, index) => {
@@ -219,13 +231,12 @@ const DeliveryAddressScreen = (props) => {
                         <Text style={styles.bold2} >${(Delivery + subTotal).toFixed(2)}</Text>
                     </View>
 
-                    <TouchableOpacity style={styles.signin}  onPress={() => {props.navigation.navigate('Orders')} } >
+                    <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Orders') }} >
                         <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                     </TouchableOpacity>
-                    </ScrollView>
-                </View>
+                </ScrollView>
             </View>
-       
+        </View>
     )
 }
 
@@ -238,7 +249,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
         marginTop: 5,
-        paddingVertical:10
+        paddingVertical: 10
     },
     checkout: {
         fontSize: 24,
@@ -346,7 +357,7 @@ const styles = StyleSheet.create({
     timetable: {
         height: 35,
         width: 35,
-        
+
     },
     cod: {
         flexDirection: 'row',

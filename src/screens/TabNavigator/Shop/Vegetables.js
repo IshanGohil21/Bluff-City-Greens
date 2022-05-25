@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView, FlatList } from 'react-native'
-import React, { useRef, useState } from 'react'
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView, FlatList , Dimensions} from 'react-native'
+import React, { useRef, useState, useEffect } from 'react'
 
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,9 +12,15 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { RadioButton } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 
+import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+
+const { width } = Dimensions.get('window')
+
 const VegetableScreen = (props) => {
     const refRBSheet = useRef();
     const [checked, setChecked] = useState('first')
+    const [isLoading, setIsLoading] = useState(true)
 
     const cartItems = useSelector( state => {
         const updatedCartItems = [];
@@ -35,6 +41,13 @@ const VegetableScreen = (props) => {
 
     const veggiAll = props.route.params.vegi
         //console.log("\n\n\n\nAll Products    "  ,veggiAll.items);
+
+        useEffect( () => {
+            setTimeout( () => {
+                setIsLoading(false)
+            },3000)
+        },[] )
+    
 
     return (
 
@@ -73,7 +86,7 @@ const VegetableScreen = (props) => {
                                    // console.log("\n\n\n\nFinal Products "        , item);
                                     return (
                                         <View key={item.id} >
-                                            
+                                            { isLoading ?   <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content}  />  :
                                              <VeggiComp 
                                                 item={item}
                                                 id={item.id}
@@ -84,6 +97,7 @@ const VegetableScreen = (props) => {
                                                  disPrice={item.item_sizes[0].price}  
                                                 onPress={ () => {}}
                                             />
+                                        }
                                             
                                         </View> 
                                     )

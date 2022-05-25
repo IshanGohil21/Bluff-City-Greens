@@ -5,9 +5,14 @@ export default {
     currentLocation: require('./Assets/icon/icons8-location-100.png'),
     mapKey: require('./Assets/icon/map.jpeg'),
     spinach: require('./Assets/icon/icons8-spinach-100.png'),
+
+    // Social Media Images
    
     facebook: require('./Assets/icon/icons8-facebook-circled-100.png'),
     google: require('./Assets/icon/icons8-google-100.png'),
+    telegram:require('./Assets/icon/telegram.png'),
+    whatsapp:require('./Assets/icon/whatsapp.png'),
+    instagram:require('./Assets/icon/instagram.png'),
    
     address: require('./Assets/icon/location.jpeg'),
     address2: require('./Assets/icon/icons8-location-100.png'),
@@ -88,6 +93,9 @@ export default {
     //    Placeholder image for profile photo 
 
     userPic: require('./Assets/icon/placeholder.jpeg'),
-    userPic0: 'https://as2.ftcdn.net/v2/jpg/02/17/34/67/1000_F_217346782_7XpCTt8bLNJqvVAaDZJwvZjm0epQmj6j.jpg'
+    userPic0: 'https://as2.ftcdn.net/v2/jpg/02/17/34/67/1000_F_217346782_7XpCTt8bLNJqvVAaDZJwvZjm0epQmj6j.jpg',
+
+    // Refer A Friend
+    refer: require('../CommonConfig/Assets/icon/Refer.jpg')
 
 }

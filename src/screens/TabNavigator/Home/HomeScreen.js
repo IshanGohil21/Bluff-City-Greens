@@ -16,36 +16,17 @@ import Toast from 'react-native-simple-toast';
 import RecommendedProductsCommon from '../../../components/RecommendedProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// import LinearGradient from 'react-native-linear-gradient';
-// import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
-
-import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, { Value } from 'react-native-reanimated';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
-import Shimmer from 'react-native-shimmer';
+// import Shimmer from 'react-native-shimmer';
 import { validateYupSchema } from 'formik';
-
-const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
 
 const { width } = Dimensions.get('window')
 
 const HomeScreen = (props) => {
 
-  const avatarRef = useRef()
-  const firstLineRef = useRef()
-  const secondLineRef = useRef()
-  const thirdLineRef = useRef()
-
-  // useEffect( () => {
-  //   const animation = Animated.stagger(
-  //     400,
-  //     [
-  //       avatarRef.current.getAnimated(),
-  //     ]
-  //   )
-  //   Animated.loop(animation).start();
-  // },[] )
+  const [isLoading, setIsLoading] = useState(true)
 
   const height = width * 100 / 0.6
   const [active, setActive] = useState(0);
@@ -77,49 +58,47 @@ const HomeScreen = (props) => {
 
   const [recommendedOrders, setRecommendedOrders] = useState([]);
   // const [token, setToken] = useState('')
-  
-  const [isLoading, setIsLoading] = useState({});
 
   const z = cartItems.find(item => item.id === props.id)
 
-  useEffect(() => {
+  useEffect(async () => {
     getBanner();
     getCategories();
     getPastOrders();
     getRecommendedOrders();
-    setIsLoading(false)
   }, [])
 
   // useEffect(() => {
   //   console.log("USER      ",token)
   // },[token])
 
-    // Banners API (common Home Page)
+  // Banners API (common Home Page)
   const [banner, setBanner] = useState([]);
-  const getBanner = async() => {
+  const getBanner = async () => {
     const response = await getMainRequest('/customer/get-homepage')
     // console.log("Banners   ", response.data );
 
-     if(response.success){
-       setBanner(response.data.banners);
+    if (response.success) {
+      setBanner(response.data.banners);
       // console.log(response.data.banners);
-     } else {
-       Toast.show('No Banners to Show Currently!')
-     }
+    } else {
+      Toast.show('No Banners to Show Currently!')
+    }
   }
 
   // Recommended APIs (common Home Page)
-  const getRecommendedOrders = async() => {
+  const getRecommendedOrders = async () => {
     const response = await getMainRequest('/customer/get-homepage')
     //  console.log('get Recommended   ', response)
 
-    if(response.success){
+    if (response.success) {
       setRecommendedOrders(response.data.recommended_products)
       //  console.log('Recommended' , response.data.recommended_products);
     }
     else {
       Toast.show('No Recommended Orders Available Currently');
     }
+    setIsLoading(false)
   }
 
   // Categories API (common Home Page)
@@ -131,39 +110,35 @@ const HomeScreen = (props) => {
 
     if (response.success) {
       setCatogeries(response.data.categories)
-     //    console.log('Categories      ', response.data.categories);
+      //    console.log('Categories      ', response.data.categories);
     }
     else {
       Toast.show('No Categories Available Currently');
     }
   }
 
-// Past Orders API (common Home Page)
+  // Past Orders API (common Home Page)
 
   const [pastOrders, setPastOrders] = useState([]);
 
   const getPastOrders = async () => {
-    
-    const response = await getRequest('/customer/get-homepage')
-    
-   // console.log("\n\n\n\nAll      ", response);
 
-    if(response.success){
+    const response = await getRequest('/customer/get-homepage')
+
+    // console.log("\n\n\n\nAll      ", response);
+
+    if (response.success) {
       setPastOrders(response.data.past_orders)
-     // console.log("\n\n\n\nPastOrders       ", response.data.past_orders);
+      // console.log("\n\n\n\nPastOrders       ", response.data.past_orders);
     }
     else {
       Toast.show('No Past Orders')
     }
   }
-  
-return (
-  <ScrollView>
-    <StatusBar backgroundColor={Colors.primary} />
-    {/* <StatusBar backgroundColor={Colors.primary} /> */}
-    <View>
-
+  return (
+    <ScrollView>
       <View style={styles.main} >
+        <StatusBar backgroundColor={Colors.primary} />
         { /* Header */}
         <View style={styles.title}>
           <View style={styles.header} >
@@ -189,12 +164,12 @@ return (
             </TouchableOpacity>
 
             {/* Notification Logo */}
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Notification') }}  style={{marginLeft: 35}} >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Notification') }} style={{ marginLeft: 35 }} >
               <Ionicons name={Icons.NOTIFICATION} size={24} color={Colors.white} style={styles.notify} />
             </TouchableOpacity>
 
             {/* Cart */}
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{marginRight:20}}  >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 20 }}  >
               <Text style={styles.xyz} >{y}</Text>
               <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
             </TouchableOpacity>
@@ -212,124 +187,135 @@ return (
             </TouchableOpacity>
           </View>
         </View>
-      </View>
-      { /* Body */}
-  
 
-              {/* Shimmer Effect */}
-      {/* <ShimmerPlaceHolder
+
+        { /* Body */}
+
+        {/* Shimmer Effect */}
+        {/* <ShimmerPlaceHolder
         LinearGradient={LinearGradient}
       /> */}
-      { isLoading ?
-            <View style={styles.loader}>
-                <StatusBar backgroundColor={Colors.white} barStyle='light-content'/>
-                <ActivityIndicator size={100} color={Colors.primary} />
-            </View> 
-            :
-      <View >
-        {/* Banners */}
-        <View>
-          <ScrollView
-            pagingEnabled
-            horizontal
-            onScroll={change}
-            showsHorizontalScrollIndicator={false}
-          >
-            {
-              banner.map( (item,index) => {
-                // console.log("\n\nITEM:      ",item);
-                return( 
-                  <View key={index}> 
-                    <Image source={{uri: item.image}}  style={{height:150, width:width}}/>
-                  </View>
-                )
-              })
-            }
-          </ScrollView>
-          <View style={styles.scroll} >
-            {
-              banner.map((i, k) => (
-                <Text key={k} style={k == active ? styles.pagingActive : styles.paging} > ⬤ </Text>
-              ))
-            }
-          </View>
-        </View>
-        {/* Discount Coupon Image */}
-        {/* <View>
-          <Image source={Images.discount} style={styles.discount} />
-        </View> */}
-        {/* Categories */}
+        {/* {isLoading ?
+          <View style={styles.loader}>
+            <StatusBar backgroundColor={Colors.white} barStyle='light-content' /> */}
+        {/* <ActivityIndicator size={100} color={Colors.primary} /> */}
+        {/* <ShimmerPlaceholder LinearGradient={LinearGradient} height={width} width={width} /> */}
+        {/* </View>
+          : */}
+        <ScrollView>
+          <View style={styles.body} >
 
-        <View style={styles.commonContainer} >
-          <Text style={styles.common} >Categories</Text>
-          <FlatList
-            data={categories}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={( itemData ) => {
-                // console.log(" \n\n\n\Categories ITEMS        ",itemData.item);
-              return (
-                <View key={itemData.item.id}>
-                  <CategoriesScreen
-                    image={itemData.item.image}
-                    id={itemData.item.id}
-                    name={itemData.item.title}
-                   // color={item.color}
-                    onClick={() => { props.navigation.navigate( 'Shop' , {screen:'Fruits', params:{ shop: itemData.item, shopId: itemData.item.id }}) }}
-                  />
-                </View>
-              )
-            }}
-          />
-        </View>
-        {/* Past Orders */}
-        <View style={styles.commonContainer} >
-          <View style={styles.past} >
-            <Text style={styles.common} >Past Orders</Text>
-            <Text style={styles.view} >View All</Text>
-          </View>
-          <View style={styles.heading}>
-            
-            <FlatList 
-            data={pastOrders}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={( item, index ) => {
-            //  console.log("\n\n\n\n\nOnly for FlatList    ",item.item.order_items);
-              return(
-                <View key={index}  style={{flex:1,flexDirection:'row'}} >
-                  {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
+            {/* Banners */}
+            {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
+              <View>
+                <ScrollView
+                  pagingEnabled
+                  horizontal
+                  onScroll={change}
+                  showsHorizontalScrollIndicator={false}
+                >
                   {
-                    item.item.order_items.map((indi) => {
-                     // console.log("\n\n\n\n\nNest FlatList:   ",indi);
-                      return(
-                        <View  >
-                          <RecommendedProductsCommon 
-                          name = {indi.item.name}
-                          id={indi.id}
-                          item={indi}
-                          price={indi.item_size.price}
-                          weight= {indi.item_size.size}
-                          image={indi.sub_category.image}
-                          onClick={() => {props.navigation.navigate('Past_Orders', {past: indi, pastId: indi.id})}}
-                          />
-                          {/* <Text>{indi.item_size.price}</Text> */}
-                          {/* <Text>Nest</Text> */}
-                          {/* <Text> {indi.item.name} </Text> */}
-                          {/* <Image source={{ uri: indi.sub_category.image}} style={{height: 50, width: 50}} /> */}
+                    banner.map((item, index) => {
+                      // console.log("\n\nITEM:      ",item);
+                      return (
+                        <View key={index}>
+                          <Image source={{ uri: item.image }} style={{ height: 150, width: width }} />
                         </View>
                       )
-                    }
-                  )
+                    })
+                  }
+                </ScrollView>
+                <View style={styles.scroll} >
+                  {
+                    banner.map((i, k) => (
+                      <Text key={k} style={k == active ? styles.pagingActive : styles.paging} > ⬤ </Text>
+                    ))
                   }
                 </View>
-              )
-            }}
-            
-            />
+              </View>
+            }
 
-            {/* Nested Scrollview for the Past Order API calling check */}
-            {/* <ScrollView
+            {/* Discount Coupon Image */}
+            {/* <View>
+          <Image source={Images.discount} style={styles.discount} />
+        </View> */}
+            {/* Categories */}
+
+            <View style={styles.commonContainer} >
+              <Text style={styles.common} >Categories</Text>
+              {/* Loading Effect */}
+              {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
+                <FlatList
+                  data={categories}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={(itemData) => {
+                    // console.log(" \n\n\n\Categories ITEMS        ",itemData.item);
+                    return (
+                      <View key={itemData.item.id}>
+                        <CategoriesScreen
+                          image={itemData.item.image}
+                          id={itemData.item.id}
+                          name={itemData.item.title}
+                          // color={item.color}
+                          onClick={() => { props.navigation.navigate('Shop', { screen: 'Fruits', params: { shop: itemData.item, shopId: itemData.item.id } }) }}
+                        />
+                      </View>
+                    )
+                  }}
+                />
+              }
+
+            </View>
+            {/* Past Orders */}
+            <View style={styles.commonContainer} >
+              <View style={styles.past} >
+                <Text style={styles.common} >Past Orders</Text>
+                <Text style={styles.view} >View All</Text>
+              </View>
+              {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
+                <View style={styles.heading}>
+
+                  <FlatList
+                    data={pastOrders}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={(item, index) => {
+                      //  console.log("\n\n\n\n\nOnly for FlatList    ",item.item.order_items);
+                      return (
+                        <View key={index} style={{ flex: 1, flexDirection: 'row' }} >
+                          {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
+                          {
+                            item.item.order_items.map((indi) => {
+                              // console.log("\n\n\n\n\nNest FlatList:   ",indi);
+                              return (
+                                <View  >
+                                  <RecommendedProductsCommon
+                                    name={indi.item.name}
+                                    id={indi.id}
+                                    item={indi}
+                                    price={indi.item_size.price}
+                                    weight={indi.item_size.size}
+                                    image={indi.sub_category.image}
+                                    onClick={() => { props.navigation.navigate('Past_Orders', { past: indi, pastId: indi.id }) }}
+                                  />
+                                  {/* <Text>{indi.item_size.price}</Text> */}
+                                  {/* <Text>Nest</Text> */}
+                                  {/* <Text> {indi.item.name} </Text> */}
+                                  {/* <Image source={{ uri: indi.sub_category.image}} style={{height: 50, width: 50}} /> */}
+                                </View>
+                              )
+                            }
+                            )
+                          }
+                        </View>
+                      )
+                    }}
+
+                  />
+
+                  {/* Nested Scrollview for the Past Order API calling check */}
+                  {/* <ScrollView
               pagingEnabled
               horizontal
               onScroll={change}
@@ -362,53 +348,58 @@ return (
               }
             </ScrollView> */}
 
-          </View>
-        </View>
+                </View>
+              }
 
-        {/* Recommended Products render by API */}
-        <View style={styles.commonContainer} >
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-            <Text style={styles.common} >Recommended Products</Text>
-            <Text style={styles.view} >View All</Text>
-          </View>
-         
-          <View style={styles.heading} >
-          <FlatList 
-            data={recommendedOrders}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={(itemData) => {
-             // console.log(itemData.item);
-              return (
-                <View key={itemData.item.id} >
-                  <RecommendedProductsCommon 
-                  item={itemData.item}
-                  name={itemData.item.name}
-                  image={itemData.item.item_images[0].image}
-                  weight={itemData.item.item_sizes[0].size}
-                  price={itemData.item.item_sizes[0].price}
-                  onClick={() => { props.navigation.navigate('Recommended_Products',  { recommended: itemData.item, recommendId: itemData.item.id }) }}
+            </View>
+
+            {/* Recommended Products render by API */}
+            <View style={styles.commonContainer} >
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                <Text style={styles.common} >Recommended Products</Text>
+                <Text style={styles.view} >View All</Text>
+              </View>
+              {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
+                <View style={styles.heading} >
+                  <FlatList
+                    data={recommendedOrders}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={(itemData) => {
+                      // console.log(itemData.item);
+                      return (
+                        <View key={itemData.item.id} >
+                          <RecommendedProductsCommon
+                            item={itemData.item}
+                            name={itemData.item.name}
+                            image={itemData.item.item_images[0].image}
+                            weight={itemData.item.item_sizes[0].size}
+                            price={itemData.item.item_sizes[0].price}
+                            onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: itemData.item, recommendId: itemData.item.id }) }}
+                          />
+                        </View>
+
+                      )
+                    }}
                   />
                 </View>
+              }
 
-              )
-            }}          
-          />
+            </View>
           </View>
-          </View>
+        </ScrollView>
+
+        {/* } */}
+
       </View>
-  }
-    </View>
-          
-  </ScrollView>
-          
-)
+    </ScrollView>
+
+  )
 };
 
 const styles = StyleSheet.create({
   main: {
     flex: 1,
-    justifyContent: 'center',
   },
   header: {
     // flex: 1,
@@ -416,7 +407,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primary,
     flexDirection: 'row',
     marginTop: 20,
-   // marginHorizontal :10
+    // marginHorizontal :10
   },
   title: {
     flex: 1,
@@ -603,11 +594,11 @@ const styles = StyleSheet.create({
     width: 15,
     height: 20,
   },
-  loader:{
-    justifyContent:'center',
-    alignItems:'center',
-    flex:1,
-},
+  loader: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
 });
 
 export default HomeScreen;
