@@ -30,7 +30,7 @@ const SearchScreen = (props) => {
   const [result, setResult] = useState([]);
 
   const getSearch = async () => {
-    const response = await getRequest(`/customer/search?term=${state}`)
+    const response = await getRequest(`/customer/search?term=${search}`)
     // console.log(`\n\n\nSearch Products  `, response.data);
     if (response.success) {
       setResult(response.data)
