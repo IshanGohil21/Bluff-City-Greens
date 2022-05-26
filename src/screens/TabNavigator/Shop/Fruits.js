@@ -23,7 +23,7 @@ const FruitShopScreen = (props) => {
     // console.log(shopID);
 
     const shopSub = props.route.params.shop
-    console.log("\n\n\n\n Sub_Categories for each  products           ",shopSub.sub_categories);
+     console.log("\n\n\n\n Sub_Categories for each  products           ",shopSub);
 
     useEffect( () => {
         setTimeout( () => {

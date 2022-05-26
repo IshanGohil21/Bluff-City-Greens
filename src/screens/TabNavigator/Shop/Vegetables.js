@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView, FlatList , Dimensions} from 'react-native'
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView, FlatList, Dimensions } from 'react-native'
 import React, { useRef, useState, useEffect } from 'react'
 
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
@@ -22,92 +22,92 @@ const VegetableScreen = (props) => {
     const [checked, setChecked] = useState('first')
     const [isLoading, setIsLoading] = useState(true)
 
-    const cartItems = useSelector( state => {
+    const cartItems = useSelector(state => {
         const updatedCartItems = [];
-        for ( const key in state.Cart.items ) {
+        for (const key in state.Cart.items) {
             updatedCartItems.push({
                 ...state.Cart.items[key]
             });
         }
-        return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
+        return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
     // console.log(cartItems);
 
-    const subTotal = (cartItems.length ? cartItems.reduce( (a,c) => a + c.itemTotal, 0 ) : 0)
+    const subTotal = (cartItems.length ? cartItems.reduce((a, c) => a + c.itemTotal, 0) : 0)
     // console.log(subTotal);
 
     const veggieId = props.route.params.vegiId
     // console.log(veggieId);
 
     const veggiAll = props.route.params.vegi
-        //console.log("\n\n\n\nAll Products    "  ,veggiAll.items);
+    console.log("\n\n\n\nAll Products    ", veggiAll.title);
 
-        useEffect( () => {
-            setTimeout( () => {
-                setIsLoading(false)
-            },3000)
-        },[] )
-    
+    useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 3000)
+    }, [])
+
 
     return (
 
         <>
-                <View style={styles.main} >
-                    <StatusBar backgroundColor={Colors.primary} />
-                    {/* Header */}
-                    <View style={styles.header} >
-                        <View style={styles.row} >
-                            <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-                                <Ionicons name={Icons.BACK_ARROW} size={28} color={Colors.white} style={styles.back} />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {props.navigation.navigate('Checkout')}} >
-                                <Ionicons name={Icons.CART} size={28} color={Colors.white} style={styles.back} />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.heading} >
-                            <Text style={styles.titleFruit} >Fresh Vegetables</Text>
-                            <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }} >
-                                <Ionicons name={Icons.OPTIONS} size={35} color={Colors.white} />
-                            </TouchableOpacity>
-                        </View>
-
+            <View style={styles.main} >
+                <StatusBar backgroundColor={Colors.primary} />
+                {/* Header */}
+                <View style={styles.header} >
+                    <View style={styles.row} >
+                        <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
+                            <Ionicons name={Icons.BACK_ARROW} size={28} color={Colors.white} style={styles.back} />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
+                            <Ionicons name={Icons.CART} size={28} color={Colors.white} style={styles.back} />
+                        </TouchableOpacity>
                     </View>
-                    {/* Body */}
-                    <View style={styles.body} >
-                        <ScrollView>
+                    <View style={styles.heading} >
+                        <Text style={styles.titleFruit} >{veggiAll.title}</Text>
+                        <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }} >
+                            <Ionicons name={Icons.OPTIONS} size={35} color={Colors.white} />
+                        </TouchableOpacity>
+                    </View>
+
+                </View>
+                {/* Body */}
+                <View style={styles.body} >
+                    <ScrollView>
                         <View style={styles.search} >
                             <SearchBarScreen />
-                            
+
                         </View>
                         <View>
                             <FlatList
                                 data={veggiAll.items}
                                 renderItem={({ item }) => {
-                                   // console.log("\n\n\n\nFinal Products "        , item);
+                                    // console.log("\n\n\n\nFinal Products "        , item);
                                     return (
                                         <View key={item.id} >
-                                            { isLoading ?   <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content}  />  :
-                                             <VeggiComp 
-                                                item={item}
-                                                id={item.id}
-                                                 image={item.item_images[0].image}
-                                                 name={item.name}
-                                                 weight={item.item_sizes[0].size}
-                                                 price={item.item_sizes[0].price}
-                                                 disPrice={item.item_sizes[0].price}  
-                                                onPress={ () => {}}
-                                            />
-                                        }
-                                            
-                                        </View> 
+                                            {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
+                                                <VeggiComp
+                                                    item={item}
+                                                    id={item.id}
+                                                    image={item.item_images[0].image}
+                                                    name={item.name}
+                                                    weight={item.item_sizes[0].size}
+                                                    price={item.item_sizes[0].price}
+                                                    disPrice={item.item_sizes[0].price}
+                                                    onPress={() => { }}
+                                                />
+                                            }
+
+                                        </View>
                                     )
                                 }}
                             />
                         </View>
-                        </ScrollView>
-                    </View>
+                    </ScrollView>
                 </View>
-            
+            </View>
+
         </>
     )
 }
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         flex: 0.5,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
-        paddingVertical:10
+        paddingVertical: 10
     },
     back: {
         marginTop: 20,

@@ -3,8 +3,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, Animated, StatusBar, Dimensions } from 'react-native';
 import LinearGradient  from 'react-native-linear-gradient';
 
-
-
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 
 const { width } = Dimensions.get('window')
@@ -12,7 +10,7 @@ const { width } = Dimensions.get('window')
 const val = Math.floor(1000 + Math.random() * 9000);
 // console.log(val);
 
-const ReferFriendScreen = props => {
+const ReferFriendScreen = (props) => {
 
     return (
         <View style={styles.main} >
@@ -20,7 +18,7 @@ const ReferFriendScreen = props => {
            <StatusBar backgroundColor={Colors.primary} />
            {/* Title */}
             <View style={styles.title} >
-                <TouchableOpacity onPress={() => {prop.navigation.goBack()}} >
+                <TouchableOpacity onPress={() => {props.navigation.goBack()}} >
                 <Ionicons  name={Icons.BACK_ARROW} size={24} color={Colors.white} style={{marginVertical:30}}  />
                 </TouchableOpacity>
                 <View>

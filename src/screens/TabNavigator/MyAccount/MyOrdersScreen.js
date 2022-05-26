@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar } from 'react-native';
 
 import { Icons, Images, Colors } from '../../../CommonConfig/CommonConfig'
+import moment from 'moment';
+import { getRequest } from '../../../Helper/ApiHelper';
 
 const MyOrdersScreen = props => {
-    const [state, setState] = useState('Current')
+    const [state, setState] = useState('Past')
+    const [loading, setIsloading] = useState(true)
+    const [paging, setPaging] = useState('1')
+
+    useEffect( () => {
+        getOrders()
+    },[state, loading] )
+
+    const getOrders = async () => {
+        const response = await getRequest(`/customer/get-order?page=${paging}&status=${state}`)
+        console.log("\n\nAll Orders   ", response);
+    }
 
     return (
         // Main 
@@ -13,7 +26,7 @@ const MyOrdersScreen = props => {
             <StatusBar backgroundColor={Colors.primary} />
             {/* Header & Title */}
             <View style={styles.header} >
-                <TouchableOpacity onPress={() => { }} >
+                <TouchableOpacity onPress={() => { props.navigation.goBack()}} >
                     <Ionicons name={Icons.BACK_ARROW} style={styles.back} size={24} />
                 </TouchableOpacity>
                 <Text style={styles.my} >My Order</Text>

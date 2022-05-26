@@ -20,11 +20,11 @@ const Popular = (props) => {
         
         <View >
             <Text style={styles.name} >{props.name}</Text>
-            <Text style={styles.weight} >Net wt. {props.weight[0]}</Text>
+            <Text style={styles.weight} >Net wt. {props.weight[0]}</Text> 
             <Text style={styles.price} >${props.price}</Text>
         </View>
         </View>
-        {/* Addition */}
+        
         
             <TouchableOpacity activeOpacity={0.5}>
                 <Ionicons name={Icons.ADD} size={35} color={Colors.primary} style={styles.addition} />
