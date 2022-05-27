@@ -23,7 +23,7 @@ const ShopScreen = (props) => {
     useEffect( () => {
         setTimeout( () => {
             setIsLoading(false)
-        },5000 )
+        },3000 )
     },[])
 
     const getCategoriesShop = async() => {
@@ -38,7 +38,6 @@ const ShopScreen = (props) => {
         Alert.alert("Error", errorMsg, [{ text: "Okay" }])
     }
 }
-
     return (
         <View style={styles.main} >
             <StatusBar backgroundColor={Colors.primary} />

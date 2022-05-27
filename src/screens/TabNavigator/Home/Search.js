@@ -8,42 +8,49 @@ import MostPopularProductScreen from '../../../dummy-data/MostPopular';
 import Popular from '../../../components/Popular';
 import SearchBarScreen3 from '../../../components/SearchBar3';
 import { getRequest } from '../../../Helper/ApiHelper';
-import SearchDetails from '../../../components/SearchDetails';
+import CategoriesScreen from '../../../components/Categories';
+import RecommendedProductsCommon from '../../../components/RecommendedProducts';
+import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+
+const { width } = Dimensions.get('window')
 
 const SearchScreen = (props) => {
-  const [state, setState] = useState('');
-  const [loading, setLoading] = useState(true)
-  const [length, setLength] = useState(0)
-
-  // useEffect(() => {
-  //       console.log(`\n\nState${state}        \n`,search);
-  //   },[search])
-
-
-  // useEffect( () => {
-  //  if(search.length !==0 ){
-  //   getSearch()
-  //  }
-  // },[search])
-
+  const [loading, setLoading] = useState(true);
+  const [length, setLength] = useState(0);
   const [search, setSearch] = useState('');
   const [result, setResult] = useState([]);
 
+  const [TestCato, setTest] = useState(false);
+  const [TestSub, setTestSub] = useState(false);
+  const [TestItems, setTestItems] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 3000)
+  }, [])
+
+
   const getSearch = async () => {
+
+    setTest(true);
+    setTestSub(true);
+    setTestItems(true);
+
     const response = await getRequest(`/customer/search?term=${search}`)
-    // console.log(`\n\n\nSearch Products  `, response.data);
+    // console.log(`\n\n\nSearched Products  `, response.data);
+
     if (response.success) {
       setResult(response.data)
-      setLoading(false)
+
     } else {
       console.log(response);
-      // }
     }
   }
-  // useEffect( () => {
-  //   console.log("Dishes:\n", result)
 
-  // },[result])
+
+
 
   return (
     <View style={styles.main} >
@@ -88,66 +95,104 @@ const SearchScreen = (props) => {
             </TouchableOpacity>
           </View>
 
+          {/* Categories */}
 
 
-          <View>
-            <Text>Categories</Text>
-            {/* Categories */}
-            <FlatList
-              data={result.categories}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => {
-                // console.log("\n\n\n\nResult of Cato              " ,result.categories);
-                return (
-                  <View key={item.id} >
-                    <Text>{item.title}</Text>
-                  </View>
-                )
-              }}
-            />
-          </View>
+          {!TestCato || result?.categories?.length === 0 ? null :
+            <View>
+              <View style={styles.popular} >
+                <Text style={styles.most} >Categories</Text>
+              </View>
+
+              <FlatList
+                data={result?.categories}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => {
+                  // console.log("\n\n\n\nResult of Cato              " ,result.categories);
+                  return (
+                    <View key={item.id}>
+                      {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={50} width={width} /> :
+                        <CategoriesScreen
+                          id={item.id}
+                          item={item}
+                          name={item.title}
+                          image={item.image}
+                          onClick={() => { props.navigation.navigate('Shop', { screen: 'Fruits', params: { shop: item, shopId: item.id } }) }}
+
+                        />}
+
+                    </View>
+                  )
+                }}
+              />
+            </View>
+          }
 
           {/* Sub Categories */}
 
-          <FlatList
-            data={result.sub_categories}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => {
-              // console.log("\n\n\n\nResult of sub             " ,result.sub_categories);
-              return (
-                <View key={item.id} >
-                  <Text>{item.title}</Text>
-                </View>
-              )
-            }}
-          />
+          {!TestSub || result?.sub_categories?.length === 0 ? null :
+
+            <View>
+              <View style={styles.popular}>
+                <Text style={styles.most}>Sub Categories</Text>
+              </View>
+
+              <FlatList
+                data={result.sub_categories}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => {
+                  // console.log("\n\n\n\nResult of sub             " ,result.sub_categories);
+                  return (
+                    <View key={item.id} >
+
+                      <CategoriesScreen
+                        name={item.title}
+                        image={item.image}
+                      // onClick={() => {props.navigation.navigate( 'Shop' , { screen :'Vegetables', params: { shop:item, shopId: item.id }}  )}}
+                      />
+                    </View>
+                  )
+                }}
+              />
+            </View>
+          }
+
 
           {/* Products */}
 
-          <View>
-            <Text style={styles.heading} >Products</Text>
-            <FlatList
-              data={result.items}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => {
-                console.log(item);
-                return (
-                  <View key={item.id} >
 
-                    <SearchDetails
-                      name={item.name}
-                      image={item.item_images[0].image}
-                      price={item.item_sizes[0].price}
-                      weight={item.item_sizes[0].size}
-                    />
-                  </View>
-                )
-              }}
-            />
-          </View>
+
+          {!TestItems || result?.items?.length === 0 ? null :
+
+            <View>
+              <View style={styles.popular} >
+                <Text style={styles.most} >Products</Text>
+              </View>
+              <FlatList
+                data={result.items}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                renderItem={({ item }) => {
+                  //console.log(item);
+                  return (
+                    <View key={item.id} >
+
+                      <RecommendedProductsCommon
+                        name={item.name}
+                        image={item.item_images[0].image}
+                        price={item.item_sizes[0].price}
+                        weight={item.item_sizes[0].size}
+                        onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: item, recommendId: item.id }) }}
+                      />
+                    </View>
+                  )
+                }}
+              />
+            </View>
+          }
+
 
           {/* Most Popular */}
 
@@ -190,8 +235,6 @@ const styles = StyleSheet.create({
     flex: 0.7,
     backgroundColor: Colors.primary,
     justifyContent: 'space-between',
-    //padding:10,
-    // marginTop: 20,
     paddingVertical: 10
   },
   body: {
@@ -261,7 +304,8 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 20,
     color: Colors.black
-  }
+  },
+
 });
 
 export default SearchScreen;

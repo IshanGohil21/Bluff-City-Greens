@@ -40,7 +40,7 @@ const VegetableScreen = (props) => {
     // console.log(veggieId);
 
     const veggiAll = props.route.params.vegi
-    console.log("\n\n\n\nAll Products    ", veggiAll.title);
+    //console.log("\n\n\n\nAll Products    ", veggiAll.title);
 
     useEffect(() => {
         setTimeout(() => {
