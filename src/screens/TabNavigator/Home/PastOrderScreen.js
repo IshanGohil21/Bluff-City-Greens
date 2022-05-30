@@ -19,7 +19,7 @@ const PastOrderScreen = (props) => {
 
     const pastId = props.route.params.pastId
     const past = props.route.params.past
-    console.log("\n\n\n\n\n\nPast Orders Details             " ,past);
+   // console.log("\n\n\n\n\n\nPast Orders Details             " ,past);
 
     const [isFavorite, setIsFavorite] = useState(props.initialState) ;
 

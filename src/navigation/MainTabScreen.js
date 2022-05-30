@@ -28,7 +28,7 @@ import FAQScreen from '../screens/TabNavigator/FAQ';
 import MyAccountScreen from '../screens/TabNavigator/MyAccount/MyAccount';
 import personalInfoScreen from '../screens/TabNavigator/MyAccount/PersonalInfo';
 import SavedAddressScreen from '../screens/TabNavigator/MyAccount/Address/SavedAddressScreen';
-import MyOrdersScreen from '../screens/TabNavigator/MyAccount/MyOrdersScreen';
+import MyOrdersScreen from '../screens/TabNavigator/MyAccount/Orders/MyOrdersScreen';
 import FavoritesScreen from '../screens/TabNavigator/MyAccount/FavoritesScreen';
 import PaymentScreen from '../screens/TabNavigator/MyAccount/PaymentScreen';
 import ReferFriendScreen from '../screens/TabNavigator/MyAccount/ReferFriend';
@@ -41,6 +41,7 @@ import RecommendedProducts from '../screens/TabNavigator/Home/RecommendedProduct
 import DeliveryAddressScreen from '../screens/TabNavigator/Checkout/DeliveryAddress';
 import OrderDetailsScreen from '../screens/TabNavigator/Checkout/OrderDetails';
 import TrackOrderScreen from '../screens/TabNavigator/Checkout/TrackOrder';
+import OrderDetailsScreenAccount from '../screens/TabNavigator/MyAccount/Orders/OrderDetails';
 
 import AddCard from '../screens/TabNavigator/Checkout/AddCard';
 import ScheduleDelivery from '../screens/TabNavigator/Checkout/ScheduleDelivery';
@@ -168,6 +169,7 @@ const CheckoutStackScreen = () => {
             <CheckoutStack.Screen name='AddCard' component={AddCard} />
             <CheckoutStack.Screen  name='ScheduleDelivery' component={ScheduleDelivery} />
             <CheckoutStack.Screen name='TrackOrder' component={TrackOrderScreen} />
+            
         </CheckoutStack.Navigator>
     )
 }
@@ -187,6 +189,7 @@ const MyAccountStackScreen = () => {
             <MyAccountStack.Screen name='AddNewAddress' component={AddNewAddressScreen} />
             <MyAccountStack.Screen name='EditAddress' component={EditAddressScreen} />
             <MyAccountStack.Screen name= 'AddNewAddress2' component={AddNewAddress2Screen} />
+            <MyAccountStack.Screen name='OrderDetails' component={OrderDetailsScreenAccount}/>
             <MyAccountStack.Screen name='FAQ' component={FAQScreen} />
         </MyAccountStack.Navigator>
     )

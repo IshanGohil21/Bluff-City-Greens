@@ -21,6 +21,7 @@ import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 // import Shimmer from 'react-native-shimmer';
 import { validateYupSchema } from 'formik';
+import { Value } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window')
 
@@ -135,6 +136,12 @@ const HomeScreen = (props) => {
       Toast.show('No Past Orders')
     }
   }
+
+  // Post Request for Favorites 
+
+  
+
+
   return (
     <ScrollView>
       <View style={styles.main} >
@@ -298,6 +305,7 @@ const HomeScreen = (props) => {
                                     weight={indi.item_size.size}
                                     image={indi.sub_category.image}
                                     onClick={() => { props.navigation.navigate('Past_Orders', { past: indi, pastId: indi.id }) }}
+                                    onHeart={() => {} }
                                   />
                                   {/* <Text>{indi.item_size.price}</Text> */}
                                   {/* <Text>Nest</Text> */}

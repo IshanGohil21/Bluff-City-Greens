@@ -32,4 +32,5 @@ export default {
     CHECKMARK: 'checkmark-circle',
     CALL: 'call',
     PERSON:'person-circle',
+    ELLIPSE:'ellipse',
 }

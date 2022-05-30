@@ -25,13 +25,6 @@ const SearchScreen = (props) => {
   const [TestSub, setTestSub] = useState(false);
   const [TestItems, setTestItems] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
-    }, 3000)
-  }, [])
-
-
   const getSearch = async () => {
 
     setTest(true);
@@ -43,14 +36,12 @@ const SearchScreen = (props) => {
 
     if (response.success) {
       setResult(response.data)
+      setLoading(false)
 
     } else {
       console.log(response);
     }
   }
-
-
-
 
   return (
     <View style={styles.main} >
@@ -96,12 +87,16 @@ const SearchScreen = (props) => {
           </View>
 
           {/* Categories */}
-
-
+          
+         
+          <View>
           {!TestCato || result?.categories?.length === 0 ? null :
+            
             <View>
               <View style={styles.popular} >
+              {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={50} width={width} /> :
                 <Text style={styles.most} >Categories</Text>
+              }
               </View>
 
               <FlatList
@@ -112,7 +107,7 @@ const SearchScreen = (props) => {
                   // console.log("\n\n\n\nResult of Cato              " ,result.categories);
                   return (
                     <View key={item.id}>
-                      {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={50} width={width} /> :
+                     
                         <CategoriesScreen
                           id={item.id}
                           item={item}
@@ -120,7 +115,7 @@ const SearchScreen = (props) => {
                           image={item.image}
                           onClick={() => { props.navigation.navigate('Shop', { screen: 'Fruits', params: { shop: item, shopId: item.id } }) }}
 
-                        />}
+                        />
 
                     </View>
                   )
@@ -128,14 +123,16 @@ const SearchScreen = (props) => {
               />
             </View>
           }
-
+          
           {/* Sub Categories */}
 
           {!TestSub || result?.sub_categories?.length === 0 ? null :
 
             <View>
               <View style={styles.popular}>
+              {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={50} width={width} /> :
                 <Text style={styles.most}>Sub Categories</Text>
+              }
               </View>
 
               <FlatList
@@ -168,7 +165,9 @@ const SearchScreen = (props) => {
 
             <View>
               <View style={styles.popular} >
+              {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={50} width={width} /> :
                 <Text style={styles.most} >Products</Text>
+              }
               </View>
               <FlatList
                 data={result.items}
@@ -192,6 +191,7 @@ const SearchScreen = (props) => {
               />
             </View>
           }
+          </View>
 
 
           {/* Most Popular */}
@@ -221,8 +221,11 @@ const SearchScreen = (props) => {
               }}
             />
           </View>
+          
         </KeyboardAwareScrollView>
+        
       </View>
+
     </View>
   )
 }

@@ -59,6 +59,7 @@
     "react-native-phone-number-input": "^2.1.0",
     "react-native-profile-picture": "^1.0.0",
     "react-native-range-slider": "^0.1.2",
+    "react-native-ratings": "^8.1.0",
     "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-reanimated": "~2.3.1",
     "react-native-safe-area-context": "3.3.2",

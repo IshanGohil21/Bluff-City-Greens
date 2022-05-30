@@ -1,0 +1,163 @@
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import RBSheet from "react-native-raw-bottom-sheet";
+
+import { Icons, Images, Colors } from '../CommonConfig/CommonConfig';
+import { Rating } from 'react-native-ratings';
+
+const OrderProfile = (props) => {
+    const refRBSheet = useRef();
+
+    return (
+        <View style={styles.main} >
+            <View >
+                <Text style={styles.time}  >{props.date} , {props.time}</Text>
+            </View>
+            <View style={styles.card} >
+                <Ionicons name={Icons.CHECKMARK} size={30} color={Colors.primary} />
+                <View style={styles.orders} >
+                    <TouchableOpacity onPress={props.onClick} >
+                    <View style={styles.details} >
+                         <Text>Order Number:</Text>
+                        <Text style={styles.margin} >{props.Order_Number}-{props.Order_Number1}</Text>
+                    </View>
+
+                    <View style={styles.details} >
+                        <Text>Order Items:</Text> 
+                        <Text style={styles.margin} >{props.quantity} items</Text>
+                    </View>
+
+                    <View style={styles.details}>
+                        <Text>Total Amount:</Text> 
+                        <Text style={styles.margin} >${props.total}</Text>
+                    </View>
+                    </TouchableOpacity>
+
+                    <View style={styles.line} />
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
+                        <Ionicons name={Icons.ELLIPSE} size={16} color={Colors.primary} />
+                        <Text style={styles.deli} >Order {props.status}</Text>
+                        <TouchableOpacity onPress={() => refRBSheet.current.open()} >
+                            <Text style={{ fontSize: 18, color: Colors.green }} >Rate Order</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+            <RBSheet
+            height={500}
+                ref={refRBSheet}
+                closeOnDragDown={true}
+                closeOnPressMask={false}
+                customStyles={{
+                    wrapper: {
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                    },
+                    draggableIcon: {
+                        backgroundColor: Colors.grey,
+                        width: 100,
+                    },
+                    container: {
+                        borderTopLeftRadius: 30,
+                        borderTopRightRadius: 30,
+                    }
+                }}
+            >
+                <View style={{ paddingVertical:10 }} >
+                    <View style={{alignItems:'center'}} >
+                        <Image source={Images.thumb} style={{ height: 80, width: 80, alignItems: 'center' }} />
+                    </View>
+                    <View style={{alignItems:'center'}} >
+                    <Text style={styles.bottom} >Rate Your Order</Text>
+                    <Rating
+                        ratingColor={Colors.STAR_YELLOW}
+                        imageSize={50}
+                        startingValue={0}
+                    />
+                    </View>
+                    <View style={{alignItems:'center'}} >
+                    <TextInput 
+                    style={{borderWidth:1, marginTop:10,width:'80%',height:150, borderColor:Colors.grey, borderRadius:10}}
+                    placeholder="Write Comment..."
+                    />
+                    </View>
+                    
+                    <View style={{alignItems:'center'}} >
+                    <TouchableOpacity onPress={() => refRBSheet.current.close()} style={{marginTop:20}}>
+                        <Text style={styles.rate} >RATE ORDER</Text>
+                    </TouchableOpacity>
+                    </View>
+                </View>
+            </RBSheet>
+        </View>
+    )
+}
+
+export default OrderProfile
+
+const styles = StyleSheet.create({
+    main: {
+        flex: 1
+    },
+    time: {
+        fontSize: 16,
+        padding: 10,
+        marginVertical: 10,
+        marginHorizontal: 10
+    },
+    card: {
+        flex: 1,
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        padding: 10
+    },
+    orders: {
+        flex: 1,
+        padding: 10,
+        elevation: 3,
+        //height:100,
+        // marginHorizontal:10,
+        //  borderRadius:10,
+        //  borderWidth:1,
+        // borderColor:Colors.grey
+    },
+    line: {
+        height: 0,
+        borderColor: Colors.grey,
+        borderWidth: 0.5,
+        width: '100%',
+        marginVertical: 10,
+        marginTop: 20,
+        flexDirection: 'row'
+    },
+    deli: {
+        fontSize: 16,
+        marginHorizontal: 10
+    },
+    bottom: {
+        padding: 20,
+        fontSize:20,
+        fontWeight:'bold'
+    },
+    details:{
+        flexDirection:'row', 
+        justifyContent:'space-between',
+        padding:5,
+    },
+    margin:{
+       marginRight:50,
+        color:Colors.grey,
+        fontSize:15,
+    },
+    rate:{
+        justifyContent: "center",
+        backgroundColor: Colors.primary,
+        textAlign: 'center',
+        padding: 10,
+        borderRadius: 10,
+       marginHorizontal: 20,
+       width:300,
+       color:Colors.white,
+       fontSize:18
+    }
+})
