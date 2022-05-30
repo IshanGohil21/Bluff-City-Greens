@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar, FlatList, } from 'react-native';
+import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar, FlatList, Dimensions } from 'react-native';
 import moment from 'moment';
+import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+
 
 import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
 import { getRequest } from '../../../../Helper/ApiHelper';
@@ -12,6 +15,8 @@ const num = Math.floor( Math.random() * 9999)
 // console.log(val);
 // console.log(num);
 
+const { width } = Dimensions.get('window')
+
 const MyOrdersScreen = props => {
     const [state, setState] = useState('past')
     const [loading, setIsloading] = useState(true)
@@ -19,6 +24,10 @@ const MyOrdersScreen = props => {
 
     const [pastOrder, setPastOrders] = useState([]);
     const [currentOrder, setcurrentOrders] = useState([]);
+
+    useEffect(() => {
+        getOrders();
+    }, [paging])
 
     const getOrders = async () => {
         const response = await getRequest(`/customer/get-order?page=${paging}&status=${state}`)
@@ -28,11 +37,13 @@ const MyOrdersScreen = props => {
             setPastOrders(response.data.order);
           //  console.log("\n\n\nOrders                       ",response.data.order );
         }
+        else {
+            Toast.show('No Orders Available');
+          }
+          setIsloading(false);
     }
 
-    useEffect(() => {
-        getOrders();
-    }, [paging])
+    
 
     return (
         // Main 
@@ -61,7 +72,7 @@ const MyOrdersScreen = props => {
                 {state === 'past' ?
                 // Past Order Screen
                     <View>
-                        
+                         {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
                         <FlatList 
                         data={pastOrder}
                         showsVerticalScrollIndicator={false}
@@ -69,6 +80,7 @@ const MyOrdersScreen = props => {
                             console.log("\n\n\nPast     ", item.item);
                             return (
                                 <View key={item.id} >
+                                     
                                     <OrderProfile 
                                     date={moment(item.item.delivery_date).format('ddd, Do MMM YYYY') }
                                     time={item.item.delivery_time}
@@ -79,10 +91,12 @@ const MyOrdersScreen = props => {
                                     status={item.item.status}
                                     onClick={ () => {props.navigation.navigate('OrderDetails',{ order:item, orderId: item.id })} }
                                     />
+                                    
                                 </View>
                             )
                         } }
                         />
+                    }
                     </View>
                     :
                     // Current Orders Screen

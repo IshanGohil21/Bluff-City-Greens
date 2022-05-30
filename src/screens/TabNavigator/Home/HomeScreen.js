@@ -139,9 +139,6 @@ const HomeScreen = (props) => {
 
   // Post Request for Favorites 
 
-  
-
-
   return (
     <ScrollView>
       <View style={styles.main} >
