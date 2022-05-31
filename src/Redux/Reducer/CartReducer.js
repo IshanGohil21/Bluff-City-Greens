@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
         case ADD_TO_CART:
 
             const addedGreens = action.greens;
-            // console.log(addedGreens);
+            console.log("\n\n\nGreens                 ", addedGreens);
             let cartItem;
 
             if (state.items[addedGreens.id]) {
@@ -30,9 +30,9 @@ export default (state = initialState, action) => {
             } else {
                 cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.price }
             }
-            console.log(cartItem.price);
-            console.log(cartItem.qty);
-            console.log(cartItem);
+            // console.log(cartItem.price);
+            // console.log(cartItem.qty);
+            // console.log(cartItem);
             
             return {
                 ...state,

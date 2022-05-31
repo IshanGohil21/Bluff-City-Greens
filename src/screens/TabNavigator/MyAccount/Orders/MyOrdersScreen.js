@@ -43,8 +43,6 @@ const MyOrdersScreen = props => {
           setIsloading(false);
     }
 
-    
-
     return (
         // Main 
         <View style={styles.main} >
@@ -77,11 +75,11 @@ const MyOrdersScreen = props => {
                         data={pastOrder}
                         showsVerticalScrollIndicator={false}
                         renderItem={ (item) => {
-                            console.log("\n\n\nPast     ", item.item);
+                           // console.log("\n\n\nPast     ", item);
                             return (
                                 <View key={item.id} >
-                                     
                                     <OrderProfile 
+                                    id={item.item.id}
                                     date={moment(item.item.delivery_date).format('ddd, Do MMM YYYY') }
                                     time={item.item.delivery_time}
                                     Order_Number={val}
@@ -91,7 +89,6 @@ const MyOrdersScreen = props => {
                                     status={item.item.status}
                                     onClick={ () => {props.navigation.navigate('OrderDetails',{ order:item, orderId: item.id })} }
                                     />
-                                    
                                 </View>
                             )
                         } }
@@ -104,8 +101,6 @@ const MyOrdersScreen = props => {
                         <Text>Please Order Something !!!</Text>
                     </View>
                 }
-
-
             </View>
         </View>
     )
@@ -116,7 +111,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        flex: 0.8,
+        flex: 0.6,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
         padding: 10,
@@ -145,7 +140,7 @@ const styles = StyleSheet.create({
     },
     filterText: {
         fontSize: 15,
-        fontWeight: '900',
+        fontWeight: 'bold',
     },
 })
 

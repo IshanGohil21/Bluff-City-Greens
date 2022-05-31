@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         flexDirection: 'row',
         alignItems: 'center',
-        // padding: 10
       },
       buttonContainer: {
         flex:0.5

@@ -60,6 +60,7 @@ const CheckoutScreen = (props) => {
                             )
                         }}
                     />
+                    <View style={styles.all} >
                     <View style={styles.total} >
                         <Text style={styles.text2} >Sub Total</Text>
                         <Text style={styles.text3} >${subTotal.toFixed(2)}</Text>
@@ -69,9 +70,13 @@ const CheckoutScreen = (props) => {
                         <Text style={styles.text3} >${Delivery}</Text>
                     </View>
 
+                    <View style={styles.line} />
+
                     <View style={styles.total} >
                         <Text style={styles.bold} >Total Amount</Text>
                         <Text style={styles.bold2} >${(Delivery + subTotal).toFixed(2) }</Text>
+                    </View>
+
                     </View>
 
                     <View style={styles.final} >
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
         flex: 3
     },
      total: {
-         marginTop: 20,
+         marginTop: 10,
          flexDirection: 'row',
          justifyContent: 'space-between',
          padding: 5,
@@ -178,6 +183,26 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         alignItems : 'center',
         marginTop: 30
+    },
+    all:{
+        flex: 1,
+        padding: 10,
+        elevation: 10,
+        overflow:'hidden',
+        borderRadius:10,
+        backgroundColor:Colors.white,
+        marginTop:20,
+        marginLeft:20,
+        marginRight:20
+    },
+    line:{
+        height: 0,
+        borderColor: Colors.grey,
+        borderWidth: 0.5,
+        width: '100%',
+        marginVertical: 10,
+        marginTop: 10,
+        flexDirection: 'row'
     }
 });
 

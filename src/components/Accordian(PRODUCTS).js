@@ -34,6 +34,7 @@ const AccordianProducts = (props) => {
                  )
              })
          }
+         <View style={styles.line} />
     </View>
   )
 }
@@ -88,6 +89,14 @@ const styles = StyleSheet.create({
         padding: 2,
         marginLeft: 40,
         marginTop: 10
+    },
+    line:{
+        height: 0,
+        borderColor: Colors.grey,
+        borderWidth: 0.5,
+        width: '100%',
+        marginVertical: 10,
+        marginTop: 10,
+        flexDirection: 'row'
     }
-
 })

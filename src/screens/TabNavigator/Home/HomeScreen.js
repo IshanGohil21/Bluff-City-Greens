@@ -5,9 +5,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import Address from '../../../dummy-data/Address';
-import CouponImages from '../../../dummy-data/Imagess';
-import Categories from '../../../dummy-data/Categories';
-import PastOrder from '../../../dummy-data/PastOrders';
 import Orders from '../../../components/Orders';
 import SearchBarScreen from '../../../components/Slider/SearchBar2';
 import CategoriesScreen from '../../../components/Categories';
@@ -15,13 +12,10 @@ import { getMainRequest, getRequest, postRequest } from '../../../Helper/ApiHelp
 import Toast from 'react-native-simple-toast';
 import RecommendedProductsCommon from '../../../components/RecommendedProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
-// import Shimmer from 'react-native-shimmer';
 import { validateYupSchema } from 'formik';
-import { Value } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window')
 
@@ -173,7 +167,7 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
 
             {/* Cart */}
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 20 }}  >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 10 }}  >
               <Text style={styles.xyz} >{y}</Text>
               <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
             </TouchableOpacity>
@@ -593,10 +587,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontWeight: 'bold',
     marginTop: 30,
-    marginLeft: 25,
+    marginLeft:18,
+    // marginLeft: 25,
     backgroundColor: Colors.yellow,
-    borderRadius: 20,
-    width: 15,
+    borderRadius: 10,
+    width: 18,
     height: 20,
   },
   loader: {

@@ -42,6 +42,7 @@ import DeliveryAddressScreen from '../screens/TabNavigator/Checkout/DeliveryAddr
 import OrderDetailsScreen from '../screens/TabNavigator/Checkout/OrderDetails';
 import TrackOrderScreen from '../screens/TabNavigator/Checkout/TrackOrder';
 import OrderDetailsScreenAccount from '../screens/TabNavigator/MyAccount/Orders/OrderDetails';
+import Report from '../screens/TabNavigator/MyAccount/Orders/Report';
 
 import AddCard from '../screens/TabNavigator/Checkout/AddCard';
 import ScheduleDelivery from '../screens/TabNavigator/Checkout/ScheduleDelivery';
@@ -191,6 +192,7 @@ const MyAccountStackScreen = () => {
             <MyAccountStack.Screen name= 'AddNewAddress2' component={AddNewAddress2Screen} />
             <MyAccountStack.Screen name='OrderDetails' component={OrderDetailsScreenAccount}/>
             <MyAccountStack.Screen name='FAQ' component={FAQScreen} />
+            <MyAccountStack.Screen name='Report' component={Report} />
         </MyAccountStack.Navigator>
     )
 }

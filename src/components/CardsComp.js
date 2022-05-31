@@ -23,7 +23,7 @@ const CardsComp = (props) => {
   }
 
   return (
-      <TouchableOpacity style={{...styles.main, borderRadius:props.id === activeCard ? 10: 1, borderColor: props.id === activeCard ? Colors.primary: null, borderWidth: props.id === activeCard ? 1 : 0, elevation: props.id === activeCard ? 0 : 0.01 }} onPress={() => {dispatch(CardAction.activatePayment(props.id))}}>
+      <TouchableOpacity style={{...styles.main, borderRadius:props.id === activeCard ? 10: 10, borderColor: props.id === activeCard ? Colors.primary: null, borderWidth: props.id === activeCard ? 1 : 0, elevation: props.id === activeCard ? 0 : 0.01 }} onPress={() => {dispatch(CardAction.activatePayment(props.id))}}>
     {/* <View  > */}
       {/* Image */}
       {/* <Text style={styles.imageStyle} >{props.brand}</Text> */}
@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         padding: 10,
         marginLeft: 15,
+        elevation:10,
+        overflow:'hidden',
+        backgroundColor:Colors.white,
+        borderRadius:10
     },
     imageStyle:{
         height: 50,

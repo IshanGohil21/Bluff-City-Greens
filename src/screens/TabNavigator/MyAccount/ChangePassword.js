@@ -112,6 +112,7 @@ const ChangePasswordScreen = props => {
                                         secureTextEntry={true}
                                     />
                                 </View>
+                                <View style={styles.line} />
                             </View>
                             { touched.currentPass && errors.currentPass && <Text style={styles.errors} >{errors.currentPass}</Text> }
 
@@ -127,6 +128,7 @@ const ChangePasswordScreen = props => {
                                         secureTextEntry={true}
                                     />
                                 </View>
+                                <View style={styles.line} />
                             </View>
                             { touched.newPass && errors.newPass && <Text style={styles.errors} >{errors.newPass}</Text> }
 
@@ -142,6 +144,7 @@ const ChangePasswordScreen = props => {
                                         secureTextEntry={true}
                                     />
                                 </View>
+                                <View style={styles.line} />
                             </View>
                             { touched.confirmPass && errors.confirmPass && <Text style={styles.errors} >{errors.confirmPass}</Text> }
 
@@ -207,6 +210,13 @@ const styles = StyleSheet.create({
     saveTxt:{
         fontSize:20,
         color:Colors.white
+    },
+    line: {
+        height: 0,
+        borderColor: Colors.grey,
+        borderWidth: 0.5,
+        width: '100%',
+        flexDirection: 'row',
     }
 });
 

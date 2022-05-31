@@ -81,7 +81,9 @@ const OrderDetailsScreenAccount = (props) => {
 
                     </View>
 
+                    
                     <Text style={styles.add}>Product Details</Text>
+                    <View style={styles.flat} >
                     <FlatList
                         data={order.item.order_items}
                         showsVerticalScrollIndicator={false}
@@ -101,6 +103,7 @@ const OrderDetailsScreenAccount = (props) => {
                             )
                         }}
                     />
+                    </View>
 
                     <Text style={styles.add} >Delivery Address</Text>
 
@@ -121,7 +124,7 @@ const OrderDetailsScreenAccount = (props) => {
                     }
 
                     <Text style={styles.add} >Delivery Date and Time</Text>
-                    <View>
+                    <View style={styles.del} >
                         <View style={styles.delivery} >
                             <Ionicons name={Icons.CALANDER} size={24} color={Colors.grey} />
                             <Text style={styles.orderIn} >    Delivery Date :</Text>
@@ -172,7 +175,7 @@ const OrderDetailsScreenAccount = (props) => {
                     </View>
 
                     <View>
-                        <TouchableOpacity style={styles.signin} onPress={() => {}} >
+                        <TouchableOpacity style={styles.signin} onPress={() => {props.navigation.navigate('Report')}} >
                             <Text style={styles.confirm} >REPORT ISSUE</Text>
                         </TouchableOpacity>
                     </View>
@@ -221,8 +224,34 @@ const styles = StyleSheet.create({
         fontWeight: '700'
     },
     orderMain: {
-        paddingHorizontal: 20,
-        paddingVertical: 20
+        marginLeft:20,
+        marginRight:20,
+        marginTop:20,
+        padding:20,
+        elevation: 10,
+        overflow:'hidden',
+        borderRadius:10,
+        backgroundColor:Colors.white
+    },
+    flat:{
+        marginLeft:20,
+        marginRight:20,
+        marginTop:20,
+        padding:20,
+        elevation: 10,
+        overflow:'hidden',
+        borderRadius:10,
+        backgroundColor:Colors.white
+    },
+    del:{
+        marginLeft:20,
+        marginRight:20,
+        marginTop:10,
+        padding:10,
+        elevation: 10,
+        overflow:'hidden',
+        borderRadius:10,
+        backgroundColor:Colors.white
     },
     add: {
         padding: 10,
@@ -254,7 +283,7 @@ const styles = StyleSheet.create({
         paddingRight: 20
     },
     details0: {
-        marginTop: 10
+       marginTop:10
     },
     invoice: {
         fontWeight: '600',

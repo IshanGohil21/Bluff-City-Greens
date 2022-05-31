@@ -71,6 +71,7 @@ const ShopScreen = (props) => {
                                         color={item.color}
                                         onPress={() => {props.navigation.navigate('Fruits',  {shop: item, shopId: item.id }) }}
                                     />}
+                                    <View style={styles.line} />
                                 </View>
                             )
                         }}
@@ -127,6 +128,13 @@ const styles = StyleSheet.create({
     search: {
         justifyContent: 'flex-start',
         padding: 10
+    },
+    line:{
+         height: 0,
+        borderColor: Colors.grey,
+        borderWidth: 0.5,
+        width: '100%',
+        marginVertical: 10,
     }
 
 });

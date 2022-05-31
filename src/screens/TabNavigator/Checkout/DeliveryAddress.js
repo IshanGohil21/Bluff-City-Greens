@@ -100,7 +100,7 @@ const DeliveryAddressScreen = (props) => {
                         </TouchableOpacity>
                     </View>
 
-                    <View  >
+                    <View >
                         <FlatList
                             horizontal
                             showsHorizontalScrollIndicator={false}
@@ -127,12 +127,15 @@ const DeliveryAddressScreen = (props) => {
                     <View style={styles.delivery} >
                         <Text style={styles.schedule} >Schedule Delivery</Text>
                     </View>
-                    <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
-                        <Image source={Images.timetable} style={styles.timetable} />
-                        <Text>Date</Text>
-                        <Text>Time</Text>
-                        <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
-                    </TouchableOpacity>
+
+                    <View style={styles.scheduleD} >
+                        <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
+                            <Image source={Images.timetable} style={styles.timetable} />
+                            <Text>Date</Text>
+                            <Text>Time</Text>
+                            <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
+                        </TouchableOpacity>
+                    </View>
 
                     {/* Payment Method */}
                     <View style={styles.deliver0} >
@@ -217,18 +220,20 @@ const DeliveryAddressScreen = (props) => {
                         }
                     </ScrollView> */}
                     {/* Total */}
-                    <View style={styles.total} >
-                        <Text style={styles.text2} >Sub Total</Text>
-                        <Text style={styles.text3} >${subTotal.toFixed(2)}</Text>
-                    </View>
-                    <View style={styles.total} >
-                        <Text style={styles.text2} >Delivery Charges</Text>
-                        <Text style={styles.text3} >${Delivery}</Text>
-                    </View>
+                    <View style={styles.last} >
+                        <View style={styles.total} >
+                            <Text style={styles.text2} >Sub Total</Text>
+                            <Text style={styles.text3} >${subTotal.toFixed(2)}</Text>
+                        </View>
+                        <View style={styles.total} >
+                            <Text style={styles.text2} >Delivery Charges</Text>
+                            <Text style={styles.text3} >${Delivery}</Text>
+                        </View>
 
-                    <View style={styles.total} >
-                        <Text style={styles.bold} >Total Amount</Text>
-                        <Text style={styles.bold2} >${(Delivery + subTotal).toFixed(2)}</Text>
+                        <View style={styles.total} >
+                            <Text style={styles.bold} >Total Amount</Text>
+                            <Text style={styles.bold2} >${(Delivery + subTotal).toFixed(2)}</Text>
+                        </View>
                     </View>
 
                     <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Orders') }} >
@@ -264,7 +269,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
-        padding: 10
+        padding: 10,
     },
     deliveryText: {
         fontSize: 10,
@@ -362,8 +367,15 @@ const styles = StyleSheet.create({
     cod: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        padding: 10
+        // justifyContent: 'flex-start',
+        padding: 10,
+        elevation: 10,
+        backgroundColor: Colors.white,
+        overflow: 'hidden',
+        marginLeft: 20,
+        marginRight: 20,
+        borderRadius: 10,
+        marginTop: 10
     },
     cash: {
         height: 60,
@@ -373,6 +385,24 @@ const styles = StyleSheet.create({
     codText: {
         fontSize: 19,
         color: Colors.grey
+    },
+    scheduleD: {
+        elevation: 10,
+        overflow: 'hidden',
+        backgroundColor: Colors.white,
+        borderRadius: 10,
+        marginLeft: 20,
+        marginRight: 20,
+        marginBottom: 20,
+        padding: 15
+    },
+    last: {
+        backgroundColor: Colors.white,
+        elevation: 10,
+        borderRadius: 5,
+        marginTop: 20,
+        marginLeft: 20,
+        marginRight: 20
     }
 });
 

@@ -48,9 +48,7 @@ const VegetableScreen = (props) => {
         }, 3000)
     }, [])
 
-
     return (
-
         <>
             <View style={styles.main} >
                 <StatusBar backgroundColor={Colors.primary} />
@@ -83,7 +81,7 @@ const VegetableScreen = (props) => {
                             <FlatList
                                 data={veggiAll.items}
                                 renderItem={({ item }) => {
-                                    // console.log("\n\n\n\nFinal Products "        , item);
+                                     console.log("\n\n\n\nFinal Products "        , item);
                                     return (
                                         <View key={item.id} >
                                             {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
@@ -97,8 +95,9 @@ const VegetableScreen = (props) => {
                                                     disPrice={item.item_sizes[0].price}
                                                     onPress={() => { }}
                                                 />
+                                               
                                             }
-
+                                            <View style={styles.line} />
                                         </View>
                                     )
                                 }}
@@ -154,4 +153,13 @@ const styles = StyleSheet.create({
     search: {
         padding: 20
     },
+    line:{
+        height: 0,
+        borderColor: Colors.grey,
+        borderWidth: 0.5,
+        width: '100%',
+        marginVertical: 10,
+        marginTop: 20,
+        flexDirection: 'row'
+    }
 })

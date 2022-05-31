@@ -14,7 +14,7 @@ const SelectAddComp = (props) => {
     // console.log(activeId);
 
     return (
-        <TouchableOpacity style={{...styles.main, borderRadius: props.id === activeId ? 10 : 1, borderColor : props.id === activeId ? Colors.primary : null, borderWidth: props.id === activeId ? 1 : 0, elevation: props.id === activeId ? 0:0.1 }}  onPress={ () => {dispatch(AddressAction.activateAddress(props.id))} } >
+        <TouchableOpacity style={{...styles.main, borderRadius: props.id === activeId ? 10 : 10, borderColor : props.id === activeId ? Colors.primary : null, borderWidth: props.id === activeId ? 1 : 0, elevation: props.id === activeId ? 0:0 }}  onPress={ () => {dispatch(AddressAction.activateAddress(props.id))} } >
             <View style={styles.overall} >
              <TouchableOpacity  onPress={() => setIsFavorite(!isFavorite)} > 
                  
@@ -41,6 +41,10 @@ const styles = StyleSheet.create({
         padding: 10,
         marginHorizontal: 20,
         marginTop: 10,
+        elevation:10,
+        overflow:'hidden',
+        borderRadius:10,
+        backgroundColor:Colors.white
     },
     heading: {
         fontSize: 18,

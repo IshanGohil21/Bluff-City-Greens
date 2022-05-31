@@ -44,7 +44,7 @@ const delivery = 0.5;
     var monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
     var weekNames = ["Sun", 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     let date = today.getDate()+ '   '+monthNames[(today.getMonth() )]+ '  '+today.getFullYear();
-    let week = weekNames[(today.getDate() )]+ '   '+today.getDate() +'   '+monthNames[(today.getMonth() )]+ '  '+today.getFullYear();
+    let week = '  '+today.getDate() +' '+monthNames[(today.getMonth() )]+ ' '+today.getFullYear();
      
     setWeek(week);
     setDate(date);
@@ -99,17 +99,17 @@ const delivery = 0.5;
           }        
             
             <Text style={styles.add} >Delivery Date and Time</Text>
-          <View>
+          <View style={styles.delli} >
               <View style={styles.delivery} >
                 <Ionicons name={Icons.CALANDER} size={24} color={Colors.grey}  />
-                <Text style={styles.orderIn} >    Delivery Date :</Text>
-                <Text style={styles.week} > {week}</Text>
+                <Text style={styles.orderIn} > Delivery Date :</Text>
+                <Text style={styles.week} >{week}</Text>
               </View>
 
             <View style={styles.delivery2} >
               <Ionicons name={Icons.TIME} size={24} color={Colors.grey} />
-              <Text style={styles.orderIn} >    Delivery Time:</Text>
-              <Text  style={styles.week}>07:30 AM to 01:00 PM </Text>
+              <Text style={styles.orderIn} > Delivery Time:</Text>
+              <Text  style={styles.week}>10:00 AM</Text>
             </View>
           </View>
           <Text style={styles.add} >Payment Details</Text>
@@ -188,9 +188,6 @@ const delivery = 0.5;
                       <Text style={styles.confirm1} >Continue Shopping</Text>
                     </TouchableOpacity>
                   </View>
-
-
-
               </RBSheet>
             </View>
 
@@ -239,7 +236,13 @@ const styles = StyleSheet.create({
     },
   orderMain:{
     paddingHorizontal:20,
-    paddingVertical: 20
+    paddingVertical: 20,
+    elevation:10,
+    backgroundColor:Colors.white,
+    borderRadius:10,
+    marginTop:20,
+    marginRight:30,
+    marginLeft:30
   },
   add:{
     padding: 10,
@@ -251,11 +254,11 @@ const styles = StyleSheet.create({
   delivery:{
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    padding: 20,
+    padding: 15,
     alignItems :'center'
   },
   week:{
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     color: Colors.grey
   },
   delivery2:{
@@ -337,8 +340,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     alignSelf: 'center',
-    // marginTop: 5,
-    // marginBottom: 30
   },
   signin3:{
     alignItems: 'center',
@@ -346,10 +347,15 @@ const styles = StyleSheet.create({
   },
   overall: {
     flexDirection: 'row',
-    // padding: 20,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 15
+    padding: 15,
+    elevation:10,
+    overflow:'hidden',
+    backgroundColor:Colors.white,
+    marginLeft:30,
+    marginRight:30,
+    borderRadius:10
   },
 heading1: {
   fontSize: 18,
@@ -362,12 +368,22 @@ texting: {
 },
 other:{
   justifyContent:'center',
-  alignItems: 'center'
+  alignItems: 'center',
 },
 please:{
   fontSize: 20,
   fontWeight: '800',
   color: Colors.red,
+},
+delli:{
+  elevation:10,
+  borderRadius:10,
+  overflow:'hidden',
+  backgroundColor:Colors.white,
+  marginLeft:30,
+  marginRight:30,
+  marginBottom:10,
+  padding:10,
 }
 
 });

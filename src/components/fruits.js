@@ -31,15 +31,19 @@ export default FruitsComp;
 
 const styles = StyleSheet.create({
   imageCato: {
-    height: 100,
+    height: 110,
     width: WIDTH*0.4,
-    borderRadius: 10,
+    // borderRadius: 10,
     
 },
   mappingComp:{
     alignItems:'center',
-    padding: 10,
-    marginVertical: 10,
+    elevation: 10,
+    overflow:'hidden',
+    borderRadius:10,
+    backgroundColor:Colors.white,
+    margin:20,
+    paddingVertical:10
 
 
   }

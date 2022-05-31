@@ -72,7 +72,7 @@ const FruitShopScreen = (props) => {
                 <Text style={styles.by} > SHOP BY CATEGORY </Text>
             </View>
 
-            <View style={{flex:1, justifyContent:'center', alignItems: 'center'}} >
+            <View>
                 <FlatList
                     data={shopSub.sub_categories}
                     numColumns= {2}
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         paddingRight: 10
     },
     body: {
-        flex: 3
+        flex: 3,
     },
     row: {
         flexDirection: 'row', 
@@ -171,6 +171,15 @@ const styles = StyleSheet.create({
     },
     content:{
         borderRadius:10
+    },
+    fruit:{
+        flex:1, 
+        justifyContent:'center', 
+        alignItems: 'center',
+        elevation: 10,
+        overflow:'hidden',
+        borderRadius:10,
+        backgroundColor:Colors.white
     }
 })
 

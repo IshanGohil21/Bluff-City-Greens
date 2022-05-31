@@ -1,13 +1,38 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native';
-import React, { useEffect, useRef } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RBSheet from "react-native-raw-bottom-sheet";
 
 import { Icons, Images, Colors } from '../CommonConfig/CommonConfig';
 import { Rating } from 'react-native-ratings';
+import { postRequest } from '../Helper/ApiHelper';
+import { ErrorMessage } from 'formik';
 
 const OrderProfile = (props) => {
     const refRBSheet = useRef();
+
+    const [rating , setRating] = useState();
+    const [ratingDescription, setRatingdescription] = useState('');
+    
+    const ratingHandler =  async() => {
+        // console.log("\n\n\nRating            ",rating);
+        // console.log("\n\n\nDescription",ratingDescription);
+        const data = {
+            rate : rating,
+            rating_description : ratingDescription
+        }
+        // console.log("\n\n\nDATA       ", data);
+        const response = await postRequest (`/customer/rate-order?orderId=${props.id}`, data)
+        console.log("\n\n\nResponse                ", response);
+
+            let errorMessage = "Invalid Rating"
+        if(response.success) {
+            refRBSheet.current.close()
+        }
+        else{
+            Alert.alert('Error', errorMessage, [{ text: "Okay" }])
+        }
+    }
 
     return (
         <View style={styles.main} >
@@ -39,13 +64,13 @@ const OrderProfile = (props) => {
                         <Ionicons name={Icons.ELLIPSE} size={16} color={Colors.primary} />
                         <Text style={styles.deli} >Order {props.status}</Text>
                         <TouchableOpacity onPress={() => refRBSheet.current.open()} >
-                            <Text style={{ fontSize: 18, color: Colors.green }} >Rate Order</Text>
+                            <Text style={{ fontSize: 18, color: Colors.primary }} >Rate Order</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </View>
             <RBSheet
-            height={500}
+                height={500}
                 ref={refRBSheet}
                 closeOnDragDown={true}
                 closeOnPressMask={false}
@@ -70,20 +95,24 @@ const OrderProfile = (props) => {
                     <View style={{alignItems:'center'}} >
                     <Text style={styles.bottom} >Rate Your Order</Text>
                     <Rating
-                        ratingColor={Colors.STAR_YELLOW}
+                        ratingColor={Colors.yellow}
                         imageSize={50}
                         startingValue={0}
+                        onFinishRating={(e) => {setRating(e)}}
                     />
                     </View>
                     <View style={{alignItems:'center'}} >
                     <TextInput 
                     style={{borderWidth:1, marginTop:10,width:'80%',height:150, borderColor:Colors.grey, borderRadius:10}}
                     placeholder="Write Comment..."
+                    onChangeText={(e) => {setRatingdescription(e)} }
+                    multiline={true}
+                    numberOfLines={4}
                     />
                     </View>
                     
                     <View style={{alignItems:'center'}} >
-                    <TouchableOpacity onPress={() => refRBSheet.current.close()} style={{marginTop:20}}>
+                    <TouchableOpacity onPress={ratingHandler} style={{marginTop:20}}>
                         <Text style={styles.rate} >RATE ORDER</Text>
                     </TouchableOpacity>
                     </View>
@@ -114,12 +143,10 @@ const styles = StyleSheet.create({
     orders: {
         flex: 1,
         padding: 10,
-        elevation: 3,
-        //height:100,
-        // marginHorizontal:10,
-        //  borderRadius:10,
-        //  borderWidth:1,
-        // borderColor:Colors.grey
+        elevation: 10,
+        overflow:'hidden',
+        borderRadius:10,
+        backgroundColor:Colors.white
     },
     line: {
         height: 0,
@@ -155,9 +182,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 10,
         borderRadius: 10,
-       marginHorizontal: 20,
-       width:300,
-       color:Colors.white,
-       fontSize:18
+        marginHorizontal: 20,
+        width:300,
+        color:Colors.white,
+        fontSize:18
     }
 })
