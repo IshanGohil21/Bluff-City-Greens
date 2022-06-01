@@ -14,7 +14,7 @@ const Popular = (props) => {
             {/* Image Container */}
         <View style={styles.imageContainer} >
         <View  style={styles.ordersScreen}>
-            <Image source={ props.image} style={styles.image2} />
+            <Image source={props.image} style={styles.image2} />
         </View>
         {/* Name, Weight & Price */}
         

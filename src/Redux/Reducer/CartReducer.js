@@ -1,4 +1,5 @@
 
+// import React,{ useState } from 'react';
 import { 
     ADD_TO_CART, 
     REMOVE_FROM_CART,
@@ -15,24 +16,33 @@ const initialState = {
     items: [],
     orderType: '',
     discount: '',
-    totalAmount: 0
+    totalAmount: 0,
+    size:'',
+    price:'',
 }
 export default (state = initialState, action) => {
+    
     switch (action.type) {
         case ADD_TO_CART:
 
             const addedGreens = action.greens;
-            // console.log("\n\n\nGreens                 ", addedGreens);
+            
+            //  console.log("\nGreens              ", addedGreens);
             let cartItem;
 
             if (state.items[addedGreens.id]) {
-                cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal + addedGreens.price }
+                cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal +  addedGreens.item_sizes.price }
+                //   cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty +  1 ,  price: state.items[addedGreens.id].item_sizes.price , size: state.items[addedGreens.id].item_sizes.size }
+                 console.log("\nCartItems        ",cartItem);
+                // console.log("\n\n\nEmaj   ", (state.items[addedGreens.id]));
             } else {
-                cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.price }
+                cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.item_sizes[0].price,   }
+                // console.log(cartItem);
             }
-            // console.log(cartItem.price);
+            //  console.log("\n\n\n\nPrice",cartItem.price);
             // console.log(cartItem.qty);
-            // console.log(cartItem);
+            //   console.log(cartItem.item_sizes[0].price);
+            // console.log(addedGreens.item_sizes[2].size);
             
             return {
                 ...state,
@@ -45,8 +55,6 @@ export default (state = initialState, action) => {
                 
                 const id = GreensRemove.id;
                 const temp = state.items
-                
-                
                 
                 let cartItemToRemove;
                 let cartItems;

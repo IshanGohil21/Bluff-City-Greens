@@ -211,7 +211,7 @@ const SearchScreen = (props) => {
                   <View key={item.id}>
 
                     <Popular
-                      image={item.item_images}
+                      image={item.image}
                       name={item.name}
                       weight={item.weight}
                       price={item.price}

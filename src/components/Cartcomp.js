@@ -16,7 +16,7 @@ const Cartcomp = (props) => {
     const dispatch = useDispatch();
 
     const WeightProducts = props.item
-    console.log(WeightProducts.item_sizes[1].size);
+    // console.log(WeightProducts.item_sizes[1].size);
 
     const [isTouched, setIsTouched] = useState(props.initialState);
 

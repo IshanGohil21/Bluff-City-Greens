@@ -80,7 +80,7 @@ const VegetableScreen = (props) => {
                             <FlatList
                                 data={veggiAll.items}
                                 renderItem={({ item }) => {
-                                     console.log("\n\n\n\nFinal Products "        , item);
+                                    //  console.log("\n\n\n\nFinal Products "        , item);
                                     return (
                                         <View key={item.id} >
                                             {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
