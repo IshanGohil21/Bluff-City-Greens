@@ -34,8 +34,8 @@ const AccordianProducts = (props) => {
                  )
              })
          }
-         <View style={styles.line} />
-    </View>
+          <View style={styles.line} />
+    </View> 
   )
 }
 
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     },
     child:{
         backgroundColor: Colors.white,
-        padding:16,
+        // padding:10,
     } ,
     font:{
         color: Colors.red

@@ -42,7 +42,6 @@ const DrawerContentScreen = (props) => {
         else {
             Alert.alert("Error", errorMsg, [{text: 'Okay'}])
         }
-        
     }
 
     const renderAccordiansProducts = () => {
@@ -116,7 +115,6 @@ const styles = StyleSheet.create({
         flex: 1.5,
         backgroundColor: Colors.primary,
         padding: 20,
-        marginTop: 20,
     },
     search: {
         marginTop: 40

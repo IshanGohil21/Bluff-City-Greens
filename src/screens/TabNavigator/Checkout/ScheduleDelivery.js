@@ -2,11 +2,11 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, FlatList }
 import React, {  useEffect, useState  } from 'react';
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {ExpandableListView} from 'react-native-expandable-listview';
 
 import moment from 'moment';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import AccordianDeliveryTime from '../../../components/Accordian(DeliveryTime)';  
-
 
 const ScheduleDelivery = (props) => {
 
@@ -18,7 +18,7 @@ const ScheduleDelivery = (props) => {
 
 // Date For the whole Month 
 
-    let date = []
+    const date = []
    for (let i = 0; i <= 31; i++) {
       // console.log(week);
       const week = moment().startOf('day').add(i, 'days').format('ddd, MMM Do')
@@ -38,7 +38,7 @@ let startTime = moment(x.openTime, "HH:mm");
 
 let endTime = moment(x.closeTime, "HH:mm").add(1, 'hour');
 
-let allTimes = [];
+const allTimes = [];
 
 while (startTime < endTime) {
   
@@ -60,6 +60,7 @@ return (
         <Text style={styles.time} >Delivery Times</Text>
       </View>
       {/* Body */}
+      
       <View style={styles.body} >
 
       <FlatList 
@@ -109,7 +110,7 @@ return (
     }
       />
       </View>
-
+      
       <TouchableOpacity style={styles.continue} onPress={() => {props.navigation.navigate('Home')}} >
         <Text style={styles.select1} >CONTINUE SHOPPING</Text>
       </TouchableOpacity>
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   head:{
-    flex:0.5,
+    flex:0.7,
     backgroundColor: Colors.primary,
     justifyContent: 'space-between'
   },

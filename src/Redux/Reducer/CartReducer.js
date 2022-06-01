@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
         case ADD_TO_CART:
 
             const addedGreens = action.greens;
-            console.log("\n\n\nGreens                 ", addedGreens);
+            // console.log("\n\n\nGreens                 ", addedGreens);
             let cartItem;
 
             if (state.items[addedGreens.id]) {

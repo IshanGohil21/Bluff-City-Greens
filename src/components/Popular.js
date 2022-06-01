@@ -14,14 +14,14 @@ const Popular = (props) => {
             {/* Image Container */}
         <View style={styles.imageContainer} >
         <View  style={styles.ordersScreen}>
-            <Image source={props.image} style={styles.image2} />
+            <Image source={ props.image} style={styles.image2} />
         </View>
         {/* Name, Weight & Price */}
         
         <View >
             <Text style={styles.name} >{props.name}</Text>
-            <Text style={styles.weight} >Net wt. {props.weight[0]}</Text> 
-            <Text style={styles.price} >${props.price}</Text>
+            <Text style={styles.weight} >Net wt. {props.weight[0]}</Text>  
+             <Text style={styles.price} >${props.price}</Text>
         </View>
         </View>
         

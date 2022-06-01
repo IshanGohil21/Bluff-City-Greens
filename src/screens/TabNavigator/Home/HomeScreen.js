@@ -175,7 +175,7 @@ const HomeScreen = (props) => {
 
           {/* Serach bar */}
           <View style={styles.filter} >
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Search') }} >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Search',  ) }} >
               <SearchBarScreen />
             </TouchableOpacity>
 
@@ -232,6 +232,7 @@ const HomeScreen = (props) => {
                 </View>
               </View>
             }
+
 
             {/* Discount Coupon Image */}
             {/* <View>

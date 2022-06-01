@@ -241,8 +241,8 @@ const styles = StyleSheet.create({
     backgroundColor:Colors.white,
     borderRadius:10,
     marginTop:20,
-    marginRight:30,
-    marginLeft:30
+    marginRight:20,
+    marginLeft:20
   },
   add:{
     padding: 10,
@@ -353,8 +353,8 @@ const styles = StyleSheet.create({
     elevation:10,
     overflow:'hidden',
     backgroundColor:Colors.white,
-    marginLeft:30,
-    marginRight:30,
+    marginLeft:20,
+    marginRight:20,
     borderRadius:10
   },
 heading1: {
@@ -380,8 +380,8 @@ delli:{
   borderRadius:10,
   overflow:'hidden',
   backgroundColor:Colors.white,
-  marginLeft:30,
-  marginRight:30,
+  marginLeft:20,
+  marginRight:20,
   marginBottom:10,
   padding:10,
 }

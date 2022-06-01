@@ -20,14 +20,14 @@ const AddCard = (props) => {
     const dispatch = useDispatch();
 
     const activeId = useSelector(state => state.Address.activatePayment)
-    
+
     const [isLoading, setIsLoading] = useState(false)
     const [isEnabled, setisEnabled] = useState(false);
     const placeholder = "Select expiry date";
     const [isOpen, toggleOpen] = useState(false);
     const [value, onChange] = useState();
 
-    const onPressAddCard = async(details) => {
+    const onPressAddCard = async (details) => {
         setIsLoading(true)
         const arr = details.expiryDate.split('/')
         // console.log(arr);
@@ -42,18 +42,18 @@ const AddCard = (props) => {
         const response = await postRequest('/customer/add-card', data)
         console.log(response);
         let errorMsg = 'Something went wrong!';
-        if(!response.success){
-            
+        if (!response.success) {
+
             console.log("Error in adding card!");
         } else {
-            
+
             //  dispatch(CardAction.addCard(details));
             Toast.show('Card Added Successfully!')
-             props.navigation.goBack()
+            props.navigation.goBack()
         }
         setIsLoading(false);
     }
-    
+
     return (
         //   Home styling
         <View style={styles.main} >
@@ -74,7 +74,7 @@ const AddCard = (props) => {
                         name: '',
                         isActive: false
                     }}
-                    onSubmit={(values) => { 
+                    onSubmit={(values) => {
                         onPressAddCard(values)
                         // const xyz = {
                         //     number: values.cardNumber,
@@ -105,53 +105,55 @@ const AddCard = (props) => {
                                 />
                                 {touched.cardNumber ? (!errors.cardNumber ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color="green" size={20} /></Animatable.View> : null) : null}
                             </View>
+                            <View style={styles.line} />
                             {touched.cardNumber && errors.cardNumber &&
                                 <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.cardNumber}</Text>
                             }
                             {/* EXPIRY & CVV */}
-                                <View style={{ marginHorizontal: 5 }}>
+                            <View style={{ marginHorizontal: 5 }}>
 
-                                    {/* Expiry Date */}
-                                    <Text style={styles.title}>Valid Until</Text>
-                                    <View style={styles.container}>
-                                        <TouchableOpacity onPress={() => toggleOpen(true)} style={{ padding: 5 }}>
-                                            <Text style={styles.placeholder} >{value ? moment(value).format('MM/YYYY') : placeholder}</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <Modal
-                                        transparent
-                                        animationType="fade"
-                                        visible={isOpen}
-                                        onRequestClose={() => {
-                                            toggleOpen(false)
-                                        }}>
-                                        <View style={styles.contentContainer}>
-                                            <View style={styles.content}>
-                                                <MonthPicker
-                                                    selectedDate={value || new Date()}
-                                                    onMonthChange={onChange}
-                                                    minDate={moment('04-2022', 'MM-YYYY')}
-                                                    maxDate={moment('04-2050', 'MM-YYYY')}
-                                                    nextIcon={<Ionicons name="chevron-forward" size={35} color={Colors.primary} />}
-                                                    prevIcon={<Ionicons name="chevron-back" size={35} color={Colors.primary} />}
-                                                />
-                                                
-                                                <TouchableOpacity style={styles.confirmButton} onPress={() => {
-                                                    toggleOpen(false);
-                                                    setFieldTouched('expiryDate');
-                                                    setFieldValue('expiryDate', moment(value).format('MM/YYYY'));
-                                                }}>
-                                                    <Text style={styles.confirm} >Confirm</Text>
-                                                </TouchableOpacity>
-                                            </View>
-                                        </View>
-                                    </Modal>
-                                    {touched.expiryDate && errors.expiryDate &&
-                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.expiryDate}</Text>
-                                    }
+                                {/* Expiry Date */}
+                                <Text style={styles.title}>Valid Until</Text>
+                                <View style={styles.container}>
+                                    <TouchableOpacity onPress={() => toggleOpen(true)} style={{ padding: 5 }}>
+                                        <Text style={styles.placeholder} >{value ? moment(value).format('MM/YYYY') : placeholder}</Text>
+                                    </TouchableOpacity>
                                 </View>
+                                <Modal
+                                    transparent
+                                    animationType="fade"
+                                    visible={isOpen}
+                                    onRequestClose={() => {
+                                        toggleOpen(false)
+                                    }}>
+                                    <View style={styles.contentContainer}>
+                                        <View style={styles.content}>
+                                            <MonthPicker
+                                                selectedDate={value || new Date()}
+                                                onMonthChange={onChange}
+                                                minDate={moment('04-2022', 'MM-YYYY')}
+                                                maxDate={moment('04-2050', 'MM-YYYY')}
+                                                nextIcon={<Ionicons name="chevron-forward" size={35} color={Colors.primary} />}
+                                                prevIcon={<Ionicons name="chevron-back" size={35} color={Colors.primary} />}
+                                            />
 
-                            <View style={{  marginHorizontal: 5, marginTop:10 }}>
+                                            <TouchableOpacity style={styles.confirmButton} onPress={() => {
+                                                toggleOpen(false);
+                                                setFieldTouched('expiryDate');
+                                                setFieldValue('expiryDate', moment(value).format('MM/YYYY'));
+                                            }}>
+                                                <Text style={styles.confirm} >Confirm</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </Modal>
+                                <View style={styles.line} />
+                                {touched.expiryDate && errors.expiryDate &&
+                                    <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.expiryDate}</Text>
+                                }
+                            </View>
+
+                            <View style={{ marginHorizontal: 5, marginTop: 10 }}>
                                 {/* CVV */}
                                 <Text style={styles.title}>CVV</Text>
                                 <View style={styles.container}>
@@ -170,6 +172,7 @@ const AddCard = (props) => {
                                     <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.cvv}</Text>
                                 }
                             </View>
+                            <View style={styles.line} />
 
                             {/* Cardholder Name */}
                             <Text style={styles.title}>Card Holder</Text>
@@ -182,10 +185,13 @@ const AddCard = (props) => {
                                 />
                                 {touched.name ? (!errors.name ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color="green" size={20} /></Animatable.View> : null) : null}
                             </View>
+                            <View style={styles.line} />
+
                             {touched.name && errors.name &&
                                 <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.name}</Text>
                             }
                             <View style={styles.switch} >
+
 
                                 <Text style={styles.toggle} > Make this my default payment </Text>
                                 <SwitchToggle
@@ -211,9 +217,10 @@ const AddCard = (props) => {
                                         borderRadius: 20,
                                     }}
                                 />
-                            </View>
 
+                            </View>
                             {/* CONFIRM BUTTON */}
+
                             <TouchableOpacity onPress={handleSubmit} disabled={!isValid}>
                                 <View style={styles.button}>
                                     <Text style={styles.buttonText}>ADD CARD</Text>
@@ -237,7 +244,7 @@ const styles = StyleSheet.create({
         flex: 0.5,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
-        padding:10
+        padding: 10
     },
     back: {
         marginTop: 30
@@ -256,11 +263,8 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     container: {
-    marginTop:10,
-    elevation: 1,
-    borderRadius: 0.5,
-    //borderWidth: 0.1,
-    padding:5
+        marginTop: 10,
+        //padding:5
     },
     button: {
         width: "80%",
@@ -282,27 +286,28 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         height: '100%',
-        backgroundColor: 'rgba(0,0,0,0.5)', 
+        backgroundColor: 'rgba(0,0,0,0.5)',
     },
     content: {
         backgroundColor: '#fff',
-        marginHorizontal: 20,
-        marginVertical: 70,
+        // marginHorizontal: 10,
+        // marginVertical: 70,
     },
     toggle: {
         fontSize: 16,
         color: Colors.grey
     },
-    switch:{
-         flexDirection: 'row', 
-         alignItems: 'center', 
-         justifyContent: 'space-between' 
+    switch: {
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 20,
+        flexDirection: 'row'
     },
-    placeholder:{
-        color:Colors.grey
+    placeholder: {
+        color: Colors.grey
     },
-    confirm:{
-        width: "60%",
+    confirm: {
+        width: "100%",
         alignItems: "center",
         backgroundColor: Colors.primary,
         textAlign: 'center',
@@ -314,11 +319,19 @@ const styles = StyleSheet.create({
         marginHorizontal: 70,
         marginBottom: 20
     },
-    mainFormik:{
-        marginTop: 30, 
-        padding: 10, 
-        flex: 3, 
+    mainFormik: {
+        marginTop: 30,
+        padding: 10,
+        flex: 3,
         marginHorizontal: 20
+    },
+    line: {
+        height: 0,
+        borderColor: Colors.grey,
+        borderWidth: 0.5,
+        width: '100%',
+        flexDirection: 'row',
+        marginBottom: 20
     }
 });
 

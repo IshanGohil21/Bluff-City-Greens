@@ -4,7 +4,6 @@ import React, { useRef, useState, useEffect } from 'react'
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchBarScreen from '../../../components/Slider/SearchBar2';
-import Vegetables from '../../../dummy-data/Vegetables';
 import VegetablesComp from '../../../components/Vegetables';
 import VeggiComp from '../../../components/VeggiMain';
 
@@ -34,7 +33,7 @@ const VegetableScreen = (props) => {
     // console.log(cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce((a, c) => a + c.itemTotal, 0) : 0)
-    // console.log(subTotal);
+    //  console.log("\n\nsub total                 ",subTotal);
 
     const veggieId = props.route.params.vegiId
     // console.log(veggieId);
@@ -45,7 +44,7 @@ const VegetableScreen = (props) => {
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false)
-        }, 3000)
+        }, 2000)
     }, [])
 
     return (
@@ -95,7 +94,6 @@ const VegetableScreen = (props) => {
                                                     disPrice={item.item_sizes[0].price}
                                                     onPress={() => { }}
                                                 />
-                                               
                                             }
                                             <View style={styles.line} />
                                         </View>
@@ -116,6 +114,7 @@ export default VegetableScreen
 const styles = StyleSheet.create({
     main: {
         flex: 1,
+        // backgroundColor:Colors.white
     },
     header: {
         flex: 0.5,
@@ -157,9 +156,10 @@ const styles = StyleSheet.create({
         height: 0,
         borderColor: Colors.grey,
         borderWidth: 0.5,
-        width: '100%',
+        width: '95%',
         marginVertical: 10,
         marginTop: 20,
-        flexDirection: 'row'
+        flexDirection: 'row',
+        marginLeft: 10
     }
 })

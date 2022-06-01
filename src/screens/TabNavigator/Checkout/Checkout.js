@@ -20,7 +20,7 @@ const CheckoutScreen = (props) => {
      console.log("\n\n\n\nCart    ",cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce( (a,c) => a + c.itemTotal, 0 ) : 0)
-    // console.log(subTotal);
+    // console.log("\n\n\nSub Total"                      ,subTotal);
 
     const Delivery = 0.5
 
@@ -43,7 +43,7 @@ const CheckoutScreen = (props) => {
                     <FlatList
                         data={cartItems}
                         renderItem={({ item }) => {
-                            console.log("\n\n\n\n\nCart Items  ", item );
+                            // console.log("\n\n\n\n\nCart Items  ", item );
                             return (
                                 <View key={item.id} >
                                     <Cartcomp

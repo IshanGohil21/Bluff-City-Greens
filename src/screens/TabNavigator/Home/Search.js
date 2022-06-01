@@ -12,6 +12,7 @@ import CategoriesScreen from '../../../components/Categories';
 import RecommendedProductsCommon from '../../../components/RecommendedProducts';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import { getMainRequest } from '../../../Helper/ApiHelper';
 
 const { width } = Dimensions.get('window')
 
@@ -43,6 +44,7 @@ const SearchScreen = (props) => {
     }
   }
 
+ 
   return (
     <View style={styles.main} >
       <StatusBar backgroundColor={Colors.primary} />
@@ -193,7 +195,6 @@ const SearchScreen = (props) => {
           }
           </View>
 
-
           {/* Most Popular */}
 
           <View style={styles.popular} >
@@ -204,13 +205,13 @@ const SearchScreen = (props) => {
               data={MostPopularProductScreen}
 
               renderItem={({ item }) => {
-                // console.log("\n\n\nSearch  ", item);
+                //  console.log("\n\n\nSearch  ", item);
                 // console.log(result.items);
                 return (
                   <View key={item.id}>
 
                     <Popular
-                      image={item.image}
+                      image={item.item_images}
                       name={item.name}
                       weight={item.weight}
                       price={item.price}

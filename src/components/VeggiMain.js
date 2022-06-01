@@ -8,7 +8,6 @@ import * as CartActions from '../Redux/Action/Cart';
 import { useDispatch, useSelector } from 'react-redux';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { RadioButton } from 'react-native-paper';
-import { Rating } from 'react-native-ratings';
 
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
@@ -19,7 +18,7 @@ const VeggiComp = (props) => {
 
     const veggies = props.item
     const [weight, setWeight] = useState(veggies.item_sizes[0].id);
-    // console.log("\n\n\nFull Description of Vegetable Products       " ,veggies.item_sizes[0].size);
+    //   console.log("\n\n\nFull Description of Vegetable Products       " ,veggies.item_sizes);
 
     const [isTouched, setIsTouched] = useState(props.initialState);
 
@@ -39,8 +38,10 @@ const VeggiComp = (props) => {
     // const qty = (cartItems.length ? cartItems.reduce( (a,c) =>  a + c.qty, 0 ) : 0)
     // console.log(qty);
     const x = cartItems.find(item => item.id === props.id)
-    // console.log(x);
+    //  console.log( "\nx" ,x);
 
+    const y = veggies.item_sizes.find(item => item.id === weight )
+    //   console.log("\ny    " ,y);
 
     return (
         <View style={styles.main} >
@@ -50,17 +51,19 @@ const VeggiComp = (props) => {
 
             <View style={{ flex: 3, paddingHorizontal: 5, padding: 5 }} >
                 <Text style={{ marginBottom: 10, color: Colors.grey, fontSize: 16, fontWeight: 'bold' }} >{props.name}</Text>
+                
                 <View>
+
                     <TouchableOpacity style={styles.weight} onPress={() => refRBSheet.current.open()} >
-                        <Text style={styles.weight0} >{props.weight}</Text>
+                        <Text style={styles.weight0} >{y.size}</Text>
                         <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.grey} />
                     </TouchableOpacity>
 
-
                 </View>
+
                 <Text style={styles.Oprice} >${props.price}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                    <Text style={styles.discount} >${props.disPrice}</Text>
+                    <Text style={styles.discount} >${y.price}</Text>
 
                     <View >
                         {x ?
@@ -83,6 +86,7 @@ const VeggiComp = (props) => {
                                 </View>
                             </TouchableOpacity>
                         }
+                        
                     </View>
 
                 </View>
@@ -94,7 +98,7 @@ const VeggiComp = (props) => {
                 {/* <TouchableOpacity onPress={() => {dispatch(CartActions.clearCart(props.item))}} >
                 <Ionicons name={Icons.TRASH} size={30} color={Colors.green} />
                 </TouchableOpacity> */}
-
+               
             </View>
             <View>
 
@@ -119,6 +123,7 @@ const VeggiComp = (props) => {
                 >
 
                     <Text style={styles.bottom} >Available Sizes</Text>
+                    
                     <View style={styles.radio} >
                         <View style={styles.button} >
                             <RadioButton
@@ -162,9 +167,9 @@ const VeggiComp = (props) => {
                             <Text>{veggies.item_sizes[2].size}</Text>
                         </View>
                     </View>
+                     
                 </RBSheet>
             </View>
-
         </View>
     )
 }
@@ -239,6 +244,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 15
     },
+    line:{
+        height: 0,
+        borderColor: Colors.grey,
+        borderWidth: 0.5,
+        width: '100%',
+        marginVertical: 10,
+        marginTop: 20,
+        flexDirection: 'row'
+    }
 });
 
 export default VeggiComp;
