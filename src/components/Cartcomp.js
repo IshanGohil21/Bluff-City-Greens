@@ -20,7 +20,7 @@ const Cartcomp = (props) => {
 
     const [isTouched, setIsTouched] = useState(props.initialState);
 
-    const refRBSheet = useRef();
+    const refRBSheet = useRef(null);
     const [checked, setChecked] = useState('first')
 
     const cartItems = useSelector(state => {

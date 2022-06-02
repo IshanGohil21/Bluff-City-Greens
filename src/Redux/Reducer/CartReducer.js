@@ -32,15 +32,10 @@ export default (state = initialState, action) => {
                 cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal +  addedGreens.item_sizes.price }
                 //   cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty +  1 ,  price: state.items[addedGreens.id].item_sizes.price , size: state.items[addedGreens.id].item_sizes.size }
                  console.log("\nCartItems        ",cartItem);
-                // console.log("\n\n\nEmaj   ", (state.items[addedGreens.id]));
             } else {
                 cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.item_sizes[0].price,   }
                 // console.log(cartItem);
             }
-            //  console.log("\n\n\n\nPrice",cartItem.price);
-            // console.log(cartItem.qty);
-            //   console.log(cartItem.item_sizes[0].price);
-            // console.log(addedGreens.item_sizes[2].size);
             
             return {
                 ...state,

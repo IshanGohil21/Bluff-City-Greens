@@ -187,7 +187,6 @@ const FilterScreen = (props) => {
                       </RBSheet>
                   </View>
 
-
                   <View style={styles.button} >
                     <RadioButton
                       value="second"
