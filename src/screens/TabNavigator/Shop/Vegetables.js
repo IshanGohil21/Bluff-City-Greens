@@ -30,6 +30,10 @@ const VegetableScreen = (props) => {
     const [isLoading, setIsLoading] = useState(true)
     const [sort, setSort] = useState('ASC')
 
+    const [start, setStart] = useState(0);
+    const [end, setEnd] = useState(10);
+
+
     const cartItems = useSelector(state => {
         const updatedCartItems = [];
         for (const key in state.Cart.items) {
@@ -48,25 +52,45 @@ const VegetableScreen = (props) => {
     // console.log(veggieId);
 
     const veggiAll = props.route.params.vegi
-    //console.log("\n\n\n\nAll Products    ", veggiAll.title);
+    // console.log("\n\n\n\nAll Products    ", veggiAll);
 
-    useEffect(async () => {
-        getSort();
-    }, [])
+    const title = props.route.params.title
+    // console.log("Title    ", title );
 
-    const [asc, setAsc] = useState([]);
+    // useEffect(async () => {
+    //     getSort();
+    // }, [])
 
-    const getSort = async () => {
+    const [sorting, setSorting] = useState([]);
+
+    // const [asc, setAsc] = useState([]);
+
+    const onPressSort = async () => {
+        refRBSheet.current.close()
         const response = await getRequest(`/customer/sort?price=${sort}`)
-         console.log("\n\n\nSorting              ", response.data.data);
+        // console.log("\n\n\nSorting              ", response.data);
+
+        if(response.success) {
+            setSorting(response.data.data)
+            // console.log("\n\nAfter API Call          ",response.data.data);
+        }
     }
 
-    const onPressFilter = async () => {
-        // const data = {
+    const [ filterResult, setResult] = useState([]);
 
-        // }
-        const Filter = await postRequest('/customer/filter')
-        // console.log("\n\n\nFilter                  ",Filter.data);
+    const onPressFilter = async (values) => {
+        const data = {
+            title,
+            start_price: start,
+            end_price: end 
+        }
+        console.log("\n\nDATA          ", data);
+        const Filter = await postRequest('/customer/filter', data)
+        // console.log("\n\n\nFilter                  ",Filter.data.data[0].sub_categories);
+
+        if(Filter.success) {
+            setResult()
+        }
     }
 
     useEffect(() => {
@@ -110,7 +134,7 @@ const VegetableScreen = (props) => {
                         </View>
                         <View>
                             <FlatList
-                                data={veggiAll.items}
+                                data= {sorting.length === 0 ?   veggiAll.items : sorting }
                                 renderItem={({ item }) => {
                                     //  console.log("\n\n\n\nFinal Products "        , item);
                                     return (
@@ -151,6 +175,7 @@ const VegetableScreen = (props) => {
                         container: {
                             borderTopLeftRadius: 30,
                             borderTopRightRadius: 30,
+                            backgroundColor:"#F5F5F5"
                         }
                     }}
                 >
@@ -172,12 +197,12 @@ const VegetableScreen = (props) => {
                                 {/* Range Slider */}
                                 <View style={styles.priceRange} >
                                     <Text style={styles.priceRange2} >Price Range</Text>
-
+                                    {/* <Text> Price Range is : </Text> */}
                                     <View style={styles.rangeSlider} >
                                         <RangeSlider
-                                            range={[0, 1]}
+                                            range={[0, 10]}
                                             minimumValue={0}
-                                            maximumValue={1}
+                                            maximumValue={10}
                                             step={0}
                                             outboundColor='#DCDCDC'
                                             inboundColor='#0603C6'
@@ -186,16 +211,19 @@ const VegetableScreen = (props) => {
                                             style={styles.ranger}
                                             trackHeight={6}
                                             thumbSize={20}
-                                            onValueChange={ () => {onPressFilter()} }
+                                            onValueChange={(value) => {
+                                                setStart(value[0])
+                                                setEnd(value[1])
+                                            } }
                                         />
                                     </View>
                                     <View style={styles.priceTag} >
                                         <Text style={styles.txt1} > $0 </Text>
-                                        <Text style={styles.txt2} > $50 </Text>
+                                        <Text style={styles.txt2} > $10 </Text>
                                     </View>
                                 </View>
                                 <View style={styles.applyButton} >
-                                    <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Home') }} >
+                                    <TouchableOpacity style={styles.signin} onPress={ onPressFilter } >
                                         <Text style={styles.apply} >APPLY</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -208,7 +236,7 @@ const VegetableScreen = (props) => {
                                 <View>
 
                                     <View style={styles.radio} >
-                                        <View style={styles.button} >
+                                        {/* <View style={styles.button} >
                                             <RadioButton
                                                 value="first"
                                                 color={Colors.primary}
@@ -217,14 +245,14 @@ const VegetableScreen = (props) => {
                                             />
                                             <Text>Delivery Time</Text>
 
-                                        </View>
-                                        <View style={styles.rb} >
-                                            <TouchableOpacity style={styles.rb2} onPress={() => refRBSheet2.current.open()}  >
+                                        </View> */}
+                                        {/* <View style={styles.rb} > */}
+                                        {/* <TouchableOpacity style={styles.rb2} onPress={() => refRBSheet2.current.open()}  >
                                                 <Text style={styles.select} >-Select Time-</Text>
                                                 <Ionicons name={Icons.DOWN_ARROW} size={30} color={Colors.grey} />
-                                            </TouchableOpacity>
+                                            </TouchableOpacity> */}
 
-                                            <RBSheet
+                                        {/* <RBSheet
                                                 ref={refRBSheet2}
                                                 closeOnDragDown={true}
                                                 closeOnPressMask={false}
@@ -284,8 +312,8 @@ const VegetableScreen = (props) => {
                                                     />
                                                     <Text>07:30 PM to 10:00 PM</Text>
                                                 </View>
-                                            </RBSheet>
-                                        </View>
+                                            </RBSheet> */}
+                                        {/* </View> */}
 
                                         <View style={styles.button} >
                                             <RadioButton
@@ -295,8 +323,8 @@ const VegetableScreen = (props) => {
                                                 onPress={() => {
                                                     setChecked('second')
                                                     setSort('ASC')
-  
-                                            }}
+                                                    // refRBSheet.current.close()
+                                                }}
                                             />
                                             <Text>Price- Low to High</Text>
                                         </View>
@@ -309,6 +337,7 @@ const VegetableScreen = (props) => {
                                                 onPress={() => {
                                                     setChecked('third')
                                                     setSort('DESC')
+                                                    // refRBSheet.current.close()
                                                 }}
                                             />
                                             <Text>Price - High to Low</Text>
@@ -317,7 +346,7 @@ const VegetableScreen = (props) => {
                                 </View>
 
                                 <View >
-                                    <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Home') }}  >
+                                    <TouchableOpacity style={styles.signin} onPress={ onPressSort }  >
                                         <Text style={styles.apply} >APPLY</Text>
                                     </TouchableOpacity>
                                 </View>
