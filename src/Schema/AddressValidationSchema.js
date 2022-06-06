@@ -1,10 +1,8 @@
 import * as yup from 'yup';
 
 const AddressValidationSchema = yup.object().shape({
-    address_type: yup.number().required('Address Tag is required.'),
-    address: yup.string().required('Address is required.'),
-    // icon: yup.string().required('Icon is required.'),
-    zipCode: yup.number().required('Zip Code is Required.')
-})
+//     addition_address_info: yup.string().required('Additional Information is required'),
+//     address: yup.string().required('Address is required.'),
+ })
 
 export default AddressValidationSchema;

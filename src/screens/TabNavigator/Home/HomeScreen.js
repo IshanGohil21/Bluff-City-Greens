@@ -175,7 +175,7 @@ const HomeScreen = (props) => {
 
           {/* Serach bar */}
           <View style={styles.filter} >
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Search',  ) }} >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Search',) }} >
               <SearchBarScreen />
             </TouchableOpacity>
 
@@ -189,17 +189,6 @@ const HomeScreen = (props) => {
 
         { /* Body */}
 
-        {/* Shimmer Effect */}
-        {/* <ShimmerPlaceHolder
-        LinearGradient={LinearGradient}
-      /> */}
-        {/* {isLoading ?
-          <View style={styles.loader}>
-            <StatusBar backgroundColor={Colors.white} barStyle='light-content' /> */}
-        {/* <ActivityIndicator size={100} color={Colors.primary} /> */}
-        {/* <ShimmerPlaceholder LinearGradient={LinearGradient} height={width} width={width} /> */}
-        {/* </View>
-          : */}
         <ScrollView>
           <View style={styles.body} >
 
@@ -297,7 +286,7 @@ const HomeScreen = (props) => {
                                     weight={indi.item_size.size}
                                     image={indi.sub_category.image}
                                     onClick={() => { props.navigation.navigate('Past_Orders', { past: indi, pastId: indi.id }) }}
-                                    onHeart={() => {} }
+                                    onHeart={() => { }}
                                   />
                                   {/* <Text>{indi.item_size.price}</Text> */}
                                   {/* <Text>Nest</Text> */}
@@ -588,7 +577,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontWeight: 'bold',
     marginTop: 30,
-    marginLeft:18,
+    marginLeft: 18,
     // marginLeft: 25,
     backgroundColor: Colors.yellow,
     borderRadius: 10,

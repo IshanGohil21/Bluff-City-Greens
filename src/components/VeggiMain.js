@@ -17,7 +17,7 @@ const VeggiComp = (props) => {
 
 
     const veggies = props.item
-    const [weight, setWeight] = useState(veggies.item_sizes[0].id);
+    const [weight, setWeight] = useState(veggies.item_sizes[0]?.id);
     //   console.log("\n\n\nFull Description of Vegetable Products       " ,veggies.item_sizes);
 
     const [isTouched, setIsTouched] = useState(props.initialState);
@@ -55,7 +55,7 @@ const VeggiComp = (props) => {
                 <View>
 
                     <TouchableOpacity style={styles.weight} onPress={() => refRBSheet.current.open()} >
-                        <Text style={styles.weight0} >{y.size}</Text>
+                        <Text style={styles.weight0} >{y?.size}</Text>
                         <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.grey} />
                     </TouchableOpacity>
 
@@ -63,7 +63,7 @@ const VeggiComp = (props) => {
 
                 <Text style={styles.Oprice} >${props.price}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                    <Text style={styles.discount} >${y.price}</Text>
+                    <Text style={styles.discount} >${y?.price}</Text>
 
                     <View >
                         {x ?
@@ -125,47 +125,48 @@ const VeggiComp = (props) => {
                     <Text style={styles.bottom} >Available Sizes</Text>
                     
                     <View style={styles.radio} >
-                        <View style={styles.button} >
+                        { veggies.item_sizes[0]?
+                         <View style={styles.button} >
                             <RadioButton
                                 value="first"
                                 color={Colors.primary}
                                 status={checked === 'first' ? 'checked' : 'unchecked'}
                                 onPress={() => {
                                     setChecked('first')
-                                    setWeight(veggies.item_sizes[0].id)
+                                    setWeight(veggies.item_sizes[0]?.id)
                                     refRBSheet.current.close()
                                 }}
                             />
-                            <Text>{veggies.item_sizes[0].size}</Text>
-                        </View>
+                            <Text>{veggies.item_sizes[0]?.size}</Text>
+                        </View>: null}
 
-                        <View style={styles.button} >
+                        { veggies.item_sizes[1]? <View style={styles.button} >
                             <RadioButton
                                 value="second"
                                 color={Colors.primary}
                                 status={checked === 'second' ? 'checked' : 'unchecked'}
                                 onPress={() => {
                                     setChecked('second')
-                                    setWeight(veggies.item_sizes[1].id)
+                                    setWeight(veggies.item_sizes[1]?.id)
                                     refRBSheet.current.close()
                                 }}
                             />
-                            <Text>{veggies.item_sizes[1].size}</Text>
-                        </View>
+                            <Text>{veggies.item_sizes[1]?.size}</Text>
+                        </View>  : null}
 
-                        <View style={styles.button} >
+                        { veggies.item_sizes[2]? <View style={styles.button} >
                             <RadioButton
                                 value="third"
                                 color={Colors.primary}
                                 status={checked === 'third' ? 'checked' : 'unchecked'}
                                 onPress={() => {
                                     setChecked('third')
-                                    setWeight(veggies.item_sizes[2].id)
+                                    setWeight(veggies.item_sizes[2]?.id)
                                     refRBSheet.current.close()
                                 }}
                             />
-                            <Text>{veggies.item_sizes[2].size}</Text>
-                        </View>
+                            <Text>{veggies.item_sizes[2]?.size}</Text>
+                        </View> : null }
                     </View>
                      
                 </RBSheet>

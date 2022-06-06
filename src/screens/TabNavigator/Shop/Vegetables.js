@@ -14,7 +14,6 @@ import VegetablesComp from '../../../components/Vegetables';
 import VeggiComp from '../../../components/VeggiMain';
 import { getRequest, postRequest } from '../../../Helper/ApiHelper';
 
-
 const { width } = Dimensions.get('window')
 
 const VegetableScreen = (props) => {
@@ -52,30 +51,26 @@ const VegetableScreen = (props) => {
     // console.log(veggieId);
 
     const veggiAll = props.route.params.vegi
-    // console.log("\n\n\n\nAll Products    ", veggiAll);
+    //  console.log("\n\n\n\nAll Products    ", veggiAll);
 
     const title = props.route.params.title
     // console.log("Title    ", title );
 
-    // useEffect(async () => {
-    //     getSort();
-    // }, [])
+    //  const y = veggiAll.find(item => item.id === filterResult)
+    //  console.log("\ny    " ,y);
 
     const [sorting, setSorting] = useState([]);
-
-    // const [asc, setAsc] = useState([]);
 
     const onPressSort = async () => {
         refRBSheet.current.close()
         const response = await getRequest(`/customer/sort?price=${sort}`)
-        // console.log("\n\n\nSorting              ", response.data);
+        //  console.log("\n\n\nSorting              ", response.data);
 
         if(response.success) {
             setSorting(response.data.data)
             // console.log("\n\nAfter API Call          ",response.data.data);
         }
     }
-
     const [ filterResult, setResult] = useState([]);
 
     const onPressFilter = async (values) => {
@@ -86,11 +81,15 @@ const VegetableScreen = (props) => {
         }
         console.log("\n\nDATA          ", data);
         const Filter = await postRequest('/customer/filter', data)
-        // console.log("\n\n\nFilter                  ",Filter.data.data[0].sub_categories);
+    //   console.log("\n\n\nFilter                  ",Filter.data.data[0].sub_categories);
+    
+    const x = Filter.data.data[0].sub_categories.find(item => item.title === veggiAll.title )
+    // console.log("X                     ",x);
 
         if(Filter.success) {
-            setResult()
+            setResult(x.items)
         }
+        refRBSheet.current.close()
     }
 
     useEffect(() => {
@@ -115,9 +114,6 @@ const VegetableScreen = (props) => {
                     </View>
                     <View style={styles.heading} >
                         <Text style={styles.titleFruit} >{veggiAll.title}</Text>
-                        {/* <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }} >
-                            <Ionicons name={Icons.OPTIONS} size={35} color={Colors.white} />
-                        </TouchableOpacity> */}
 
                         <TouchableOpacity onPress={() => refRBSheet.current.open()} >
                             <Ionicons name={Icons.OPTIONS} size={35} color={Colors.white} />
@@ -134,11 +130,13 @@ const VegetableScreen = (props) => {
                         </View>
                         <View>
                             <FlatList
-                                data= {sorting.length === 0 ?   veggiAll.items : sorting }
+                                // data= { filterResult.length === 0 ?  sorting.length === 0 ?   veggiAll.items : sorting : filterResult}
+                                data={ filterResult.length > 0 ? filterResult : sorting.length > 0 ? sorting : veggiAll.items }
+                                keyExtractor={item => item.id}
                                 renderItem={({ item }) => {
                                     //  console.log("\n\n\n\nFinal Products "        , item);
                                     return (
-                                        <View key={item.id} >
+                                        <View  >
                                             {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
                                                 <VeggiComp
                                                     item={item}
@@ -150,6 +148,7 @@ const VegetableScreen = (props) => {
                                                     disPrice={item.item_sizes[0].price}
                                                     onPress={() => { }}
                                                 />
+                                                // <View></View>
                                             }
                                             <View style={styles.line1} />
                                         </View>
@@ -197,7 +196,6 @@ const VegetableScreen = (props) => {
                                 {/* Range Slider */}
                                 <View style={styles.priceRange} >
                                     <Text style={styles.priceRange2} >Price Range</Text>
-                                    {/* <Text> Price Range is : </Text> */}
                                     <View style={styles.rangeSlider} >
                                         <RangeSlider
                                             range={[0, 10]}
@@ -446,7 +444,7 @@ const styles = StyleSheet.create({
         padding: 10
     },
     commonContainer: {
-        padding: 10
+        padding: 10,
     },
     text: {
         fontSize: 16,

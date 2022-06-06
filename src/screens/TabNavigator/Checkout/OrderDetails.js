@@ -43,8 +43,8 @@ const delivery = 0.5;
     let today = new Date();
     var monthNames = ["January", "February", "March", "April", "May","June","July", "August", "September", "October", "November","December"];
     var weekNames = ["Sun", 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    let date = today.getDate()+ '   '+monthNames[(today.getMonth() )]+ '  '+today.getFullYear();
-    let week = '  '+today.getDate() +' '+monthNames[(today.getMonth() )]+ ' '+today.getFullYear();
+    const date = today.getDate()+ '   '+monthNames[(today.getMonth() )]+ '  '+today.getFullYear();
+    const week = '  '+today.getDate() +' '+monthNames[(today.getMonth() )]+ ' '+today.getFullYear();
      
     setWeek(week);
     setDate(date);

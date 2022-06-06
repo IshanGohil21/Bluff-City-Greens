@@ -1,24 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Address from '../../../../dummy-data/Address';
 import { ActivityIndicator, RadioButton, TextInput } from 'react-native-paper';
 
 import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
 import { ScrollView } from 'react-native-gesture-handler';
-// import RadioButtonScreen from '../../../../components/RadioButton';
+import * as Address from '../../../../Redux/Action/Address';
 import { postRequest } from '../../../../Helper/ApiHelper';
 import AddressValidationSchema from '../../../../Schema/AddressValidationSchema';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
+import GetLocation from 'react-native-get-location';
+import Toast from 'react-native-simple-toast';
 
 const AddNewAddressScreen = (props) => {
 
     const [checked, setChecked] = useState('')
     const [isLoading, setIsLoading] = useState(false);
     const dispatch = useDispatch();
-
+    const [latitudes, setLatitudes] = useState();
+    const [longitudes, setLongitudes] = useState();
     const [radio, setRadio] = useState()
+
+    const onPressAddress = async (values) => {
+        // console.log("\n\nValues          ", values);
+        const data = {
+            primary_address: values?.primary_address,
+            addition_address_info: values.addition_address_info,
+            latitude: latitudes,
+            longitude: longitudes,
+            is_select: values.address_type,
+        }
+        console.log("DATA            ", data);
+        const AddressResponse = await postRequest('/add-address', data)
+        // console.log("\n\nAddress        ", AddressResponse.data.data);
+        if (AddressResponse.success) {
+            dispatch(Address.addAddress(values))
+            Toast.show('Address added successfully.')
+            props.navigation.navigate('DeliveryCheckout');
+        }
+    }
+    useEffect(() => {
+
+        GetLocation.getCurrentPosition({
+            enableHighAccuracy: true,
+        })
+            .then(location => {
+                //    console.log("location        ", location);
+                setLatitudes(location.latitude)
+                setLongitudes(location.longitude)
+            })
+            .catch(error => {
+                const { code, message } = error;
+                // console.warn(code, message);
+            })
+    }, [longitudes, latitudes])
 
     return (
         <ScrollView>
@@ -33,7 +69,7 @@ const AddNewAddressScreen = (props) => {
                             <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.back} />
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() => { props.navigation.navigate('AddNewAddress2') }} >
+                        <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryCheckout') }} >
                             <Ionicons name={Icons.SEARCH} size={28} color={Colors.white} style={styles.back} />
                         </TouchableOpacity>
                     </View>
@@ -50,48 +86,56 @@ const AddNewAddressScreen = (props) => {
                             source={Images.address}
                             style={styles.map}
                         />
+
                     </View>
                     <Formik
                         initialValues={{
+                            addition_address_info: '',
+                            primary_address: '',
                             address_type: '',
-                            address: '',
-                            zip: ''
+                            zip: '',
                         }}
-                        onSubmit={ () => {props.naivation.goBack()} }
-                        validationSchema={AddressValidationSchema}
+                        onSubmit={values => { onPressAddress(values) }}
+                    // validationSchema={AddressValidationSchema}
                     >
                         {({ values, errors, setFieldTouched, touched, handleChange, setFieldValue, isValid, handleSubmit }) => (
                             <View style={styles.bodyContainer} >
                                 <View style={styles.detailContainer} >
-                                    <Text style={styles.details} > Stree Name, Flat No., Society/Office Name </Text>
+                                    <Text style={styles.details} >Street Name, Flat No., Society/Office Name</Text>
 
-                                    <TextInput 
-                                    value={values.address}
-                                    onBlur={ () => setFieldTouched('address')}
-                                    onChangeText={handleChange('address')}
-                                    placeholder= 'Enter Address'
-                                    keyboardType='default'
+                                    <TextInput
+                                        value={values.primary_address}
+                                        onBlur={() => setFieldTouched('primary_address')}
+                                        onChangeText={handleChange('primary_address')}
+                                        placeholder='Enter Address'
+                                        keyboardType='default'
+                                        backgroundColor={Colors.white}
                                     />
-                                  {touched.address && errors.address && 
-                                    <Text style={{ fontSize: 11, color: Colors.red, margin:10 }} >{errors.address}</Text>
-                                  }  
+                                    {touched.address && errors.address &&
+                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.address}</Text>
+                                    }
 
                                     <Text style={styles.details} > Zip Code </Text>
-                                    <TextInput 
-                                    value={values.zip}
-                                    onBlur={ () => setFieldTouched('zip')}
-                                    onChangeText={handleChange('zip')}
-                                    placeholder= 'Enter Zip Code'
-                                    keyboardType='numeric'
+                                    <TextInput
+                                        value={values.zip}
+                                        onBlur={() => setFieldTouched('zip')}
+                                        onChangeText={handleChange('zip')}
+                                        placeholder='Enter Zip Code'
+                                        keyboardType='numeric'
+                                        backgroundColor={Colors.white}
                                     />
-                                    {touched.address && errors.address && 
-                                    <Text style={{ fontSize: 11, color: Colors.red, margin:10 }} >{errors.zip}</Text>
-                                  }
+                                    {touched.address && errors.address &&
+                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.zip}</Text>
+                                    }
 
                                     <Text style={styles.details} > Nearest Landmark (Optional) </Text>
-                                    <TextInput 
-                                    placeholder='Enter any Landmark '
-                                    keyboardType='default'
+                                    <TextInput
+                                        value={values.addition_address_info}
+                                        onBlur={() => setFieldTouched('addition_address_info')}
+                                        onChangeText={handleChange('addition_address_info')}
+                                        placeholder='Enter any Landmark '
+                                        keyboardType='default'
+                                        backgroundColor={Colors.white}
                                     />
 
                                 </View>
@@ -109,10 +153,10 @@ const AddNewAddressScreen = (props) => {
                                                 <Ionicons name='radio-button-off' size={25} color={Colors.grey} />
                                             </TouchableOpacity>
                                         }
-                                        <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Home</Text>
+                                        <Text style={{ fontWeight: 'bold', fontSize: 16, color: Colors.grey }}> Home</Text>
                                     </View>
 
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                                         {radio === 1 ?
                                             <Ionicons name='radio-button-on' size={25} color={Colors.primary} />
                                             :
@@ -124,10 +168,10 @@ const AddNewAddressScreen = (props) => {
                                                 <Ionicons name='radio-button-off' size={25} color={Colors.grey} />
                                             </TouchableOpacity>
                                         }
-                                        <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Work</Text>
+                                        <Text style={{ fontWeight: 'bold', fontSize: 16, color: Colors.grey }}> Work</Text>
                                     </View>
 
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10, color: Colors.grey }}>
                                         {radio === 2 ?
                                             <Ionicons name='radio-button-on' size={25} color={Colors.primary} />
                                             :
@@ -139,19 +183,19 @@ const AddNewAddressScreen = (props) => {
                                                 <Ionicons name='radio-button-off' size={25} color={Colors.grey} />
                                             </TouchableOpacity>
                                         }
-                                        <Text style={{fontWeight:'bold' ,fontSize: 16 }}>Others</Text>
+                                        <Text style={{ fontWeight: 'bold', fontSize: 16, color: Colors.grey }}> Others</Text>
                                     </View>
                                 </View>
                                 {touched.address_type && errors.address_type &&
                                     <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.address_type}</Text>
                                 }
 
-                                <TouchableOpacity onPress={handleSubmit}  disabled={!isValid} >
+                                <TouchableOpacity onPress={handleSubmit}>
                                     {
-                                    isLoading ? <ActivityIndicator size={'small'} color={Colors.white} /> 
-                                    :   
-                                    <Text style={styles.signin} > ADD ADDRESS </Text>
-                                    }       
+                                        isLoading ? <ActivityIndicator size={'small'} color={Colors.white} />
+                                            :
+                                            <Text style={styles.signin} > ADD ADDRESS </Text>
+                                    }
                                 </TouchableOpacity>
 
                             </View>
@@ -178,7 +222,8 @@ const styles = StyleSheet.create({
         marginTop: 40
     },
     body: {
-        flex: 3
+        flex: 3,
+        backgroundColor: Colors.white
     },
     map: {
         height: 300,
@@ -189,7 +234,6 @@ const styles = StyleSheet.create({
     },
     detailContainer: {
         borderColor: Colors.white,
-        //   borderWidth: 5,
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         padding: 10,

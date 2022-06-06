@@ -5,9 +5,7 @@ import { RadioButton } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
-import Address from '../../../dummy-data/Address';
 import SelectAddComp from '../../../components/SelectAddComp';
-import Card from '../../../dummy-data/Card';
 import CardsComp from '../../../components/CardsComp';
 import { getRequest } from '../../../Helper/ApiHelper';
 import { Toast } from 'react-native-simple-toast';
@@ -54,7 +52,8 @@ const DeliveryAddressScreen = (props) => {
     // console.log("CARD_ITEMS         ",cardItems);
     useEffect(() => {
         getCard();
-    }, []);
+        getAddress();
+    }, [credit, address]);
 
     const [credit, setCredit] = useState([]);
     const getCard = async () => {
@@ -71,6 +70,21 @@ const DeliveryAddressScreen = (props) => {
             Alert.alert("Error", errorMsg, [{ text: "Okay" }])
         }
     }
+
+    const [address, setAddress] = useState([]);
+    const getAddress = async () => {
+        const response = await getRequest('/get-address');
+        // console.log("\n\n\nAddress    ", response.data.data);
+        let errorMsg = "No Address to show!";
+
+        if(!response.success){
+            setAddress(response.data.data)
+        }
+        else {
+            Alert.alert("Error", errorMsg, [{ text:'Okay' }])
+        }
+    }
+
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false)
@@ -104,19 +118,21 @@ const DeliveryAddressScreen = (props) => {
                         <FlatList
                             horizontal
                             showsHorizontalScrollIndicator={false}
-                            data={Address}
+                            data={address}
                             renderItem={({ item }) => {
+                                // console.log("\n\nAddress Items    ", item);
                                 return (
-                                    <View key={item.id}   >
+                                    <View key={item.id}>
                                         {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
                                             <SelectAddComp
                                                 item={item}
                                                 id={item.id}
-                                                tag={item.tag}
-                                                name={item.name}
-                                                address={item.address}
+                                                // tag={item.addition_address_info}
+                                                name={item.primary_address}
+                                                address={item.addition_address_info}
                                                 country={item.country}
                                             />
+                                        
                                         }
                                     </View>
                                 )

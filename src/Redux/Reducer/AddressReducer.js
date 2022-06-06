@@ -8,12 +8,13 @@ const initialState = {
 export default (state = initialState, action) => {
     switch(action.type) {
         case ADD_ADDRESS:
-            const tag = action.tag;
+            const type = action.type;
             const address = action.address;
-            const zip = action.zip
+            const zip = action.zip;
+            const add_address = action.add_address;
 
             let newAddress;
-            newAddress = { tag,address,zip }
+            newAddress = { type,address,zip }
             const addressList = [];
             for( const key in state.addresses ) {
                 addressList.push({
