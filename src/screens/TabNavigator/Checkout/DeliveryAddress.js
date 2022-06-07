@@ -51,8 +51,8 @@ const DeliveryAddressScreen = (props) => {
 
     // console.log("CARD_ITEMS         ",cardItems);
     useEffect(() => {
-        getCard();
         getAddress();
+        getCard();
     }, [credit, address]);
 
     const [credit, setCredit] = useState([]);
@@ -74,14 +74,14 @@ const DeliveryAddressScreen = (props) => {
     const [address, setAddress] = useState([]);
     const getAddress = async () => {
         const response = await getRequest('/get-address');
-        // console.log("\n\n\nAddress    ", response.data.data);
+        //  console.log("\n\n\nAddress    ", response.data.data);
         let errorMsg = "No Address to show!";
 
-        if(!response.success){
+        if (!response.success) {
             setAddress(response.data.data)
         }
         else {
-            Alert.alert("Error", errorMsg, [{ text:'Okay' }])
+            Alert.alert("Error", errorMsg, [{ text: 'Okay' }])
         }
     }
 
@@ -120,19 +120,18 @@ const DeliveryAddressScreen = (props) => {
                             showsHorizontalScrollIndicator={false}
                             data={address}
                             renderItem={({ item }) => {
-                                // console.log("\n\nAddress Items    ", item);
+                                   console.log("\n\nAddress Items    ", item);
                                 return (
                                     <View key={item.id}>
                                         {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
                                             <SelectAddComp
                                                 item={item}
                                                 id={item.id}
-                                                // tag={item.addition_address_info}
+                                                tag={item.is_select}
                                                 name={item.primary_address}
                                                 address={item.addition_address_info}
-                                                country={item.country}
+                                            // country={item.is_select}
                                             />
-                                        
                                         }
                                     </View>
                                 )
@@ -212,7 +211,8 @@ const DeliveryAddressScreen = (props) => {
                             }}
                         />
 
-                    </View> :
+                    </View>
+                        :
                         <View style={styles.cod} >
                             <Image source={Images.money} style={styles.cash} />
                             <Text style={styles.codText} >Cash on Delivery</Text>
@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
     },
     deliveryTime: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         alignItems: 'center',
         padding: 10,
     },

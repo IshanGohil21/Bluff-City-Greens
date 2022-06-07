@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity,StatusBar,ScrollView } from 'react-native';
 import Address from '../../../../dummy-data/Address';
 import AddressItem from '../../../../components/AddressItem';
-
-import { Icons, Colors } from '../../../../CommonConfig/CommonConfig'
-
+import { Icons, Colors } from '../../../../CommonConfig/CommonConfig';
+import { getRequest } from '../../../../Helper/ApiHelper';
+import Toast from 'react-native-simple-toast';
+import { async } from '@firebase/util';
 
 const SavedAddressScreen = props => {
     const [addressArray,  setAddressArray]= useState(Address)
@@ -13,8 +14,19 @@ const SavedAddressScreen = props => {
    // console.log(Address)
      const deleteHandler = (prevState) => {
         setAddressArray =>  prevState.filter( (address) =>  address !== prevState  )
-     }
-       
+    }
+    
+    useEffect( () => {
+        getAddress();
+    },[address] )
+
+    const [address, setAddress] = useState([]);
+
+    const getAddress = async () => {
+        const response = await getRequest('/get-address');
+        console.log('\n\nResponse          ', response.data.data);
+    }
+
     return (
         <View  style={styles.main}>
              {/* Header */}

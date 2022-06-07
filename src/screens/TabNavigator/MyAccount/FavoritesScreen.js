@@ -10,28 +10,29 @@ import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import { getRequest } from '../../../Helper/ApiHelper'; 
 import { FlatList } from 'react-native-gesture-handler';
 import Toast from 'react-native-simple-toast';
+import MapView , {PROVIDER_GOOGLE} from 'react-native-maps';
 
 const { width } = Dimensions.get('window')
 
 const FavoritesScreen = props => {
-    useEffect( async () => {
-        getFav();
-    },[])
+    // useEffect( async () => {
+    //     getFav();
+    // },[])
 
-    const [Favorites, setFavorites] = useState([]);
+    // const [Favorites, setFavorites] = useState([]);
 
-    const getFav = async () => {
-        const response = await getRequest('/customer/get-favourites');
-        // console.log("\n\nFavorites                 ", response);
+    // const getFav = async () => {
+    //     const response = await getRequest('/customer/get-favourites');
+    //     // console.log("\n\nFavorites                 ", response);
 
-        if(response.success){
-            setFavorites(response.data.data)
-            // console.log("\n\n\nResponse.data.data for Fav           ", response.data.data);
-        }
-        else {
-            Toast.show('No Favorite Products Found');
-        }
-    }
+    //     if(response.success){
+    //         setFavorites(response.data.data)
+    //         // console.log("\n\n\nResponse.data.data for Fav           ", response.data.data);
+    //     }
+    //     else {
+    //         Toast.show('No Favorite Products Found');
+    //     }
+    // }
 
     return (
         <View  style={styles.main}>
@@ -46,7 +47,7 @@ const FavoritesScreen = props => {
             {/* Body */}
             <View style={styles.body} >
 
-                <FlatList 
+                {/* <FlatList 
                 data={Favorites}
                 renderItem={ (item) => {
                     console.log("\n\nItems       ",item);
@@ -56,8 +57,13 @@ const FavoritesScreen = props => {
                         </View>
                     )
                 } }
-                />
-
+                /> */}
+                <View>
+                    <MapView 
+                    provider={PROVIDER_GOOGLE}
+                    style={{ height:500, width:500 }}
+                    />
+                </View>
             </View>
         </View>
     )
@@ -84,6 +90,9 @@ const styles= StyleSheet.create({
     },
     body:{
         flex:3
+    },
+    map:{
+
     }
 })
 

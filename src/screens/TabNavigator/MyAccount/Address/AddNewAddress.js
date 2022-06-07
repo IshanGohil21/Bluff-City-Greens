@@ -7,11 +7,12 @@ import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Address from '../../../../Redux/Action/Address';
 import { postRequest } from '../../../../Helper/ApiHelper';
-import AddressValidationSchema from '../../../../Schema/AddressValidationSchema';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import GetLocation from 'react-native-get-location';
 import Toast from 'react-native-simple-toast';
+import addressValidationSchema from '../../../../Schema/AddressValidationSchema';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 const AddNewAddressScreen = (props) => {
 
@@ -40,6 +41,7 @@ const AddNewAddressScreen = (props) => {
             props.navigation.navigate('DeliveryCheckout');
         }
     }
+    
     useEffect(() => {
 
         GetLocation.getCurrentPosition({
@@ -55,6 +57,29 @@ const AddNewAddressScreen = (props) => {
                 // console.warn(code, message);
             })
     }, [longitudes, latitudes])
+
+    // const initialState = {
+    //     latitude: null,
+    //     longitude: null,
+    //     longitudeDelta: 0.015,
+    //     latitudeDelta: 0.0121
+    // }
+    // const [currentPosition, setCurrentPosition] = useState(initialState);
+
+    // useEffect( () => {
+    //     navigator.geolocation.getCurrentPosition( position => {
+    //         // alert(JSON.stringify(position))
+    //         const { longitude, latitude } = position.coords;
+    //         setCurrentPosition({
+    //             ...currentPosition,
+    //             latitude,
+    //             longitude,
+    //         })
+    //     }, 
+    //         error => alert(error.message),
+    //         { timeout: 20000, maximumAge:1000 }
+    //     )  
+    // },[])
 
     return (
         <ScrollView>
@@ -82,21 +107,34 @@ const AddNewAddressScreen = (props) => {
                 <View style={styles.body} >
 
                     <View>
-                        <Image
+                        {/* <Image
                             source={Images.address}
                             style={styles.map}
-                        />
-
+                        /> */}
+                        
+                        <MapView
+                            provider={PROVIDER_GOOGLE}
+                            style={styles.map}
+                        >
+                            <Marker
+                                coordinate={{
+                                    latitude: 37.7882,
+                                    longitude: -122.4324,
+                                }}
+                                
+                            />
+                        </MapView>
+                        
                     </View>
                     <Formik
                         initialValues={{
-                            addition_address_info: '',
                             primary_address: '',
-                            address_type: '',
                             zip: '',
+                            addition_address_info: '',
+                            address_type: '',
                         }}
                         onSubmit={values => { onPressAddress(values) }}
-                    // validationSchema={AddressValidationSchema}
+                        validationSchema={addressValidationSchema}
                     >
                         {({ values, errors, setFieldTouched, touched, handleChange, setFieldValue, isValid, handleSubmit }) => (
                             <View style={styles.bodyContainer} >
@@ -111,8 +149,8 @@ const AddNewAddressScreen = (props) => {
                                         keyboardType='default'
                                         backgroundColor={Colors.white}
                                     />
-                                    {touched.address && errors.address &&
-                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.address}</Text>
+                                    {touched.primary_address && errors.primary_address &&
+                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.primary_address}</Text>
                                     }
 
                                     <Text style={styles.details} > Zip Code </Text>
@@ -124,7 +162,7 @@ const AddNewAddressScreen = (props) => {
                                         keyboardType='numeric'
                                         backgroundColor={Colors.white}
                                     />
-                                    {touched.address && errors.address &&
+                                    {touched.zip && errors.zip &&
                                         <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.zip}</Text>
                                     }
 
@@ -137,6 +175,9 @@ const AddNewAddressScreen = (props) => {
                                         keyboardType='default'
                                         backgroundColor={Colors.white}
                                     />
+                                    {touched.addition_address_info && errors.addition_address_info &&
+                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.addition_address_info}</Text>
+                                    }
 
                                 </View>
                                 <Text style={styles.radioContainer} > Tag this address as: </Text>
@@ -190,7 +231,7 @@ const AddNewAddressScreen = (props) => {
                                     <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.address_type}</Text>
                                 }
 
-                                <TouchableOpacity onPress={handleSubmit}>
+                                <TouchableOpacity onPress={handleSubmit} disabled={!isValid} >
                                     {
                                         isLoading ? <ActivityIndicator size={'small'} color={Colors.white} />
                                             :
