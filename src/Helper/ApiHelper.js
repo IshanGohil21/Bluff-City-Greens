@@ -174,5 +174,39 @@ export const refreshToken = async(data) => {
       };
   });
 }
+
+// Delete API Helper
+
+export const deleteRequest = async( url, data) => {
+  return await axios
+  .delete( apiBaseUrl + url ,{
+      headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + ( await AsyncStorage.getItem('token') )
+      } , data
+  })
+  .then( (response) => {
+      if(response.data.status===1) {
+          return {
+            success: true,
+            data: response.data,
+            statusCode: response.status,
+          };
+      } else {
+          return {
+            success: false,
+            data: response.data,
+            statusCode: response.status,
+          };
+      }
+  })
+  .catch((error) => {
+        return {
+          success: false,
+          data: error.response.data,
+          statusCode: error.response.status,
+      };
+  });
+}
  
   

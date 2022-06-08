@@ -5,19 +5,19 @@ import Colors from '../CommonConfig/Colors';
 
 const AddressItem = props => {
     return (
-        <View style={{marginVertical:10}}>
+        <View style={{marginVertical:10, elevation:10, overflow:'hidden', backgroundColor:Colors.white, padding:20, borderRadius:10}}>
             <View  style={styles.mainContainer}> 
                 <Ionicons  name={props.icon} size={25} color='grey'/>
                 <Text style={styles.tags} > {props.tag} - {props.name} </Text>
             </View>
             <Text style={styles.address} > {props.address} </Text>
             <View style={styles.buttonContainer} >
-                <TouchableOpacity style={styles.Button} onPress={props.edit}>
+                <TouchableOpacity style={styles.Button} onPress={props.onEdit}>
                     <Ionicons name='pencil-outline' size={25} color={Colors.grey} />
                     <Text style={styles.text} > EDIT </Text>
                 </TouchableOpacity>
                 <View style={styles.line} ></View>
-                <TouchableOpacity style={styles.Button} onPress={props.delete} >
+                <TouchableOpacity style={styles.Button} onPress={props.onDelete} >
                     <Ionicons name='trash-bin-outline' size={25} color={Colors.grey} />
                     <Text style={styles.text} > DELETE </Text>
                 </TouchableOpacity>
@@ -25,8 +25,6 @@ const AddressItem = props => {
         </View>
     );
 }
-
-
 
 const styles=StyleSheet.create({
     mainContainer: {

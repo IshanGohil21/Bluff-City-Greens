@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, RadioButton, TextInput } from 'react-native-paper';
 
 import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
-import { ScrollView } from 'react-native-gesture-handler';
 import * as Address from '../../../../Redux/Action/Address';
 import { postRequest } from '../../../../Helper/ApiHelper';
 import { Formik } from 'formik';
@@ -40,8 +39,11 @@ const AddNewAddressScreen = (props) => {
             Toast.show('Address added successfully.')
             props.navigation.navigate('DeliveryCheckout');
         }
+        else {
+            Toast.show('Unable to Add new Address')
+        }
     }
-    
+
     useEffect(() => {
 
         GetLocation.getCurrentPosition({
@@ -111,20 +113,11 @@ const AddNewAddressScreen = (props) => {
                             source={Images.address}
                             style={styles.map}
                         /> */}
-                        
+
                         <MapView
                             provider={PROVIDER_GOOGLE}
                             style={styles.map}
-                        >
-                            <Marker
-                                coordinate={{
-                                    latitude: 37.7882,
-                                    longitude: -122.4324,
-                                }}
-                                
-                            />
-                        </MapView>
-                        
+                        />
                     </View>
                     <Formik
                         initialValues={{
