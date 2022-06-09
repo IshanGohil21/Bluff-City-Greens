@@ -1,24 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, Dimensions ,TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar, ScrollView, FlatList } from 'react-native';
 
 import AddressItem from '../../../../components/AddressItem';
 import { Icons, Colors } from '../../../../CommonConfig/CommonConfig';
 import { getRequest, deleteRequest } from '../../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
+import LinearGradient from 'react-native-linear-gradient';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+
+const { width } = Dimensions.get('window')
 
 const SavedAddressScreen = props => {
-    const deleteHandler = (prevState) => {
-        setAddressArray => prevState.filter((address) => address !== prevState)
-    }
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getAddress();
     }, [address])
 
-    // const onPressDelete = async() => {
-    //     const deleteResponse = await deleteRequest('/delete-address/') 
-    // }
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false)
+        }, 3000)
+    }, [])
 
     const [address, setAddress] = useState([]);
 
@@ -32,6 +37,12 @@ const SavedAddressScreen = props => {
         else {
             Toast.show('Please Add a Address Initially');
         }
+    }
+
+    const onPressDelete = async (id) => {
+        // console.log(id);
+        const deleteResponse = await deleteRequest(`/delete-address/${id}`);
+        console.log("\n\nDELETE                 ", deleteResponse);
     }
 
     return (
@@ -51,25 +62,29 @@ const SavedAddressScreen = props => {
             </View>
             { /* Body */}
             <View style={styles.body} >
-                {/* <ScrollView  showsVerticalScrollIndicator={false}> */}
+
                 <FlatList
                     data={address}
                     showsVerticalScrollIndicator={false}
                     renderItem={(item) => {
-                        // console.log("\n\nAddress             ", item)
+                        //  console.log("\n\nAddress             ", item)
                         return (
                             <View>
-                                <AddressItem
-                                    id={item.item.id}
-                                    tag={item.item.is_select}
-                                    name={item.item.primary_address}
-                                    address={item.item.addition_address_info}
-                                    onEdit={() => { props.navigation.navigate('EditAddress', { edit: item, editId: item.item.id }) }}
-                                />
+                                {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
+                                    <AddressItem
+                                        id={item.item.id}
+                                        tag={item.item.is_select}
+                                        name={item.item.primary_address}
+                                        address={item.item.addition_address_info}
+                                        onEdit={() => { props.navigation.navigate('EditAddress', { edit: item, editId: item.item.id }) }}
+                                        onDelete={() => { onPressDelete(item.item.id) }}
+                                    />
+                                }
                             </View>
                         )
                     }}
                 />
+
             </View>
             <TouchableOpacity onPress={() => { props.navigation.navigate('AddNewAddress') }}>
                 <Text style={styles.signin} >ADD NEW ADDRESS</Text>

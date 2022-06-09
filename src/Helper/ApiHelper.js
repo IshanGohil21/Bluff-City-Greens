@@ -146,7 +146,7 @@ export const getMainRequest = async( url ) => {
 
 export const refreshToken = async(data) => {
   return await axios
-  .post( apiBaseUrl + '/refresh-token' , data,{
+  .post( baseUrl + '/refresh-token' , data,{
       headers: {
           'Content-Type': 'application/json',
         } 
@@ -179,7 +179,7 @@ export const refreshToken = async(data) => {
 
 export const deleteRequest = async( url, data) => {
   return await axios
-  .delete( apiBaseUrl + url ,{
+  .delete( baseUrl + url ,{
       headers: {
           'Content-Type': 'application/json',
           Authorization: 'Bearer ' + ( await AsyncStorage.getItem('token') )
