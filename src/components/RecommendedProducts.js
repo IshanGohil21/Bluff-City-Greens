@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Colors, Icons, Images } from '../CommonConfig/CommonConfig';
 import * as CartActions from '../Redux/Action/Cart';
-
+import { postRequest } from '../Helper/ApiHelper';
 
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
 const RecommendedProductsCommon = (props) => {
    const itemW = props.item
-    //console.log("Item:      ",itemW);
+    // console.log("Item:      ",itemW);
 
     const cartItems = useSelector(state => {
         const updatedCartItems = [];
@@ -33,17 +33,29 @@ const RecommendedProductsCommon = (props) => {
     
       const [isFavorite, setIsFavorite] = useState(props.initialState);
 
+      const onPressFav = async () => {
+        setIsFavorite(!isFavorite)
+        const data = {
+          itemId : itemW.id
+        }
+        
+         console.log("\n\nDATA            ",data);
+        const responseFav = await postRequest('/customer/add-to-favourites', data);
+        console.log("\n\nFAVORITES            ", responseFav);
+      }
+    
+
   return (
     <View  >
       {/* Favorite */}
-      <TouchableOpacity style={styles.orders} onPress={props.onHeart}>
-        <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)} >
+      <TouchableOpacity style={styles.orders} onPress={onPressFav}>
+        {/* <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)} > */}
           {isFavorite ?
             
             <Ionicons name={Icons.HEART_FILLED} size={30} color={Colors.red} />:
             <Ionicons name={Icons.HEART} size={30} color={Colors.black} />
           }
-        </TouchableOpacity>
+        {/* </TouchableOpacity> */}
       </TouchableOpacity>
 
 {/* Image Containers */}

@@ -131,8 +131,9 @@ const HomeScreen = (props) => {
     }
   }
 
-  // Post Request for Favorites 
+  // Favorites API
 
+  
   return (
     <ScrollView>
       <View style={styles.main} >
@@ -365,6 +366,7 @@ const HomeScreen = (props) => {
                             weight={itemData.item.item_sizes[0].size}
                             price={itemData.item.item_sizes[0].price}
                             onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: itemData.item, recommendId: itemData.item.id }) }}
+                            onHeart={ () => { }}
                           />
                         </View>
 
