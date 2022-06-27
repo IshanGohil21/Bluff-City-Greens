@@ -368,13 +368,11 @@ const HomeScreen = (props) => {
                             onHeart={ () => { }}
                           />
                         </View>
-
                       )
                     }}
                   />
                 </View>
               }
-
             </View>
           </View>
         </ScrollView>

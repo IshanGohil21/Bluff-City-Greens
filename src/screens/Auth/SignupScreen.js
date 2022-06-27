@@ -298,8 +298,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         width: '100%',
-        backgroundColor: 'rgba(25,20,200,0.35)',
-        color:Colors.white
+        backgroundColor: Colors.white,
+        color:Colors.black
     },
     signin: {
         width: "100%",
@@ -314,20 +314,19 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     profile: {
-
         alignItems: 'center',
         width: '100%',
         marginBottom: 50
     },
     avatar: {
-        width: 160,
-        height: 160,
+        width: 120,
+        height: 120,
         borderRadius: 10
     },
     camera: {
         position: 'absolute',
-        right: Dimensions.get('window').width * 0.250,
-        top: Dimensions.get('window').width * 0.35,
+        right: Dimensions.get('window').width * 0.300,
+        top: Dimensions.get('window').width * 0.25,
         borderRadius: 25,
         borderWidth: 4,
         borderColor: Colors.primary,
@@ -441,7 +440,9 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         borderRadius: 10,
         padding: 10,
-        backgroundColor: 'rgba(25,20,200,0.35)',
+        // backgroundColor: 'rgba(25,20,200,0.35)',
+        // backgroundColor: "#D9FFFFFF",
+        backgroundColor:Colors.white,
         alignItems: 'center'
     }
 });
