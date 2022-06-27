@@ -63,7 +63,7 @@ const CheckoutScreen = (props) => {
                     <View style={styles.all} >
                     <View style={styles.total} >
                         <Text style={styles.text2} >Sub Total</Text>
-                        <Text style={styles.text3} >${subTotal.toFixed(2)}</Text>
+                        <Text style={styles.text3} >${subTotal}</Text>
                     </View>
                     <View style={styles.total} >
                         <Text style={styles.text2} >Delivery Charges</Text>
@@ -74,7 +74,7 @@ const CheckoutScreen = (props) => {
 
                     <View style={styles.total} >
                         <Text style={styles.bold} >Total Amount</Text>
-                        <Text style={styles.bold2} >${(Delivery + subTotal).toFixed(2) }</Text>
+                        <Text style={styles.bold2} >${(Delivery + subTotal) }</Text>
                     </View>
 
                     </View>

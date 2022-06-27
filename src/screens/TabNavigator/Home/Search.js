@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, FlatList, TextInput } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, TouchableOpacity, Dimensions, FlatList, TextInput, Keyboard } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -13,6 +13,9 @@ import RecommendedProductsCommon from '../../../components/RecommendedProducts';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import { getMainRequest } from '../../../Helper/ApiHelper';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import SearchValidationSchema from '../../../Schema/SerachValidationSchema';
 
 const { width } = Dimensions.get('window')
 
@@ -21,6 +24,7 @@ const SearchScreen = (props) => {
   const [length, setLength] = useState(0);
   const [search, setSearch] = useState('');
   const [result, setResult] = useState([]);
+  const [text, setText] = useState();
 
   const [TestCato, setTest] = useState(false);
   const [TestSub, setTestSub] = useState(false);
@@ -43,7 +47,6 @@ const SearchScreen = (props) => {
       console.log(response);
     }
   }
-
  
   return (
     <View style={styles.main} >
@@ -58,6 +61,7 @@ const SearchScreen = (props) => {
       </View>
 
       {/* Body */}
+    
       <View style={styles.body} >
         <KeyboardAwareScrollView>
           <View style={styles.searchButton} >
@@ -65,9 +69,11 @@ const SearchScreen = (props) => {
             {/* Search Bar */}
             <View style={styles.searchContainer}>
               <TextInput
+                maxLength={20}
+                multiline={false}
                 value={search}
                 placeholder="Search"
-                onChangeText={(e) => { setSearch(e) }}
+                 onChangeText={(e) => { setSearch(e) }}
                 autoFocus
                 style={{
                   fontSize: 20,
@@ -116,7 +122,6 @@ const SearchScreen = (props) => {
                           name={item.title}
                           image={item.image}
                           onClick={() => { props.navigation.navigate('Shop', { screen: 'Fruits', params: { shop: item, shopId: item.id } }) }}
-
                         />
 
                     </View>
@@ -226,7 +231,6 @@ const SearchScreen = (props) => {
         </KeyboardAwareScrollView>
         
       </View>
-
     </View>
   )
 }

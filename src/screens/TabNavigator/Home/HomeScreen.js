@@ -223,7 +223,6 @@ const HomeScreen = (props) => {
               </View>
             }
 
-
             {/* Discount Coupon Image */}
             {/* <View>
           <Image source={Images.discount} style={styles.discount} />

@@ -29,12 +29,12 @@ export default (state = initialState, action) => {
             let cartItem;
 
             if (state.items[addedGreens.id]) {
-                cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal +  addedGreens.item_sizes.price }
-                //   cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty +  1 ,  price: state.items[addedGreens.id].item_sizes.price , size: state.items[addedGreens.id].item_sizes.size }
+                // cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal +  addedGreens.item_sizes.price }
+                   cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty +  1 ,  price: state.items[addedGreens.id].item_sizes.price , size: state.items[addedGreens.id].item_sizes.size }
                  console.log("\nCartItems        ",cartItem);
             } else {
-                cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.item_sizes[0].price,   }
-                // console.log(cartItem);
+                cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.item_sizes.price}
+                console.log(cartItem);
             }
             
             return {

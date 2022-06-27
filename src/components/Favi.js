@@ -10,7 +10,7 @@ import { postRequest } from '../Helper/ApiHelper';
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
-const RecommendedProductsCommon = (props) => {
+const Favi = (props) => {
    const itemW = props.item
     // console.log("Item:      ",itemW);
 
@@ -33,26 +33,17 @@ const RecommendedProductsCommon = (props) => {
     
       const [isFavorite, setIsFavorite] = useState(props.initialState);
 
-      const onPressFav = async () => {
-        setIsFavorite(true)
-        const data = {
-          itemId : itemW.id
-        }
-        
-        //  console.log("\n\nDATA            ",data);
-        const responseFav = await postRequest('/customer/add-to-favourites', data);
-        console.log("\n\nFAVORITES            ", responseFav);
-      }
-
   return (
     <View  >
       {/* Favorite */}
-      <TouchableOpacity style={styles.orders} onPress={onPressFav} disabled={isFavorite} >
-          {isFavorite ?
-            <Ionicons name={Icons.HEART_FILLED} size={30} color={Colors.red} />:
-            <Ionicons name={Icons.HEART} size={30} color={Colors.black} />
+      {/* <TouchableOpacity style={styles.orders} onPress={onPressFav} >
+          {isFavorite ? */}
+          <View  style={styles.orders}>
+            <Ionicons name={Icons.HEART_FILLED} size={30} color={Colors.red} /></View>
+            {/* : */}
+            {/* <Ionicons name={Icons.HEART} size={30} color={Colors.black} />
           }
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
 {/* Image Containers */}
 <TouchableOpacity style={styles.orderContainer} onPress={props.onClick} >
@@ -99,7 +90,7 @@ const RecommendedProductsCommon = (props) => {
   )
 }
 
-export default RecommendedProductsCommon;
+export default Favi;
 
 const styles = StyleSheet.create({
     main: {
@@ -117,9 +108,7 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'flex-start',
       backgroundColor: Colors.primary,
-  
-    },
-    
+    }, 
     notify: {
       marginTop: 40,
       marginLeft: 10
@@ -179,21 +168,22 @@ const styles = StyleSheet.create({
     },
     orders: {
       position: 'absolute',
-      bottom: 165,
-      left: width * 0.5 - 20,
+      bottom: 185,
+      left: width * 0.5 - 48,
       zIndex: 10,
     },
     orderContainer: {
       flex: 1,
-      width: width * 0.5,
+      width: width * 0.44,
       height: 200,
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginHorizontal: 15,
+       marginHorizontal: 10,
       borderBottomRightRadius: 15,
       borderBottomLeftRadius: 15,
        backgroundColor: Colors.white,
        borderRadius: 5,
+       marginVertical:20
       //  elevation: 5
     },
     addButton: {
@@ -204,7 +194,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       padding: 10,
       borderBottomRightRadius: 15,
-      borderBottomLeftRadius: 15
+      borderBottomLeftRadius: 15,
+      paddingHorizontal:10
     },
     button: {
       color: Colors.white,
