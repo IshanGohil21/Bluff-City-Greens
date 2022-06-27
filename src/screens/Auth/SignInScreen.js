@@ -10,6 +10,7 @@ import { postRequest, getRequest } from '../../Helper/ApiHelper';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
 import { LinearGradient } from "react-native-svg";
+import { color } from "react-native-reanimated";
 
 const SignInScreen = (props) => {
 
@@ -188,7 +189,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         width: '100%',
-        backgroundColor: 'rgba(25,20,200,0.35)'
+        // backgroundColor: 'rgba(25,20,200,0.35)'
+        backgroundColor: Colors.white,
+        color:Colors.black
     },
     forgot_password: {
         height: 30,
