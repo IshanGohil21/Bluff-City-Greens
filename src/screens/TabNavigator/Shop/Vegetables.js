@@ -66,7 +66,7 @@ const VegetableScreen = (props) => {
 
         if (response.success) {
             setSorting(response.data.data)
-            // console.log("\n\nAfter API Call          ",response.data.data);
+             console.log("\n\nAfter API Call          ",response.data.data);
         }
     }
     const [filterResult, setResult] = useState([]);
@@ -77,12 +77,12 @@ const VegetableScreen = (props) => {
             start_price: start,
             end_price: end
         }
-        console.log("\n\nDATA          ", data);
+        // console.log("\n\nDATA          ", data);
         const Filter = await postRequest('/customer/filter', data)
         //   console.log("\n\n\nFilter                  ",Filter.data.data[0].sub_categories);
 
         const x = Filter.data.data[0].sub_categories.find(item => item.title === veggiAll.title)
-        // console.log("X                     ",x);
+         console.log("X                     ",x);
 
         if (Filter.success) {
             setResult(x.items)
@@ -116,7 +116,10 @@ const VegetableScreen = (props) => {
                     <View style={styles.heading} >
                         <Text style={styles.titleFruit} >{veggiAll.title}</Text>
 
-                        <TouchableOpacity onPress={() => refRBSheet.current.open()} >
+                        <TouchableOpacity onPress={() => {
+                            setStart(0)
+                             setEnd(20)
+                            refRBSheet.current.open()}} >
                             <Ionicons name={Icons.OPTIONS} size={35} color={Colors.white} />
                         </TouchableOpacity>
                     </View>

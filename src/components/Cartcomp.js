@@ -83,7 +83,6 @@ const Cartcomp = (props) => {
                             </TouchableOpacity>
                         }
                     </View>
-
                 </View>
             </View>
             <View>
@@ -116,7 +115,7 @@ const Cartcomp = (props) => {
                                 status={checked === 'first' ? 'checked' : 'unchecked'}
                                 onPress={() => setChecked('first')}
                             />
-                            <Text>{WeightProducts.item_sizes[0].size}</Text>
+                            <Text>{WeightProducts?.item_sizes[0]?.size}</Text>
                         </View>
 
                         <View style={styles.button} >
@@ -126,7 +125,7 @@ const Cartcomp = (props) => {
                                 status={checked === 'second' ? 'checked' : 'unchecked'}
                                 onPress={() => setChecked('second')}
                             />
-                            <Text>{WeightProducts.item_sizes[1].size}</Text>
+                            <Text>{WeightProducts?.item_sizes[1]?.size}</Text>
                         </View>
 
                         <View style={styles.button} >
@@ -136,7 +135,7 @@ const Cartcomp = (props) => {
                                 status={checked === 'third' ? 'checked' : 'unchecked'}
                                 onPress={() => setChecked('third')}
                             />
-                            <Text>{WeightProducts.item_sizes[2].size}</Text>
+                            <Text>{WeightProducts?.item_sizes[2]?.size}</Text>
                         </View>
                     </View>
                 </RBSheet>
