@@ -14,7 +14,7 @@ const { width } = Dimensions.get('window')
 
 const CategoriesScreen = (props) => {
   return (
-    <View>
+    <View  style={styles.mains} >
       <TouchableOpacity key={props.id} style={styles.categories} onPress={props.onClick} >
         <Image source={{  uri : props.image}} style={styles.catoContainer} />
         <Text style={{ color:Colors.black , marginVertical: 5 }} > {props.name} </Text>
@@ -31,11 +31,19 @@ const styles = StyleSheet.create({
         padding: 5,
         marginHorizontal: 5,
         marginVertical: 10,
+        elevation:10
       },
       catoContainer: {
         height: 50, 
-        width: 40,
+        width: 50,
         borderRadius: 10,
         borderWidth: 30,
+      },
+      mains:{
+        backgroundColor:Colors.white,
+        borderRadius:10,
+        paddingHorizontal:5,
+        margin:10,
+        elevation:15
       }
 })

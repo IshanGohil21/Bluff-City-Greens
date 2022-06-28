@@ -45,7 +45,7 @@ const MyAccountScreen = props => {
         <ScrollView>
         <View>
            <StatusBar backgroundColor='rgba(0,0,0,0)'/>
-                        <ImageBackground source={{ uri: user.picture }} resizeMode='cover' style={styles.image} >
+                        <ImageBackground source={{ uri: user?.picture }} resizeMode='cover' style={styles.image} >
                             <View style={{flexDirection:'row' , justifyContent:'space-between' ,paddingHorizontal: 10}} >
                                 <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                                     <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.object} />
@@ -57,7 +57,7 @@ const MyAccountScreen = props => {
                         <View style={{borderTopRightRadius:30,borderTopLeftRadius:30, overflow:'hidden'}}>
                         <ProfileOption 
                             name = 'Personal Information'
-                            onPress={() => { props.navigation.navigate('personalInfo',{user}) }}
+                            onPress={() => { user ? props.navigation.navigate('personalInfo',{user}) : props.navigation.navigate('SignIn') }}
                             iconLeft = {Icons.PERSON}
                             iconRight = {Icons.PROFILE_FORWARD}
                         />

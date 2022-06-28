@@ -99,6 +99,10 @@ export default {
     refer: require('../CommonConfig/Assets/icon/Refer.jpg'),
 
     // Rating
-    thumb: require('../CommonConfig/Assets/icon/thumb.png')
+    thumb: require('../CommonConfig/Assets/icon/thumb.png'),
+    
+    // location 
+    gps: require('../CommonConfig/Assets/icon/gps.png'),
+    grey_gps: require('../CommonConfig/Assets/icon/grey_gps.png')
 
 }

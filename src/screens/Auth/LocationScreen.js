@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, StatusBar} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Searchbar3 from '../../components/SearchBar3';
+import Searchbar from '../../components/SearchBar';
 import { Images, Colors, Icons }from '../../CommonConfig/CommonConfig';
 
 const LocationScreen = (props) => {
@@ -34,19 +34,21 @@ const LocationScreen = (props) => {
             <View style={styles.body} >
                 <View style={styles.search} >
                     <View style={{marginHorizontal: 10}} >
-                        <Searchbar3
+                        <Searchbar
                             value={value}
                         />
                     </View  >
                         <View style={{marginHorizontal: 10}} >
-                        <Ionicons  name={Icons.LOCATION} size={30} color={Colors.white} style={styles.icon} />
+                        <Ionicons  name={Icons.LOCATION} size={25} color={Colors.white} style={styles.icon} />
                         </View>
-                    
                 </View>
 
                 <View style={styles.searchContainer2}>
                     <View style={styles.vwSearch} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} >
-                        <Ionicons name={Icons.NAVIGATE} size={20} color={Colors.grey} />
+                        {/* <Ionicons name={Icons.NAVIGATE} size={20} color={Colors.grey} /> */}
+                        <Image
+                            source={Images.gps}
+                            style={styles.images}/>
                     </View>
 
                     <Text style={styles.text3} onPress={() => { props.navigation.navigate('PickCurrentLocation') }} > Use current location </Text>
@@ -76,7 +78,6 @@ const LocationScreen = (props) => {
                 </View>
             </View>
         </View>
-
     )
 }
 
@@ -127,7 +128,7 @@ const styles = StyleSheet.create({
         textAlign: 'left'
     },
     signin: {
-        width: "100%",
+       
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "green",
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         width: '70%',
         // marginLeft: 50,
-        marginTop: 20,
+        marginTop: 40,
         paddingBottom: 10,
         width: 300
     },
@@ -179,8 +180,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         borderRadius: 10,
         padding: 10,
-        height: 50,
-        width: 50,
+        height: 45,
+        width: 45,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -194,6 +195,11 @@ const styles = StyleSheet.create({
         color: Colors.green , 
         fontWeight: 'bold', 
         fontSize: 20 
+    },
+    images:{
+        height:22,
+        width:22,
+        marginBottom:5
     }
 });
 

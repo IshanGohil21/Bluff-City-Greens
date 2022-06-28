@@ -127,10 +127,11 @@ const styles = StyleSheet.create({
     },
     search: {
         justifyContent: 'flex-start',
-        padding: 10
+        padding: 10,
+        marginHorizontal:20
     },
     line:{
-         height: 0,
+        height: 0,
         borderColor: Colors.grey,
         borderWidth: 0.5,
         width: '100%',

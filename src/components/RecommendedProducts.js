@@ -12,7 +12,8 @@ const height = width * 100 / 0.6
 
 const RecommendedProductsCommon = (props) => {
    const itemW = props.item
-    // console.log("Item:      ",itemW);
+    //  console.log("Item:      ",itemW);
+    // const [weight, setWeight] = useState(itemW.item_sizes[0]?.id);
 
     const cartItems = useSelector(state => {
         const updatedCartItems = [];
@@ -27,7 +28,7 @@ const RecommendedProductsCommon = (props) => {
     
       const dispatch = useDispatch();
     
-      const x = cartItems.find(item => item.id === props.id);
+      const x = cartItems.find(item => item.id === itemW.id);
     
       const [isTouched, setIsTouched] = useState(props.initialState);
     
@@ -119,12 +120,10 @@ const styles = StyleSheet.create({
       backgroundColor: Colors.primary,
   
     },
-    
     notify: {
       marginTop: 40,
       marginLeft: 10
     },
-   
     filter: {
       flexDirection: 'row',
       justifyContent: 'space-evenly',
@@ -142,7 +141,6 @@ const styles = StyleSheet.create({
       color: Colors.grey,
       margin: 5,
     },
-    
     scroll: {
       flexDirection: 'row',
       position: 'absolute',
@@ -182,6 +180,7 @@ const styles = StyleSheet.create({
       bottom: 165,
       left: width * 0.5 - 20,
       zIndex: 10,
+      elevation:15
     },
     orderContainer: {
       flex: 1,
@@ -193,8 +192,8 @@ const styles = StyleSheet.create({
       borderBottomRightRadius: 15,
       borderBottomLeftRadius: 15,
        backgroundColor: Colors.white,
+       elevation:15,
        borderRadius: 5,
-      //  elevation: 5
     },
     addButton: {
       flexDirection: 'row',

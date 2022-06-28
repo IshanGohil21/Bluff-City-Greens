@@ -15,10 +15,9 @@ const height = width * 100 / 0.6
 const VeggiComp = (props) => {
     const dispatch = useDispatch();
 
-
     const veggies = props.item
     const [weight, setWeight] = useState(veggies.item_sizes[0]?.id);
-    //   console.log("\n\n\nFull Description of Vegetable Products       " ,veggies.item_sizes);
+    //   console.log("\n\n\nFull Description of Vegetable Products       " ,veggies);
 
     const [isTouched, setIsTouched] = useState(props.initialState);
 
@@ -49,7 +48,7 @@ const VeggiComp = (props) => {
                 <Image source={{ uri: props.image }} style={styles.img} />
             </View>
 
-            <View style={{ flex: 3, paddingHorizontal: 5, padding: 5 }} >
+            <View style={{ flex: 3, paddingHorizontal: 5, padding: 5,  }} >
                 <Text style={{ marginBottom: 10, color: Colors.grey, fontSize: 16, fontWeight: 'bold' }} >{props.name}</Text>
                 
                 <View>
@@ -61,9 +60,13 @@ const VeggiComp = (props) => {
 
                 </View>
 
-                <Text style={styles.Oprice} >${props.price}</Text>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+               
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' , alignItems:'center', marginVertical:10}} >
+                
+                    <View >
+                    <Text style={styles.Oprice} >${props.price}</Text>
                     <Text style={styles.discount} >${y?.price}</Text>
+                    </View>
 
                     <View >
                         {x ?
@@ -72,7 +75,7 @@ const VeggiComp = (props) => {
                                     <Ionicons name={Icons.ADD} size={20} color={Colors.white} />
                                 </TouchableOpacity>
 
-                                <Text style={styles.qtyText} > {x.qty} </Text>
+                                <Text style={styles.qtyText} > {x?.qty} </Text>
 
                                 <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item)) }}>
                                     <Ionicons name={Icons.SUB} size={20} color={Colors.white} />
@@ -85,20 +88,10 @@ const VeggiComp = (props) => {
                                     <Text style={styles.add}>Add</Text>
                                 </View>
                             </TouchableOpacity>
-                        }
-                        
+                        }  
                     </View>
 
-                </View>
-
-                {/* <TouchableOpacity  onPress={() => {dispatch(CartActions.removeFromCart(props.item))}}  >
-                    <Ionicons name={Icons.TRASH} size={30} color={Colors.green} />
-                </TouchableOpacity>  */}
-
-                {/* <TouchableOpacity onPress={() => {dispatch(CartActions.clearCart(props.item))}} >
-                <Ionicons name={Icons.TRASH} size={30} color={Colors.green} />
-                </TouchableOpacity> */}
-               
+                </View>               
             </View>
             <View>
 
@@ -197,7 +190,9 @@ const styles = StyleSheet.create({
     },
     Oprice: {
         color: Colors.grey,
-        textDecorationLine: 'line-through'
+        textDecorationLine: 'line-through',
+        justifyContent:'center',
+        alignItems:'center',
     },
     weight: {
         flexDirection: 'row',

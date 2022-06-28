@@ -1,18 +1,18 @@
 import { StyleSheet, Text, View, StatusBar, TouchableOpacity, ScrollView, FlatList, Dimensions } from 'react-native'
 import React, { useRef, useState, useEffect, useCallback } from 'react'
-import RBSheet from "react-native-raw-bottom-sheet";
-import { RadioButton } from 'react-native-paper';
 import { useSelector } from 'react-redux';
+
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
-import { RangeSlider } from '@sharcoux/slider'
-
+ import { RangeSlider } from '@sharcoux/slider'
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchBarScreen from '../../../components/Slider/SearchBar2';
 import VegetablesComp from '../../../components/Vegetables';
 import VeggiComp from '../../../components/VeggiMain';
 import { getRequest, postRequest } from '../../../Helper/ApiHelper';
+import RBSheet from "react-native-raw-bottom-sheet";
+import { RadioButton } from 'react-native-paper';
 
 const { width } = Dimensions.get('window')
 
@@ -21,16 +21,15 @@ const VegetableScreen = (props) => {
     const [enableScroll, setEnable] = useState(true);
     const [disableScroll, setDisable] = useState(false);
     const [range, setRange] = useState(0);
-    const [value, setValue] = useState([0, 50])
+    const [value, setValue] = useState([0, 15])
     const [state, setState] = useState('filter')
     const refRBSheet = useRef();
-    const refRBSheet2 = useRef();
     const [checked, setChecked] = useState('first')
     const [isLoading, setIsLoading] = useState(true)
     const [sort, setSort] = useState('ASC')
 
     const [start, setStart] = useState(0);
-    const [end, setEnd] = useState(10);
+    const [end, setEnd] = useState(20);
 
 
     const cartItems = useSelector(state => {
@@ -42,7 +41,7 @@ const VegetableScreen = (props) => {
         }
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
-    // console.log(cartItems);
+    //  console.log("\n\n\nCart Items         ", cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce((a, c) => a + c.itemTotal, 0) : 0)
     //  console.log("\n\nsub total                 ",subTotal);
@@ -51,13 +50,12 @@ const VegetableScreen = (props) => {
     // console.log(veggieId);
 
     const veggiAll = props.route.params.vegi
-    //  console.log("\n\n\n\nAll Products    ", veggiAll);
+    const allVeg = veggiAll.items
+    const z = cartItems.find(item => item.id  === allVeg.id)
+        // console.log("\n\n\n\nAll Products    ", veggiAll.items[0].id);
 
     const title = props.route.params.title
     // console.log("Title    ", title );
-
-    //  const y = veggiAll.find(item => item.id === filterResult)
-    //  console.log("\ny    " ,y);
 
     const [sorting, setSorting] = useState([]);
 
@@ -66,27 +64,27 @@ const VegetableScreen = (props) => {
         const response = await getRequest(`/customer/sort?price=${sort}`)
         //  console.log("\n\n\nSorting              ", response.data);
 
-        if(response.success) {
+        if (response.success) {
             setSorting(response.data.data)
             // console.log("\n\nAfter API Call          ",response.data.data);
         }
     }
-    const [ filterResult, setResult] = useState([]);
+    const [filterResult, setResult] = useState([]);
 
     const onPressFilter = async (values) => {
         const data = {
             title,
             start_price: start,
-            end_price: end 
+            end_price: end
         }
         console.log("\n\nDATA          ", data);
         const Filter = await postRequest('/customer/filter', data)
-    //   console.log("\n\n\nFilter                  ",Filter.data.data[0].sub_categories);
-    
-    const x = Filter.data.data[0].sub_categories.find(item => item.title === veggiAll.title )
-    // console.log("X                     ",x);
+        //   console.log("\n\n\nFilter                  ",Filter.data.data[0].sub_categories);
 
-        if(Filter.success) {
+        const x = Filter.data.data[0].sub_categories.find(item => item.title === veggiAll.title)
+        // console.log("X                     ",x);
+
+        if (Filter.success) {
             setResult(x.items)
         }
         refRBSheet.current.close()
@@ -109,6 +107,9 @@ const VegetableScreen = (props) => {
                             <Ionicons name={Icons.BACK_ARROW} size={28} color={Colors.white} style={styles.back} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
+                        <View style={styles.qtyCart} >
+                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{z ? z?.qty : 0}</Text>
+                        </View>
                             <Ionicons name={Icons.CART} size={28} color={Colors.white} style={styles.back} />
                         </TouchableOpacity>
                     </View>
@@ -131,7 +132,7 @@ const VegetableScreen = (props) => {
                         <View>
                             <FlatList
                                 // data= { filterResult.length === 0 ?  sorting.length === 0 ?   veggiAll.items : sorting : filterResult}
-                                data={ filterResult.length > 0 ? filterResult : sorting.length > 0 ? sorting : veggiAll.items }
+                                data={filterResult.length > 0 ? filterResult : sorting.length > 0 ? sorting : veggiAll.items}
                                 keyExtractor={item => item.id}
                                 renderItem={({ item }) => {
                                     //  console.log("\n\n\n\nFinal Products "        , item);
@@ -160,9 +161,9 @@ const VegetableScreen = (props) => {
                 </View>
                 <RBSheet
                     ref={refRBSheet}
-                    height={500}
+                    height={400}
                     closeOnDragDown={true}
-                    closeOnPressMask={false}
+                    closeOnPressMask={true}
                     customStyles={{
                         wrapper: {
                             backgroundColor: 'rgba(0,0,0,0.5)',
@@ -174,7 +175,7 @@ const VegetableScreen = (props) => {
                         container: {
                             borderTopLeftRadius: 30,
                             borderTopRightRadius: 30,
-                            backgroundColor:"#F5F5F5"
+                            backgroundColor: "#F5F5F5"
                         }
                     }}
                 >
@@ -196,12 +197,15 @@ const VegetableScreen = (props) => {
                                 {/* Range Slider */}
                                 <View style={styles.priceRange} >
                                     <Text style={styles.priceRange2} >Price Range</Text>
+                                    <View style={{alignItems:'center', justifyContent:'center', padding:5}} >
+                                    <Text style={{fontSize:20, fontWeight:'bold', color:Colors.grey}} >${start} - ${end}</Text>
+                                    </View>
                                     <View style={styles.rangeSlider} >
                                         <RangeSlider
-                                            range={[0, 10]}
+                                            range={[0, 20]}
                                             minimumValue={0}
-                                            maximumValue={10}
-                                            step={0}
+                                            maximumValue={20}
+                                            step={1}
                                             outboundColor='#DCDCDC'
                                             inboundColor='#0603C6'
                                             thumbTintColor={Colors.white}
@@ -211,108 +215,26 @@ const VegetableScreen = (props) => {
                                             thumbSize={20}
                                             onValueChange={(value) => {
                                                 setStart(value[0])
-                                                setEnd(value[1])
-                                            } }
-                                        />
+                                                setEnd(value[value.length-1])
+                                            }}
+                                        /> 
                                     </View>
                                     <View style={styles.priceTag} >
                                         <Text style={styles.txt1} > $0 </Text>
-                                        <Text style={styles.txt2} > $10 </Text>
+                                        <Text style={styles.txt2} > $20 </Text>
                                     </View>
                                 </View>
                                 <View style={styles.applyButton} >
-                                    <TouchableOpacity style={styles.signin} onPress={ onPressFilter } >
+                                    <TouchableOpacity style={styles.signin0} onPress={onPressFilter} >
                                         <Text style={styles.apply} >APPLY</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
-
                             :
-
                             // Sort By Screen
                             <View>
                                 <View>
-
                                     <View style={styles.radio} >
-                                        {/* <View style={styles.button} >
-                                            <RadioButton
-                                                value="first"
-                                                color={Colors.primary}
-                                                status={checked === 'first' ? 'checked' : 'unchecked'}
-                                                onPress={() => setChecked('first')}
-                                            />
-                                            <Text>Delivery Time</Text>
-
-                                        </View> */}
-                                        {/* <View style={styles.rb} > */}
-                                        {/* <TouchableOpacity style={styles.rb2} onPress={() => refRBSheet2.current.open()}  >
-                                                <Text style={styles.select} >-Select Time-</Text>
-                                                <Ionicons name={Icons.DOWN_ARROW} size={30} color={Colors.grey} />
-                                            </TouchableOpacity> */}
-
-                                        {/* <RBSheet
-                                                ref={refRBSheet2}
-                                                closeOnDragDown={true}
-                                                closeOnPressMask={false}
-                                                customStyles={{
-                                                    wrapper: {
-                                                        backgroundColor: 'rgba(0,0,0,0.5)',
-                                                    },
-                                                    draggableIcon: {
-                                                        backgroundColor: Colors.grey,
-                                                        width: 80,
-                                                    },
-                                                    container: {
-                                                        borderTopLeftRadius: 30,
-                                                        borderTopRightRadius: 30,
-                                                    }
-                                                }}
-                                            >
-                                                <Text style={styles.delivery} >Delivery Time</Text>
-
-                                                <View style={styles.button2} >
-                                                    <RadioButton
-                                                        value="first"
-                                                        color={Colors.primary}
-                                                        status={checked === 'first' ? 'checked' : 'unchecked'}
-                                                        onPress={() => setChecked('first')}
-                                                    />
-                                                    <Text>07:00 AM to 9:30 AM</Text>
-                                                </View>
-
-                                                <View style={styles.button2} >
-                                                    <RadioButton
-                                                        value="second"
-                                                        color={Colors.primary}
-                                                        status={checked === 'second' ? 'checked' : 'unchecked'}
-                                                        onPress={() => setChecked('second')}
-                                                    />
-                                                    <Text>9:30 AM to 11:00 AM</Text>
-                                                </View>
-
-
-                                                <View style={styles.button2} >
-                                                    <RadioButton
-                                                        value="third"
-                                                        color={Colors.primary}
-                                                        status={checked === 'third' ? 'checked' : 'unchecked'}
-                                                        onPress={() => setChecked('third')}
-                                                    />
-                                                    <Text>5:00 PM to 7:30 PM</Text>
-                                                </View>
-
-                                                <View style={styles.button2} >
-                                                    <RadioButton
-                                                        value="fourth"
-                                                        color={Colors.primary}
-                                                        status={checked === 'fourth' ? 'checked' : 'unchecked'}
-                                                        onPress={() => setChecked('fourth')}
-                                                    />
-                                                    <Text>07:30 PM to 10:00 PM</Text>
-                                                </View>
-                                            </RBSheet> */}
-                                        {/* </View> */}
-
                                         <View style={styles.button} >
                                             <RadioButton
                                                 value="second"
@@ -344,7 +266,7 @@ const VegetableScreen = (props) => {
                                 </View>
 
                                 <View >
-                                    <TouchableOpacity style={styles.signin} onPress={ onPressSort }  >
+                                    <TouchableOpacity style={styles.signin} onPress={onPressSort}  >
                                         <Text style={styles.apply} >APPLY</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -366,7 +288,7 @@ const styles = StyleSheet.create({
         // backgroundColor:Colors.white
     },
     header: {
-        flex: 0.5,
+        flex: 0.71,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
         paddingVertical: 10
@@ -507,8 +429,8 @@ const styles = StyleSheet.create({
         color: Colors.primary
     },
     priceRange: {
-        padding: 10,
-        marginTop: 15,
+        padding: 5,
+        marginTop: 10,
     },
     priceRange2: {
         fontSize: 20,
@@ -519,6 +441,21 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     signin: {
+        width: "70%",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: Colors.primary,
+        textAlign: 'center',
+        color: Colors.white,
+        fontSize: 23,
+        padding: 10,
+        borderRadius: 10,
+        borderColor: Colors.primary,
+        overflow: 'hidden',
+        marginLeft: 60,
+        marginTop: 120
+    },
+    signin0: {
         width: "70%",
         alignItems: "center",
         justifyContent: "center",
@@ -581,11 +518,11 @@ const styles = StyleSheet.create({
         marginRight: 15,
         color: Colors.grey
     },
-    applyButton: {
-        marginTop: 80
-    },
+    // applyButton: {
+    //     marginTop: 10
+    // },
     rangeSlider: {
-        marginTop: 40
+        marginTop: 20
     },
     thumb: {
         elevation: 10,
@@ -596,5 +533,17 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         elevation: 10
+    },
+    qtyCart:{
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:Colors.yellow, 
+        borderRadius:10,
+        height:22, 
+        width:18,
+        marginTop:18,
+        marginLeft:22, 
+        position:'absolute', 
+        zIndex:10 
     }
 })

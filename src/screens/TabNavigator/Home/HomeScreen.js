@@ -55,6 +55,7 @@ const HomeScreen = (props) => {
   // const [token, setToken] = useState('')
 
   const z = cartItems.find(item => item.id === props.id)
+  // console.log(z)
 
   useEffect(async () => {
     getBanner();
@@ -132,7 +133,6 @@ const HomeScreen = (props) => {
   }
 
   // Favorites API
-
   
   return (
     <ScrollView>
@@ -157,7 +157,7 @@ const HomeScreen = (props) => {
                 :
                 <TouchableOpacity style={styles.location} onPress={() => { props.navigation.navigate('Checkout', { screen: 'DeliveryCheckout' }) }}>
                   <Text style={styles.address} >Please Select Address</Text>
-                  <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.white} />
+                  <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.white}/>
                 </TouchableOpacity>
               }
             </TouchableOpacity>
@@ -168,9 +168,12 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
 
             {/* Cart */}
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 10 }}  >
-              <Text style={styles.xyz} >{y}</Text>
-              <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify} />
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 20}}  >
+            <View style={styles.qtyCart} >
+                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{z ? z.qty : 0}</Text>
+                        </View>
+              {/* <Text style={styles.xyz} >{z}</Text> */}
+              <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify0} />
             </TouchableOpacity>
           </View>
 
@@ -186,8 +189,7 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-
-
+        
         { /* Body */}
 
         <ScrollView>
@@ -252,9 +254,9 @@ const HomeScreen = (props) => {
                     )
                   }}
                 />
-              }
-
+                }
             </View>
+
             {/* Past Orders */}
             <View style={styles.commonContainer} >
               <View style={styles.past} >
@@ -275,9 +277,9 @@ const HomeScreen = (props) => {
                           {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
                           {
                             item.item.order_items.map((indi) => {
-                              // console.log("\n\n\n\n\nNest FlatList:   ",indi);
+                               console.log("\n\nNest FlatList:   ",indi);
                               return (
-                                <View  >
+                                <View>
                                   <RecommendedProductsCommon
                                     name={indi.item.name}
                                     id={indi.id}
@@ -288,10 +290,6 @@ const HomeScreen = (props) => {
                                     onClick={() => { props.navigation.navigate('Past_Orders', { past: indi, pastId: indi.id }) }}
                                     onHeart={() => { }}
                                   />
-                                  {/* <Text>{indi.item_size.price}</Text> */}
-                                  {/* <Text>Nest</Text> */}
-                                  {/* <Text> {indi.item.name} </Text> */}
-                                  {/* <Image source={{ uri: indi.sub_category.image}} style={{height: 50, width: 50}} /> */}
                                 </View>
                               )
                             }
@@ -300,9 +298,7 @@ const HomeScreen = (props) => {
                         </View>
                       )
                     }}
-
                   />
-
                   {/* Nested Scrollview for the Past Order API calling check */}
                   {/* <ScrollView
               pagingEnabled
@@ -420,7 +416,11 @@ const styles = StyleSheet.create({
   },
   notify: {
     marginTop: 40,
-    marginLeft: 10
+    marginRight: 10
+  },
+  notify0: {
+    marginTop: 40,
+    marginRight: 10
   },
   searchContainer:
   {
@@ -576,18 +576,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontWeight: 'bold',
     marginTop: 30,
-    marginLeft: 18,
-    // marginLeft: 25,
+    marginLeft:12,
     backgroundColor: Colors.yellow,
     borderRadius: 10,
-    width: 18,
+    width: 20,
     height: 20,
+    
   },
   loader: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
   },
+  qtyCart:{
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:Colors.yellow, 
+    borderRadius:10,
+    height:22, 
+    width:18,
+    marginTop:30,
+    marginLeft:15, 
+    position:'absolute', 
+    zIndex:10 
+}
 });
 
 export default HomeScreen;
