@@ -44,14 +44,13 @@ const VegetableScreen = (props) => {
     //  console.log("\n\n\nCart Items         ", cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce((a, c) => a + c.itemTotal, 0) : 0)
+    const Badgeqty = (cartItems.length ? cartItems.reduce((a, c) => a + c.qty, 0) : 0)
     //  console.log("\n\nsub total                 ",subTotal);
 
     const veggieId = props.route.params.vegiId
     // console.log(veggieId);
 
     const veggiAll = props.route.params.vegi
-    const allVeg = veggiAll.items
-    const z = cartItems.find(item => item.id  === allVeg.id)
         // console.log("\n\n\n\nAll Products    ", veggiAll.items[0].id);
 
     const title = props.route.params.title
@@ -108,7 +107,7 @@ const VegetableScreen = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
                         <View style={styles.qtyCart} >
-                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{z ? z?.qty : 0}</Text>
+                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{Badgeqty}</Text>
                         </View>
                             <Ionicons name={Icons.CART} size={28} color={Colors.white} style={styles.back} />
                         </TouchableOpacity>
