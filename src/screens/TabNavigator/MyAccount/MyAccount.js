@@ -50,7 +50,7 @@ const MyAccountScreen = props => {
                                 <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                                     <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.object} />
                                 </TouchableOpacity>
-                                <TouchableOpacity>
+                                <TouchableOpacity   onPress={() => { props.navigation.navigate('EditInfo') }} >
                                     <Ionicons name='create-outline' size={30} color={Colors.white} style={styles.object} />
                                 </TouchableOpacity>
                             </View>
@@ -238,7 +238,8 @@ const styles = StyleSheet.create({
     },
     object:{
         marginTop: 20, 
-        marginLeft: 10 
+        marginLeft: 10,
+        color:Colors.red 
     }
 });
 

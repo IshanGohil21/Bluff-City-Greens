@@ -60,7 +60,6 @@ const VeggiComp = (props) => {
 
                 </View>
 
-               
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' , alignItems:'center', marginVertical:10}} >
                 
                     <View >
@@ -114,9 +113,7 @@ const VeggiComp = (props) => {
                         }
                     }}
                 >
-
                     <Text style={styles.bottom} >Available Sizes</Text>
-                    
                     <View style={styles.radio} >
                         { veggies.item_sizes[0]?
                          <View style={styles.button} >
