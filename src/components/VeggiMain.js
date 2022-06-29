@@ -16,8 +16,8 @@ const VeggiComp = (props) => {
     const dispatch = useDispatch();
 
     const veggies = props.item
-    const [weight, setWeight] = useState(veggies.item_sizes[0]?.id);
-    //   console.log("\n\n\nFull Description of Vegetable Products       " ,veggies);
+    const [weight, setWeight] = useState(veggies?.item_sizes[0]);
+       console.log("\n\n\nFull Description of Vegetable Products       " ,veggies?.item_sizes[0]);
 
     const [isTouched, setIsTouched] = useState(props.initialState);
 
@@ -39,7 +39,7 @@ const VeggiComp = (props) => {
     const x = cartItems.find(item => item.id === props.id)
     //  console.log( "\nx" ,x);
 
-    const y = veggies.item_sizes.find(item => item.id === weight )
+    const y = veggies.item_sizes.find(item => item.id === weight.id)
     //   console.log("\ny    " ,y);
 
     return (
@@ -48,9 +48,9 @@ const VeggiComp = (props) => {
                 <Image source={{ uri: props.image }} style={styles.img} />
             </View>
 
-            <View style={{ flex: 3, paddingHorizontal: 5, padding: 5,  }} >
+            <View style={{ flex: 3, paddingHorizontal: 5, padding: 5, }} >
                 <Text style={{ marginBottom: 10, color: Colors.grey, fontSize: 16, fontWeight: 'bold' }} >{props.name}</Text>
-                
+
                 <View>
 
                     <TouchableOpacity style={styles.weight} onPress={() => refRBSheet.current.open()} >
@@ -60,11 +60,11 @@ const VeggiComp = (props) => {
 
                 </View>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' , alignItems:'center', marginVertical:10}} >
-                
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 10 }} >
+
                     <View >
-                    <Text style={styles.Oprice} >${props.price}</Text>
-                    <Text style={styles.discount} >${y?.price}</Text>
+                        <Text style={styles.Oprice} >${props.price}</Text>
+                        <Text style={styles.discount} >${y?.price}</Text>
                     </View>
 
                     <View >
@@ -81,16 +81,16 @@ const VeggiComp = (props) => {
                                 </TouchableOpacity>
                             </View>
                             :
-                            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item)) }}  >
+                            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight)) }}  >
                                 <View style={styles.signin} >
                                     <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.cart} />
                                     <Text style={styles.add}>Add</Text>
                                 </View>
                             </TouchableOpacity>
-                        }  
+                        }
                     </View>
 
-                </View>               
+                </View>
             </View>
             <View>
 
@@ -115,51 +115,53 @@ const VeggiComp = (props) => {
                 >
                     <Text style={styles.bottom} >Available Sizes</Text>
                     <View style={styles.radio} >
-                        { veggies.item_sizes[0]?
-                         <View style={styles.button} >
-                            <RadioButton
-                                value="first"
-                                color={Colors.primary}
-                                status={checked === 'first' ? 'checked' : 'unchecked'}
-                                onPress={() => {
-                                    setChecked('first')
-                                    setWeight(veggies.item_sizes[0]?.id)
-                                    refRBSheet.current.close()
-                                }}
-                            />
-                            <Text>{veggies.item_sizes[0]?.size}</Text>
-                        </View>: null}
+                        {veggies.item_sizes[0] ?
+                            <View style={styles.button} >
+                                <RadioButton
+                                    value="first"
+                                    color={Colors.primary}
+                                    status={checked === 'first' ? 'checked' : 'unchecked'}
+                                    onPress={() => {
+                                        setChecked('first')
+                                        setWeight(veggies?.item_sizes[0])
+                                        refRBSheet.current.close()
+                                    }}
+                                />
+                                <Text>{veggies.item_sizes[0]?.size}</Text>
+                            </View>
+                            : null}
 
-                        { veggies.item_sizes[1]? 
-                        <View style={styles.button} >
-                            <RadioButton
-                                value="second"
-                                color={Colors.primary}
-                                status={checked === 'second' ? 'checked' : 'unchecked'}
-                                onPress={() => {
-                                    setChecked('second')
-                                    setWeight(veggies.item_sizes[1]?.id)
-                                    refRBSheet.current.close()
-                                }}
-                            />
-                            <Text>{veggies.item_sizes[1]?.size}</Text>
-                        </View>  : null}
+                        {veggies.item_sizes[1] ?
+                            <View style={styles.button} >
+                                <RadioButton
+                                    value="second"
+                                    color={Colors.primary}
+                                    status={checked === 'second' ? 'checked' : 'unchecked'}
+                                    onPress={() => {
+                                        setChecked('second')
+                                        setWeight(veggies?.item_sizes[1])
+                                        refRBSheet.current.close()
+                                    }}
+                                />
+                                <Text>{veggies.item_sizes[1]?.size}</Text>
+                            </View>
+                            : null}
 
-                        { veggies.item_sizes[2]? <View style={styles.button} >
+                        {veggies.item_sizes[2] ? <View style={styles.button} >
                             <RadioButton
                                 value="third"
                                 color={Colors.primary}
                                 status={checked === 'third' ? 'checked' : 'unchecked'}
                                 onPress={() => {
                                     setChecked('third')
-                                    setWeight(veggies.item_sizes[2]?.id)
+                                    setWeight(veggies?.item_sizes[2])
                                     refRBSheet.current.close()
                                 }}
                             />
                             <Text>{veggies.item_sizes[2]?.size}</Text>
-                        </View> : null }
+                        </View> : null}
                     </View>
-                     
+
                 </RBSheet>
             </View>
         </View>
@@ -189,8 +191,8 @@ const styles = StyleSheet.create({
     Oprice: {
         color: Colors.grey,
         textDecorationLine: 'line-through',
-        justifyContent:'center',
-        alignItems:'center',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     weight: {
         flexDirection: 'row',
@@ -238,7 +240,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 15
     },
-    line:{
+    line: {
         height: 0,
         borderColor: Colors.grey,
         borderWidth: 0.5,

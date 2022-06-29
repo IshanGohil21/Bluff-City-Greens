@@ -23,21 +23,19 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
         case ADD_TO_CART:
-
             const addedGreens = action.greens;
-
-            // console.log("\nGreens              ", addedGreens);
+            const addedWeight = action.weight;
+            console.log("\n\nweights         ",addedWeight)
+            //  console.log("\nGreens              ", addedGreens);
             let cartItem;
 
             if (state.items[addedGreens.id]) {
-                 cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal ,price:state.items[addedGreens.id].item_sizes.price ,size: state.items[addedGreens.id].item_sizes.size,}
-                // cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal }
+                cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal, price: state.items[addedGreens.id].item_sizes.price, size: state.items[addedGreens.id].item_sizes.size }
                 console.log("\nCartItems        ", cartItem);
             } else {
-                cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.item_sizes.price }
+                cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.item_sizes[0].price }
                 // console.log(cartItem);
             }
-
             return {
                 ...state,
                 items: { ...state.items, [addedGreens.id]: cartItem }

@@ -16,7 +16,9 @@ const Cartcomp = (props) => {
     const dispatch = useDispatch();
 
     const WeightProducts = props.item
+    const [weight, setWeight] = useState(WeightProducts?.item_sizes[0]);
     // console.log(WeightProducts.item_sizes[1].size);
+    const y = WeightProducts.item_sizes.find(item => item.id === weight )
 
     const [isTouched, setIsTouched] = useState(props.initialState);
 
@@ -87,6 +89,7 @@ const Cartcomp = (props) => {
             </View>
             <View>
 
+
                 <RBSheet
                     ref={refRBSheet}
                     closeOnDragDown={true}
@@ -108,35 +111,54 @@ const Cartcomp = (props) => {
                 >
                     <Text style={styles.bottom} >Available Sizes</Text>
                     <View style={styles.radio} >
+                    {WeightProducts.item_sizes[0]?
                         <View style={styles.button} >
                             <RadioButton
                                 value="first"
                                 color={Colors.primary}
                                 status={checked === 'first' ? 'checked' : 'unchecked'}
-                                onPress={() => setChecked('first')}
+                                onPress={() =>{
+                                     setChecked('first')
+                                     setWeight(WeightProducts?.item_sizes[0])
+                                    refRBSheet.current.close()
+                                    }}
                             />
                             <Text>{WeightProducts?.item_sizes[0]?.size}</Text>
                         </View>
+                        :null}
 
+
+                        {WeightProducts.item_sizes[1]?
                         <View style={styles.button} >
                             <RadioButton
                                 value="second"
                                 color={Colors.primary}
                                 status={checked === 'second' ? 'checked' : 'unchecked'}
-                                onPress={() => setChecked('second')}
+                                onPress={() => {
+                                    setChecked('second')
+                                    setWeight(WeightProducts?.item_sizes[1])
+                                    refRBSheet.current.close()
+                                }}
                             />
                             <Text>{WeightProducts?.item_sizes[1]?.size}</Text>
                         </View>
+                        :null}
 
+                        {WeightProducts.item_sizes[2]?
                         <View style={styles.button} >
                             <RadioButton
                                 value="third"
                                 color={Colors.primary}
                                 status={checked === 'third' ? 'checked' : 'unchecked'}
-                                onPress={() => setChecked('third')}
+                                onPress={() => {
+                                    setChecked('third')
+                                    setWeight(WeightProducts?.item_sizes[2])
+                                    refRBSheet.current.close()
+                            }}
                             />
                             <Text>{WeightProducts?.item_sizes[2]?.size}</Text>
                         </View>
+                        :null}
                     </View>
                 </RBSheet>
             </View>

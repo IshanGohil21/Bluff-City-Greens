@@ -87,7 +87,7 @@ const CheckoutScreen = (props) => {
 
                     <View style={styles.total} >
                         <Text style={styles.bold} >Total Amount</Text>
-                        <Text style={styles.bold2} >${(Delivery + subTotal) }</Text>
+                        <Text style={styles.bold2} >${(subTotal) }</Text>
                     </View>
 
                     </View>

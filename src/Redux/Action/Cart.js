@@ -7,8 +7,8 @@ export const CLEAR_CART = 'CLEAR_CART';
 export const SET_TOTAL_AMOUNT = 'SET_TOTAL_AMOUNT'
 export const DELETE_ITEM = 'DELETE_ITEM'
 
-export const addToCart = (greens) => {
-  return { type: ADD_TO_CART, greens: greens};
+export const addToCart = (greens, weight) => {
+  return { type: ADD_TO_CART, greens,weight };
 };
 
 export const removeFromCart = (greens) => {
