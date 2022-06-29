@@ -182,7 +182,7 @@ const HomeScreen = (props) => {
 
           {/* Serach bar */}
           <View style={styles.filter} >
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Search',) }} >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Search') }} >
               <SearchBarScreen />
             </TouchableOpacity>
 

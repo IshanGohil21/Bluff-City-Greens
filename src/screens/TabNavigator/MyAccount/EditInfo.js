@@ -16,13 +16,13 @@ const EditInfoScreen = (props) => {
 
     const [user, setUser] = useState({})
 
-    useEffect( () => {
+    useEffect(() => {
         getProfile()
-    },[])
+    }, [])
 
-    const getProfile = async() => {
+    const getProfile = async () => {
         setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
-    } 
+    }
 
     const onPressEdit = async (values) => {
         const data = {
@@ -35,7 +35,7 @@ const EditInfoScreen = (props) => {
         //  console.log("EDIT Screen Response          ", EditResponse)
 
         if (EditResponse.success) {
-            AsyncStorage.setItem("userInfo",JSON.stringify({...user, name: data.name, phone: data.phone}))
+            AsyncStorage.setItem("userInfo", JSON.stringify({ ...user, name: data.name, phone: data.phone }))
             Toast.show('Update customer successfully')
             props.navigation.goBack();
         }
@@ -72,36 +72,36 @@ const EditInfoScreen = (props) => {
                         <View style={styles.wrapper} >
                             {/* Name */}
                             <View>
-                            <Text style={styles.text}>Full Name</Text>
-                            <TextInput
-                                value={values.name}
-                                onBlur={() => setFieldTouched('name')}
-                                onChangeText={handleChange('name')}
-                                placeholder='Enter Your Name'
-                                style={styles.edit}
-                            />
-                            {touched.name && errors.name &&
-                                <Text style={styles.error}>{errors.name}</Text>
-                            }
-                            <View style={styles.line} />
+                                <Text style={styles.text}>Full Name</Text>
+                                <TextInput
+                                    value={values.name}
+                                    onBlur={() => setFieldTouched('name')}
+                                    onChangeText={handleChange('name')}
+                                    placeholder='Enter Your Name'
+                                    style={styles.edit}
+                                />
+                                {touched.name && errors.name &&
+                                    <Text style={styles.error}>{errors.name}</Text>
+                                }
+                                <View style={styles.line} />
 
-                            {/* Country Code & Phone */}
+                                {/* Country Code & Phone */}
 
-                            <Text style={styles.text} >Contact Number</Text>
-                            <TextInput
-                                value={values.phone}
-                                onBlur={() => setFieldTouched('phone')}
-                                onChangeText={handleChange('phone')}
-                                keyboardType='numeric'
-                                placeholder='Enter Phone Number'
-                                maxLength={10}
-                                style={styles.edit}
-                            />
-                            {touched.phone && errors.phone &&
-                                <Text style={styles.error}>{errors.phone}</Text>
-                            }
+                                <Text style={styles.text} >Contact Number</Text>
+                                <TextInput
+                                    value={values.phone}
+                                    onBlur={() => setFieldTouched('phone')}
+                                    onChangeText={handleChange('phone')}
+                                    keyboardType='numeric'
+                                    placeholder='Enter Phone Number'
+                                    maxLength={10}
+                                    style={styles.edit}
+                                />
+                                {touched.phone && errors.phone &&
+                                    <Text style={styles.error}>{errors.phone}</Text>
+                                }
 
-                            <View style={styles.line} />
+                                <View style={styles.line} />
                             </View>
 
                             <View style={{ alignItems: 'center', }} >
@@ -177,6 +177,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: Colors.green,
         overflow: 'hidden',
-        marginTop:350
+        marginTop: 350
     },
 })
