@@ -13,6 +13,7 @@ import Toast from 'react-native-simple-toast';
 import addressValidationSchema from '../../../../Schema/AddressValidationSchema';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
+
 const AddNewAddressScreen = (props) => {
 
     const [checked, setChecked] = useState('')
@@ -59,29 +60,6 @@ const AddNewAddressScreen = (props) => {
                 // console.warn(code, message);
             })
     }, [longitudes, latitudes])
-
-    // const initialState = {
-    //     latitude: null,
-    //     longitude: null,
-    //     longitudeDelta: 0.015,
-    //     latitudeDelta: 0.0121
-    // }
-    // const [currentPosition, setCurrentPosition] = useState(initialState);
-
-    // useEffect( () => {
-    //     navigator.geolocation.getCurrentPosition( position => {
-    //         // alert(JSON.stringify(position))
-    //         const { longitude, latitude } = position.coords;
-    //         setCurrentPosition({
-    //             ...currentPosition,
-    //             latitude,
-    //             longitude,
-    //         })
-    //     }, 
-    //         error => alert(error.message),
-    //         { timeout: 20000, maximumAge:1000 }
-    //     )  
-    // },[])
 
     return (
         <ScrollView>

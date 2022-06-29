@@ -50,11 +50,13 @@ const MyAccountScreen = props => {
                                 <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                                     <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.object} />
                                 </TouchableOpacity>
+
                                 <TouchableOpacity   onPress={() => { props.navigation.navigate('EditInfo') }} >
                                     <Ionicons name='create-outline' size={30} color={Colors.white} style={styles.object} />
                                 </TouchableOpacity>
                             </View>
                         <View style={{borderTopRightRadius:30,borderTopLeftRadius:30, overflow:'hidden'}}>
+                            
                         <ProfileOption 
                             name = 'Personal Information'
                             onPress={() => { user ? props.navigation.navigate('personalInfo',{user}) : props.navigation.navigate('SignIn') }}

@@ -1,29 +1,48 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity } from 'react-native';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import User from '../../../dummy-data/User';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Icons, Colors } from '../../../CommonConfig/CommonConfig'
 
 const personalInfoScreen = props => {
-    const user = props.route.params.user
-    console.log("                    ", user);
+    
+    const [user, setUser] = useState({})
+    // const user = props.route.params.user
+    //  console.log("                    ", user);
     const [phoneNumber, setphoneNumber] = useState('');
     const phoneInput = useRef(null);
+
+    const getProfile = async() => {
+        setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
+    } 
+
+    useEffect( () => {
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            getProfile();
+        })
+        return unsubscribe;
+    }, [props.navigation])
 
     return (
         <View style={styles.main}>
             {/* Header */}
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => {
-                    props.navigation.goBack()
-                }}
-                >
+                
+                <View style={{flexDirection:'row', justifyContent:'space-between'}} >
+                <TouchableOpacity onPress={() => {props.navigation.goBack()}}  >
                     <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.icon} />
                 </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => {props.navigation.navigate('EditInfo',)}} style={{flexDirection:'row', justifyContent:'space-between'}} >
+                    <Ionicons name='create-outline' color={Colors.white} size={30} style={styles.icon} />
+                </TouchableOpacity>
+                </View>
+
                 {/*Title*/}
                 <View>
                     <Text style={styles.title}> Personal Information </Text>
@@ -63,7 +82,6 @@ const styles = StyleSheet.create({
         color: Colors.white,
         fontWeight: 'bold',
         fontSize: 24,
-        marginTop: 50
     },
     mainWrapper: {
         flex: 1,
@@ -88,7 +106,8 @@ const styles = StyleSheet.create({
     header: {
         padding: 10,
         backgroundColor: Colors.primary,
-        flex: 0.2
+        flex: 0.4,
+        justifyContent:'space-between'
     },
     main: {
         flex: 1
@@ -102,7 +121,7 @@ const styles = StyleSheet.create({
         marginLeft: 40
     },
     icon: {
-        marginTop: 10
+        marginTop: 30
     },
     line: {
         height: 0,
