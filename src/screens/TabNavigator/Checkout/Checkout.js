@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View,Text, StyleSheet, TouchableOpacity, StatusBar, FlatList, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -6,6 +6,8 @@ import { Icons, Colors } from '../../../CommonConfig/CommonConfig';
 import Vegetables  from '../../../dummy-data/Vegetables';
 import Cartcomp from '../../../components/Cartcomp';
 import { useDispatch, useSelector } from 'react-redux';
+import { postRequest } from '../../../Helper/ApiHelper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CheckoutScreen = (props) => {
     const cartItems = useSelector( state => {
@@ -24,6 +26,17 @@ const CheckoutScreen = (props) => {
 
     const Delivery = 0.5
 
+    const [checkOut, setCheckOut] = useState()
+
+    const getToken = async() => {
+        setCheckOut(await AsyncStorage.getItem('token'))
+    }
+    // console.log("\n\ncheckOut                 ",checkOut)
+
+    useEffect( () => {
+        getToken();
+    },[])
+
     return (
         
         <View style={styles.main} >
@@ -38,8 +51,8 @@ const CheckoutScreen = (props) => {
             {/* Body */}
             <View style={styles.body} >
             <ScrollView>
+            
                 <View>
-
                     <FlatList
                         data={cartItems}
                         renderItem={({ item }) => {
@@ -80,9 +93,15 @@ const CheckoutScreen = (props) => {
                     </View>
 
                     <View style={styles.final} >
+                    {checkOut ? 
                     <TouchableOpacity style={styles.signin} onPress={() => {props.navigation.navigate('DeliveryCheckout')} } >
                         <Text style={styles.CheckboxButton} >CHECKOUT</Text>
                     </TouchableOpacity>
+                    : 
+                    <TouchableOpacity style={styles.signin} onPress={() =>  props.navigation.navigate('SignIn') } >
+                        <Text style={styles.CheckboxButton} >CHECKOUT</Text>
+                    </TouchableOpacity>
+                    }
 
                     <TouchableOpacity style={styles.buttonContinue}  onPress={() => {props.navigation.navigate('Home')}} >
                         <Text style={styles.continue} >Continue Shopping</Text>

@@ -202,7 +202,6 @@ const ContactStackScreen = () => {
     return (
         <ContactStack.Navigator headerMode='none'>
             <ContactStack.Screen name='Contact' component={ContactScreen} />
-
             <ContactStack.Screen name='FAQ' component={FAQScreen}/>
         </ContactStack.Navigator>
     )

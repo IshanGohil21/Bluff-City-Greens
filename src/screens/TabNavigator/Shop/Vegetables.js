@@ -66,7 +66,7 @@ const VegetableScreen = (props) => {
 
         if (response.success) {
             setSorting(response.data.data)
-             console.log("\n\nAfter API Call          ",response.data.data);
+            //  console.log("\n\nAfter API Call          ",response.data.data);
         }
     }
     const [filterResult, setResult] = useState([]);
@@ -77,7 +77,7 @@ const VegetableScreen = (props) => {
             start_price: start,
             end_price: end
         }
-        // console.log("\n\nDATA          ", data);
+         console.log("\n\nDATA          ", data);
         const Filter = await postRequest('/customer/filter', data)
         //   console.log("\n\n\nFilter                  ",Filter.data.data[0].sub_categories);
 
@@ -147,9 +147,9 @@ const VegetableScreen = (props) => {
                                                     id={item.id}
                                                     image={item.item_images[0].image}
                                                     name={item.name}
-                                                    weight={item.item_sizes[0].size}
+                                                    weight={item.item_sizes?.size}
                                                     price={item.item_sizes[0].price}
-                                                    disPrice={item.item_sizes[0].price}
+                                                    disPrice={item.item_sizes?.price}
                                                     onPress={() => { }}
                                                 />
                                                 // <View></View>

@@ -258,11 +258,14 @@ const HomeScreen = (props) => {
             </View>
 
             {/* Past Orders */}
+            
+            { pastOrders.length === 0 ? null :
             <View style={styles.commonContainer} >
-              <View style={styles.past} >
+            <View style={styles.past} >
                 <Text style={styles.common} >Past Orders</Text>
                 <Text style={styles.view} >View All</Text>
               </View>
+            
               {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
                 <View style={styles.heading}>
 
@@ -277,7 +280,7 @@ const HomeScreen = (props) => {
                           {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
                           {
                             item.item.order_items.map((indi) => {
-                               console.log("\n\nNest FlatList:   ",indi);
+                              //  console.log("\n\nNest FlatList:   ",indi);
                               return (
                                 <View>
                                   <RecommendedProductsCommon
@@ -334,9 +337,9 @@ const HomeScreen = (props) => {
             </ScrollView> */}
 
                 </View>
-              }
-
+              }            
             </View>
+      }
 
             {/* Recommended Products render by API */}
             <View style={styles.commonContainer} >

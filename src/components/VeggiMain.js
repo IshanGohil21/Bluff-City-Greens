@@ -133,7 +133,8 @@ const VeggiComp = (props) => {
                             <Text>{veggies.item_sizes[0]?.size}</Text>
                         </View>: null}
 
-                        { veggies.item_sizes[1]? <View style={styles.button} >
+                        { veggies.item_sizes[1]? 
+                        <View style={styles.button} >
                             <RadioButton
                                 value="second"
                                 color={Colors.primary}

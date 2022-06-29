@@ -65,7 +65,7 @@ const SignInScreen = (props) => {
                         <StatusBar style="auto" />
                     </View>
                     <View>
-                        <TouchableOpacity onPress={() =>  props.navigation.navigate( 'MainTab' ,{ screen: 'Home' })}>
+                        <TouchableOpacity onPress={() =>  props.navigation.navigate( 'MainTab' ,{ screen: 'Home', params: { skipped: true} })}>
                             <Text style={styles.skip} > SKIP </Text>
                         </TouchableOpacity>
                     </View>
