@@ -10,17 +10,22 @@ import { postRequest } from '../Helper/ApiHelper';
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
-const RecommendedProductsCommon = (props) => {
+const PastProductsCommon = (props) => {
    const itemW = props.item
-     const [weight, setWeight] = useState(itemW?.item_sizes[0]);
-
-     const splitting = (str) => {
-      let arr = str.split(' ');
-      let arr0 = parseInt(arr[0]);
-      return arr0
-  }
+    // const [weight, setWeight] = useState(itemW?.item_sizes[0]);
 
     // console.log("\n\ntemsW            ", itemW.item_sizes)
+    console.log("\n\nitemW2           ", itemW.item_size);
+
+    const [weight, setWeight] = useState(itemW?.item_size);
+    console.log(itemW.item_size);
+
+    const splitting = (str) => {
+     let arr = str.split(' ');
+     let arr0 = parseInt(arr[0]);
+     return arr0
+    }
+    
   // const y = itemW.item_sizes.find(item => item.id === weight.id)
   
 
@@ -109,7 +114,7 @@ const RecommendedProductsCommon = (props) => {
   )
 }
 
-export default RecommendedProductsCommon;
+export default PastProductsCommon;
 
 const styles = StyleSheet.create({
     main: {

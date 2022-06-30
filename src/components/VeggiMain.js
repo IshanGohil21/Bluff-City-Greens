@@ -38,7 +38,7 @@ const VeggiComp = (props) => {
     // const qty = (cartItems.length ? cartItems.reduce( (a,c) =>  a + c.qty, 0 ) : 0)
     // console.log(qty);
     const x = cartItems.find(item => item.id === props.id)
-    //  console.log( "\nx" ,x);
+      console.log( "\nx" ,x);
 
     const y = veggies.item_sizes.find(item => item.id === weight.id)
     //  console.log("\ny    " ,y);
@@ -88,7 +88,7 @@ const VeggiComp = (props) => {
 
                                 <Text style={styles.qtyText} > {x?.size} </Text>
 
-                                <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item)) }}>
+                                <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item, weight.price, splitting(weight.size))) }}>
                                     <Ionicons name={Icons.SUB} size={20} color={Colors.white} />
                                 </TouchableOpacity>
                             </View>

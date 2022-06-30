@@ -60,7 +60,7 @@ export default (state = initialState, action) => {
                 delete cartItems[GreensRemove.id]
             } else if (temp[id].size > 1) {
                 cartItemToRemove = { ...GreensRemove,  size: state.items[id].size - subSize , itemTotal: state.items[id].itemTotal - subPrice }
-                console.log(cartItemToRemove);
+                // console.log(cartItemToRemove);
                 temp[id] = cartItemToRemove
                 cartItems = temp
                 //cartItems = [ ...temp[id] : cartItemToRemove]

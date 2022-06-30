@@ -56,7 +56,7 @@ const CheckoutScreen = (props) => {
                     <FlatList
                         data={cartItems}
                         renderItem={({ item }) => {
-                            // console.log("\n\n\n\n\nCart Items  ", item );
+                             console.log("\n\n\n\n\nCart Items  ", item );
                             return (
                                 <View key={item.id} >
                                     <Cartcomp

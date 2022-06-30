@@ -23,16 +23,23 @@ const RecommendedProductsScreen = (props) => {
     const [checked, setChecked] = useState('first')
     const refRBSheet = useRef();
 
-
     const recommendId = props.route.params.recommendId
     const current = props.route.params.recommended
-    //  console.log( "\n\n\n  Current        " ,current);
+    //   console.log( "\n\n\n  Current        " ,current.item_sizes[0].size);
 
     // Setting Weight of the Products
-    const [weight, setWeight] = useState(current.item_sizes[0]?.id);
-    const y = current.item_sizes.find(item => item.id === weight)
-    //  console.log(y)
+    const [weight, setWeight] = useState(current.item_sizes[0]);
+    const y = current.item_sizes.find(item => item.id === weight.id)
+      console.log(y.size)
 
+      
+
+    const splitting = (str) => {
+        let arr = str.split(' ');
+        let arr0 = parseInt(arr[0]);
+        return arr0
+    }
+     
     const height = width * 100 / 0.6
     const [active, setActive] = useState(0);
 
@@ -54,7 +61,7 @@ const RecommendedProductsScreen = (props) => {
     })
     // console.log(cartItems);
     const x = cartItems.find(item => item.id === current.id)
-    //  console.log("\n\n\nx",x);
+       console.log("\n\n\nx",x);
 
     return (
         <View style={styles.screen} >
@@ -127,13 +134,13 @@ const RecommendedProductsScreen = (props) => {
                     {x ? <View style={styles.quantity} >
                         <Text style={styles.quantityContainer} >Quantity</Text>
                         <View style={styles.addQuantity} >
-                            <TouchableOpacity style={styles.addition} onPress={() => { dispatch(CartActions.addToCart(current)) }}  >
+                            <TouchableOpacity style={styles.addition} onPress={() => { dispatch(CartActions.addToCart(current, weight.price, splitting(weight.size) )) }}  >
                                 <Ionicons name={Icons.ADD} color={Colors.grey} size={24} />
                             </TouchableOpacity>
 
-                            <Text style={styles.number} > {x.qty} </Text>
+                            <Text style={styles.number} > {x?.size} </Text>
 
-                            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(current)) }}  >
+                            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(current,current, weight.price, splitting(weight.size))) }}  >
                                 <Ionicons name={Icons.SUB} color={Colors.grey} size={24} />
                             </TouchableOpacity>
                         </View>
@@ -177,7 +184,7 @@ const RecommendedProductsScreen = (props) => {
                                             status={checked === 'first' ? 'checked' : 'unchecked'}
                                             onPress={() => {
                                                 setChecked('first')
-                                                setWeight(current.item_sizes[0]?.id)
+                                                setWeight(current?.item_sizes[0])
                                                 refRBSheet.current.close()
                                             }}
                                         />
@@ -193,7 +200,7 @@ const RecommendedProductsScreen = (props) => {
                                             status={checked === 'second' ? 'checked' : 'unchecked'}
                                             onPress={() => {
                                                 setChecked('second')
-                                                setWeight(current.item_sizes[1]?.id)
+                                                setWeight(current?.item_sizes[1])
                                                 refRBSheet.current.close()
                                             }}
                                         />
@@ -208,7 +215,7 @@ const RecommendedProductsScreen = (props) => {
                                             status={checked === 'third' ? 'checked' : 'unchecked'}
                                             onPress={() => {
                                                 setChecked('third')
-                                                setWeight(current.item_sizes[2]?.id)
+                                                setWeight(current?.item_sizes[2])
                                                 refRBSheet.current.close()
                                             }}
                                         />

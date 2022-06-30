@@ -14,6 +14,7 @@ import RecommendedProductsCommon from '../../../components/RecommendedProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import PastProductsCommon from '../../../components/PastOrdesCommon';
 
 import { validateYupSchema } from 'formik';
 
@@ -45,6 +46,8 @@ const HomeScreen = (props) => {
   })
 
   const Badgeqty = (cartItems.length ? cartItems.reduce((a, c) => a + c.qty, 0) : 0)
+  const BadgeSize = (cartItems.length ? cartItems.reduce((a,c) => a + c.size , 0) : 0) 
+  // console.log(BadgeSize) 
   // console.log(cartItems);
   const y = cartItems?.length;
 
@@ -173,7 +176,7 @@ const HomeScreen = (props) => {
             {/* Cart */}
             <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 20}}  >
             <View style={styles.qtyCart} >
-                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{Badgeqty}</Text>
+                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{Badgeqty}{BadgeSize}</Text>
                         </View>
               {/* <Text style={styles.xyz} >{z}</Text> */}
               <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify0} />
@@ -283,16 +286,16 @@ const HomeScreen = (props) => {
                           {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
                           {
                             item.item.order_items.map((indi) => {
-                              //  console.log("\n\nNest FlatList:   ",indi);
+                                // console.log("\n\nNest FlatList:   ",indi.item_size);
                               return (
                                 <View>
-                                  <RecommendedProductsCommon
+                                  <PastProductsCommon
                                     name={indi.item.name}
                                     id={indi.id}
                                     item={indi}
-                                    price={indi.item_size.price}
-                                    weight={indi.item_size.size}
-                                    image={indi.sub_category.image}
+                                    price={indi.item_size?.price}
+                                    weight={indi.item_size?.size}
+                                    image={indi.item.item_images[0].image}
                                     onClick={() => { props.navigation.navigate('Past_Orders', { past: indi, pastId: indi.id }) }}
                                     onHeart={() => { }}
                                   />
@@ -363,9 +366,9 @@ const HomeScreen = (props) => {
                           <RecommendedProductsCommon
                             item={itemData.item}
                             name={itemData.item.name}
-                            image={itemData.item.item_images[0].image}
-                            weight={itemData.item.item_sizes[0].size}
-                            price={itemData.item.item_sizes[0].price}
+                            image={itemData.item.item_images[0]?.image}
+                            weight={itemData.item.item_sizes[0]?.size}
+                            price={itemData.item.item_sizes[0]?.price}
                             onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: itemData.item, recommendId: itemData.item.id }) }}
                             onHeart={ () => { }}
                           />

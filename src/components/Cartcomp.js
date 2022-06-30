@@ -27,7 +27,7 @@ const Cartcomp = (props) => {
         return arr0
     }
      const temp = splitting(y.size)
-    console.log("TEMP        ",temp);
+    // console.log("TEMP        ",temp);
 
 
     const [isTouched, setIsTouched] = useState(props.initialState);
