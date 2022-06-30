@@ -176,7 +176,7 @@ const HomeScreen = (props) => {
             {/* Cart */}
             <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 20}}  >
             <View style={styles.qtyCart} >
-                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{Badgeqty}{BadgeSize}</Text>
+                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{y}</Text>
                         </View>
               {/* <Text style={styles.xyz} >{z}</Text> */}
               <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify0} />
