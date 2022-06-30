@@ -95,6 +95,7 @@ const VegetableScreen = (props) => {
         }, 2000)
     }, [])
 
+
     return (
         <>
             <View style={styles.main} >
@@ -133,7 +134,6 @@ const VegetableScreen = (props) => {
                         </View>
                         <View>
                             <FlatList
-                                // data= { filterResult.length === 0 ?  sorting.length === 0 ?   veggiAll.items : sorting : filterResult}
                                 data={filterResult.length > 0 ? filterResult : sorting.length > 0 ? sorting : veggiAll.items}
                                 keyExtractor={item => item.id}
                                 renderItem={({ item }) => {
@@ -151,7 +151,6 @@ const VegetableScreen = (props) => {
                                                     disPrice={item.item_sizes?.price}
                                                     onPress={() => { }}
                                                 />
-                                                // <View></View>
                                             }
                                             <View style={styles.line1} />
                                         </View>

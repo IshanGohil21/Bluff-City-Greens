@@ -64,9 +64,9 @@ const CheckoutScreen = (props) => {
                                         id={item.id}
                                         image={item.item_images[0].image}
                                         name={item.name}
-                                        weight={item.item_sizes[0].size}
+                                        weight={item.item_sizes?.size}
                                         price={item.item_sizes[0].price}
-                                        disPrice={item.item_sizes[0].price}
+                                        disPrice={item.item_sizes?.price}
                                         onPress={() => { }}
                                     />
                                 </View>
@@ -76,7 +76,7 @@ const CheckoutScreen = (props) => {
                     <View style={styles.all} >
                     <View style={styles.total} >
                         <Text style={styles.text2} >Sub Total</Text>
-                        <Text style={styles.text3} >${subTotal}</Text>
+                        <Text style={styles.text3} >${subTotal.toFixed(2)}</Text>
                     </View>
                     <View style={styles.total} >
                         <Text style={styles.text2} >Delivery Charges</Text>
@@ -87,7 +87,7 @@ const CheckoutScreen = (props) => {
 
                     <View style={styles.total} >
                         <Text style={styles.bold} >Total Amount</Text>
-                        <Text style={styles.bold2} >${(subTotal) }</Text>
+                        <Text style={styles.bold2} >${subTotal>0 ? ((subTotal+Delivery).toFixed(2)) : 0 }</Text>
                     </View>
 
                     </View>

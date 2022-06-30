@@ -81,7 +81,7 @@ const FruitShopScreen = (props) => {
                             data={shopSub.sub_categories}
                             numColumns={2}
                             renderItem={({ item }) => {
-                                //  console.log("\n\n\n Vegetables        ",item);
+                                //   console.log("\n\n\n Vegetables        ",item.item);
                                 return (
                                     <View key={item.id}   >
                                         {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={height} width={width} /> :

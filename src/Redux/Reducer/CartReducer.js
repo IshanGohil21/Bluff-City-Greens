@@ -17,24 +17,26 @@ const initialState = {
     totalAmount: 0,
     size: '',
     price: '',
-    qty: 0,
 }
 export default (state = initialState, action) => {
 
     switch (action.type) {
         case ADD_TO_CART:
             const addedGreens = action.greens;
-            const addedWeight = action.weight;
-            console.log("\n\nweights         ",addedWeight)
+            // const addedWeight = action.weight;
+            const price = action.price;
+            const size = action.size;
+            // console.log("\n\nweights                          ", price,  size)
+
             //  console.log("\nGreens              ", addedGreens);
             let cartItem;
 
             if (state.items[addedGreens.id]) {
-                cartItem = { ...state.items[addedGreens.id], qty: state.items[addedGreens.id].qty + 1, itemTotal: state.items[addedGreens.id].itemTotal, price: state.items[addedGreens.id].item_sizes.price, size: state.items[addedGreens.id].item_sizes.size }
-                console.log("\nCartItems        ", cartItem);
+                cartItem = { ...state.items[addedGreens.id], size: state.items[addedGreens.id].size + size , itemTotal: state.items[addedGreens.id].itemTotal + price }
+                // console.log("\nCartItems        ", cartItem);
             } else {
-                cartItem = { ...addedGreens, qty: 1, itemTotal: addedGreens.item_sizes[0].price }
-                // console.log(cartItem);
+                cartItem = { ...addedGreens, size:size, itemTotal: price,}
+                  console.log(cartItem);
             }
             return {
                 ...state,
@@ -48,11 +50,17 @@ export default (state = initialState, action) => {
             const id = GreensRemove.id;
             const temp = state.items
 
+            const subPrice = action.price;
+            const subSize = action.size;
+
             let cartItemToRemove;
             let cartItems;
-            if (temp[id].qty > 1) {
-                cartItemToRemove = { ...GreensRemove, qty: temp[id].qty - 1, itemTotal: temp[id].itemTotal - GreensRemove.price }
-                // console.log(cartItemToRemove);
+            if(temp[id].size <= subSize ) {
+                cartItems = { ...state.items }
+                delete cartItems[GreensRemove.id]
+            } else if (temp[id].size > 1) {
+                cartItemToRemove = { ...GreensRemove,  size: state.items[id].size - subSize , itemTotal: state.items[id].itemTotal - subPrice }
+                console.log(cartItemToRemove);
                 temp[id] = cartItemToRemove
                 cartItems = temp
                 //cartItems = [ ...temp[id] : cartItemToRemove]
@@ -78,11 +86,9 @@ export default (state = initialState, action) => {
 
             let cartItemss
 
-            if (temp0[id0].qty >= 1) {
                 cartItemss = { ...state.items }
                 delete cartItemss[GreensDelete.id]
-            }
-
+            
             return {
                 ...state,
                 items: cartItemss

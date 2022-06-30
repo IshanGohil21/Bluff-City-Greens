@@ -16,8 +16,9 @@ const VeggiComp = (props) => {
     const dispatch = useDispatch();
 
     const veggies = props.item
+    // console.log(veggies);
     const [weight, setWeight] = useState(veggies?.item_sizes[0]);
-       console.log("\n\n\nFull Description of Vegetable Products       " ,veggies?.item_sizes[0]);
+    //   console.log("\n\n\nWeights and Price                   ",veggies?.item_sizes[0].size);
 
     const [isTouched, setIsTouched] = useState(props.initialState);
 
@@ -40,7 +41,18 @@ const VeggiComp = (props) => {
     //  console.log( "\nx" ,x);
 
     const y = veggies.item_sizes.find(item => item.id === weight.id)
-    //   console.log("\ny    " ,y);
+    //  console.log("\ny    " ,y);
+    // console.log(typeof y.price)
+
+    const splitting = (str) => {
+        let arr = str.split(' ');
+        let arr0 = parseInt(arr[0]);
+        return arr0
+    }
+
+    // const temp = splitting(y.size)
+    // console.log(temp);
+
 
     return (
         <View style={styles.main} >
@@ -63,25 +75,25 @@ const VeggiComp = (props) => {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginVertical: 10 }} >
 
                     <View >
-                        <Text style={styles.Oprice} >${props.price}</Text>
-                        <Text style={styles.discount} >${y?.price}</Text>
+                        <Text style={styles.Oprice} >${(props.price.toFixed(2))}</Text>
+                        <Text style={styles.discount} >${(y?.price.toFixed(2))}</Text>
                     </View>
 
                     <View >
                         {x ?
                             <View style={styles.signin2}>
-                                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item)) }}>
+                                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight.price, splitting(weight.size))) }}>
                                     <Ionicons name={Icons.ADD} size={20} color={Colors.white} />
                                 </TouchableOpacity>
 
-                                <Text style={styles.qtyText} > {x?.qty} </Text>
+                                <Text style={styles.qtyText} > {x?.size} </Text>
 
                                 <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item)) }}>
                                     <Ionicons name={Icons.SUB} size={20} color={Colors.white} />
                                 </TouchableOpacity>
                             </View>
                             :
-                            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight)) }}  >
+                            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight.price, splitting(weight.size))) }}  >
                                 <View style={styles.signin} >
                                     <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.cart} />
                                     <Text style={styles.add}>Add</Text>
