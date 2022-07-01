@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Colors } from '../CommonConfig/CommonConfig';
 import { date } from 'yup';
+import moment from 'moment';
+import { Icons, Colors, Images } from '../CommonConfig/CommonConfig';
 
 const AccordianDeliveryTime = (props) => {
   //Time Data For 2 Hours Diff
+  
 let x = {
   slotInterval: 2,
   openTime: '6:00 ',
@@ -27,11 +29,8 @@ while (startTime < endTime) {
 
 //  console.log(allTimes);
 
-
-
-
     const itemsss = props.item
-    // console.log(item);
+    //  console.log(itemsss);
     const [expanded, setExpanded] = useState(false);
 
     const toggleExpanded = () => {
@@ -43,6 +42,7 @@ while (startTime < endTime) {
             const monthdate = itemsss.substring(9,13)
             return(
               <View>
+                {/* <Text>Helllo</Text> */}
                 <TouchableOpacity style={styles.sche}  onPress={ () => {toggleExpanded()} } >
                 <View style={{flex:0.5,backgroundColor: Colors.blue, alignItems: 'center', justifyContent:'center'  }} >  
                   <Text style={{fontSize: 16, color: Colors.white, fontWeight:'bold'}} >{month}</Text>
@@ -80,6 +80,74 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         height:60,
         backgroundColor:Colors.red,
+    } ,
+    main:{
+      flex: 1,
+    },
+    head:{
+      flex:0.7,
+      backgroundColor: Colors.primary,
+      justifyContent: 'space-between'
+    },
+    back:{
+      marginTop: 30
+    },
+    time:{
+      fontSize: 24,
+      color: Colors.white,
+      fontWeight: 'bold'
+    },
+    body:{
+      flex: 3,
+    },
+    sche:{
+      flexDirection:'row', height:60
+    },
+    select:{
+      flexDirection: 'row',
+      justifyContent:'space-between',
+      padding: 10
+    },
+    signin:{
+        width: "25%",
+        alignItems: "center",
+        backgroundColor: Colors.primary,
+        textAlign: 'center',
+        color: Colors.white,
+        fontSize: 23,
+        padding: 10,
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
+    select0:{
+      fontSize:16,
+      fontWeight:'bold',
+      color: Colors.white
+    },
+    times:{
+      padding:5,
+      marginHorizontal: 20,
+      fontSize: 14,
+      fontWeight:'900'
+    },
+    continue:{
+        width: "85%",
+        alignItems: "center",
+        backgroundColor: Colors.primary,
+        textAlign: 'center',
+        color: Colors.white,
+        fontSize: 23,
+        padding: 10,
+        borderRadius: 10,
+        overflow: 'hidden',
+        padding: 10,
+        marginHorizontal: 30,
+        marginTop: 30
+    },
+    select1:{
+      fontSize:19,
+      fontWeight:'bold',
+      color: Colors.white
     }
 })
 

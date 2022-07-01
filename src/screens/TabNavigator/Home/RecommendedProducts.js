@@ -30,9 +30,7 @@ const RecommendedProductsScreen = (props) => {
     // Setting Weight of the Products
     const [weight, setWeight] = useState(current.item_sizes[0]);
     const y = current.item_sizes.find(item => item.id === weight.id)
-      console.log(y.size)
-
-      
+    //   console.log(y)
 
     const splitting = (str) => {
         let arr = str.split(' ');
@@ -61,7 +59,9 @@ const RecommendedProductsScreen = (props) => {
     })
     // console.log(cartItems);
     const x = cartItems.find(item => item.id === current.id)
-       console.log("\n\n\nx",x);
+    //    console.log("\n\n\nx",x);
+
+    const abc = cartItems?.length;
 
     return (
         <View style={styles.screen} >
@@ -77,7 +77,7 @@ const RecommendedProductsScreen = (props) => {
                     <View  >
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
                             <View style={styles.qtyCart} >
-                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{x ? x.qty : 0}</Text>
+                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{abc}</Text>
                             </View>
                             <Ionicons name={Icons.CART} size={30} color={Colors.white} style={styles.titleIcons} />
 
@@ -140,7 +140,7 @@ const RecommendedProductsScreen = (props) => {
 
                             <Text style={styles.number} > {x?.size} </Text>
 
-                            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(current,current, weight.price, splitting(weight.size))) }}  >
+                            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(current,weight.price, splitting(weight.size))) }}  >
                                 <Ionicons name={Icons.SUB} color={Colors.grey} size={24} />
                             </TouchableOpacity>
                         </View>
@@ -237,7 +237,7 @@ const RecommendedProductsScreen = (props) => {
                             {isFavorite ? <Ionicons name={Icons.HEART} color={Colors.grey} size={30} style={styles.heartFilled} /> :
                                 <Ionicons name={Icons.HEART_FILLED} color={Colors.red} size={30} style={styles.heartFilled} />}
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.signin} onPress={() => { dispatch(CartActions.addToCart(current)) }} >
+                        <TouchableOpacity style={styles.signin} onPress={() => { dispatch(CartActions.addToCart(current,weight.price, splitting(weight.size))) }} >
                             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
                             <Text style={styles.textCart} >Add to Cart</Text>
                         </TouchableOpacity>

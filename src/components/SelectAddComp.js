@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Icons, Colors, Images } from '../CommonConfig/CommonConfig';
@@ -8,21 +8,21 @@ import * as AddressAction from '../Redux/Action/Address';
 
 const SelectAddComp = (props) => {
     const dispatch = useDispatch();
-    const [isFavorite, setIsFavorite] = useState(props.initialState) ;
+    const [isFavorite, setIsFavorite] = useState(props.initialState);
 
     const activeId = useSelector(state => state.Address.activeAddress)
     // console.log(activeId);
 
     return (
-        <TouchableOpacity style={{...styles.main, borderRadius: props.id === activeId ? 10 : 10, borderColor : props.id === activeId ? Colors.primary : null, borderWidth: props.id === activeId ? 1 : 0, elevation: props.id === activeId ? 0:0 }}  onPress={ () => {dispatch(AddressAction.activateAddress(props.id))} } >
+        <TouchableOpacity style={{ ...styles.main, borderRadius: props.id === activeId ? 10 : 10, borderColor: props.id === activeId ? Colors.primary : null, borderWidth: props.id === activeId ? 1 : 0, elevation: props.id === activeId ? 0 : 0 }} onPress={() => { dispatch(AddressAction.activateAddress(props.id)) }} >
             <View style={styles.overall} >
-             <TouchableOpacity  onPress={() => setIsFavorite(!isFavorite)} > 
-                 
-                    <Ionicons name={Icons.PIN} color={Colors.primary} size={30} /> 
+                <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)} >
+
+                    <Ionicons name={Icons.PIN} color={Colors.primary} size={30} />
                     {/* <Ionicons name={Icons.PIN_FILLED} color={Colors.primary} size={30}  /> */}
-                
+
                 </TouchableOpacity>
-                    
+
                 <View>
                     <Text style={styles.heading} >{props.tag} - {props.name}</Text>
                     <Text style={styles.texting} >{props.address}</Text>
@@ -41,10 +41,10 @@ const styles = StyleSheet.create({
         padding: 10,
         marginHorizontal: 20,
         marginTop: 10,
-        elevation:10,
-        overflow:'hidden',
-        borderRadius:10,
-        backgroundColor:Colors.white
+        elevation: 10,
+        overflow: 'hidden',
+        borderRadius: 10,
+        backgroundColor: Colors.white
     },
     heading: {
         fontSize: 18,

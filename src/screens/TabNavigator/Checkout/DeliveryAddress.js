@@ -7,9 +7,8 @@ import { useSelector } from 'react-redux';
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import SelectAddComp from '../../../components/SelectAddComp';
 import CardsComp from '../../../components/CardsComp';
-import { getRequest } from '../../../Helper/ApiHelper';
+import { getRequest, getMainRequest } from '../../../Helper/ApiHelper';
 import { Toast } from 'react-native-simple-toast';
-
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
@@ -39,21 +38,12 @@ const DeliveryAddressScreen = (props) => {
 
     const Delivery = 0.5;
 
-    const cardItems = useSelector(state => {
-        const updatedCardItems = [];
-        for (const key in state.Card.paymentMethods) {
-            updatedCardItems.push({
-                ...state.Card.paymentMethods[key]
-            });
-        }
-        return updatedCardItems.sort((a, b) => a.id > b.id ? 1 : -1);
-    })
-
     // console.log("CARD_ITEMS         ",cardItems);
     useEffect(() => {
         getAddress();
         getCard();
-    }, [credit, address]);
+        getDiscount();
+    }, [credit, address, discount]);
 
     const [credit, setCredit] = useState([]);
     const getCard = async () => {
@@ -85,6 +75,21 @@ const DeliveryAddressScreen = (props) => {
         }
     }
 
+    const [discount, setDiscount] = useState([]);
+    const getDiscount = async () => {
+        const response = await getRequest('/customer/get-coupons');
+        //   console.log("\n\n\nDiscount Coupons    ", response.data);
+        let errorMsg = "No Discount Copons available";
+
+        if (response.success) {
+            setDiscount(response.data)
+            // console.log(response.data)
+        }
+        else {
+            Alert.alert("Error", errorMsg, [{ text: 'Okay' }])
+        }
+    }
+
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false)
@@ -92,7 +97,6 @@ const DeliveryAddressScreen = (props) => {
     }, [])
 
     return (
-
 
         <View style={styles.main} >
             {/* // Main Screen Styling */}
@@ -120,7 +124,7 @@ const DeliveryAddressScreen = (props) => {
                             showsHorizontalScrollIndicator={false}
                             data={address}
                             renderItem={({ item }) => {
-                                   console.log("\n\nAddress Items    ", item);
+                                //    console.log("\n\nAddress Items    ", item);
                                 return (
                                     <View key={item.id}>
                                         {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
@@ -130,7 +134,6 @@ const DeliveryAddressScreen = (props) => {
                                                 tag={item.is_select}
                                                 name={item.primary_address}
                                                 address={item.addition_address_info}
-                                            // country={item.is_select}
                                             />
                                         }
                                     </View>
@@ -219,22 +222,6 @@ const DeliveryAddressScreen = (props) => {
                         </View>
                     }
 
-                    {/* To Test Wether the API Called is running or not */}
-                    {/* <ScrollView>
-                        {
-                            credit.map( (item, index) => {
-                              //  console.log(item);
-                                return (
-                                    <View key={index} style={{flexDirection:'row'}} >
-                                        <Text>{item.last4}</Text>
-                                        <Text>{item.brand}</Text>
-                                    </View>
-                                )
-                            }
-
-                            )
-                        }
-                    </ScrollView> */}
                     {/* Total */}
                     <View style={styles.last} >
                         <View style={styles.total} >
@@ -255,6 +242,7 @@ const DeliveryAddressScreen = (props) => {
                     <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Orders') }} >
                         <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                     </TouchableOpacity>
+
                 </ScrollView>
             </View>
         </View>

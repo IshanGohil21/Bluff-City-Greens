@@ -108,7 +108,6 @@ const CheckoutScreen = (props) => {
                     </TouchableOpacity>
                     </View>
 
-
                 </View> 
                 </ScrollView>
             </View>

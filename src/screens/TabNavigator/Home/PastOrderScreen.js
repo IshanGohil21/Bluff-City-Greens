@@ -8,6 +8,7 @@ import PastOrder from '../../../dummy-data/PastOrders';
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import { useSelector, useDispatch } from 'react-redux';
 import * as CartActions from '../../../Redux/Action/Cart';
+import { ref } from 'yup';
 
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
@@ -19,14 +20,22 @@ const PastOrderScreen = (props) => {
 
     const pastId = props.route.params.pastId
     const past = props.route.params.past
-   // console.log("\n\n\n\n\n\nPast Orders Details             " ,past);
+     console.log("\n\nPast Orders Details             " ,past);
+
+    const [weight, setWeight] = useState(past.item_size);
+    //   const xyz = past.item_size.find(item => item.id === weight.id)
+
+    const splitting = (str) => {
+        let arr = str.split(' ');
+        let arr0 = parseInt(arr[0]);
+        return arr0
+    }
 
     const [isFavorite, setIsFavorite] = useState(props.initialState) ;
 
     const [checked, setChecked] = useState('first')
     const refRBSheet = useRef();
-    // const pid = props.route.params.id
-    // const past = PastOrder.find(item => item.id === pid)
+    //  const pid = props.route.params.id
 
     const height = width * 100 / 0.6
     const [active, setActive] = useState(0);
@@ -114,11 +123,11 @@ const PastOrderScreen = (props) => {
                     {x ? <View style={styles.quantity} >
                         <Text style={styles.quantityContainer} >Quantity</Text>
                         <View style={styles.addQuantity} >
-                            <TouchableOpacity style={styles.addition} onPress={() => {dispatch(CartActions.addToCart(past))} }  >
+                            <TouchableOpacity style={styles.addition} onPress={() => {dispatch(CartActions.addToCart(past, weight.price,splitting(weight.size) ))} }  >
                                 <Ionicons name={Icons.ADD} color={Colors.grey} size={24} />
                             </TouchableOpacity>
-                            <Text style={styles.number} > {x.qty} </Text>
-                            <TouchableOpacity onPress={() => {dispatch(CartActions.removeFromCart(past))} } >
+                            <Text style={styles.number} > {x?.size} </Text>
+                            <TouchableOpacity onPress={() => {dispatch(CartActions.removeFromCart(past, weight.price, splitting(weight.size) ))} } >
                                 <Ionicons name={Icons.SUB} color={Colors.grey} size={24} />
                             </TouchableOpacity>
                         </View>
@@ -127,7 +136,7 @@ const PastOrderScreen = (props) => {
                     <View>
                         <Text style={styles.sizeContainer} >Size</Text>
                         <TouchableOpacity style={styles.sizeContainer2} onPress={() => refRBSheet.current.open()} >
-                            <Text style={styles.selectSize} >- Select Size -</Text>
+                            <Text style={styles.selectSize} >{weight?.size}</Text>
                             <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
                         </TouchableOpacity>
                     </View>
@@ -151,37 +160,26 @@ const PastOrderScreen = (props) => {
                             }}
                         >
 
+                            
                             <Text style={styles.bottom} >Available Sizes</Text>
                             <View style={styles.radio} >
+                            {past.item_size?
                                 <View style={styles.button} >
                                     <RadioButton
                                         value="first"
                                         color={Colors.primary}
                                         status={checked === 'first' ? 'checked' : 'unchecked'}
-                                        onPress={() => setChecked('first')}
+                                        onPress={() => {
+                                            setChecked('first')
+                                            setWeight(past?.item_size)
+                                            refRBSheet.current.close()
+                                    }}
                                     />
                                     <Text>{past.item_size.size}</Text>
                                 </View>
-
-                                <View style={styles.button} >
-                                    <RadioButton
-                                        value="second"
-                                        color={Colors.primary}
-                                        status={checked === 'second' ? 'checked' : 'unchecked'}
-                                        onPress={() => setChecked('second')}
-                                    />
-                                    <Text>{past.item_size.size}</Text>
-                                </View>
-
-                                <View style={styles.button} >
-                                    <RadioButton
-                                        value="third"
-                                        color={Colors.primary}
-                                        status={checked === 'third' ? 'checked' : 'unchecked'}
-                                        onPress={() => setChecked('third')}
-                                    />
-                                    <Text>{past.item_size.size}</Text>
-                                </View>
+                                :
+                                null
+                            }
                             </View>
                         </RBSheet>
                     </View> 
@@ -199,7 +197,7 @@ const PastOrderScreen = (props) => {
                                 <Ionicons name={Icons.HEART_FILLED} color={Colors.red} size={30} style={styles.heartFilled} /> 
                             }
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.signin}   onPress={() => {dispatch(CartActions.addToCart(past))} } >
+                        <TouchableOpacity style={styles.signin}   onPress={() => {dispatch(CartActions.addToCart(past,weight.price, splitting(weight.size)))} } >
                             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
                             <Text style={styles.textCart} >Add to Cart</Text>
                         </TouchableOpacity>
