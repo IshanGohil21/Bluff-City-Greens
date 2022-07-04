@@ -15,7 +15,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import PastProductsCommon from '../../../components/PastOrdesCommon';
-
 import { validateYupSchema } from 'formik';
 
 const { width } = Dimensions.get('window')
@@ -46,7 +45,7 @@ const HomeScreen = (props) => {
   })
 
   const Badgeqty = (cartItems.length ? cartItems.reduce((a, c) => a + c.qty, 0) : 0)
-  const BadgeSize = (cartItems.length ? cartItems.reduce((a,c) => a + c.size , 0) : 0) 
+  const BadgeSize = (cartItems.length ? cartItems.reduce((a, c) => a + c.size, 0) : 0)
   // console.log(BadgeSize) 
   // console.log(cartItems);
   const y = cartItems?.length;
@@ -63,11 +62,15 @@ const HomeScreen = (props) => {
   const z = cartItems.find(item => item.id === props.id)
   // console.log(z)
 
+  const [activeAddress, setActiveAddress] = useState({})
+  // console.log("\n\nActive null        ", activeAddress)
+
   useEffect(async () => {
     getBanner();
     getCategories();
     getPastOrders();
     getRecommendedOrders();
+    setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
   }, [])
 
   // useEffect(() => {
@@ -138,8 +141,12 @@ const HomeScreen = (props) => {
     }
   }
 
-  // Favorites API
-  
+  const tag = (address_type) => {
+    if (address_type === 0) return "Home"
+    if (address_type === 1) return "Work"
+    if (address_type === 2) return "Other"
+  }
+
   return (
     <ScrollView>
       <View style={styles.main} >
@@ -155,15 +162,15 @@ const HomeScreen = (props) => {
 
             <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryLocation') }}  >
               <Text style={styles.deliver} > Deliver to </Text>
-              {x ?
+              {activeAddress === null ?
                 <View style={styles.location} >
-                  <Text style={styles.address} >{x.address}</Text>
+                  <Text style={styles.address} >Please Select Address</Text>
                   <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.white} />
                 </View>
                 :
                 <TouchableOpacity style={styles.location} onPress={() => { props.navigation.navigate('Checkout', { screen: 'DeliveryCheckout' }) }}>
-                  <Text style={styles.address} >Please Select Address</Text>
-                  <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.white}/>
+                  <Text style={styles.address} >{activeAddress.primary_address}</Text>
+                  <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.white} />
                 </TouchableOpacity>
               }
             </TouchableOpacity>
@@ -174,10 +181,10 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
 
             {/* Cart */}
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 20}}  >
-            <View style={styles.qtyCart} >
-                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{y}</Text>
-                        </View>
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 20 }}  >
+              <View style={styles.qtyCart} >
+                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{y}</Text>
+              </View>
               {/* <Text style={styles.xyz} >{z}</Text> */}
               <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify0} />
             </TouchableOpacity>
@@ -195,7 +202,7 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
           </View>
         </View>
-        
+
         { /* Body */}
 
         <ScrollView>
@@ -260,56 +267,71 @@ const HomeScreen = (props) => {
                     )
                   }}
                 />
-                }
+              }
             </View>
 
             {/* Past Orders */}
-            
-            { pastOrders.length === 0 ? null :
-            <View style={styles.commonContainer} >
-            <View style={styles.past} >
-                <Text style={styles.common} >Past Orders</Text>
-                <Text style={styles.view} >View All</Text>
-              </View>
-            
-              {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
-                <View style={styles.heading}>
 
-                  <FlatList
-                    data={pastOrders}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={(item, index) => {
-                      //  console.log("\n\n\n\n\nOnly for FlatList    ",item.item.order_items);
-                      return (
-                        <View key={index} style={{ flex: 1, flexDirection: 'row' }} >
-                          {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
-                          {
-                            item.item.order_items.map((indi) => {
+            {pastOrders.length === 0 ? null :
+              <View style={styles.commonContainer} >
+                <View style={styles.past} >
+                  <Text style={styles.common} >Past Orders</Text>
+                  <Text style={styles.view} >View All</Text>
+                </View>
+{/* 
+                <FlatList 
+                  data={pastOrders}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={(itemData) => {
+                    console.log("\n\n\n\nPast Orders in Home Screen          \n\n\n\n", itemData.item)
+                    return (
+                      <View>
+                        <Text>Hiiii</Text>
+                      </View>
+                    )
+                  }}
+                /> */}
+
+                {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
+                  <View style={styles.heading}>
+
+                    <FlatList
+                      data={pastOrders}
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      renderItem={(item, index) => {
+                          // console.log("\n\n\n\n\nOnly for FlatList    ",item.item.order_items);
+                        return (
+                          <View key={index} style={{ flex: 1, flexDirection: 'row' }} >
+                            {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
+                            {
+                              item.item.order_items.map((indi) => {
                                 // console.log("\n\nNest FlatList:   ",indi.item_size);
-                              return (
-                                <View>
-                                  <PastProductsCommon
-                                    name={indi.item.name}
-                                    id={indi.id}
-                                    item={indi}
-                                    price={indi.item_size?.price}
-                                    weight={indi.item_size?.size}
-                                    image={indi.item.item_images[0].image}
-                                    onClick={() => { props.navigation.navigate('Past_Orders', { past: indi, pastId: indi.id }) }}
-                                    onHeart={() => { }}
-                                  />
-                                </View>
+                                return (
+                                  <View>
+                                    
+                                    <PastProductsCommon
+                                      name={indi.item.name}
+                                      id={indi.id}
+                                      item={indi}
+                                      price={indi.item_size?.price}
+                                      weight={indi.item_size?.size}
+                                      image={indi.item.item_images[0].image}
+                                      onClick={() => { props.navigation.navigate('Past_Orders', { past: indi, pastId: indi.id }) }}
+                                      onHeart={() => { }}
+                                    />
+                                  </View>
+                                )
+                              }
                               )
                             }
-                            )
-                          }
-                        </View>
-                      )
-                    }}
-                  />
-                  {/* Nested Scrollview for the Past Order API calling check */}
-                  {/* <ScrollView
+                          </View>
+                        )
+                      }}
+                    />
+                    {/* Nested Scrollview for the Past Order API calling check */}
+                    {/* <ScrollView
               pagingEnabled
               horizontal
               onScroll={change}
@@ -342,10 +364,10 @@ const HomeScreen = (props) => {
               }
             </ScrollView> */}
 
-                </View>
-              }            
-            </View>
-      }
+                  </View>
+                }
+              </View>
+            }
 
             {/* Recommended Products render by API */}
             <View style={styles.commonContainer} >
@@ -360,7 +382,7 @@ const HomeScreen = (props) => {
                     horizontal
                     showsHorizontalScrollIndicator={false}
                     renderItem={(itemData) => {
-                      // console.log(itemData.item);
+                      //  console.log("\n\n\nRecommended Orders   ",itemData.item);
                       return (
                         <View key={itemData.item.id} >
                           <RecommendedProductsCommon
@@ -370,7 +392,7 @@ const HomeScreen = (props) => {
                             weight={itemData.item.item_sizes[0]?.size}
                             price={itemData.item.item_sizes[0]?.price}
                             onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: itemData.item, recommendId: itemData.item.id }) }}
-                            onHeart={ () => { }}
+                            onHeart={() => { }}
                           />
                         </View>
                       )
@@ -585,30 +607,30 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     fontWeight: 'bold',
     marginTop: 30,
-    marginLeft:12,
+    marginLeft: 12,
     backgroundColor: Colors.yellow,
     borderRadius: 10,
     width: 20,
     height: 20,
-    
+
   },
   loader: {
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
   },
-  qtyCart:{
-    alignItems:'center',
-    justifyContent:'center',
-    backgroundColor:Colors.yellow, 
-    borderRadius:10,
-    height:22, 
-    width:18,
-    marginTop:30,
-    marginLeft:15, 
-    position:'absolute', 
-    zIndex:10 
-}
+  qtyCart: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.yellow,
+    borderRadius: 10,
+    height: 22,
+    width: 18,
+    marginTop: 30,
+    marginLeft: 15,
+    position: 'absolute',
+    zIndex: 10
+  }
 });
 
 export default HomeScreen;

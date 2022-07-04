@@ -9,7 +9,6 @@ import * as AddressAction from '../../../Redux/Action/Address';
 import { useSelector, useDispatch } from 'react-redux';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Address from '../../../dummy-data/Address';
-
 import SelectAddComp from '../../../components/SelectAddComp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -53,8 +52,21 @@ const OrderDetailsScreen = (props) => {
   const activeId = useSelector(state => state.Address.activeAddress)
   //  console.log(activeId)
 
-  const x = Address.find(item => item.id === activeId)
-  //  console.log(x);
+  // const x = Address.find(item => item.id === activeId)
+  // //  console.log(x);
+
+  const [activeAddress, setActiveAddress] = useState({})
+  // console.log("\n\nActive null        ", activeAddress)
+
+  useEffect(async () => {
+    setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
+  }, [])
+
+  const tag = (address_type) => {
+    if (address_type === 0) return "Home"
+    if (address_type === 1) return "Work"
+    if (address_type === 2) return "Other"
+  }
 
   return (
 
@@ -83,21 +95,19 @@ const OrderDetailsScreen = (props) => {
           </View>
           <Text style={styles.add} >Delivery Address</Text>
 
-          {x ?
-            <View style={styles.overall} >
-              <Ionicons name={Icons.PIN_FILLED} size={35} color={Colors.primary} />
-              <View style={{ padding: 10 }} >
-                <Text style={styles.heading1} >  {x.tag} - {x.name}</Text>
-                <Text style={styles.texting} > {x.address} </Text>
-                <Text style={styles.texting} > {x.country} </Text>
-              </View>
 
+          <View style={styles.overall} >
+            <Ionicons name={Icons.PIN_FILLED} size={35} color={Colors.primary} />
+            <View style={{ padding: 10 }} >
+              <Text style={styles.heading1} >  {tag(activeAddress.address_type)} - {activeAddress.primary_address}</Text>
+              <Text style={styles.texting} > {activeAddress.addition_address_info} </Text>
             </View>
-            :
-            <TouchableOpacity style={styles.other} onPress={() => { props.navigation.goBack() }}>
+
+          </View>
+          {/* : */}
+          {/* <TouchableOpacity style={styles.other} onPress={() => { props.navigation.goBack() }}>
               <Text style={styles.please} >Please Select Address</Text>
-            </TouchableOpacity>
-          }
+            </TouchableOpacity> */}
 
           <Text style={styles.add} >Delivery Date and Time</Text>
           <View style={styles.delli} >

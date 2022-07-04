@@ -10,6 +10,7 @@ import Toast from 'react-native-simple-toast';
 import Favi from '../../../components/Favi';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import RecommendedProductsCommon from '../../../components/RecommendedProducts';
 
 const { width } = Dimensions.get('window')
 const numColumns = 2
@@ -57,7 +58,12 @@ const FavoritesScreen = props => {
                     return (
                         <View key ={item.id} style={styles.favi}>
                             <Favi
+                                item={item.item}
                                 name={item.item.name}
+                                image={item.item.item_images[0]?.image}
+                                weight={item.item.item_sizes[0]?.size}
+                                price={item.item.item_sizes[0]?.price}
+                                onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: item.item, recommendId: item.item.id }) }}
                             />
                         </View>
                     )

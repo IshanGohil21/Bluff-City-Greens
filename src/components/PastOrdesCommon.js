@@ -18,7 +18,7 @@ const PastProductsCommon = (props) => {
   // console.log("\n\nitemW2           ", itemW.item_size);
 
   const [weight, setWeight] = useState(itemW?.item_size);
-  console.log(itemW.item_size);
+  // console.log(itemW.item_size);
 
   const splitting = (str) => {
     let arr = str.split(' ');

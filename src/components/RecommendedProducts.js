@@ -18,11 +18,7 @@ const RecommendedProductsCommon = (props) => {
       let arr = str.split(' ');
       let arr0 = parseInt(arr[0]);
       return arr0
-  }
-
-    // console.log("\n\ntemsW            ", itemW.item_sizes)
-  // const y = itemW.item_sizes.find(item => item.id === weight.id)
-  
+  }  
 
     const cartItems = useSelector(state => {
         const updatedCartItems = [];

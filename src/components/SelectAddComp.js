@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Icons, Colors, Images } from '../CommonConfig/CommonConfig';
 import { useDispatch, useSelector } from 'react-redux';
 import * as AddressAction from '../Redux/Action/Address';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SelectAddComp = (props) => {
     const dispatch = useDispatch();
@@ -13,8 +14,19 @@ const SelectAddComp = (props) => {
     const activeId = useSelector(state => state.Address.activeAddress)
     // console.log(activeId);
 
+    const [ activeAddress, setActiveAddress ] = useState( {} )
+    //  console.log("\n\nActive null        ",activeAddress)
+
+    useEffect( async() => {
+        setActiveAddress( JSON.parse( await AsyncStorage.getItem('activeAddress')))
+    },[])  
+
+    const addObj = props.item
+    // console.log("\n\nADDRESS OBJ         ",addObj)
+
     return (
-        <TouchableOpacity style={{ ...styles.main, borderRadius: props.id === activeId ? 10 : 10, borderColor: props.id === activeId ? Colors.primary : null, borderWidth: props.id === activeId ? 1 : 0, elevation: props.id === activeId ? 0 : 0 }} onPress={() => { dispatch(AddressAction.activateAddress(props.id)) }} >
+        
+        <TouchableOpacity style={{ ...styles.main, borderRadius: props.id === activeId ? 10 : 10, borderColor: props.id === activeId ? Colors.primary : null, borderWidth: props.id === activeId ? 1 : 0, elevation: props.id === activeId ? 0 : 0 }} onPress={async() => { dispatch(AddressAction.activateAddress(props.id)), await AsyncStorage.setItem('activeAddress', JSON.stringify(props.item)) }} >
             <View style={styles.overall} >
                 <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)} >
 

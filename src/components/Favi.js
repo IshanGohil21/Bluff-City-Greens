@@ -14,6 +14,14 @@ const Favi = (props) => {
    const itemW = props.item
     // console.log("Item:      ",itemW);
 
+    const [weight, setWeight] = useState(itemW?.item_sizes[0]);
+
+     const splitting = (str) => {
+      let arr = str.split(' ');
+      let arr0 = parseInt(arr[0]);
+      return arr0
+  }
+
     const cartItems = useSelector(state => {
         const updatedCartItems = [];
         for (const key in state.Cart.items) {
@@ -27,7 +35,7 @@ const Favi = (props) => {
     
       const dispatch = useDispatch();
     
-      const x = cartItems.find(item => item.id === props.id);
+      const x = cartItems.find(item => item.id === itemW.id);
     
       const [isTouched, setIsTouched] = useState(props.initialState);
     
@@ -68,18 +76,18 @@ const Favi = (props) => {
         {x ?
 
           <View style={styles.signin2} >
-            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW)) }} >
+            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW ,weight.price, splitting(weight.size))) }} >
               <Ionicons name={Icons.ADD} size={24} color={Colors.white} />
             </TouchableOpacity>
 
-            <Text style={styles.qtyText} > {x.qty} </Text>
+            <Text style={styles.qtyText} > {x?.size} </Text>
 
-            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(itemW)) }} >
+            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(itemW,weight.price, splitting(weight.size))) }} >
               <Ionicons name={Icons.SUB} size={24} color={Colors.white} />
             </TouchableOpacity>
           </View>
           :
-          <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW)) }} style={styles.addButton} >
+          <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW ,weight.price, splitting(weight.size) )) }} style={styles.addButton} >
             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
             <Text style={styles.button} >ADD</Text>
           </TouchableOpacity>

@@ -11,6 +11,7 @@ import { getRequest, getMainRequest } from '../../../Helper/ApiHelper';
 import { Toast } from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window')
 
@@ -27,7 +28,6 @@ const DeliveryAddressScreen = (props) => {
             updatedCartItems.push({
                 ...state.Cart.items[key]
             });
-
         }
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
@@ -96,6 +96,12 @@ const DeliveryAddressScreen = (props) => {
         }, 3000)
     }, [])
 
+    const tag = (address_type) => {
+        if(address_type === 0) return "Home"
+        if(address_type === 1) return "Work"
+        if(address_type === 2) return "Other"
+    }
+
     return (
 
         <View style={styles.main} >
@@ -118,7 +124,7 @@ const DeliveryAddressScreen = (props) => {
                         </TouchableOpacity>
                     </View>
 
-                    <View >
+                    <View>
                         <FlatList
                             horizontal
                             showsHorizontalScrollIndicator={false}
@@ -131,7 +137,7 @@ const DeliveryAddressScreen = (props) => {
                                             <SelectAddComp
                                                 item={item}
                                                 id={item.id}
-                                                tag={item.is_select}
+                                                tag={tag(item.is_select)}
                                                 name={item.primary_address}
                                                 address={item.addition_address_info}
                                             />
