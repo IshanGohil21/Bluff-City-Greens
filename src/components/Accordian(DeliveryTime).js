@@ -5,35 +5,45 @@ import { date } from 'yup';
 import moment from 'moment';
 import { Icons, Colors, Images } from '../CommonConfig/CommonConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as DateTimeAction from '../Redux/Action/OrderAction';
+import { useSelector, useDispatch } from 'react-redux';
 
 const AccordianDeliveryTime = (props) => {
   //Time Data For 2 Hours Diff
 
-  let x = {
-    slotInterval: 2,
-    openTime: '6:00 ',
-    closeTime: '14:00 '
-  };
+  const dispatch = useDispatch();
 
-  let startTime = moment(x.openTime, "HH:mm");
+  // const x = {
+  //   slotInterval: 2,
+  //   openTime: '6:00 AM',
+  //   closeTime: '14:00'
+  // };
 
-  let endTime = moment(x.closeTime, "HH:mm").add(1, 'hour');
+  // let startTime = moment(x.openTime, "HH:mm");
+
+  // let endTime = moment(x.closeTime, "HH:mm ").add(1, 'hour');
+
+  let startTime = 6;
+
+  let endTime = 16;
+
+  let interval = 1;
 
   let allTimes = [];
 
   while (startTime < endTime) {
 
-    allTimes.push(startTime.format("HH:mm"));
-
-    startTime.add(x.slotInterval, 'hour');
+    if ( startTime > 12) {
+      allTimes.push(`${startTime-12}:00 PM to ${startTime+interval-12}:00 PM`);
+    }
+    else if (startTime === 12) {
+      allTimes.push(`12:00 AM to ${startTime+interval-12}:00 PM`);
+    }
+    else{
+      allTimes.push(`${startTime}:00 AM to ${startTime+interval}:00 AM`);
+    }
+    startTime += interval;
   }
-
-  let start = parseInt(x.openTime);
-  let end = parseInt(x.closeTime)
-  
-  // console.log(start, end)
-
-  //  console.log(allTimes);
 
   const itemsss = props.item
     // console.log(itemsss);
@@ -47,15 +57,18 @@ const AccordianDeliveryTime = (props) => {
   const month = itemsss.substring(5, 8)
   const monthdate = itemsss.substring(9, 13)
 
-  // const [ activeTime, setActiveTime ] = useState( {} )
-  // const [ activeDate, setActiveDate ] = useState( {} )
-  //   console.log("\n\nActive Date          ",activeDate);
-  //   console.log("\n\nActive Time          ",activeTime)
+  const [ selectedDateTime, setSelectedDateTime ] = useState();
+  const [y ,setY] = useState();
 
-  // useEffect( async() => {
-  //   setActiveDate( JSON.parse( await AsyncStorage.getItem('activeDate')))
-  //   setActiveTime( JSON.parse( await AsyncStorage.getItem('activeTime')))
-  // },[])
+  const handleConfirm = (time) => {
+    // console.log(time);
+    setY(itemsss)
+    //Send X to API
+    setSelectedDateTime(time)
+    dispatch(DateTimeAction.setDateTime( itemsss, time))
+}
+// console.log("\n\n\nSelect Date       ",y)
+// console.log("\n\n\nSelect and Time  ",selectedDateTime);
 
   return (
     <View>
@@ -75,11 +88,12 @@ const AccordianDeliveryTime = (props) => {
           data={allTimes}
           keyExtractor={(item, index) => index}
           renderItem={({ item }) => {
-            const time = item.substring(0, 10)
+            // console.log(item);
+            const time = item
             return (
               <View style={styles.select} >
-                <Text style={styles.times} > {time} to {time}</Text>
-                <TouchableOpacity onPress={props.onSelect} style={styles.signin}>
+                <Text style={styles.times} > {time} </Text>
+                <TouchableOpacity onPress={() => {handleConfirm(time) }} style={styles.signin}>
                   <Text style={styles.select0} >SELECT </Text>
                 </TouchableOpacity>
               </View>

@@ -2,23 +2,23 @@ import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, TouchableOpaci
 import React, { useEffect, useState } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RadioButton } from 'react-native-paper';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import SelectAddComp from '../../../components/SelectAddComp';
 import CardsComp from '../../../components/CardsComp';
-import { getRequest, getMainRequest } from '../../../Helper/ApiHelper';
+import { getRequest, getMainRequest, postRequest } from '../../../Helper/ApiHelper';
 import { Toast } from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window')
 
 const DeliveryAddressScreen = (props) => {
     const [checked, setChecked] = useState('first');
 
-    const [state, setState] = useState('Card');
+    const [state, setState] = useState('Cash');
 
     const [isLoading, setIsLoading] = useState({});
 
@@ -37,6 +37,12 @@ const DeliveryAddressScreen = (props) => {
     // console.log(subTotal);
 
     const Delivery = 0.5;
+
+    const date = useSelector(state => state.Order.date)
+    // console.log(date);
+
+    const time = useSelector(state => state.Order.time)
+    // console.log(time);
 
     // console.log("CARD_ITEMS         ",cardItems);
     useEffect(() => {
@@ -75,6 +81,20 @@ const DeliveryAddressScreen = (props) => {
         }
     }
 
+    const onPressPlaceOrder = async (details) => {
+        const data = {
+            delivery_date: date,
+            delivery_time: time,
+            payment_method: state,
+            sub_total: total,
+            delivery_charge: Delivery,
+            order_item: cartItems,
+        }
+        console.log("Data of Place Order API",data);
+        const placeOrderResponse = await postRequest('/customer/place-order',data)
+        console.log(placeOrderResponse);
+    }
+
     const [discount, setDiscount] = useState([]);
     const getDiscount = async () => {
         const response = await getRequest('/customer/get-coupons');
@@ -97,10 +117,13 @@ const DeliveryAddressScreen = (props) => {
     }, [])
 
     const tag = (address_type) => {
-        if(address_type === 0) return "Home"
-        if(address_type === 1) return "Work"
-        if(address_type === 2) return "Other"
+        if (address_type === 0) return "Home"
+        if (address_type === 1) return "Work"
+        if (address_type === 2) return "Other"
     }
+
+    const total = subTotal > 0 ? ((subTotal + Delivery).toFixed(2)) : 0
+    // console.log(total);
 
     return (
 
@@ -155,8 +178,17 @@ const DeliveryAddressScreen = (props) => {
                     <View style={styles.scheduleD} >
                         <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
                             <Image source={Images.timetable} style={styles.timetable} />
-                            <Text>Date</Text>
-                            <Text>Time</Text>
+
+                            <View>
+                                <Text>Date</Text>
+                                <Text>{date} </Text>
+                            </View>
+
+                            <View>
+                                <Text>Time</Text>
+                                <Text>{time}</Text>
+                            </View>
+
                             <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
                         </TouchableOpacity>
                     </View>
@@ -177,10 +209,10 @@ const DeliveryAddressScreen = (props) => {
                                 status={checked === 'first' ? 'checked' : 'unchecked'}
                                 onPress={() => {
                                     setChecked('first')
-                                    setState('Card')
+                                    setState('Cash')
                                 }}
                             />
-                            <Text>Card</Text>
+                            <Text>Cash or EBT</Text>
                         </View>
 
                         <View style={styles.button} >
@@ -190,14 +222,22 @@ const DeliveryAddressScreen = (props) => {
                                 status={checked === 'second' ? 'checked' : 'unchecked'}
                                 onPress={() => {
                                     setChecked('second')
-                                    setState('Cash')
+                                    setState('Card')
                                 }}
                             />
-                            <Text>Cash or EBT</Text>
+                            <Text>Card</Text>
                         </View>
                     </View>
                     {/* Adding Credit or Debit Card */}
-                    {state === 'Card' ? <View>
+                    {state === 'Cash' ? <View>
+                        <View style={styles.cod} >
+                            <Image source={Images.money} style={styles.cash} />
+                            <Text style={styles.codText} >Cash on Delivery</Text>
+                        </View>
+
+                    </View>
+                        :
+
                         <FlatList
                             horizontal
                             showsHorizontalScrollIndicator={false}
@@ -219,13 +259,6 @@ const DeliveryAddressScreen = (props) => {
                                 )
                             }}
                         />
-
-                    </View>
-                        :
-                        <View style={styles.cod} >
-                            <Image source={Images.money} style={styles.cash} />
-                            <Text style={styles.codText} >Cash on Delivery</Text>
-                        </View>
                     }
 
                     {/* Total */}
@@ -241,11 +274,15 @@ const DeliveryAddressScreen = (props) => {
 
                         <View style={styles.total} >
                             <Text style={styles.bold} >Total Amount</Text>
-                            <Text style={styles.bold2} >${(Delivery + subTotal).toFixed(2)}</Text>
+                            <Text style={styles.bold2} >${total}</Text>
                         </View>
                     </View>
 
                     <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Orders') }} >
+                        <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.signin} onPress={onPressPlaceOrder} >
                         <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                     </TouchableOpacity>
 
@@ -404,7 +441,9 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20,
         marginBottom: 20,
-        padding: 15
+        padding: 10,
+        // alignItems:'center',
+        justifyContent: 'space-between'
     },
     last: {
         backgroundColor: Colors.white,
@@ -413,6 +452,13 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 20,
         marginRight: 20
+    },
+    selectDateTime: {
+        justifyContent: 'space-evenly',
+        //  marginLeft: 100,
+        alignItems: 'center',
+        flexDirection: 'row',
+        // padding:10
     }
 });
 

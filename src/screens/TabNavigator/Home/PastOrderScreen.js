@@ -13,17 +13,20 @@ import { ref } from 'yup';
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
-const randomColor = Math.floor(Math.random()*16111215).toString(16);
+const randomColor = Math.floor(Math.random() * 16111215).toString(16);
 
 const PastOrderScreen = (props) => {
     const dispatch = useDispatch();
 
     const pastId = props.route.params.pastId
     const past = props.route.params.past
-     console.log("\n\nPast Orders Details             " ,past);
+    //  console.log("\n\nPast Orders Details             " ,past.item.item_sizes[0]);
 
-    const [weight, setWeight] = useState(past.item_size);
+    const [weight, setWeight] = useState(past.item.item_sizes[0]);
     //   const xyz = past.item_size.find(item => item.id === weight.id)
+    const y = past.item.item_sizes.find(item => item.id === weight.id)
+
+    
 
     const splitting = (str) => {
         let arr = str.split(' ');
@@ -31,7 +34,7 @@ const PastOrderScreen = (props) => {
         return arr0
     }
 
-    const [isFavorite, setIsFavorite] = useState(props.initialState) ;
+    const [isFavorite, setIsFavorite] = useState(props.initialState);
 
     const [checked, setChecked] = useState('first')
     const refRBSheet = useRef();
@@ -47,96 +50,101 @@ const PastOrderScreen = (props) => {
         }
     }
 
-    const cartItems = useSelector( state => {
+    const cartItems = useSelector(state => {
         const updatedCartItems = [];
-        for ( const key in state.Cart.items ) {
+        for (const key in state.Cart.items) {
             updatedCartItems.push({
                 ...state.Cart.items[key]
             });
         }
-        return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
+        return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
-    
-    const x = cartItems.find(item => item.id  === past.id)
+
+    const x = cartItems.find(item => item.id === past.id)
+    const abc = cartItems?.length;
 
     return (
         <View style={styles.screen} >
-             <StatusBar backgroundColor={`#${randomColor}`} barStyle='light-content' />
+            <StatusBar backgroundColor={`#${randomColor}`} barStyle='light-content' />
 
             {/* Header  */}
-           <View style={{ ...styles.header, backgroundColor: `#${randomColor}` }} >
+            <View style={{ ...styles.header, backgroundColor: `#${randomColor}` }} >
                 <View style={styles.back} >
                     <TouchableOpacity onPress={() => { props.navigation.goBack() }}  >
                         <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.titleIcons} />
                     </TouchableOpacity>
-                    <TouchableOpacity>
-                        <Ionicons name={Icons.CART} size={30} color={Colors.white} style={styles.titleIcons} />
+                   
+                        <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
+                            <View style={styles.qtyCart} >
+                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{abc}</Text>
+                            </View>
+                            <Ionicons name={Icons.CART} size={30} color={Colors.white} style={styles.titleIcons} />
                     </TouchableOpacity>
-                </View> 
+                </View>
 
                 {/* {/* Images ScrollView  */}
                 <View style={{ alignItems: 'center', padding: 10 }} >
-                       <ScrollView
+                    <ScrollView
                         pagingEnabled
                         horizontal
                         onScroll={change}
                         showsHorizontalScrollIndicator={false}
-                    > 
+                    >
                         {past.item.item_images.map((item, index) => {
                             return (
                                 <View style={styles.fruit} key={index}>
-                                    <Image source={{ uri: item.image  }}style={styles.imageContainer} />
+                                    <Image source={{ uri: item.image }} style={styles.imageContainer} />
                                 </View>
                             )
                         })}
 
-                    </ScrollView> 
+                    </ScrollView>
                 </View>
                 <View style={styles.scroll} >
-                     {
+                    {
                         past.item.item_images.map((i, k) => (
                             <Text key={k} style={k == active ? styles.pagingActive : styles.paging} > ⬤ </Text>
                         ))
-                    } 
-                </View> 
-             </View> 
+                    }
+                </View>
+            </View>
 
             {/* Body */}
-             <View style={{ ...styles.header, backgroundColor: `#${randomColor}` }} >
+            <View style={{ ...styles.header, backgroundColor: `#${randomColor}` }} >
                 <View style={styles.body} >
                     <View style={styles.bodyHeading} >
                         <Text style={styles.fruitName}> {past.item.name}</Text>
-                        
-                       <Text style={styles.priceBefore} >${past.item_size.price}</Text>
-                       
+
+                        <Text style={styles.priceBefore} >${past.item_size.price}</Text>
+
                     </View>
                     <View style={styles.bodyHeading} >
                         <Text style={styles.weightContainer} >Net wt. {past.item_size.size}</Text>
-                        
+
                         <Text style={styles.nonOriginalPrice} >${past.item_size.price}</Text>
-                        
+
                     </View>
                     <View style={styles.detailContainer} >
                         <Text style={styles.details} >{past.details}This is a very good food and its very healthy</Text>
-                        
+
                     </View>
                     {x ? <View style={styles.quantity} >
                         <Text style={styles.quantityContainer} >Quantity</Text>
                         <View style={styles.addQuantity} >
-                            <TouchableOpacity style={styles.addition} onPress={() => {dispatch(CartActions.addToCart(past, weight.price,splitting(weight.size) ))} }  >
+                            <TouchableOpacity style={styles.addition} onPress={() => { dispatch(CartActions.addToCart(past, weight.price, splitting(weight.size))) }}  >
                                 <Ionicons name={Icons.ADD} color={Colors.grey} size={24} />
                             </TouchableOpacity>
                             <Text style={styles.number} > {x?.size} </Text>
-                            <TouchableOpacity onPress={() => {dispatch(CartActions.removeFromCart(past, weight.price, splitting(weight.size) ))} } >
+                            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(past, weight.price, splitting(weight.size))) }} >
                                 <Ionicons name={Icons.SUB} color={Colors.grey} size={24} />
                             </TouchableOpacity>
                         </View>
-                    </View> : null} 
-                 {/* Size Bottom Sheet */}
+                    </View> : null}
+                    {/* Size Bottom Sheet */}
                     <View>
                         <Text style={styles.sizeContainer} >Size</Text>
                         <TouchableOpacity style={styles.sizeContainer2} onPress={() => refRBSheet.current.open()} >
-                            <Text style={styles.selectSize} >{weight?.size}</Text>
+                            <Text style={styles.selectSize} >{y?.size}</Text>
                             <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
                         </TouchableOpacity>
                     </View>
@@ -159,51 +167,89 @@ const PastOrderScreen = (props) => {
                                 }
                             }}
                         >
-
                             
                             <Text style={styles.bottom} >Available Sizes</Text>
-                            <View style={styles.radio} >
-                            {past.item_size?
+                            {/* <View style={styles.radio} > */}
+                            {past.item.item_sizes[0] ?
                                 <View style={styles.button} >
                                     <RadioButton
+
                                         value="first"
                                         color={Colors.primary}
                                         status={checked === 'first' ? 'checked' : 'unchecked'}
                                         onPress={() => {
                                             setChecked('first')
-                                            setWeight(past?.item_size)
+                                            setWeight(past?.item.item_sizes[0])
                                             refRBSheet.current.close()
-                                    }}
+                                        }}
                                     />
-                                    <Text>{past.item_size.size}</Text>
+                                    <Text>{past.item.item_sizes[0].size}</Text>
                                 </View>
                                 :
                                 null
                             }
-                            </View>
+
+                            {past.item.item_sizes[1] ?
+                                <View style={styles.button} >
+                                    <RadioButton
+
+                                        value="second"
+                                        color={Colors.primary}
+                                        status={checked === 'second' ? 'checked' : 'unchecked'}
+                                        onPress={() => {
+                                            setChecked('second')
+                                            setWeight(past?.item.item_sizes[1])
+                                            refRBSheet.current.close()
+                                        }}
+                                    />
+                                    <Text>{past.item.item_sizes[1].size}</Text>
+                                </View>
+                                :
+                                null
+                            }
+
+                            {past.item.item_sizes[2] ?
+                                <View style={styles.button} >
+                                    <RadioButton
+
+                                        value="third"
+                                        color={Colors.primary}
+                                        status={checked === 'third' ? 'checked' : 'unchecked'}
+                                        onPress={() => {
+                                            setChecked('third')
+                                            setWeight(past?.item.item_sizes[2])
+                                            refRBSheet.current.close()
+                                        }}
+                                    />
+                                    <Text>{past.item.item_sizes[2].size}</Text>
+                                </View>
+                                :
+                                null
+                            }
+                            {/* </View> */}
                         </RBSheet>
-                    </View> 
+                    </View>
 
                     {/* Truck Statement  */}
                     <View style={styles.delivery} >
                         <Ionicons name={Icons.DELIVERY} color={Colors.grey} size={28} />
                         <Text style={styles.freeDelivery} > Free delivery on purchase above $10 </Text>
                     </View>
-                     {/* Heart and Add to Cart */}
-                     <View style={styles.addToCart} >
+                    {/* Heart and Add to Cart */}
+                    <View style={styles.addToCart} >
                         <TouchableOpacity onPress={() => setIsFavorite(!isFavorite)}>
-                           {isFavorite ? 
+                            {isFavorite ?
                                 <Ionicons name={Icons.HEART} color={Colors.grey} size={30} style={styles.heartFilled} /> :
-                                <Ionicons name={Icons.HEART_FILLED} color={Colors.red} size={30} style={styles.heartFilled} /> 
+                                <Ionicons name={Icons.HEART_FILLED} color={Colors.red} size={30} style={styles.heartFilled} />
                             }
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.signin}   onPress={() => {dispatch(CartActions.addToCart(past,weight.price, splitting(weight.size)))} } >
+                        <TouchableOpacity style={styles.signin} onPress={() => { dispatch(CartActions.addToCart(past, weight.price, splitting(weight.size))) }} >
                             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
                             <Text style={styles.textCart} >Add to Cart</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>  
+            </View>
         </View>
     )
 }
@@ -228,7 +274,8 @@ const styles = StyleSheet.create({
     },
     back: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingVertical:20
     },
     titleIcons: {
         padding: 15,
@@ -380,5 +427,21 @@ const styles = StyleSheet.create({
         color: Colors.white,
         fontWeight: '700',
         fontSize: 20
-    }
+    },
+    qtyCart: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.yellow,
+        borderRadius: 10,
+        height: 22,
+        width: 18,
+        marginTop: 20,
+        marginLeft: 30,
+        position: 'absolute',
+        zIndex: 10
+    },
+    titleIcons: {
+        padding: 15,
+        marginTop: 15
+    },
 })

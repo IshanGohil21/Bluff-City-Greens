@@ -4,20 +4,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'react-moment';
 
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
-import * as CartActions from '../../../Redux/Action/Cart';
-import * as AddressAction from '../../../Redux/Action/Address';
 import { useSelector, useDispatch } from 'react-redux';
 import RBSheet from "react-native-raw-bottom-sheet";
-import Address from '../../../dummy-data/Address';
-import SelectAddComp from '../../../components/SelectAddComp';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OrderDetailsScreen = (props) => {
   const refRBSheet = useRef();
   const dispatch = useDispatch();
-
-  const [date, setDate] = useState(null);
-  const [week, setWeek] = useState(null);
 
   var RandomNumber = Math.floor(Math.random() * 100) + 100;
   var RandomNumber2 = Math.floor(Math.random() * 1000) + 1000;
@@ -38,22 +31,8 @@ const OrderDetailsScreen = (props) => {
   const subTotal = (cartItems.length ? cartItems.reduce((a, c) => a + c.itemTotal, 0) : 0);
   const delivery = 0.5;
 
-  useEffect(() => {
-    let today = new Date();
-    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    var weekNames = ["Sun", 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    const date = today.getDate() + '   ' + monthNames[(today.getMonth())] + '  ' + today.getFullYear();
-    const week = '  ' + today.getDate() + ' ' + monthNames[(today.getMonth())] + ' ' + today.getFullYear();
-
-    setWeek(week);
-    setDate(date);
-  }, []);
-
-  const activeId = useSelector(state => state.Address.activeAddress)
-  //  console.log(activeId)
-
-  // const x = Address.find(item => item.id === activeId)
-  // //  console.log(x);
+  const date = useSelector(state => state.Order.date)
+  const time = useSelector(state => state.Order.time)
 
   const [activeAddress, setActiveAddress] = useState({})
   // console.log("\n\nActive null        ", activeAddress)
@@ -95,32 +74,33 @@ const OrderDetailsScreen = (props) => {
           </View>
           <Text style={styles.add} >Delivery Address</Text>
 
+          {activeAddress !== null ?
+            <View style={styles.overall} >
+              <Ionicons name={Icons.PIN_FILLED} size={35} color={Colors.primary} />
+              <View style={{ padding: 10 }} >
+                <Text style={styles.heading1} >  {tag(activeAddress.address_type)} - {activeAddress.primary_address}</Text>
+                <Text style={styles.texting} > {activeAddress.addition_address_info} </Text>
+              </View>
 
-          <View style={styles.overall} >
-            <Ionicons name={Icons.PIN_FILLED} size={35} color={Colors.primary} />
-            <View style={{ padding: 10 }} >
-              <Text style={styles.heading1} >  {tag(activeAddress.address_type)} - {activeAddress.primary_address}</Text>
-              <Text style={styles.texting} > {activeAddress.addition_address_info} </Text>
             </View>
-
-          </View>
-          {/* : */}
-          {/* <TouchableOpacity style={styles.other} onPress={() => { props.navigation.goBack() }}>
+            :
+            <TouchableOpacity style={styles.other} onPress={() => { props.navigation.goBack() }}>
               <Text style={styles.please} >Please Select Address</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
+          }
 
           <Text style={styles.add} >Delivery Date and Time</Text>
           <View style={styles.delli} >
             <View style={styles.delivery} >
               <Ionicons name={Icons.CALANDER} size={24} color={Colors.grey} />
               <Text style={styles.orderIn} > Delivery Date :</Text>
-              <Text style={styles.week} >{week}</Text>
+              <Text style={styles.week} >{date}</Text>
             </View>
 
             <View style={styles.delivery2} >
               <Ionicons name={Icons.TIME} size={24} color={Colors.grey} />
               <Text style={styles.orderIn} > Delivery Time:</Text>
-              <Text style={styles.week}>10:00 AM</Text>
+              <Text style={styles.week}>{time}</Text>
             </View>
           </View>
           <Text style={styles.add} >Payment Details</Text>
@@ -138,9 +118,7 @@ const OrderDetailsScreen = (props) => {
 
             <View style={styles.details} >
               <Text style={styles.invoice} >Order Items</Text>
-              {/* {y  ?   */}
               <Text style={styles.randomNum} >{abc} items</Text>
-              {/* // : null } */}
             </View>
 
             <View style={styles.details} >
@@ -155,7 +133,7 @@ const OrderDetailsScreen = (props) => {
 
             <View style={styles.details1} >
               <Text style={styles.total} >Total Amount</Text>
-              <Text style={styles.amt} >${(delivery + subTotal).toFixed(2)}</Text>
+              <Text style={styles.amt} >${subTotal > 0 ? ((subTotal + delivery).toFixed(2)) : 0}</Text>
             </View>
 
           </View>

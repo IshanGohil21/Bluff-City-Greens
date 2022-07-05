@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, StatusBar } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Images, Icons } from '../../CommonConfig/CommonConfig';
 
@@ -7,7 +7,8 @@ import { Colors, Images, Icons } from '../../CommonConfig/CommonConfig';
 const ContactScreen = props => {
     return (
         <View style={{ flex: 1 }} >
-            <View style={{  padding:20 ,backgroundColor: '#259D57', fontSize: 30, marginTop:20,}}>
+            <StatusBar backgroundColor={Colors.primary} />
+            <View style={{  padding:20 ,backgroundColor: '#259D57', fontSize: 30, marginTop:20, }}>
                 <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                     <Ionicons
                         name='arrow-back'
@@ -120,7 +121,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
         backgroundColor: 'white',
-        padding: 10
+        padding: 10,
+        flex:3
     },
     text: {
         fontSize: 30,

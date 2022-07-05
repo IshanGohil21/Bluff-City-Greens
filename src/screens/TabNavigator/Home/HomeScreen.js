@@ -278,20 +278,7 @@ const HomeScreen = (props) => {
                   <Text style={styles.common} >Past Orders</Text>
                   <Text style={styles.view} >View All</Text>
                 </View>
-{/* 
-                <FlatList 
-                  data={pastOrders}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={(itemData) => {
-                    console.log("\n\n\n\nPast Orders in Home Screen          \n\n\n\n", itemData.item)
-                    return (
-                      <View>
-                        <Text>Hiiii</Text>
-                      </View>
-                    )
-                  }}
-                /> */}
+
 
                 {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
                   <View style={styles.heading}>
@@ -307,7 +294,7 @@ const HomeScreen = (props) => {
                             {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
                             {
                               item.item.order_items.map((indi) => {
-                                // console.log("\n\nNest FlatList:   ",indi.item_size);
+                                //  console.log("\n\nNest FlatList:   ",indi.item_size);
                                 return (
                                   <View>
                                     

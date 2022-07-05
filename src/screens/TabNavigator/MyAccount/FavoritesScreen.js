@@ -29,7 +29,7 @@ const FavoritesScreen = props => {
 
         if(response.success){
             setFavorites(response.data.data)
-             console.log("\n\n\nResponse.data.data for Fav           ", response.data.data);
+            //  console.log("\n\n\nResponse.data.data for Fav           ", response.data.data);
         }
         else {
             Toast.show('No Favorite Products Found');

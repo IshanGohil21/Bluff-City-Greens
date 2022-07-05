@@ -18,8 +18,8 @@ export default (state = initialState, action ) => {
             // console.log(data);
             const exp_month = data.expiryDate.substring(0,2)
             const exp_year = data.expiryDate.substring(3)
-            console.log(exp_month);
-            console.log(exp_year);
+            // console.log(exp_month);
+            // console.log(exp_year);
 
             const cardObj = {
                 // brand: data.brand,

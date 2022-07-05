@@ -79,7 +79,6 @@ const RecommendedProductsCommon = (props) => {
           </View>
         </View>
         {/* Button */}
-
         {x ?
 
           <View style={styles.signin2} >

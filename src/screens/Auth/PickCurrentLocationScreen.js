@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-// import Colors from '../CommonConfig/Colors/Colors';
-// import Images from '../CommonConfig/Images/Images';
 import { Colors, Images, Icons } from '../../CommonConfig/CommonConfig';
-
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
 const PickCurrentLocationScreen = (props) => {
   return (
@@ -18,7 +16,7 @@ const PickCurrentLocationScreen = (props) => {
         </TouchableOpacity>
       </View>
       {/* Header */}
-      <View style={styles.title }>
+      <View style={styles.title}>
         {/*Title*/}
         <View>
           <View style={styles.location}>
@@ -30,8 +28,9 @@ const PickCurrentLocationScreen = (props) => {
         </View>
       </View>
       {/* Body */}
-      <Image
-        source={Images.mapKey}
+
+      <MapView
+        provider={PROVIDER_GOOGLE}
         style={styles.map}
       />
       <Text style={styles.delivery} >
@@ -41,8 +40,8 @@ const PickCurrentLocationScreen = (props) => {
         Culture Tea Bar, Broadway, new York, NY 10027, United States
       </Text>
 
-      <TouchableOpacity onPress={ () => { props.navigation.goBack() }} >
-           <Text style={styles.signin}> USE THE LOCATION </Text>
+      <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
+        <Text style={styles.signin}> USE THE LOCATION </Text>
       </TouchableOpacity>
 
     </View>
@@ -62,12 +61,12 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom:10,
+    marginBottom: 10,
     marginLeft: 10
   },
   map: {
     height: 400,
-    width:500
+    width: 500
   },
   delivery: {
     textAlign: 'center',
@@ -86,29 +85,29 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: Colors.green,
+    backgroundColor: Colors.primary,
     textAlign: 'center',
-    color: Colors.white ,
+    color: Colors.white,
     fontSize: 23,
     padding: 10,
     borderRadius: 10,
-    borderColor: Colors.green ,
+    borderColor: Colors.primary,
     overflow: 'hidden',
     width: '70%',
-     marginLeft: 50,
+    marginLeft: 50,
     marginTop: 20,
-    paddingBottom:10
-  },  
+    paddingBottom: 10
+  },
   header: {
-    flexDirection: 'row', 
-    padding:10, 
+    flexDirection: 'row',
+    padding: 10,
     backgroundColor: Colors.primary,
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
-    
+
   },
-  title:{
-    flexDirection: 'row',  
+  title: {
+    flexDirection: 'row',
     backgroundColor: Colors.primary
   },
   location: {
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
   },
   locationContainer: {
     fontSize: 24,
-    fontWeight:'bold',
+    fontWeight: 'bold',
     color: Colors.white,
     marginLeft: 15
   }

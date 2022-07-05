@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Images, Colors, Icons } from '../CommonConfig/CommonConfig';
 import * as CardAction from '../Redux/Action/CardAction';
+import { async } from '@firebase/util';
  
 const CardsComp = (props) => {
   const dispatch = useDispatch()
@@ -22,8 +25,15 @@ const CardsComp = (props) => {
     }
   }
 
+  const [ activateCard, setActivateCard ] = useState( {} )
+      // console.log("\n\nActive CARD       ",activateCard)
+
+    useEffect( async() => {
+      setActivateCard( JSON.parse( await AsyncStorage.getItem('activateCard')))
+    },[]) 
+
   return (
-      <TouchableOpacity style={{...styles.main, borderRadius:props.id === activeCard ? 10: 10, borderColor: props.id === activeCard ? Colors.primary: null, borderWidth: props.id === activeCard ? 1 : 0, elevation: props.id === activeCard ? 0 : 0.01 }} onPress={() => {dispatch(CardAction.activatePayment(props.id))}}>
+      <TouchableOpacity style={{...styles.main, borderRadius:props.id === activeCard ? 10: 10, borderColor: props.id === activeCard ? Colors.primary: null, borderWidth: props.id === activeCard ? 1 : 0, elevation: props.id === activeCard ? 0 : 0.01 }} onPress={async() => {dispatch(CardAction.activatePayment(props.id)), await AsyncStorage.setItem('activateCard', JSON.stringify(props.item))}}>
     {/* <View  > */}
       {/* Image */}
       {/* <Text style={styles.imageStyle} >{props.brand}</Text> */}

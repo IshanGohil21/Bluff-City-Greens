@@ -7,6 +7,9 @@ import moment from 'moment';
 import AccordianDeliveryTime from '../../../components/Accordian(DeliveryTime)';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Toast } from 'react-native-simple-toast';
+import * as DateTimeAction from '../../../Redux/Action/OrderAction';
+// import * as DateTimeAction from '../../../Redux'
+import { useSelector, useDispatch } from 'react-redux';
 
 const ScheduleDelivery = (props) => {
 
@@ -26,32 +29,8 @@ const ScheduleDelivery = (props) => {
   }
   // console.log(date);
 
-
   //Time Data For 2 Hours Diff
-  let x = {
-    slotInterval: 2,
-    openTime: '6:00 ',
-    closeTime: '14:00 '
-  };
-
   
-  let startTime = moment(x.openTime, "HH:mm");
-
-  let endTime = moment(x.closeTime, "HH:mm").add(1, 'hour');
-
-  const allTimes = [];
-
-  while (startTime < endTime) {
-
-    allTimes.push(startTime.format("HH:mm"));
-
-    startTime.add(x.slotInterval, 'hour');
-  }
-
-  //  console.log(allTimes);
-
-  
-
   return (
     <View style={styles.main} >
 
@@ -69,12 +48,13 @@ const ScheduleDelivery = (props) => {
         <FlatList
           data={date}
           renderItem={({ item }) => {
+            //  console.log(item);
             return (
               <View>
                 {/* <Text>Hello</Text> */}
                 <AccordianDeliveryTime
                   item={item}
-                  onSelect={() => { props.navigation.goBack() }}
+                  onSelect={ () => props.navigation.goBack()}
                 />
               </View>
             )
@@ -82,11 +62,9 @@ const ScheduleDelivery = (props) => {
           }
         />
       </View>
-
       <TouchableOpacity style={styles.continue} onPress={() => { props.navigation.navigate('Home') }} >
         <Text style={styles.select1} >CONTINUE SHOPPING</Text>
       </TouchableOpacity>
-
     </View>
   )
 }

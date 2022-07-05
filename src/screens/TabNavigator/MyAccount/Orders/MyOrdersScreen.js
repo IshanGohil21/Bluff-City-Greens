@@ -23,7 +23,7 @@ const MyOrdersScreen = props => {
     const [paging, setPaging] = useState(1)
 
     const [pastOrder, setPastOrders] = useState([]);
-    const [currentOrder, setcurrentOrders] = useState([]);
+    const [currentOrder, setCurrentOrders] = useState([]);
 
     useEffect(() => {
         getOrders();
@@ -31,10 +31,11 @@ const MyOrdersScreen = props => {
 
     const getOrders = async () => {
         const response = await getRequest(`/customer/get-order?page=${paging}&status=${state}`)
-      //  console.log("\n\nAll Orders   hello     ", response.data);
+        // console.log("\n\nAll Orders   hello     ", response.data);
 
         if(response.success){
             setPastOrders(response.data.order);
+            // setCurrentOrders( response.data.order)
           //  console.log("\n\n\nOrders                       ",response.data.order );
         }
         else {
@@ -98,8 +99,33 @@ const MyOrdersScreen = props => {
                     :
                     // Current Orders Screen
                     <View>
-                        <Text>Please Order Something !!!</Text>
+                         {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
+                        <FlatList 
+                        data={currentOrder}
+                        showsVerticalScrollIndicator={false}
+                        renderItem={ (item) => {
+                            console.log("\n\n\nCurrent     ", item);
+                            return (
+                                <View key={item.id} >
+                                    {/* <Text>Hello</Text> */}
+                                    <OrderProfile 
+                                    id={item.item.id}
+                                    date={moment(item.item.delivery_date).format('ddd, Do MMM YYYY') }
+                                    time={item.item.delivery_time}
+                                    Order_Number={val}
+                                    Order_Number1={num}
+                                    quantity={item.item.order_items.length}
+                                    total={item.item.total_amount}
+                                    status={item.item.status}
+                                    onClick={ () => {props.navigation.navigate('OrderDetails',{ order:item, orderId: item.id })} }
+                                    />
+                                </View>
+                            )
+                        } }
+                        />
+                    }
                     </View>
+                    
                 }
             </View>
         </View>

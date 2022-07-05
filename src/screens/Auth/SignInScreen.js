@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Dimensions, Alert, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Dimensions, Alert, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import { Ionicons } from '@expo/vector-icons';
@@ -40,17 +40,18 @@ const SignInScreen = (props) => {
             // console.log("\n\n\n\n\ALL DATA             ", response.data);
             // console.log("\n\n\n\n\nACCESS             ", response.data.access_token) 
             await AsyncStorage.setItem('refreshToken', response.data.refresh_token)
-           // console.log("\n\n\n\n\nREFRESH            ", response.refresh_token);
+            // console.log("\n\n\n\n\nREFRESH            ", response.refresh_token);
             await AsyncStorage.setItem('userInfo', JSON.stringify(response.data.user))
-           // console.log("\n\n\n\n\n USER        ", response.data.user);
+            // console.log("\n\n\n\n\n USER        ", response.data.user);
             await AsyncStorage.setItem('isLogin', "true")
 
-             props.navigation.navigate('MainTab', { screen: 'Home' })
+            props.navigation.navigate('MainTab', { screen: 'Home' })
         }
     }
 
     const [rememberMe, setRememberMe] = useState(false);
     return (
+
         <Formik
             initialValues={{
                 email: '',
@@ -65,7 +66,7 @@ const SignInScreen = (props) => {
                         <StatusBar style="auto" />
                     </View>
                     <View>
-                        <TouchableOpacity onPress={() =>  props.navigation.navigate( 'MainTab' ,{ screen: 'Home', params: { skipped: true} })}>
+                        <TouchableOpacity onPress={() => props.navigation.navigate('MainTab', { screen: 'Home', params: { skipped: true } })}>
                             <Text style={styles.skip} > SKIP </Text>
                         </TouchableOpacity>
                     </View>
@@ -76,12 +77,13 @@ const SignInScreen = (props) => {
                             style={styles.image}
                             resizeMode='contain'
                         />
-                        <View style={{alignItems:'center', justifyContent:'center', marginRight: 60}} >
+                        <View style={{ alignItems: 'center', justifyContent: 'center', marginRight: 60 }} >
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={styles.bluff}>Bluff City </Text></View>
                             <View><Text style={styles.greens}> GREENS </Text></View>
                         </View>
                     </View>
+
 
                     <Text style={{ textAlign: 'left', paddingVertical: 10, color: Colors.white }}>Email id</Text>
                     <TextInput
@@ -96,7 +98,10 @@ const SignInScreen = (props) => {
                     {touched.email && errors.email &&
                         <Text style={styles.emailError}>{errors.email}</Text>
                     }
+
+
                     <Text style={{ color: Colors.white }} >Password</Text>
+
                     <TextInput
                         value={values.password}
                         style={styles.customCss}
@@ -106,23 +111,24 @@ const SignInScreen = (props) => {
                         onChangeText={handleChange('password')}
                         secureTextEntry={true}
                     />
+
                     {touched.password && errors.password &&
                         <Text style={styles.errors}>{errors.password}</Text>
                     }
                     <View style={styles.rememberContainer} >
 
-                    <View style={{flexDirection:'row'}} >
-                    <TouchableOpacity onPress={() => { setRememberMe(!rememberMe) }}>
-                            {rememberMe ? <Ionicons name="checkbox-outline" size={20} color='white' /> : <Ionicons name="square-outline" size={20} color='white' />}
-                        </TouchableOpacity>
-                        <Text style={styles.remember}> Remember me </Text>
-                    </View>
+                        <View style={{ flexDirection: 'row' }} >
+                            <TouchableOpacity onPress={() => { setRememberMe(!rememberMe) }}>
+                                {rememberMe ? <Ionicons name="checkbox-outline" size={20} color='white' /> : <Ionicons name="square-outline" size={20} color='white' />}
+                            </TouchableOpacity>
+                            <Text style={styles.remember}> Remember me </Text>
+                        </View>
 
-                    <TouchableOpacity onPress={() => {
-                        props.navigation.navigate('ForgotPassword')
-                    }} >
-                        <Text style={styles.forgot_password}> Forgot Password ? </Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={() => {
+                            props.navigation.navigate('ForgotPassword')
+                        }} >
+                            <Text style={styles.forgot_password}> Forgot Password ? </Text>
+                        </TouchableOpacity>
 
                     </View>
 
@@ -152,12 +158,12 @@ const SignInScreen = (props) => {
                     </View>
 
                     <TouchableOpacity onPress={handleSubmit} >
-                        <View  style={styles.signin}>
-                    {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
-                        <Text  style={{fontSize: 24, color: Colors.white}} >  SIGN IN </Text>}
-                        </View> 
+                        <View style={styles.signin}>
+                            {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
+                                <Text style={{ fontSize: 24, color: Colors.white }} >  SIGN IN </Text>}
+                        </View>
                     </TouchableOpacity>
-                   
+
                     <View style={styles.account}>
                         <Text style={{ color: Colors.white }}>Don't have account?</Text>
                         <TouchableOpacity onPress={() => {
@@ -170,7 +176,9 @@ const SignInScreen = (props) => {
 
                 </View>
             )}
+
         </Formik>
+
 
     );
 }
@@ -191,11 +199,11 @@ const styles = StyleSheet.create({
         width: '100%',
         // backgroundColor: 'rgba(25,20,200,0.35)'
         backgroundColor: Colors.white,
-        color:Colors.black
+        color: Colors.black
     },
     forgot_password: {
         height: 30,
-       // marginBottom: 5,
+        // marginBottom: 5,
         textAlign: 'right',
         fontSize: 14,
         color: Colors.white
@@ -208,8 +216,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         padding: 10,
         borderRadius: 10,
-       marginHorizontal: 20,
-       marginVertical: 40
+        marginHorizontal: 20,
+        marginVertical: 40
     },
     remember: {
         height: 20,
@@ -255,8 +263,8 @@ const styles = StyleSheet.create({
     },
     rememberContainer: {
         flexDirection: 'row',
-       // marginBottom: 30,
-        justifyContent:'space-between',
+        // marginBottom: 30,
+        justifyContent: 'space-between',
         paddingVertical: 5
     },
     connect: {
