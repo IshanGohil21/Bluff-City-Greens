@@ -19,14 +19,16 @@ const Cartcomp = (props) => {
     const [weight, setWeight] = useState(WeightProducts?.item_sizes[0]);
     //  console.log(WeightProducts.item_sizes[0]);
     const y = WeightProducts.item_sizes.find(item => item.id === weight.id)
+
+    
     // console.log(y)
     
-    const splitting = (str) => {
-        let arr = str.split(' ');
-        let arr0 = parseInt(arr[0]);
-        return arr0
-    }
-     const temp = splitting(y.size)
+    // const splitting = (str) => {
+    //     let arr = str.split(' ');
+    //     let arr0 = parseInt(arr[0]);
+    //     return arr0
+    // }
+    //  const temp = splitting(y.size)
     // console.log("TEMP        ",temp);
 
 
@@ -45,8 +47,11 @@ const Cartcomp = (props) => {
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
 
-    const x = cartItems.find(item => item.id === props.id)
+    // const x = cartItems.find(item => item.itemSizeId === weight.id)
+    const x = cartItems.find(item => item?.itemSizeId === props.weight.id)
     // console.log(x);
+
+    // console.log(props.weight);
 
     return (
         <View style={styles.main} >
@@ -63,31 +68,31 @@ const Cartcomp = (props) => {
                 </View>
                 <View>
                     <TouchableOpacity style={styles.weight} onPress={() => refRBSheet.current.open()} >
-                        <Text style={styles.weight0} >{y?.size}</Text>
+                        <Text style={styles.weight0} >{props.weight.size}</Text>
                         <Ionicons name={Icons.DOWN_ARROW} size={24} color={Colors.grey} />
                     </TouchableOpacity>
 
 
                 </View>
-                <Text style={styles.Oprice} >${(props.price.toFixed(2))}</Text>
+                <Text style={styles.Oprice} >${(props.weight.price.toFixed(2))}</Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
-                    <Text style={styles.discount} >${(y?.price)}</Text>
+                    <Text style={styles.discount} >${(props.weight.price.toFixed(2))}</Text>
 
                     <View >
                         {x ?
                             <View style={styles.signin2}>
-                                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight.price, splitting(weight.size))) }}>
+                                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, props.weight)) }}>
                                     <Ionicons name={Icons.ADD} size={30} color={Colors.grey}  />
                                 </TouchableOpacity>
 
-                                <Text style={styles.qtyText} > {x?.size} </Text>
+                                <Text style={styles.qtyText} > {x?.qty} </Text>
 
-                                <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item, weight.price, splitting(weight.size))) }}>
+                                <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item,props.weight)) }}>
                                     <Ionicons name={Icons.SUB} size={30} color={Colors.grey} />
                                 </TouchableOpacity>
                             </View>
                             :
-                            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight.price, splitting(weight.size))) }}  >
+                            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, props.weight)) }}  >
                                 <View style={styles.signin} >
                                     <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.cart} />
                                     <Text style={styles.add}>Add</Text>

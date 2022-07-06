@@ -18,7 +18,7 @@ const { width } = Dimensions.get('window')
 const DeliveryAddressScreen = (props) => {
     const [checked, setChecked] = useState('first');
 
-    const [state, setState] = useState('Cash');
+    const [state, setState] = useState('COD');
 
     const [isLoading, setIsLoading] = useState({});
 
@@ -59,7 +59,7 @@ const DeliveryAddressScreen = (props) => {
 
         if (response.success) {
             setCredit(response.data.cards.data);
-            // console.log("\n\n\n\nMAIN_CARD_DETAILS"        ,response.data.cards.data);
+            //  console.log("\n\n\n\nMAIN_CARD_DETAILS"        ,response.data.cards.data);
         }
         else {
             // Toast.show('Initially add card to save & access the card ')
@@ -81,6 +81,17 @@ const DeliveryAddressScreen = (props) => {
         }
     }
 
+    // console.log("CART_ITEMS:        ", cartItems);
+
+    const temp = cartItems.map(item => ({
+        quantity:item.qty, 
+        subCategoryId: item.subCategoryId,
+         itemId: item.id, 
+         itemSizeId: item.itemSizeId
+    }))
+
+    //  console.log("\n\n\nTEMP",temp);
+
     const onPressPlaceOrder = async (details) => {
         const data = {
             delivery_date: date,
@@ -88,11 +99,11 @@ const DeliveryAddressScreen = (props) => {
             payment_method: state,
             sub_total: total,
             delivery_charge: Delivery,
-            order_item: cartItems,
+            order_item: temp
         }
-        console.log("Data of Place Order API",data);
+        // console.log("\n\n\nData of Place Order API               ",data);
         const placeOrderResponse = await postRequest('/customer/place-order',data)
-        console.log(placeOrderResponse);
+        console.log("\n\n\nPlace Order                           ",placeOrderResponse);
     }
 
     const [discount, setDiscount] = useState([]);
@@ -122,8 +133,8 @@ const DeliveryAddressScreen = (props) => {
         if (address_type === 2) return "Other"
     }
 
-    const total = subTotal > 0 ? ((subTotal + Delivery).toFixed(2)) : 0
-    // console.log(total);
+    const total = parseFloat(subTotal > 0 ? ((subTotal + Delivery).toFixed(2)) : 0)
+    //  console.log(total);
 
     return (
 
@@ -179,12 +190,12 @@ const DeliveryAddressScreen = (props) => {
                         <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
                             <Image source={Images.timetable} style={styles.timetable} />
 
-                            <View>
+                            <View style={{paddingHorizontal:8 }} >
                                 <Text>Date</Text>
-                                <Text>{date} </Text>
+                                <Text>{date}</Text>
                             </View>
 
-                            <View>
+                            <View style={{paddingHorizontal:5}} >
                                 <Text>Time</Text>
                                 <Text>{time}</Text>
                             </View>
@@ -209,7 +220,7 @@ const DeliveryAddressScreen = (props) => {
                                 status={checked === 'first' ? 'checked' : 'unchecked'}
                                 onPress={() => {
                                     setChecked('first')
-                                    setState('Cash')
+                                    setState('COD')
                                 }}
                             />
                             <Text>Cash or EBT</Text>
@@ -274,7 +285,7 @@ const DeliveryAddressScreen = (props) => {
 
                         <View style={styles.total} >
                             <Text style={styles.bold} >Total Amount</Text>
-                            <Text style={styles.bold2} >${total}</Text>
+                            <Text style={styles.bold2} >${parseFloat(total)}</Text>
                         </View>
                     </View>
 
@@ -442,6 +453,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
         marginBottom: 20,
         padding: 10,
+        paddingVertical:20,
         // alignItems:'center',
         justifyContent: 'space-between'
     },

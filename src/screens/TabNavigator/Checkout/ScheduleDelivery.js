@@ -8,7 +8,6 @@ import AccordianDeliveryTime from '../../../components/Accordian(DeliveryTime)';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Toast } from 'react-native-simple-toast';
 import * as DateTimeAction from '../../../Redux/Action/OrderAction';
-// import * as DateTimeAction from '../../../Redux'
 import { useSelector, useDispatch } from 'react-redux';
 
 const ScheduleDelivery = (props) => {
@@ -23,11 +22,12 @@ const ScheduleDelivery = (props) => {
 
   const date = []
   for (let i = 0; i <= 31; i++) {
-    // console.log(week);
-    const week = moment().startOf('day').add(i, 'days').format('ddd, MMM Do')
+    
+    const week = moment().startOf('day').add(i, 'days').format('ddd, MMM Do YYYY')
     date.push(week)
+    //  console.log(week);
   }
-  // console.log(date);
+  //  console.log(date);
 
   //Time Data For 2 Hours Diff
   

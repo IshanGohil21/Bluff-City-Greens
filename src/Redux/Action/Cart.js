@@ -7,17 +7,18 @@ export const CLEAR_CART = 'CLEAR_CART';
 export const SET_TOTAL_AMOUNT = 'SET_TOTAL_AMOUNT'
 export const DELETE_ITEM = 'DELETE_ITEM'
 
-export const addToCart = (greens, price, size) => {
-  return { type: ADD_TO_CART, greens, price, size };
+export const addToCart = (greens, weight) => {
+  return { type: ADD_TO_CART, greens, weight };
 };
 
-export const removeFromCart = (greens , price, size) => {
-  return{ type : REMOVE_FROM_CART, greens, price, size};
+export const removeFromCart = (greens , weight) => {
+  return{ type : REMOVE_FROM_CART, greens, weight};
 };
 
 export const clearCart = () => {
   return { type: CLEAR_CART }
 };
+
 
 export const deleteItem = (greens) => {
   return { type: DELETE_ITEM, greens }

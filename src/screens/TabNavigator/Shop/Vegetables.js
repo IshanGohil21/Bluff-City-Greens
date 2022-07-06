@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
- import { RangeSlider } from '@sharcoux/slider'
+import { RangeSlider } from '@sharcoux/slider'
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SearchBarScreen from '../../../components/Slider/SearchBar2';
@@ -44,14 +44,14 @@ const VegetableScreen = (props) => {
     //  console.log("\n\n\nCart Items         ", cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce((a, c) => a + c.itemTotal, 0) : 0)
-   const abc = cartItems?.length
+    const abc = cartItems?.length
     //  console.log("\n\nsub total                 ",subTotal);
 
     const veggieId = props.route.params.vegiId
     // console.log(veggieId);
 
     const veggiAll = props.route.params.vegi
-        // console.log("\n\n\n\nAll Products    ", veggiAll.items[0].id);
+    // console.log("\n\n\n\nAll Products    ", veggiAll.items[0].id);
 
     const title = props.route.params.title
     // console.log("Title    ", title );
@@ -76,12 +76,12 @@ const VegetableScreen = (props) => {
             start_price: start,
             end_price: end
         }
-         console.log("\n\nDATA          ", data);
+        console.log("\n\nDATA          ", data);
         const Filter = await postRequest('/customer/filter', data)
         //   console.log("\n\n\nFilter                  ",Filter.data.data[0].sub_categories);
 
         const x = Filter.data.data[0].sub_categories.find(item => item.title === veggiAll.title)
-         console.log("X                     ",x);
+        //   console.log("\n\n\n CART ITEMS                     ",x );
 
         if (Filter.success) {
             setResult(x.items)
@@ -107,9 +107,9 @@ const VegetableScreen = (props) => {
                             <Ionicons name={Icons.BACK_ARROW} size={28} color={Colors.white} style={styles.back} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
-                        <View style={styles.qtyCart} >
-                            <Text style={{fontSize:12, fontWeight:'bold', color:Colors.white}}>{abc}</Text>
-                        </View>
+                            <View style={styles.qtyCart} >
+                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{abc}</Text>
+                            </View>
                             <Ionicons name={Icons.CART} size={28} color={Colors.white} style={styles.back} />
                         </TouchableOpacity>
                     </View>
@@ -118,8 +118,9 @@ const VegetableScreen = (props) => {
 
                         <TouchableOpacity onPress={() => {
                             setStart(0)
-                             setEnd(20)
-                            refRBSheet.current.open()}} >
+                            setEnd(20)
+                            refRBSheet.current.open()
+                        }} >
                             <Ionicons name={Icons.OPTIONS} size={35} color={Colors.white} />
                         </TouchableOpacity>
                     </View>
@@ -198,8 +199,8 @@ const VegetableScreen = (props) => {
                                 {/* Range Slider */}
                                 <View style={styles.priceRange} >
                                     <Text style={styles.priceRange2} >Price Range</Text>
-                                    <View style={{alignItems:'center', justifyContent:'center', padding:5}} >
-                                    <Text style={{fontSize:20, fontWeight:'bold', color:Colors.grey}} >${start} - ${end}</Text>
+                                    <View style={{ alignItems: 'center', justifyContent: 'center', padding: 5 }} >
+                                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors.grey }} >${start} - ${end}</Text>
                                     </View>
                                     <View style={styles.rangeSlider} >
                                         <RangeSlider
@@ -216,9 +217,9 @@ const VegetableScreen = (props) => {
                                             thumbSize={20}
                                             onValueChange={(value) => {
                                                 setStart(value[0])
-                                                setEnd(value[value.length-1])
+                                                setEnd(value[value.length - 1])
                                             }}
-                                        /> 
+                                        />
                                     </View>
                                     <View style={styles.priceTag} >
                                         <Text style={styles.txt1} > $0 </Text>
@@ -535,16 +536,16 @@ const styles = StyleSheet.create({
         marginRight: 20,
         elevation: 10
     },
-    qtyCart:{
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:Colors.yellow, 
-        borderRadius:10,
-        height:22, 
-        width:18,
-        marginTop:18,
-        marginLeft:22, 
-        position:'absolute', 
-        zIndex:10 
+    qtyCart: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: Colors.yellow,
+        borderRadius: 10,
+        height: 22,
+        width: 18,
+        marginTop: 18,
+        marginLeft: 22,
+        position: 'absolute',
+        zIndex: 10
     }
 })

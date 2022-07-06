@@ -16,7 +16,7 @@ const VeggiComp = (props) => {
     const dispatch = useDispatch();
 
     const veggies = props.item
-    // console.log(veggies);
+    //  console.log("\n\n\n\n\n\n\n\nVeggies               " ,veggies);
     const [weight, setWeight] = useState(veggies?.item_sizes[0]);
     //   console.log("\n\n\nWeights and Price                   ",veggies?.item_sizes[0].size);
 
@@ -34,16 +34,16 @@ const VeggiComp = (props) => {
         }
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
+    // console.log("\nVeggie Main CART_ITEMS: \n\n",cartItems);
 
     // const qty = (cartItems.length ? cartItems.reduce( (a,c) =>  a + c.qty, 0 ) : 0)
     // console.log(qty);
-    const x = cartItems.find(item => item.id === props.id)
-      console.log( "\nx" ,x);
+    const x = cartItems.find(item => item?.itemSizeId === weight.id)
+    //  console.log("\nx                           ", x);
 
     const y = veggies.item_sizes.find(item => item.id === weight.id)
     //  console.log("\ny    " ,y);
-    // console.log(typeof y.price)
-
+    
     const splitting = (str) => {
         let arr = str.split(' ');
         let arr0 = parseInt(arr[0]);
@@ -52,7 +52,6 @@ const VeggiComp = (props) => {
 
     // const temp = splitting(y.size)
     // console.log(temp);
-
 
     return (
         <View style={styles.main} >
@@ -82,18 +81,18 @@ const VeggiComp = (props) => {
                     <View >
                         {x ?
                             <View style={styles.signin2}>
-                                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight.price, splitting(weight.size))) }}>
+                                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight)) }}>
                                     <Ionicons name={Icons.ADD} size={20} color={Colors.white} />
                                 </TouchableOpacity>
 
-                                <Text style={styles.qtyText} > {x?.size} </Text>
+                                <Text style={styles.qtyText} > {x?.qty} </Text>
 
-                                <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item, weight.price, splitting(weight.size))) }}>
+                                <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item, weight)) }}>
                                     <Ionicons name={Icons.SUB} size={20} color={Colors.white} />
                                 </TouchableOpacity>
                             </View>
                             :
-                            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight.price, splitting(weight.size))) }}  >
+                            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, weight)) }}  >
                                 <View style={styles.signin} >
                                     <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.cart} />
                                     <Text style={styles.add}>Add</Text>

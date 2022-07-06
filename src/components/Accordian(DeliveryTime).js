@@ -46,16 +46,22 @@ const AccordianDeliveryTime = (props) => {
   }
 
   const itemsss = props.item
-    // console.log(itemsss);
+    //  console.log(itemsss);
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpanded = () => {
     setExpanded(!expanded)
   }
 
+  const year2 = moment().year();
+  // console.log(year2);
+
   const day = itemsss.substring(0, 3)
   const month = itemsss.substring(5, 8)
-  const monthdate = itemsss.substring(9, 13)
+  const monthdate = itemsss.substring(9, 11)
+
+  //  const year = itemsss.substring(13,18)
+  //  console.log(year);
 
   const [ selectedDateTime, setSelectedDateTime ] = useState();
   const [y ,setY] = useState();
@@ -64,11 +70,13 @@ const AccordianDeliveryTime = (props) => {
     // console.log(time);
     setY(itemsss)
     //Send X to API
+    // setYear(year2)
     setSelectedDateTime(time)
-    dispatch(DateTimeAction.setDateTime( itemsss, time))
+    dispatch(DateTimeAction.setDateTime( itemsss, time,))
 }
-// console.log("\n\n\nSelect Date       ",y)
+//  console.log("\n\n\nSelect Date       ",y)
 // console.log("\n\n\nSelect and Time  ",selectedDateTime);
+// console.log("\n\n\nYear", year);
 
   return (
     <View>

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View,Text, StyleSheet, TouchableOpacity, StatusBar, FlatList, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Icons, Colors } from '../../../CommonConfig/CommonConfig';
 import Vegetables  from '../../../dummy-data/Vegetables';
 import Cartcomp from '../../../components/Cartcomp';
-import { useDispatch, useSelector } from 'react-redux';
 import { postRequest } from '../../../Helper/ApiHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -19,7 +19,7 @@ const CheckoutScreen = (props) => {
         }
         return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
     })
-    //  console.log("\n\n\n\nCart    ",cartItems);
+    //   console.log("\n\n\n\nCart    ",cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce( (a,c) => a + c.itemTotal, 0 ) : 0)
     // console.log("\n\n\nSub Total"                      ,subTotal);
@@ -55,18 +55,19 @@ const CheckoutScreen = (props) => {
                 <View>
                     <FlatList
                         data={cartItems}
+                        keyExtractor={item => item.itemSizeId}
                         renderItem={({ item }) => {
-                             console.log("\n\n\n\n\nCart Items  ", item );
+                            //  console.log("\n\n\n\n\nCart Items  ", item );
                             return (
-                                <View key={item.id} >
+                                <View>
                                     <Cartcomp
                                         item={item}
                                         id={item.id}
                                         image={item.item_images[0].image}
                                         name={item.name}
-                                        weight={item.item_sizes?.size}
-                                        price={item.item_sizes[0].price}
-                                        disPrice={item.item_sizes?.price}
+                                        weight={item.item_sizes.find(obj => obj.id == item.itemSizeId)}
+                                        // price={item.item_sizes[0].price}
+                                        // disPrice={item.item_sizes?.price}
                                         onPress={() => { }}
                                     />
                                 </View>
