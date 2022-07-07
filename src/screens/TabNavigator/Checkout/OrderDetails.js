@@ -12,6 +12,8 @@ const OrderDetailsScreen = (props) => {
   const refRBSheet = useRef();
   const dispatch = useDispatch();
 
+  const orders = props.routes.params.order
+
   var RandomNumber = Math.floor(Math.random() * 100) + 100;
   var RandomNumber2 = Math.floor(Math.random() * 1000) + 1000;
   var RandomNumber3 = Math.floor(Math.random() * 100000) + 100000
@@ -46,6 +48,16 @@ const OrderDetailsScreen = (props) => {
     if (address_type === 1) return "Work"
     if (address_type === 2) return "Other"
   }
+
+  const onPressCancelOrder = async() => {
+    const data = {
+      // orderId : ,
+      // cancellation_reason : 
+    }
+    console.log("DATA CANCEL: \n", data);
+  }
+
+
 
   return (
 
@@ -141,6 +153,12 @@ const OrderDetailsScreen = (props) => {
           <View>
             <TouchableOpacity style={styles.signin} onPress={() => refRBSheet.current.open()} >
               <Text style={styles.confirm} >CONFIRM ORDER</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            <TouchableOpacity style={styles.signin0} onPress={() => {}} >
+              <Text style={styles.confirm} >CANCEL ORDER</Text>
             </TouchableOpacity>
           </View>
 
@@ -373,8 +391,20 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginBottom: 10,
     padding: 10,
+  },
+  signin0:{
+      width: "80%",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: Colors.primary,
+      textAlign: 'center',
+      padding: 10,
+      borderRadius: 10,
+      overflow: 'hidden',
+      alignSelf: 'center',
+       marginTop: 5,
+      marginBottom: 30
   }
-
 });
 
 export default OrderDetailsScreen;

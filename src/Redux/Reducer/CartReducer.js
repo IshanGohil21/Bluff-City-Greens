@@ -33,7 +33,7 @@ export default (state = initialState, action) => {
 
             if (state.items[addedWeight.id]) {
                 cartItem = { ...state.items[addedWeight.id], qty: state.items[addedWeight.id].qty + 1, itemTotal: state.items[addedWeight.id].itemTotal + addedWeight.price }
-                console.log("\nCartItems Redux :          \n\n", cartItem);
+                // console.log("\nCartItems Redux :          \n\n", cartItem);
             } else {
                 cartItem = { ...addedGreens, qty: 1, itemTotal: addedWeight.price, itemSizeId: addedWeight.id }
                 //   console.log(cartItem);
@@ -48,46 +48,49 @@ export default (state = initialState, action) => {
 
             const GreensRemove = action.greens;
             const removeWeight = action.weight;
-            // console.log(quantity);
 
-            const id = GreensRemove.id;
+               console.log(removeWeight);
+
+            //  console.log((state.items[removeWeight.id].qty));
+            const quantity = state.items[removeWeight.id].qty
+
+            const id = removeWeight.id;
             const temp = state.items
-           
-            // console.log(removeWeight);
+            console.log(state.items);
 
             let cartItemToRemove;
             let cartItems;
-            if( removeWeight == 1  ) {
-                cartItems = { ...state.items }
-                delete cartItems[removeWeight.id]
-            } 
 
-            else if (state.items[removeWeight.id] > 1) {
-                cartItemToRemove = { ...GreensRemove[removeWeight.id], qty: state.items[removeWeight.id].qty - 1, itemTotal: state.items[removeWeight.id].itemTotal - removeWeight.price }
-                // console.log(cartItemToRemove);
-                temp[id] = cartItemToRemove
-                cartItems = temp
+             if (quantity > 1) {
+                cartItemToRemove = { ...GreensRemove, qty: quantity - 1 , itemTotal: state.items[removeWeight.id].itemTotal - removeWeight.price }
+                cartItems = { ...state.items, [removeWeight.id] : cartItemToRemove }
+                //  console.log("\n\nRemove From Reducer Log  \n", cartItemToRemove);
+                // temp[id] = cartItemToRemove
+                // cartItems = temp
                 // cartItems = [ ...temp[id] : cartItemToRemove]
             } else {
                 cartItems = { ...state.items }
                 delete cartItems[removeWeight.id]
+                // console.log("DELETE THE WHOLE ITEM");
             }         
 
-        case CLEAR_CART:
-            return {
-                ...initialState
-            }
+        // case CLEAR_CART:
+        //     return {
+        //         ...initialState
+        //     }
 
         case DELETE_ITEM:
             const GreensDelete = action.greens;
-
-            const id0 = GreensDelete.id
-            const temp0 = state.items
+            const RemoveAll = action.weight;
+            
+            // console.log(GreensDelete);
+            // console.log(RemoveAll);
 
             let cartItemss
 
             cartItemss = { ...state.items }
-            delete cartItemss[GreensDelete.id]
+            // console.log(cartItemss);
+            delete cartItemss[RemoveAll.id]
 
             return {
                 ...state,

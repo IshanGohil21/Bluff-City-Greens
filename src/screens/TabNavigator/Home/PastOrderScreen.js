@@ -60,7 +60,7 @@ const PastOrderScreen = (props) => {
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
 
-    const x = cartItems.find(item => item.id === past.id)
+    const x = cartItems.find(item => item?.itemSizeId === weight.id)
     const abc = cartItems?.length;
 
     return (
@@ -76,7 +76,7 @@ const PastOrderScreen = (props) => {
                    
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
                             <View style={styles.qtyCart} >
-                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{abc}</Text>
+                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{x?.qty}</Text>
                             </View>
                             <Ionicons name={Icons.CART} size={30} color={Colors.white} style={styles.titleIcons} />
                     </TouchableOpacity>
@@ -131,11 +131,11 @@ const PastOrderScreen = (props) => {
                     {x ? <View style={styles.quantity} >
                         <Text style={styles.quantityContainer} >Quantity</Text>
                         <View style={styles.addQuantity} >
-                            <TouchableOpacity style={styles.addition} onPress={() => { dispatch(CartActions.addToCart(past, weight.price, splitting(weight.size))) }}  >
+                            <TouchableOpacity style={styles.addition} onPress={() => { dispatch(CartActions.addToCart(past, weight)) }}  >
                                 <Ionicons name={Icons.ADD} color={Colors.grey} size={24} />
                             </TouchableOpacity>
-                            <Text style={styles.number} > {x?.size} </Text>
-                            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(past, weight.price, splitting(weight.size))) }} >
+                            <Text style={styles.number} > {x?.qty} </Text>
+                            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(past, weight)) }} >
                                 <Ionicons name={Icons.SUB} color={Colors.grey} size={24} />
                             </TouchableOpacity>
                         </View>
@@ -243,7 +243,7 @@ const PastOrderScreen = (props) => {
                                 <Ionicons name={Icons.HEART_FILLED} color={Colors.red} size={30} style={styles.heartFilled} />
                             }
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.signin} onPress={() => { dispatch(CartActions.addToCart(past, weight.price, splitting(weight.size))) }} >
+                        <TouchableOpacity style={styles.signin} onPress={() => { dispatch(CartActions.addToCart(past, weight)) }} >
                             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
                             <Text style={styles.textCart} >Add to Cart</Text>
                         </TouchableOpacity>

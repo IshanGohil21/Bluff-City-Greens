@@ -62,7 +62,7 @@ const Cartcomp = (props) => {
             <View style={{ flex: 3, paddingHorizontal: 5, padding: 10 }} >
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
                     <Text style={{ marginBottom: 10, color: Colors.grey, fontSize: 16, fontWeight: 'bold' }} >{props.name}</Text>
-                    <TouchableOpacity onPress={() => { dispatch(CartActions.deleteItem(props.item)) }} >
+                    <TouchableOpacity onPress={() => { dispatch(CartActions.deleteItem(props.item, props.weight)) }} >
                         <Ionicons name={Icons.TRASH} size={20} color={Colors.grey} />
                     </TouchableOpacity>
                 </View>

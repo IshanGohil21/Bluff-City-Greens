@@ -9,7 +9,7 @@ import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import SelectAddComp from '../../../components/SelectAddComp';
 import CardsComp from '../../../components/CardsComp';
 import { getRequest, getMainRequest, postRequest } from '../../../Helper/ApiHelper';
-import { Toast } from 'react-native-simple-toast';
+import Toast  from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
@@ -84,10 +84,10 @@ const DeliveryAddressScreen = (props) => {
     // console.log("CART_ITEMS:        ", cartItems);
 
     const temp = cartItems.map(item => ({
-        quantity:item.qty, 
+        quantity: item.qty,
         subCategoryId: item.subCategoryId,
-         itemId: item.id, 
-         itemSizeId: item.itemSizeId
+        itemId: item.id,
+        itemSizeId: item.itemSizeId
     }))
 
     //  console.log("\n\n\nTEMP",temp);
@@ -101,9 +101,17 @@ const DeliveryAddressScreen = (props) => {
             delivery_charge: Delivery,
             order_item: temp
         }
-        // console.log("\n\n\nData of Place Order API               ",data);
-        const placeOrderResponse = await postRequest('/customer/place-order',data)
-        console.log("\n\n\nPlace Order                           ",placeOrderResponse);
+        // console.log("\n\n\nData of Place Order API               ", data);
+        const placeOrderResponse = await postRequest('/customer/place-order', data)
+        console.log("\n\n\nPlace Order                           ", placeOrderResponse);
+
+        if (placeOrderResponse.success) {
+            props.navigation.navigate('Orders')
+            Toast.show('Order Created Successfully')
+        }
+        else {
+            Toast.show('Something went Wrong')
+        }
     }
 
     const [discount, setDiscount] = useState([]);
@@ -190,12 +198,12 @@ const DeliveryAddressScreen = (props) => {
                         <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
                             <Image source={Images.timetable} style={styles.timetable} />
 
-                            <View style={{paddingHorizontal:8 }} >
+                            <View style={{ paddingHorizontal: 8 }} >
                                 <Text>Date</Text>
                                 <Text>{date}</Text>
                             </View>
 
-                            <View style={{paddingHorizontal:5}} >
+                            <View style={{ paddingHorizontal: 5 }} >
                                 <Text>Time</Text>
                                 <Text>{time}</Text>
                             </View>
@@ -240,7 +248,7 @@ const DeliveryAddressScreen = (props) => {
                         </View>
                     </View>
                     {/* Adding Credit or Debit Card */}
-                    {state === 'Cash' ? <View>
+                    {state === 'COD' ? <View>
                         <View style={styles.cod} >
                             <Image source={Images.money} style={styles.cash} />
                             <Text style={styles.codText} >Cash on Delivery</Text>
@@ -288,14 +296,26 @@ const DeliveryAddressScreen = (props) => {
                             <Text style={styles.bold2} >${parseFloat(total)}</Text>
                         </View>
                     </View>
-
-                    <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Orders') }} >
+                    {/* 
+                    {subTotal === 0 ? 
+                    
+                    <TouchableOpacity style={styles.signin} onPress={() => { onPressPlaceOrder }} disabled={true} >
                         <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                     </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.signin} onPress={onPressPlaceOrder} >
+                    :
+                     <TouchableOpacity style={styles.signin} onPress={() => { onPressPlaceOrder }} >
                         <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>} */}
+
+                    {subTotal === 0 ?
+                        <TouchableOpacity style={styles.signin} onPress={() => { onPressPlaceOrder }} disabled={true} >
+                            <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity style={styles.signin} onPress={onPressPlaceOrder} >
+                            <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
+                        </TouchableOpacity>
+                    }
 
                 </ScrollView>
             </View>
@@ -453,7 +473,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
         marginBottom: 20,
         padding: 10,
-        paddingVertical:20,
+        paddingVertical: 20,
         // alignItems:'center',
         justifyContent: 'space-between'
     },

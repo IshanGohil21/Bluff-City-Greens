@@ -38,6 +38,7 @@ const VeggiComp = (props) => {
 
     // const qty = (cartItems.length ? cartItems.reduce( (a,c) =>  a + c.qty, 0 ) : 0)
     // console.log(qty);
+    
     const x = cartItems.find(item => item?.itemSizeId === weight.id)
     //  console.log("\nx                           ", x);
 

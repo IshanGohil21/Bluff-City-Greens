@@ -8,6 +8,7 @@ import RecommendedProducts from '../../../dummy-data/RecommendedProducts';
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import { useSelector, useDispatch } from 'react-redux';
 import * as CartActions from '../../../Redux/Action/Cart';
+import { multiply } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
@@ -58,7 +59,7 @@ const RecommendedProductsScreen = (props) => {
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     })
     // console.log(cartItems);
-    const x = cartItems.find(item => item.id === current.id)
+    const x = cartItems.find(item => item?.itemSizeId === weight.id)
     //    console.log("\n\n\nx",x);
 
     const abc = cartItems?.length;
@@ -74,10 +75,10 @@ const RecommendedProductsScreen = (props) => {
                         <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.titleIcons} />
                     </TouchableOpacity>
 
-                    <View  >
+                    <View >
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
                             <View style={styles.qtyCart} >
-                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{abc}</Text>
+                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{x == null ? 0 : x?.qty}</Text>
                             </View>
                             <Ionicons name={Icons.CART} size={30} color={Colors.white} style={styles.titleIcons} />
 
@@ -134,13 +135,13 @@ const RecommendedProductsScreen = (props) => {
                     {x ? <View style={styles.quantity} >
                         <Text style={styles.quantityContainer} >Quantity</Text>
                         <View style={styles.addQuantity} >
-                            <TouchableOpacity style={styles.addition} onPress={() => { dispatch(CartActions.addToCart(current, weight.price, splitting(weight.size) )) }}  >
+                            <TouchableOpacity style={styles.addition} onPress={() => { dispatch(CartActions.addToCart(current, weight)) }}  >
                                 <Ionicons name={Icons.ADD} color={Colors.grey} size={24} />
                             </TouchableOpacity>
 
-                            <Text style={styles.number} > {x?.size} </Text>
+                            <Text style={styles.number} > {x?.qty} </Text>
 
-                            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(current,weight.price, splitting(weight.size))) }}  >
+                            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(current,weight)) }}  >
                                 <Ionicons name={Icons.SUB} color={Colors.grey} size={24} />
                             </TouchableOpacity>
                         </View>
@@ -237,7 +238,7 @@ const RecommendedProductsScreen = (props) => {
                             {isFavorite ? <Ionicons name={Icons.HEART} color={Colors.grey} size={30} style={styles.heartFilled} /> :
                                 <Ionicons name={Icons.HEART_FILLED} color={Colors.red} size={30} style={styles.heartFilled} />}
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.signin} onPress={() => { dispatch(CartActions.addToCart(current,weight.price, splitting(weight.size))) }} >
+                        <TouchableOpacity style={styles.signin} onPress={() => { dispatch(CartActions.addToCart(current,weight)) }} >
                             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
                             <Text style={styles.textCart} >Add to Cart</Text>
                         </TouchableOpacity>

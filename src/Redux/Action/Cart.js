@@ -20,8 +20,8 @@ export const clearCart = () => {
 };
 
 
-export const deleteItem = (greens) => {
-  return { type: DELETE_ITEM, greens }
+export const deleteItem = (greens, weight) => {
+  return { type: DELETE_ITEM, greens, weight }
 }
 
 // export const setOrderType = ( orderType ) => {

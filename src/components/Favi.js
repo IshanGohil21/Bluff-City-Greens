@@ -35,7 +35,7 @@ const Favi = (props) => {
     
       const dispatch = useDispatch();
     
-      const x = cartItems.find(item => item.id === itemW.id);
+      const x = cartItems.find(item => item?.itemSizeId === weight.id);
     
       const [isTouched, setIsTouched] = useState(props.initialState);
     
@@ -76,18 +76,18 @@ const Favi = (props) => {
         {x ?
 
           <View style={styles.signin2} >
-            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW ,weight.price, splitting(weight.size))) }} >
+            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW ,weight)) }} >
               <Ionicons name={Icons.ADD} size={24} color={Colors.white} />
             </TouchableOpacity>
 
-            <Text style={styles.qtyText} > {x?.size} </Text>
+            <Text style={styles.qtyText} > {x?.qty} </Text>
 
-            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(itemW,weight.price, splitting(weight.size))) }} >
+            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(itemW,weight)) }} >
               <Ionicons name={Icons.SUB} size={24} color={Colors.white} />
             </TouchableOpacity>
           </View>
           :
-          <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW ,weight.price, splitting(weight.size) )) }} style={styles.addButton} >
+          <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW ,weight)) }} style={styles.addButton} >
             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
             <Text style={styles.button} >ADD</Text>
           </TouchableOpacity>

@@ -81,7 +81,7 @@ const VegetableScreen = (props) => {
         //   console.log("\n\n\nFilter                  ",Filter.data.data[0].sub_categories);
 
         const x = Filter.data.data[0].sub_categories.find(item => item.title === veggiAll.title)
-        //   console.log("\n\n\n CART ITEMS                     ",x );
+        //   console.log("\n\n\n CART ITEMS  from Vegetables Screen                   ",x );
 
         if (Filter.success) {
             setResult(x.items)
