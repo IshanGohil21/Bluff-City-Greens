@@ -5,8 +5,10 @@ import { RadioButton } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import * as Cart from '../../../Redux/Action/Cart';
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import SelectAddComp from '../../../components/SelectAddComp';
+// import Cart fr
 import CardsComp from '../../../components/CardsComp';
 import { getRequest, getMainRequest, postRequest } from '../../../Helper/ApiHelper';
 import Toast  from 'react-native-simple-toast';
@@ -17,6 +19,8 @@ const { width } = Dimensions.get('window')
 
 const DeliveryAddressScreen = (props) => {
     const [checked, setChecked] = useState('first');
+
+    const dispatch = useDispatch();
 
     const [state, setState] = useState('COD');
 
@@ -111,6 +115,7 @@ const DeliveryAddressScreen = (props) => {
             // console.log("Stroing details : \n\n ",placeOrderResponse.data.order);
             // console.log("ABCS:   ",OrderStore);
             props.navigation.navigate('Orders', {order : OrderStore})
+            dispatch(Cart.clearCart())
             Toast.show('Order Created Successfully')
         }
         else {

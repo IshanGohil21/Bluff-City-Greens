@@ -74,10 +74,10 @@ export default (state = initialState, action) => {
                 // console.log("DELETE THE WHOLE ITEM");
             }         
 
-        // case CLEAR_CART:
-        //     return {
-        //         ...initialState
-        //     }
+        case CLEAR_CART:
+            return {
+                ...initialState
+            }
 
         case DELETE_ITEM:
             const GreensDelete = action.greens;
