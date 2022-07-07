@@ -19,7 +19,6 @@ export const clearCart = () => {
   return { type: CLEAR_CART }
 };
 
-
 export const deleteItem = (greens, weight) => {
   return { type: DELETE_ITEM, greens, weight }
 }

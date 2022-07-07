@@ -34,9 +34,6 @@ const OrderDetailsScreenAccount = (props) => {
         }
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
     });
-    // const x = Address.find(item => item.id  === activeId)
-    // // console.log(x);
-
 
     const total = useSelector(state => state.Cart.qty)
 
@@ -88,7 +85,7 @@ const OrderDetailsScreenAccount = (props) => {
                         data={order.item.order_items}
                         showsVerticalScrollIndicator={false}
                         renderItem={(item) => {
-                            //console.log("\n\n\n\nProduct Details               ",item);
+                            console.log("\n\n\n\nProduct Details               ",item);
                             return (
                                 <View>
                                     <Products

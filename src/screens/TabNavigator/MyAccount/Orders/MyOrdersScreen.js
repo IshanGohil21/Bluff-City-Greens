@@ -10,8 +10,8 @@ import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
 import { getRequest } from '../../../../Helper/ApiHelper';
 import OrderProfile from '../../../../components/OrderProfile';
 
-const val = Math.floor( 1+ Math.random() * 999);
-const num = Math.floor( Math.random() * 9999)
+const val = Math.floor(1 + Math.random() * 999);
+const num = Math.floor(Math.random() * 9999)
 // console.log(val);
 // console.log(num);
 
@@ -20,28 +20,57 @@ const { width } = Dimensions.get('window')
 const MyOrdersScreen = props => {
     const [state, setState] = useState('past')
     const [loading, setIsloading] = useState(true)
+    const [isMoreItem, setisMoreItem] = useState(false);
     const [paging, setPaging] = useState(1)
 
     const [pastOrder, setPastOrders] = useState([]);
     const [currentOrder, setCurrentOrders] = useState([]);
 
+
+    let renderLoader = () => {
+        return (
+            <View style={styles.loaderStyle}>
+                {isMoreItem ?
+                    (
+                        <ActivityIndicator size="large" />
+                    ) : null}
+            </View>
+        );
+    }
+
+    const loadMoreItem = () => {
+        // console.log("currentpage       ",setCurrentPage)
+        setPaging(paging + 1)
+        console.log("loadMore  ", paging)
+    };
+
+    useEffect(() => {
+        update();
+    }, [props.navigation])
+
+    const update = async () => {
+        props.navigation.addListener('focus', () => {
+            getOrders();
+        });
+    }
+
     useEffect(() => {
         getOrders();
-    }, [paging])
+    }, [paging, state])
 
     const getOrders = async () => {
-        const response = await getRequest(`/customer/get-order?page=${paging}&status=${state}`)
+        const response = await getRequest(`/customer/get-order?page=${paging}&status=${state}&page_size=10`)
         // console.log("\n\nAll Orders   hello     ", response.data);
 
-        if(response.success){
+        if (response.success) {
             setPastOrders(response.data.order);
-            // setCurrentOrders( response.data.order)
-          //  console.log("\n\n\nOrders                       ",response.data.order );
+            setCurrentOrders(response.data.order)
+            // console.log("\n\n\nOrders                       ",response.data.order );
         }
         else {
             Toast.show('No Orders Available');
-          }
-          setIsloading(false);
+        }
+        setIsloading(false);
     }
 
     return (
@@ -69,63 +98,77 @@ const MyOrdersScreen = props => {
                 </View>
 
                 {state === 'past' ?
-                // Past Order Screen
+                    // Past Order Screen
                     <View>
-                         {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
-                        <FlatList 
-                        data={pastOrder}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={ (item) => {
-                           // console.log("\n\n\nPast     ", item);
-                            return (
-                                <View key={item.id} >
-                                    <OrderProfile 
-                                    id={item.item.id}
-                                    date={moment(item.item.delivery_date).format('ddd, Do MMM YYYY') }
-                                    time={item.item.delivery_time}
-                                    Order_Number={val}
-                                    Order_Number1={num}
-                                    quantity={item.item.order_items.length}
-                                    total={item.item.total_amount}
-                                    status={item.item.status}
-                                    onClick={ () => {props.navigation.navigate('OrderDetails',{ order:item, orderId: item.id })} }
-                                    />
-                                </View>
-                            )
-                        } }
-                        />
-                    }
+                       
+                            <FlatList
+                                // ListFooterComponent={renderLoader}
+                                // onEndReached={loadMoreItem}
+                                // onEndReached={()=>{console.log("hi")}}
+                                // onEndReachedThreshold={0.5}
+                                data={pastOrder}
+                                showsVerticalScrollIndicator={false}
+                                renderItem={(item) => {
+                                    // console.log("\n\n\nPast     ", item);
+                                    return (
+                                        <View key={item.id} >
+                                            {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
+                                            <OrderProfile
+                                                id={item.item.id}
+                                                date={moment(item.item.delivery_date).format('ddd, Do MMM YYYY')}
+                                                time={item.item.delivery_time}
+                                                Order_Number={val}
+                                                Order_Number1={num}
+                                                quantity={item.item.order_items.length}
+                                                total={item.item.total_amount}
+                                                status={item.item.status}
+                                                onClick={() => { props.navigation.navigate('OrderDetails', { order: item, orderId: item.id }) }}
+                                            />
+                                            }
+                                        </View>
+                                    )
+                                }}
+                            />
+                        
                     </View>
                     :
                     // Current Orders Screen
                     <View>
-                         {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
-                        <FlatList 
-                        data={currentOrder}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={ (item) => {
-                            console.log("\n\n\nCurrent     ", item);
-                            return (
-                                <View key={item.id} >
-                                    {/* <Text>Hello</Text> */}
-                                    <OrderProfile 
-                                    id={item.item.id}
-                                    date={moment(item.item.delivery_date).format('ddd, Do MMM YYYY') }
-                                    time={item.item.delivery_time}
-                                    Order_Number={val}
-                                    Order_Number1={num}
-                                    quantity={item.item.order_items.length}
-                                    total={item.item.total_amount}
-                                    status={item.item.status}
-                                    onClick={ () => {props.navigation.navigate('OrderDetails',{ order:item, orderId: item.id })} }
-                                    />
-                                </View>
-                            )
-                        } }
-                        />
-                    }
+
+                        {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
+                            <FlatList
+                                data={currentOrder}
+                                showsVerticalScrollIndicator={false}
+                                renderItem={(item) => {
+                                    //  console.log("\n\n\nCurrent     ", item);
+                                    return (
+                                        <View key={item.id} >
+                                            {/* <Text>Hello</Text> */}
+                                            <OrderProfile
+                                                id={item.item.id}
+                                                date={moment(item.item.delivery_date).format('ddd, Do MMM YYYY')}
+                                                time={item.item.delivery_time}
+                                                Order_Number={val}
+                                                Order_Number1={num}
+                                                quantity={item.item.order_items.length}
+                                                total={item.item.total_amount}
+                                                status={item.item.status}
+                                            // onClick={ () => {props.navigation.navigate('OrderDetails',{ order:item, orderId: item.id })} }
+                                            />
+                                        </View>
+                                    )
+                                }}
+                            />
+                        }
+
+
+
+
+
+
+
                     </View>
-                    
+
                 }
             </View>
         </View>

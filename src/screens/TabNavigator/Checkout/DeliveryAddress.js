@@ -83,6 +83,7 @@ const DeliveryAddressScreen = (props) => {
 
     // console.log("CART_ITEMS:        ", cartItems);
 
+    const [OrderStore, setOrderStore] = useState();
     const temp = cartItems.map(item => ({
         quantity: item.qty,
         subCategoryId: item.subCategoryId,
@@ -101,12 +102,15 @@ const DeliveryAddressScreen = (props) => {
             delivery_charge: Delivery,
             order_item: temp
         }
-        // console.log("\n\n\nData of Place Order API               ", data);
+        console.log("\n\n\nData of Place Order API               ", data);
         const placeOrderResponse = await postRequest('/customer/place-order', data)
         console.log("\n\n\nPlace Order                           ", placeOrderResponse);
 
         if (placeOrderResponse.success) {
-            props.navigation.navigate('Orders')
+            setOrderStore(placeOrderResponse.data.order)
+            // console.log("Stroing details : \n\n ",placeOrderResponse.data.order);
+            // console.log("ABCS:   ",OrderStore);
+            props.navigation.navigate('Orders', {order : OrderStore})
             Toast.show('Order Created Successfully')
         }
         else {
@@ -198,15 +202,17 @@ const DeliveryAddressScreen = (props) => {
                         <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
                             <Image source={Images.timetable} style={styles.timetable} />
 
-                            <View style={{ paddingHorizontal: 8 }} >
+                                
+                                <View style={{ paddingHorizontal:8 }} >
                                 <Text>Date</Text>
                                 <Text>{date}</Text>
                             </View>
 
-                            <View style={{ paddingHorizontal: 5 }} >
+                            <View style={{ paddingHorizontal:5 }} >
                                 <Text>Time</Text>
                                 <Text>{time}</Text>
                             </View>
+                            
 
                             <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
                         </TouchableOpacity>
@@ -307,7 +313,7 @@ const DeliveryAddressScreen = (props) => {
                         <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                     </TouchableOpacity>} */}
 
-                    {subTotal === 0 ?
+                    {subTotal  === 0 ?
                         <TouchableOpacity style={styles.signin} onPress={() => { onPressPlaceOrder }} disabled={true} >
                             <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                         </TouchableOpacity>

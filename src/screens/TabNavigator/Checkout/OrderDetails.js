@@ -12,7 +12,8 @@ const OrderDetailsScreen = (props) => {
   const refRBSheet = useRef();
   const dispatch = useDispatch();
 
-  const orders = props.routes.params.order
+  const Order = props.route.params.order;
+  //  console.log("Oder reciept         ",Order);
 
   var RandomNumber = Math.floor(Math.random() * 100) + 100;
   var RandomNumber2 = Math.floor(Math.random() * 1000) + 1000;
@@ -157,7 +158,7 @@ const OrderDetailsScreen = (props) => {
           </View>
 
           <View>
-            <TouchableOpacity style={styles.signin0} onPress={() => {}} >
+            <TouchableOpacity style={styles.signin0} onPress={() => {props.navigation.navigate('Cancel', {order: Order})}} >
               <Text style={styles.confirm} >CANCEL ORDER</Text>
             </TouchableOpacity>
           </View>
