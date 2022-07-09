@@ -47,23 +47,30 @@ export default (state = initialState, action) => {
         case REMOVE_FROM_CART:
 
             const GreensRemove = action.greens;
+            console.log("REDUCE ", GreensRemove);
             const removeWeight = action.weight;
 
-               console.log(removeWeight);
+            //    console.log(removeWeight);
 
             //  console.log((state.items[removeWeight.id].qty));
             const quantity = state.items[removeWeight.id].qty
+                // console.log("REMOVE WEIGHT", removeWeight);
+                // console.log("Quat", quantity);
 
-            const id = removeWeight.id;
+            // const id = removeWeight.id;
             const temp = state.items
-            console.log(state.items);
+            // console.log(state.items);
 
             let cartItemToRemove;
             let cartItems;
 
              if (quantity > 1) {
-                cartItemToRemove = { ...GreensRemove, qty: quantity - 1 , itemTotal: state.items[removeWeight.id].itemTotal - removeWeight.price }
-                cartItems = { ...state.items, [removeWeight.id] : cartItemToRemove }
+                cartItemToRemove = { ...GreensRemove, qty: state.items[removeWeight.id].qty - 1 , itemTotal: state.items[removeWeight.id].itemTotal - removeWeight.price, itemSizeId: removeWeight.id  }
+                //  console.log("CART REMOVE", cartItemToRemove);
+                return {
+                    ...state,
+                    items: { ...state.items, [removeWeight.id]: cartItemToRemove }
+                }   
                 //  console.log("\n\nRemove From Reducer Log  \n", cartItemToRemove);
                 // temp[id] = cartItemToRemove
                 // cartItems = temp
@@ -71,8 +78,14 @@ export default (state = initialState, action) => {
             } else {
                 cartItems = { ...state.items }
                 delete cartItems[removeWeight.id]
+
+                return {
+                    ...state, 
+                    items: cartItems
+                }
                 // console.log("DELETE THE WHOLE ITEM");
-            }         
+            }   
+              
 
         case CLEAR_CART:
             return {

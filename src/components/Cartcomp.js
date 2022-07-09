@@ -19,7 +19,6 @@ const Cartcomp = (props) => {
     const [weight, setWeight] = useState(WeightProducts?.item_sizes[0]);
     //  console.log(WeightProducts.item_sizes[0]);
     const y = WeightProducts.item_sizes.find(item => item.id === weight.id)
-
     
     // console.log(y)
     
@@ -87,7 +86,7 @@ const Cartcomp = (props) => {
 
                                 <Text style={styles.qtyText} > {x?.qty} </Text>
 
-                                <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item,props.weight)) }}>
+                                <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(props.item, props.weight)) }}>
                                     <Ionicons name={Icons.SUB} size={30} color={Colors.grey} />
                                 </TouchableOpacity>
                             </View>

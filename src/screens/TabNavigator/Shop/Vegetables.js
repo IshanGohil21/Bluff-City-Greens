@@ -145,7 +145,7 @@ const VegetableScreen = (props) => {
                                                 <VeggiComp
                                                     item={item}
                                                     id={item.id}
-                                                    image={item.item_images[0].image}
+                                                    image={item?.item_images[0]?.image}
                                                     name={item.name}
                                                     weight={item.item_sizes?.size}
                                                     price={item.item_sizes[0].price}

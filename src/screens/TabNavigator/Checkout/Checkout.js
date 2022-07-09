@@ -8,6 +8,7 @@ import Vegetables  from '../../../dummy-data/Vegetables';
 import Cartcomp from '../../../components/Cartcomp';
 import { postRequest } from '../../../Helper/ApiHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as CartActions from '../../../Redux/Action/Cart';
 
 const CheckoutScreen = (props) => {
     const cartItems = useSelector( state => {
@@ -19,7 +20,7 @@ const CheckoutScreen = (props) => {
         }
         return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
     })
-    //   console.log("\n\n\n\nCart    ",cartItems);
+       console.log("\n\n\n\nCart          ",cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce( (a,c) => a + c.itemTotal, 0 ) : 0)
     // console.log("\n\n\nSub Total"                      ,subTotal);
@@ -37,6 +38,13 @@ const CheckoutScreen = (props) => {
         getToken();
     },[])
 
+    const dispatch = useDispatch();
+    // const x = cartItems.find(item => item?.itemSizeId === props.weight.id)
+
+    // const [weight, setWeight] = useState(WeightProducts?.item_sizes[0]);
+    // //  console.log(WeightProducts.item_sizes[0]);
+    // const y = WeightProducts.item_sizes.find(item => item.id === weight.id)
+
     return (
         
         <View style={styles.main} >
@@ -51,21 +59,50 @@ const CheckoutScreen = (props) => {
             {/* Body */}
             <View style={styles.body} >
             <ScrollView>
-            
+
+                {/* <View>
+                    {
+                cartItems.map( (item) => {
+                    // console.log("\nMAPPING CART ITEMS",  item);
+                    return (
+                        <View key={item.id} >
+                            <Text>{item.name}</Text>
+                        </View>
+                    )
+                } )
+                    }
+                </View> */}
+
+                {/* <View>
+                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, props.weight)) }}>
+                                    <Ionicons name={Icons.ADD} size={30} color={Colors.grey}  />
+                                </TouchableOpacity>
+
+                                {/* <Text style={styles.qtyText} > {x?.qty} </Text> */}
+
+                                {/* <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, props.weight)) }}>
+                                    <Ionicons name={Icons.ADD} size={30} color={Colors.grey}  />
+                                </TouchableOpacity> */}
+
+                {/* </View> */} 
+
                 <View>
+                    <View>
+                    {cartItems.length  == 0 ? null : 
                     <FlatList
                         data={cartItems}
                         keyExtractor={item => item.itemSizeId}
+                        ListEmptyComponent={() => <View/>}
                         renderItem={({ item }) => {
-                            //  console.log("\n\n\n\n\nCart Items  ", item );
+                            //   console.log("\n\n\n\n\nCart Items  checkout ", item );
                             return (
                                 <View>
                                     <Cartcomp
                                         item={item}
-                                        id={item.id}
-                                        image={item.item_images[0].image}
-                                        name={item.name}
-                                        weight={item.item_sizes.find(obj => obj.id == item.itemSizeId)}
+                                        id={item?.id}
+                                        image={item?.item_images[0].image}
+                                        name={item?.name}
+                                        weight={item?.item_sizes.find(obj => obj.id == item?.itemSizeId)}
                                         // price={item.item_sizes[0].price}
                                         // disPrice={item.item_sizes?.price}
                                         onPress={() => { }}
@@ -74,6 +111,8 @@ const CheckoutScreen = (props) => {
                             )
                         }}
                     />
+                         }
+                    </View>
                     <View style={styles.all} >
                     <View style={styles.total} >
                         <Text style={styles.text2} >Sub Total</Text>
@@ -108,7 +147,7 @@ const CheckoutScreen = (props) => {
                         <Text style={styles.continue} >Continue Shopping</Text>
                     </TouchableOpacity>
                     </View>
-
+        
                 </View> 
                 </ScrollView>
             </View>

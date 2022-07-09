@@ -40,7 +40,8 @@ const VeggiComp = (props) => {
     // console.log(qty);
     
     const x = cartItems.find(item => item?.itemSizeId === weight.id)
-    //  console.log("\nx                           ", x);
+    //   console.log("\nx                           ", x);
+
 
     const y = veggies.item_sizes.find(item => item.id === weight.id)
     //  console.log("\ny    " ,y);
