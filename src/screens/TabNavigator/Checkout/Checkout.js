@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View,Text, StyleSheet, TouchableOpacity, StatusBar, FlatList, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Icons, Colors } from '../../../CommonConfig/CommonConfig';
 import Vegetables  from '../../../dummy-data/Vegetables';
 import Cartcomp from '../../../components/Cartcomp';
@@ -39,11 +38,6 @@ const CheckoutScreen = (props) => {
     },[])
 
     const dispatch = useDispatch();
-    // const x = cartItems.find(item => item?.itemSizeId === props.weight.id)
-
-    // const [weight, setWeight] = useState(WeightProducts?.item_sizes[0]);
-    // //  console.log(WeightProducts.item_sizes[0]);
-    // const y = WeightProducts.item_sizes.find(item => item.id === weight.id)
 
     return (
         
@@ -59,33 +53,6 @@ const CheckoutScreen = (props) => {
             {/* Body */}
             <View style={styles.body} >
             <ScrollView>
-
-                {/* <View>
-                    {
-                cartItems.map( (item) => {
-                    // console.log("\nMAPPING CART ITEMS",  item);
-                    return (
-                        <View key={item.id} >
-                            <Text>{item.name}</Text>
-                        </View>
-                    )
-                } )
-                    }
-                </View> */}
-
-                {/* <View>
-                <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, props.weight)) }}>
-                                    <Ionicons name={Icons.ADD} size={30} color={Colors.grey}  />
-                                </TouchableOpacity>
-
-                                {/* <Text style={styles.qtyText} > {x?.qty} </Text> */}
-
-                                {/* <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(props.item, props.weight)) }}>
-                                    <Ionicons name={Icons.ADD} size={30} color={Colors.grey}  />
-                                </TouchableOpacity> */}
-
-                {/* </View> */} 
-
                 <View>
                     <View>
                     {cartItems.length  == 0 ? null : 

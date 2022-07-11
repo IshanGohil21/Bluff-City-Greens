@@ -8,12 +8,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Cart from '../../../Redux/Action/Cart';
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import SelectAddComp from '../../../components/SelectAddComp';
-// import Cart fr
 import CardsComp from '../../../components/CardsComp';
 import { getRequest, getMainRequest, postRequest } from '../../../Helper/ApiHelper';
-import Toast  from 'react-native-simple-toast';
+import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 const { width } = Dimensions.get('window')
 
@@ -57,19 +57,21 @@ const DeliveryAddressScreen = (props) => {
 
     const [credit, setCredit] = useState([]);
     const getCard = async () => {
-        const response = await getRequest('/customer/get-card');
+        const cardResponse = await getRequest('/customer/get-card');
         //console.log("n\n\n\n\n\nCARD     ",response.data );
         let errorMsg = 'No Credit Cards to Show!';
 
-        if (response.success) {
-            setCredit(response.data.cards.data);
-            //  console.log("\n\n\n\nMAIN_CARD_DETAILS"        ,response.data.cards.data);
+        if (cardResponse.success) {
+            setCredit(cardResponse.data.cards.data);
+            //   console.log("\n\n\n\nMAIN_CARD_DETAILS"        ,cardResponse.data.cards.data);
         }
         else {
             // Toast.show('Initially add card to save & access the card ')
             Alert.alert("Error", errorMsg, [{ text: "Okay" }])
         }
     }
+
+
 
     const [address, setAddress] = useState([]);
     const getAddress = async () => {
@@ -95,7 +97,7 @@ const DeliveryAddressScreen = (props) => {
         itemSizeId: item.itemSizeId
     }))
 
-    //  console.log("\n\n\nTEMP",temp);
+    //   console.log("\n\n\nTEMP",temp);
 
     const onPressPlaceOrder = async (details) => {
         const data = {
@@ -106,15 +108,34 @@ const DeliveryAddressScreen = (props) => {
             delivery_charge: Delivery,
             order_item: temp
         }
-        console.log("\n\n\nData of Place Order API               ", data);
+
+        // console.log("\n\n\nData of Place Order API               ", data);
         const placeOrderResponse = await postRequest('/customer/place-order', data)
         console.log("\n\n\nPlace Order                           ", placeOrderResponse);
+
+        // { state == "Card" ? 
+
+        const tempId = placeOrderResponse.data.order.id
+        // console.log("IDDDDDD", tempId);
+
+        const card_Temp = credit.map(item => ({
+            card_id: item.id
+        }))
+        console.log("CARD TEMPING", card_Temp);
+
+        const cardParams = {
+            orderId: tempId,
+            card_id: card_Temp
+        }
+
+        console.log("\n\n  ONLY CARD PAYMENT PARAMS   ", cardParams);
+        // :
 
         if (placeOrderResponse.success) {
             setOrderStore(placeOrderResponse.data.order)
             // console.log("Stroing details : \n\n ",placeOrderResponse.data.order);
             // console.log("ABCS:   ",OrderStore);
-            props.navigation.navigate('Orders', {order : OrderStore})
+            props.navigation.navigate('Orders', { order: OrderStore })
             dispatch(Cart.clearCart())
             Toast.show('Order Created Successfully')
         }
@@ -122,6 +143,7 @@ const DeliveryAddressScreen = (props) => {
             Toast.show('Something went Wrong')
         }
     }
+// }
 
     const [discount, setDiscount] = useState([]);
     const getDiscount = async () => {
@@ -207,17 +229,17 @@ const DeliveryAddressScreen = (props) => {
                         <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
                             <Image source={Images.timetable} style={styles.timetable} />
 
-                                
-                                <View style={{ paddingHorizontal:8 }} >
+
+                            <View style={{ paddingHorizontal: 8 }} >
                                 <Text>Date</Text>
                                 <Text>{date}</Text>
                             </View>
 
-                            <View style={{ paddingHorizontal:5 }} >
+                            <View style={{ paddingHorizontal: 5 }} >
                                 <Text>Time</Text>
                                 <Text>{time}</Text>
                             </View>
-                            
+
 
                             <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
                         </TouchableOpacity>
@@ -291,6 +313,15 @@ const DeliveryAddressScreen = (props) => {
                         />
                     }
 
+                    <View>
+                        <StripeProvider
+                            publishableKey="pk_test_51KYm9ASJ7crToGEYDadpzSGseBGOmjOfGKCFvTbGWSXJAGvwOGrQTXu3ZnJBKTKNXjYfgsgQTHX6q0WTdxaKrQfj003pXSAxAh"
+                        >
+                            <Text>Hello </Text>
+
+                        </StripeProvider>
+                    </View>
+
                     {/* Total */}
                     <View style={styles.last} >
                         <View style={styles.total} >
@@ -307,26 +338,11 @@ const DeliveryAddressScreen = (props) => {
                             <Text style={styles.bold2} >${parseFloat(total)}</Text>
                         </View>
                     </View>
-                    {/* 
-                    {subTotal === 0 ? 
-                    
-                    <TouchableOpacity style={styles.signin} onPress={() => { onPressPlaceOrder }} disabled={true} >
-                        <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
-                    </TouchableOpacity>
-                    :
-                     <TouchableOpacity style={styles.signin} onPress={() => { onPressPlaceOrder }} >
-                        <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
-                    </TouchableOpacity>} */}
 
-                    {subTotal  === 0 ?
-                        <TouchableOpacity style={styles.signin} onPress={() => { onPressPlaceOrder }} disabled={true} >
+                        <TouchableOpacity style={styles.signin} onPress={onPressPlaceOrder}  disabled={((cartItems.length===0) || (!date) || (!address))? true : false} >
                             <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                         </TouchableOpacity>
-                        :
-                        <TouchableOpacity style={styles.signin} onPress={onPressPlaceOrder} >
-                            <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
-                        </TouchableOpacity>
-                    }
+                   
 
                 </ScrollView>
             </View>

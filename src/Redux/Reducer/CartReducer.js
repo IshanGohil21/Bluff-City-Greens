@@ -71,10 +71,7 @@ export default (state = initialState, action) => {
                     ...state,
                     items: { ...state.items, [removeWeight.id]: cartItemToRemove }
                 }   
-                //  console.log("\n\nRemove From Reducer Log  \n", cartItemToRemove);
-                // temp[id] = cartItemToRemove
-                // cartItems = temp
-                // cartItems = [ ...temp[id] : cartItemToRemove]
+                
             } else {
                 cartItems = { ...state.items }
                 delete cartItems[removeWeight.id]

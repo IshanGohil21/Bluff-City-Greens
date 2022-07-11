@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import AuthStackScreen from "./AuthStackScreen";
 import MainTabScreen from "./MainTabScreen";
+import SplashScreen from "../screens/SplashScreen";
 
 
 const AppStack = createStackNavigator();
@@ -11,9 +12,10 @@ const AppStack = createStackNavigator();
 const AppNavigator = props => {
     return(
         <NavigationContainer>
-            <AppStack.Navigator headerMode='none'>
+            <AppStack.Navigator headerMode='none'  initialRouteName='Splash'>
                 <AppStack.Screen name='Auth' component={AuthStackScreen} />
                 <AppStack.Screen name='MainTab' component={MainTabScreen} />
+                <AppStack.Screen name ='Splash' component={SplashScreen} />
              
             </AppStack.Navigator>
         </NavigationContainer>

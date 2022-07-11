@@ -8,7 +8,7 @@ const ContactScreen = props => {
     return (
         <View style={{ flex: 1 }} >
             <StatusBar backgroundColor={Colors.primary} />
-            <View style={{  padding:20 ,backgroundColor: '#259D57', fontSize: 30, marginTop:20, }}>
+            <View style={{padding:20 ,backgroundColor: '#259D57', fontSize: 30, }}>
                 <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                     <Ionicons
                         name='arrow-back'

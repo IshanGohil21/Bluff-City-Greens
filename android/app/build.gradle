@@ -125,6 +125,11 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
+
+    lintOptions { 
+    checkReleaseBuilds false
+}
+
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -194,9 +199,13 @@ android {
 }
 
 dependencies {
+
+    implementation(project(':stripe_stripe-react-native')) { exclude module: 'appcompat' }
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+    // implementation 'com.stripe:stripe-android:20.7.0'
 
     def isGifEnabled = (findProperty('expo.gif.enabled') ?: "") == "true";
     def isWebpEnabled = (findProperty('expo.webp.enabled') ?: "") == "true";

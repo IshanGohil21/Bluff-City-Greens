@@ -8,9 +8,7 @@ import SignInValidationSchema from "../../Schema/SignInValidationSchema";
 import { Images, Colors, Button } from '../../CommonConfig/CommonConfig'
 import { postRequest, getRequest } from '../../Helper/ApiHelper';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import ShimmerPlaceHolder from 'react-native-shimmer-placeholder'
-import { LinearGradient } from "react-native-svg";
-import { color } from "react-native-reanimated";
+import messaging from '@react-native-firebase/messaging';
 
 const SignInScreen = (props) => {
 
@@ -44,7 +42,6 @@ const SignInScreen = (props) => {
             await AsyncStorage.setItem('userInfo', JSON.stringify(response.data.user))
             // console.log("\n\n\n\n\n USER        ", response.data.user);
             await AsyncStorage.setItem('isLogin', "true")
-
             props.navigation.navigate('MainTab', { screen: 'Home' })
         }
     }
@@ -67,7 +64,7 @@ const SignInScreen = (props) => {
                     </View>
                     <View>
                         <TouchableOpacity onPress={() => props.navigation.navigate('MainTab', { screen: 'Home', params: { skipped: true } })}>
-                            <Text style={styles.skip} > SKIP </Text>
+                            <Text style={styles.skip}> SKIP </Text> 
                         </TouchableOpacity>
                     </View>
 
@@ -77,6 +74,7 @@ const SignInScreen = (props) => {
                             style={styles.image}
                             resizeMode='contain'
                         />
+                        
                         <View style={{ alignItems: 'center', justifyContent: 'center', marginRight: 60 }} >
                             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={styles.bluff}>Bluff City </Text></View>
@@ -99,7 +97,6 @@ const SignInScreen = (props) => {
                         <Text style={styles.emailError}>{errors.email}</Text>
                     }
 
-
                     <Text style={{ color: Colors.white }} >Password</Text>
 
                     <TextInput
@@ -115,6 +112,7 @@ const SignInScreen = (props) => {
                     {touched.password && errors.password &&
                         <Text style={styles.errors}>{errors.password}</Text>
                     }
+
                     <View style={styles.rememberContainer} >
 
                         <View style={{ flexDirection: 'row' }} >

@@ -11,7 +11,7 @@ const CancelorderScreen = (props) => {
     const [checked, setChecked] = useState('first')
 
     const order = props.route.params.order 
-    // console.log("Cancel Params \n\n       ",order);
+     console.log("\nCancel Params       ",order);
 
     const onPressCancel = async() => {
         const data = {
