@@ -19,7 +19,7 @@ const CheckoutScreen = (props) => {
         }
         return updatedCartItems.sort( (a,b) => a.id > b.id ? 1 : -1);
     })
-       console.log("\n\n\n\nCart          ",cartItems);
+    //    console.log("\n\n\n\nCart          ",cartItems);
 
     const subTotal = (cartItems.length ? cartItems.reduce( (a,c) => a + c.itemTotal, 0 ) : 0)
     // console.log("\n\n\nSub Total"                      ,subTotal);

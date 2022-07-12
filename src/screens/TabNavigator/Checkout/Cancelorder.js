@@ -15,7 +15,7 @@ const CancelorderScreen = (props) => {
 
     const onPressCancel = async() => {
         const data = {
-            orderId : order.id,
+            orderId : order,
             cancellation_reason : "Items is not fresh."
         }
         // console.log("CANCEL:  \n\n"  ,data);

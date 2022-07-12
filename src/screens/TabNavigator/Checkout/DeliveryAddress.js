@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, StatusBar, ScrollView, FlatList, TouchableOpacity, Image, Alert, Dimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { RadioButton } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,11 +13,15 @@ import { getRequest, getMainRequest, postRequest } from '../../../Helper/ApiHelp
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
-import { StripeProvider } from '@stripe/stripe-react-native';
+import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 const { width } = Dimensions.get('window')
 
 const DeliveryAddressScreen = (props) => {
+
+    const { initPaymentSheet, presentPaymentSheet } = useStripe()
+
     const [checked, setChecked] = useState('first');
 
     const dispatch = useDispatch();
@@ -49,11 +53,33 @@ const DeliveryAddressScreen = (props) => {
     // console.log(time);
 
     // console.log("CARD_ITEMS         ",cardItems);
+
+    const [ activateCard, setActivateCard ] = useState( {} )
+    //    console.log("\n\nActive CARD       ",activateCard)
+
+    useEffect( async() => {
+      setActivateCard( JSON.parse( await AsyncStorage.getItem('activateCard')))
+    },[]) 
+
+    useEffect( () => {
+        getProfile()
+       
+    },[])
+
+    const [user, setUser] = useState({})
+
+    const getProfile = async() => {
+        setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))   
+    }
+
+    // console.log("USER DETAILS", user.name);
+
+
     useEffect(() => {
         getAddress();
         getCard();
-        getDiscount();
-    }, [credit, address, discount]);
+        // getDiscount();
+    }, [credit, address]);
 
     const [credit, setCredit] = useState([]);
     const getCard = async () => {
@@ -64,14 +90,13 @@ const DeliveryAddressScreen = (props) => {
         if (cardResponse.success) {
             setCredit(cardResponse.data.cards.data);
             //   console.log("\n\n\n\nMAIN_CARD_DETAILS"        ,cardResponse.data.cards.data);
+            // console.log("CREDITSSSssssss         ", credit);
         }
         else {
             // Toast.show('Initially add card to save & access the card ')
             Alert.alert("Error", errorMsg, [{ text: "Okay" }])
         }
     }
-
-
 
     const [address, setAddress] = useState([]);
     const getAddress = async () => {
@@ -88,8 +113,8 @@ const DeliveryAddressScreen = (props) => {
     }
 
     // console.log("CART_ITEMS:        ", cartItems);
+    const [storeID, setStoreID] = useState();
 
-    const [OrderStore, setOrderStore] = useState();
     const temp = cartItems.map(item => ({
         quantity: item.qty,
         subCategoryId: item.subCategoryId,
@@ -99,7 +124,7 @@ const DeliveryAddressScreen = (props) => {
 
     //   console.log("\n\n\nTEMP",temp);
 
-    const onPressPlaceOrder = async (details) => {
+    const onPressPlaceOrder = async () => {
         const data = {
             delivery_date: date,
             delivery_time: time,
@@ -111,54 +136,72 @@ const DeliveryAddressScreen = (props) => {
 
         // console.log("\n\n\nData of Place Order API               ", data);
         const placeOrderResponse = await postRequest('/customer/place-order', data)
-        console.log("\n\n\nPlace Order                           ", placeOrderResponse);
+        console.log("\n\n\nPlace Order", placeOrderResponse);
 
-        // { state == "Card" ? 
-
-        const tempId = placeOrderResponse.data.order.id
+            const tempId = placeOrderResponse.data.order.id
         // console.log("IDDDDDD", tempId);
 
-        const card_Temp = credit.map(item => ({
-            card_id: item.id
-        }))
-        console.log("CARD TEMPING", card_Temp);
+        // console.log("CARD TEMPING", card_Temp);
 
         const cardParams = {
             orderId: tempId,
-            card_id: card_Temp
+            card_id: activateCard.id
         }
 
-        console.log("\n\n  ONLY CARD PAYMENT PARAMS   ", cardParams);
-        // :
+         console.log("\n\n\nONLY CARD PAYMENT PARAMS   ", cardParams);
+
+        const checkOutResponse = await postRequest('/customer/checkout', cardParams)
+
+        console.log("\n\n\nCheckout API LOG", checkOutResponse);
+
+        const  { error }  = await initPaymentSheet({
+            // customerEphemeralKeySecret:checkOutResponse.data.data.customer_id,
+            customerEphemeralKeySecret: user.stripe_id,
+            customerId : checkOutResponse.data.data.customer_id,
+            paymentIntentClientSecret : checkOutResponse.data.data.payment_intent,
+            // merchantDisplayName: user.name
+        })
+
+        console.log("\n\nERRORS  ",error);
+        
+        // console.log("Init Successful!");
+
+        // setTimeout(async() => {
+        //     try {
+        //         const { error } = await presentPaymentSheet()
+        //         console.log(error);
+        //     } catch (e) {
+        //         console.log(e)
+        //     }
+        // }, 5000)
+
+        // await presentPaymentSheet()
+        //    console.log("Present Error");
 
         if (placeOrderResponse.success) {
-            setOrderStore(placeOrderResponse.data.order)
-            // console.log("Stroing details : \n\n ",placeOrderResponse.data.order);
-            // console.log("ABCS:   ",OrderStore);
-            props.navigation.navigate('Orders', { order: OrderStore })
+            setStoreID(placeOrderResponse.data.order)
+            //  console.log("Storing details : \n\n ",placeOrderResponse.data.order.id);
+            //   console.log("ABCS:   ",storeID);
+            props.navigation.navigate('Orders', { order: storeID })
             dispatch(Cart.clearCart())
+            
             Toast.show('Order Created Successfully')
         }
         else {
             Toast.show('Something went Wrong')
         }
     }
-// }
 
-    const [discount, setDiscount] = useState([]);
-    const getDiscount = async () => {
-        const response = await getRequest('/customer/get-coupons');
-        //   console.log("\n\n\nDiscount Coupons    ", response.data);
-        let errorMsg = "No Discount Copons available";
+    // const openPaymentSheet = async () => {
+        
 
-        if (response.success) {
-            setDiscount(response.data)
-            // console.log(response.data)
-        }
-        else {
-            Alert.alert("Error", errorMsg, [{ text: 'Okay' }])
-        }
-    }
+    // const rbButtonHandler = () => {
+    //     props.navigation.popToTop()
+    //     dispatch(Cart.clearCart())
+    //     refRBSheet.current.close()
+    //     props.navigation.navigate('Orders', { order: storeID })
+    // }
+    // }
 
     useEffect(() => {
         setTimeout(() => {
@@ -177,176 +220,210 @@ const DeliveryAddressScreen = (props) => {
 
     return (
 
-        <View style={styles.main} >
-            {/* // Main Screen Styling */}
-            <StatusBar backgroundColor={Colors.primary} />
-            {/* Header */}
-            <View style={styles.header} >
-                <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-                    <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.back} />
-                </TouchableOpacity>
-                <Text style={styles.checkout} >Checkout</Text>
-            </View>
-            {/* Body */}
-            <View style={styles.body} >
-                <ScrollView>
-                    <View style={styles.headings} >
-                        <Text style={styles.deliveryText} >Delivery Address</Text>
-                        <TouchableOpacity onPress={() => { props.navigation.navigate('MyAccount', { screen: 'AddNewAddress' }) }} >
-                            <Text style={styles.newAdd} >Add New</Text>
-                        </TouchableOpacity>
-                    </View>
+        <StripeProvider publishableKey='pk_test_51KYm9ASJ7crToGEYDadpzSGseBGOmjOfGKCFvTbGWSXJAGvwOGrQTXu3ZnJBKTKNXjYfgsgQTHX6q0WTdxaKrQfj003pXSAxAh'>
+            <View style={styles.main} >
+                {/* // Main Screen Styling */}
+                <StatusBar backgroundColor={Colors.primary} />
+                {/* Header */}
+                <View style={styles.header} >
+                    <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
+                        <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.back} />
+                    </TouchableOpacity>
+                    <Text style={styles.checkout} >Checkout</Text>
+                </View>
+                {/* Body */}
+                <View style={styles.body} >
+                    <ScrollView>
+                        <View style={styles.headings} >
+                            <Text style={styles.deliveryText} >Delivery Address</Text>
+                            <TouchableOpacity onPress={() => { props.navigation.navigate('MyAccount', { screen: 'AddNewAddress' }) }} >
+                                <Text style={styles.newAdd} >Add New</Text>
+                            </TouchableOpacity>
+                        </View>
 
-                    <View>
-                        <FlatList
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            data={address}
-                            renderItem={({ item }) => {
-                                //    console.log("\n\nAddress Items    ", item);
-                                return (
-                                    <View key={item.id}>
-                                        {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
-                                            <SelectAddComp
-                                                item={item}
-                                                id={item.id}
-                                                tag={tag(item.is_select)}
-                                                name={item.primary_address}
-                                                address={item.addition_address_info}
-                                            />
-                                        }
-                                    </View>
-                                )
-                            }}
-                        />
-                    </View>
-                    {/* Delivery */}
-                    <View style={styles.delivery} >
-                        <Text style={styles.schedule} >Schedule Delivery</Text>
-                    </View>
-
-                    <View style={styles.scheduleD} >
-                        <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
-                            <Image source={Images.timetable} style={styles.timetable} />
-
-
-                            <View style={{ paddingHorizontal: 8 }} >
-                                <Text>Date</Text>
-                                <Text>{date}</Text>
-                            </View>
-
-                            <View style={{ paddingHorizontal: 5 }} >
-                                <Text>Time</Text>
-                                <Text>{time}</Text>
-                            </View>
-
-
-                            <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
-                        </TouchableOpacity>
-                    </View>
-
-                    {/* Payment Method */}
-                    <View style={styles.deliver0} >
-                        <Text style={styles.schedule} >Payment Method</Text>
-                        <TouchableOpacity onPress={() => { props.navigation.navigate('AddCard') }} >
-                            <Text style={styles.newAdd} >Add New</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.buttonContainer} >
-                        <View style={styles.button} >
-                            <RadioButton
-                                value="first"
-                                color={Colors.primary}
-                                status={checked === 'first' ? 'checked' : 'unchecked'}
-                                onPress={() => {
-                                    setChecked('first')
-                                    setState('COD')
+                        <View>
+                            <FlatList
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                data={address}
+                                renderItem={({ item }) => {
+                                    //    console.log("\n\nAddress Items    ", item);
+                                    return (
+                                        <View key={item.id}>
+                                            {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
+                                                <SelectAddComp
+                                                    item={item}
+                                                    id={item.id}
+                                                    tag={tag(item.is_select)}
+                                                    name={item.primary_address}
+                                                    address={item.addition_address_info}
+                                                />
+                                            }
+                                        </View>
+                                    )
                                 }}
                             />
-                            <Text>Cash or EBT</Text>
+                        </View>
+                        {/* Delivery */}
+                        <View style={styles.delivery} >
+                            <Text style={styles.schedule} >Schedule Delivery</Text>
                         </View>
 
-                        <View style={styles.button} >
-                            <RadioButton
-                                value="second"
-                                color={Colors.primary}
-                                status={checked === 'second' ? 'checked' : 'unchecked'}
-                                onPress={() => {
-                                    setChecked('second')
-                                    setState('Card')
+                        <View style={styles.scheduleD} >
+                            <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
+                                <Image source={Images.timetable} style={styles.timetable} />
+
+
+                                <View style={{ paddingHorizontal: 8 }} >
+                                    <Text>Date</Text>
+                                    <Text>{date}</Text>
+                                </View>
+
+                                <View style={{ paddingHorizontal: 5 }} >
+                                    <Text>Time</Text>
+                                    <Text>{time}</Text>
+                                </View>
+
+
+                                <Ionicons name={Icons.DOWN_ARROW} color={Colors.grey} size={24} />
+                            </TouchableOpacity>
+                        </View>
+
+                        {/* Payment Method */}
+                        <View style={styles.deliver0} >
+                            <Text style={styles.schedule} >Payment Method</Text>
+                            <TouchableOpacity onPress={() => { props.navigation.navigate('AddCard') }} >
+                                <Text style={styles.newAdd} >Add New</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.buttonContainer} >
+                            <View style={styles.button} >
+                                <RadioButton
+                                    value="first"
+                                    color={Colors.primary}
+                                    status={checked === 'first' ? 'checked' : 'unchecked'}
+                                    onPress={() => {
+                                        setChecked('first')
+                                        setState('COD')
+                                    }}
+                                />
+                                <Text>Cash or EBT</Text>
+                            </View>
+
+                            <View style={styles.button} >
+                                <RadioButton
+                                    value="second"
+                                    color={Colors.primary}
+                                    status={checked === 'second' ? 'checked' : 'unchecked'}
+                                    onPress={() => {
+                                        setChecked('second')
+                                        setState('online')
+                                    }}
+                                />
+                                <Text>Card</Text>
+                            </View>
+                        </View>
+                        {/* Adding Credit or Debit Card */}
+                        {state === 'COD' ? <View>
+                            <View style={styles.cod} >
+                                <Image source={Images.money} style={styles.cash} />
+                                <Text style={styles.codText} >Cash on Delivery</Text>
+                            </View>
+
+                        </View>
+
+                            :
+
+                            <FlatList
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                data={credit}
+                                renderItem={({ item, index }) => {
+                                    //   console.log("\n\n\n\n\nCARD_ITEMDATA         ",item);
+                                    return (
+                                        <View key={index} >
+                                            {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} contentStyle={styles.content} /> :
+                                                <CardsComp
+                                                    item={item}
+                                                    id={item.id}
+                                                    number={item.last4}
+                                                    image={item.image}
+                                                    brand={item.brand}
+                                                />
+                                            }
+                                        </View>
+                                    )
                                 }}
                             />
-                            <Text>Card</Text>
-                        </View>
-                    </View>
-                    {/* Adding Credit or Debit Card */}
-                    {state === 'COD' ? <View>
-                        <View style={styles.cod} >
-                            <Image source={Images.money} style={styles.cash} />
-                            <Text style={styles.codText} >Cash on Delivery</Text>
-                        </View>
+                        }
 
-                    </View>
-                        :
-
-                        <FlatList
-                            horizontal
-                            showsHorizontalScrollIndicator={false}
-                            data={credit}
-                            renderItem={({ item, index }) => {
-                                //   console.log("\n\n\n\n\nCARD_ITEMDATA         ",item);
-                                return (
-                                    <View key={index} >
-                                        {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} contentStyle={styles.content} /> :
-                                            <CardsComp
-                                                item={item}
-                                                id={item.id}
-                                                number={item.last4}
-                                                image={item.image}
-                                                brand={item.brand}
-                                            />
-                                        }
-                                    </View>
-                                )
-                            }}
-                        />
-                    }
-
-                    <View>
+                        {/* <View>
                         <StripeProvider
                             publishableKey="pk_test_51KYm9ASJ7crToGEYDadpzSGseBGOmjOfGKCFvTbGWSXJAGvwOGrQTXu3ZnJBKTKNXjYfgsgQTHX6q0WTdxaKrQfj003pXSAxAh"
                         >
-                            <Text>Hello </Text>
 
                         </StripeProvider>
-                    </View>
+                    </View> */}
 
-                    {/* Total */}
-                    <View style={styles.last} >
-                        <View style={styles.total} >
-                            <Text style={styles.text2} >Sub Total</Text>
-                            <Text style={styles.text3} >${subTotal.toFixed(2)}</Text>
-                        </View>
-                        <View style={styles.total} >
-                            <Text style={styles.text2} >Delivery Charges</Text>
-                            <Text style={styles.text3} >${Delivery}</Text>
+                        {/* Total */}
+                        <View style={styles.last} >
+                            <View style={styles.total} >
+                                <Text style={styles.text2} >Sub Total</Text>
+                                <Text style={styles.text3} >${subTotal.toFixed(2)}</Text>
+                            </View>
+                            <View style={styles.total} >
+                                <Text style={styles.text2} >Delivery Charges</Text>
+                                <Text style={styles.text3} >${Delivery}</Text>
+                            </View>
+
+                            <View style={styles.total} >
+                                <Text style={styles.bold} >Total Amount</Text>
+                                <Text style={styles.bold2} >${parseFloat(total)}</Text>
+                            </View>
                         </View>
 
-                        <View style={styles.total} >
-                            <Text style={styles.bold} >Total Amount</Text>
-                            <Text style={styles.bold2} >${parseFloat(total)}</Text>
-                        </View>
-                    </View>
-
-                        <TouchableOpacity style={styles.signin} onPress={onPressPlaceOrder}  disabled={((cartItems.length===0) || (!date) || (!address))? true : false} >
+                        <TouchableOpacity style={styles.signin} onPress={onPressPlaceOrder} disabled={((cartItems.length === 0) || (!date) || (!address)) ? true : false} >
                             <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                         </TouchableOpacity>
-                   
 
-                </ScrollView>
+                        {/* <RBSheet
+                    ref={refRBSheet}
+                    closeOnDragDown={false}
+                    closeOnPressMask={false}
+                    closeOnPressBack={false}
+                    dragFromTopOnly
+                    customStyles={{
+                    wrapper: {
+                        backgroundColor: "rgba(0,0,0,0.5)"
+                    },
+                    container:{
+                        height:'auto',
+                        paddingHorizontal:20,
+                        backgroundColor: Colors.WHITE,
+                        borderTopRightRadius:30,
+                        borderTopLeftRadius:30,
+                    }
+                    }}
+                >
+                    <View style={{justifyContent:'space-between'}}>
+                        <View style={styles.rbView}>
+                            <Image source={Images.ORDER_SUCCESSFUL} style={styles.rbImage}/>
+                            <Text style={styles.rbText}>Your order was placed successfully!</Text>
+                        </View>
+                        <View style={styles.rbLine} />
+                        <TouchableOpacity style={styles.rbButton} onPress={rbButtonHandler} >
+                            <Text style={styles.rbOk}>OK</Text>
+                        </TouchableOpacity>
+                    </View>
+                </RBSheet> */}
+
+
+                    </ScrollView>
+                </View>
             </View>
-        </View>
+
+        </StripeProvider>
     )
 }
 

@@ -25,18 +25,16 @@ const CardsComp = (props) => {
     }
   }
 
-  const [ activateCard, setActivateCard ] = useState( {} )
-      // console.log("\n\nActive CARD       ",activateCard)
+  // const [ activateCard, setActivateCard ] = useState( {} )
+  //     //  console.log("\n\nActive CARD       ",activateCard)
 
-    useEffect( async() => {
-      setActivateCard( JSON.parse( await AsyncStorage.getItem('activateCard')))
-    },[]) 
+  //   useEffect( async() => {
+  //     setActivateCard( JSON.parse( await AsyncStorage.getItem('activateCard')))
+  //   },[]) 
 
   return (
       <TouchableOpacity style={{...styles.main, borderRadius:props.id === activeCard ? 10: 10, borderColor: props.id === activeCard ? Colors.primary: null, borderWidth: props.id === activeCard ? 1 : 0, elevation: props.id === activeCard ? 0 : 0.01 }} onPress={async() => {dispatch(CardAction.activatePayment(props.id)), await AsyncStorage.setItem('activateCard', JSON.stringify(props.item))}}>
     {/* <View  > */}
-      {/* Image */}
-      {/* <Text style={styles.imageStyle} >{props.brand}</Text> */}
       <Image  source={logoSelector(props.brand)}  style={styles.imageStyle} />
       <Text style={styles.cardnum} > **** **** ****{props.number}</Text>
     {/* </View> */}

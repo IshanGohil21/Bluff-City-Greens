@@ -1,15 +1,22 @@
 import { Image, StatusBar, StyleSheet, View, ActivityIndicator } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CommonActions } from '@react-navigation/native';
 
 import { Colors, Images, Icons } from '../CommonConfig/CommonConfig';
 
 const SplashScreen = (props) => {
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         loadApp()
     }, [])
+
+    useEffect( () => {
+        setTimeout( () => {
+            setIsLoading(false)
+        }, 3000 )
+    }, [] )
 
     const loadApp = async () => {
 
@@ -30,7 +37,7 @@ const SplashScreen = (props) => {
         }
     }
 
-    return (
+    return ( 
         <View style={styles.screen}>
             <StatusBar backgroundColor={Colors.primary} />
             <Image source={Images.grains} style={{ width: 200, height: 200 }} />

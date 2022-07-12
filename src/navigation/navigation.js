@@ -12,7 +12,9 @@ const AppStack = createStackNavigator();
 const AppNavigator = props => {
     return(
         <NavigationContainer>
-            <AppStack.Navigator headerMode='none'  initialRouteName='Splash'>
+            <AppStack.Navigator headerMode='none' 
+            //  initialRouteName='Splash'
+             >
                 <AppStack.Screen name='Auth' component={AuthStackScreen} />
                 <AppStack.Screen name='MainTab' component={MainTabScreen} />
                 <AppStack.Screen name ='Splash' component={SplashScreen} />

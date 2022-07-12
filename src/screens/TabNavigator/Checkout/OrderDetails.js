@@ -13,7 +13,7 @@ const OrderDetailsScreen = (props) => {
   const dispatch = useDispatch();
 
   const Order = props.route.params.order;
-  //  console.log("Oder reciept         ",Order);
+    // console.log("Oder reciept         ",Order);
 
   var RandomNumber = Math.floor(Math.random() * 100) + 100;
   var RandomNumber2 = Math.floor(Math.random() * 1000) + 1000;
@@ -49,16 +49,6 @@ const OrderDetailsScreen = (props) => {
     if (address_type === 1) return "Work"
     if (address_type === 2) return "Other"
   }
-
-  const onPressCancelOrder = async() => {
-    const data = {
-      // orderId : ,
-      // cancellation_reason : 
-    }
-    console.log("DATA CANCEL: \n", data);
-  }
-
-
 
   return (
 
