@@ -13,14 +13,15 @@ import { getRequest, getMainRequest, postRequest } from '../../../Helper/ApiHelp
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
-import { StripeProvider, useStripe } from '@stripe/stripe-react-native';
+import { StripeProvider, useStripe, CardField, useConfirmPayment } from '@stripe/stripe-react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import { set } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window')
 
 const DeliveryAddressScreen = (props) => {
 
-    const { initPaymentSheet, presentPaymentSheet } = useStripe()
+    const { initPaymentSheet, presentPaymentSheet, confirmPaymentSheetPayment } = useStripe()
 
     const [checked, setChecked] = useState('first');
 
@@ -54,22 +55,22 @@ const DeliveryAddressScreen = (props) => {
 
     // console.log("CARD_ITEMS         ",cardItems);
 
-    const [ activateCard, setActivateCard ] = useState( {} )
+    const [activateCard, setActivateCard] = useState({})
     //    console.log("\n\nActive CARD       ",activateCard)
 
-    useEffect( async() => {
-      setActivateCard( JSON.parse( await AsyncStorage.getItem('activateCard')))
-    },[]) 
+    useEffect(async () => {
+        setActivateCard(JSON.parse(await AsyncStorage.getItem('activateCard')))
+    }, [])
 
-    useEffect( () => {
+    useEffect(() => {
         getProfile()
-       
-    },[])
+
+    }, [])
 
     const [user, setUser] = useState({})
 
-    const getProfile = async() => {
-        setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))   
+    const getProfile = async () => {
+        setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
     }
 
     // console.log("USER DETAILS", user.name);
@@ -138,8 +139,8 @@ const DeliveryAddressScreen = (props) => {
         const placeOrderResponse = await postRequest('/customer/place-order', data)
         console.log("\n\n\nPlace Order", placeOrderResponse);
 
-            const tempId = placeOrderResponse.data.order.id
-        // console.log("IDDDDDD", tempId);
+        const tempId = placeOrderResponse.data.order.id
+        //  console.log("IDDDDDD", tempId);
 
         // console.log("CARD TEMPING", card_Temp);
 
@@ -148,52 +149,70 @@ const DeliveryAddressScreen = (props) => {
             card_id: activateCard.id
         }
 
-         console.log("\n\n\nONLY CARD PAYMENT PARAMS   ", cardParams);
+        console.log("\n\n\nONLY CARD PAYMENT PARAMS   ", cardParams);
 
         const checkOutResponse = await postRequest('/customer/checkout', cardParams)
 
         console.log("\n\n\nCheckout API LOG", checkOutResponse);
 
-        const  { error }  = await initPaymentSheet({
-            // customerEphemeralKeySecret:checkOutResponse.data.data.customer_id,
+        const { error } = await initPaymentSheet({
             customerEphemeralKeySecret: user.stripe_id,
-            customerId : checkOutResponse.data.data.customer_id,
-            paymentIntentClientSecret : checkOutResponse.data.data.payment_intent,
-            // merchantDisplayName: user.name
+            customerId: checkOutResponse.data.data.customer_id,
+            paymentIntentClientSecret: checkOutResponse.data.data.payment_intent,
+            merchantDisplayName: 'com.ishan21.bluffcitygreens',
+            testEnv:true,
         })
+        console.log("Init Successful!");
 
-        console.log("\n\nERRORS  ",error);
-        
-        // console.log("Init Successful!");
+        // console.log(payRESP);
+
+        const  errorss  = await presentPaymentSheet({
+            confirmPayment: false,
+            clientSecret: checkOutResponse.data.data.payment_intent
+          })
+
+        //   console.log(error);
+
+            if (error) {
+                Alert.alert(`Error code: ${error.code}`, error.message);
+            } else {
+                Alert.alert(
+                    'Success',
+                    'Your order is confirmed!'
+                );
+            }
 
         // setTimeout(async() => {
-        //     try {
-        //         const { error } = await presentPaymentSheet()
+        //     if (error)  {
+        //          await presentPaymentSheet()
         //         console.log(error);
-        //     } catch (e) {
-        //         console.log(e)
+        //     } else {
+        //         console.log("ERROR")
         //     }
         // }, 5000)
 
-        // await presentPaymentSheet()
+        // await presentPaymentSheet({
+        //     clientSecret: checkOutResponse.data.data.payment_intent
+        // })
+
         //    console.log("Present Error");
 
         if (placeOrderResponse.success) {
-            setStoreID(placeOrderResponse.data.order)
+
             //  console.log("Storing details : \n\n ",placeOrderResponse.data.order.id);
             //   console.log("ABCS:   ",storeID);
+            
+            setStoreID(placeOrderResponse.data.order)
             props.navigation.navigate('Orders', { order: storeID })
             dispatch(Cart.clearCart())
-            
             Toast.show('Order Created Successfully')
         }
         else {
             Toast.show('Something went Wrong')
         }
     }
-
     // const openPaymentSheet = async () => {
-        
+
 
     // const rbButtonHandler = () => {
     //     props.navigation.popToTop()
@@ -386,6 +405,35 @@ const DeliveryAddressScreen = (props) => {
                         <TouchableOpacity style={styles.signin} onPress={onPressPlaceOrder} disabled={((cartItems.length === 0) || (!date) || (!address)) ? true : false} >
                             <Text style={styles.CheckboxButton} >PLACE ORDER</Text>
                         </TouchableOpacity>
+                        {/* <View>
+                            { state === 'online' ?
+                            <CardField
+
+                                // postalCodeEnabled={true}
+                                placeholders={{
+                                    number: '**** **** **** ****',
+                                }}
+                                cardStyle={{
+                                    backgroundColor: '#FFFFFF',
+                                    textColor: '#000000',
+                                }}
+                                style={{
+                                    width: '100%',
+                                    height: 50,
+                                    marginVertical: 30,
+                                }}
+                                onCardChange={(cardDetails) => {
+                                    console.log('cardDetails', cardDetails);
+                                }}
+                                onFocus={(focusedField) => {
+                                    console.log('focusField', focusedField);
+                                }}
+                            />
+                        
+                           : null }
+
+
+                           </View> */}
 
                         {/* <RBSheet
                     ref={refRBSheet}
