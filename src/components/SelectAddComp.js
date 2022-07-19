@@ -14,12 +14,12 @@ const SelectAddComp = (props) => {
     const activeId = useSelector(state => state.Address.activeAddress)
     // console.log(activeId);
 
-    const [ activeAddress, setActiveAddress ] = useState( {} )
-    //  console.log("\n\nActive null        ",activeAddress)
+    // const [ activeAddress, setActiveAddress ] = useState( {} )
+    // //  console.log("\n\nActive null        ",activeAddress)
 
-    useEffect( async() => {
-        setActiveAddress( JSON.parse( await AsyncStorage.getItem('activeAddress')))
-    },[])  
+    // useEffect( async() => {
+    //     setActiveAddress( JSON.parse( await AsyncStorage.getItem('activeAddress')))
+    // },[])  
 
     const addObj = props.item
     // console.log("\n\nADDRESS OBJ         ",addObj)

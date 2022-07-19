@@ -6,9 +6,11 @@ buildscript {
         minSdkVersion = 21
         compileSdkVersion = 31
         targetSdkVersion = 31
+        minCompileSdk = 30
         supportLibVersion = "30.0.2"         //ADD THIS
         googlePlayServicesVersion = "17.0.0" //ADD THIS
         androidMapsUtilsVersion = "2.3.0" 
+        ndkVersion = "25.0.8775105"
     }
     repositories {
         google()
@@ -18,8 +20,6 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:4.1.0")
         classpath 'com.google.gms:google-services:4.3.10'
-       
-
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

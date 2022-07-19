@@ -48,6 +48,7 @@ import CancelorderScreen from '../screens/TabNavigator/Checkout/Cancelorder';
 
 import AddCard from '../screens/TabNavigator/Checkout/AddCard';
 import ScheduleDelivery from '../screens/TabNavigator/Checkout/ScheduleDelivery';
+import checkoutDeliveryScreen from '../screens/TabNavigator/Checkout/ChekoutDelivery';
 
 import Icons from '../CommonConfig/Icons';
 
@@ -157,7 +158,6 @@ const ShopStackScreen = () => {
             <ShopStack.Screen name='Shop' component={ShopScreen} />
             <ShopStack.Screen name='Fruits' component={FruitShopScreen} />
             <ShopStack.Screen name='Vegetables' component={Vegetables} />
-            
         </ShopStack.Navigator>
     )
 }
@@ -173,7 +173,6 @@ const CheckoutStackScreen = () => {
             <CheckoutStack.Screen  name='ScheduleDelivery' component={ScheduleDelivery} />
             <CheckoutStack.Screen name='TrackOrder' component={TrackOrderScreen} />
             <CheckoutStack.Screen name='Cancel' component={CancelorderScreen} />
-            
         </CheckoutStack.Navigator>
     )
 }
