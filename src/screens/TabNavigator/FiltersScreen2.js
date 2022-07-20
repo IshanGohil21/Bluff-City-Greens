@@ -51,8 +51,6 @@ const FiltersScreen2 = (props) => {
                 <TouchableOpacity style={styles.applyButton} onPress={() => {props.navigation.navigate('Search')} } >
                     <Text style={styles.apply} >APPLY</Text>
                 </TouchableOpacity>
-
-
             </View>
         </View>
     )

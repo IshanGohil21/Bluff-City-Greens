@@ -15,7 +15,7 @@ import Products from '../../../../components/Products';
 const OrderDetailsScreenAccount = (props) => {
     const orderId = props.route.params.orderId
     const order = props.route.params.order
-    // console.log("\n\n\n\n\n\n Orders Details             " ,order);
+    //  console.log("\n\n Orders Details             " ,order);
 
     const refRBSheet = useRef()
 
@@ -64,7 +64,7 @@ const OrderDetailsScreenAccount = (props) => {
                     <View style={styles.orderMain} >
                         <View style={styles.order}>
                             <Text style={styles.orderIn} >Order Date :          </Text>
-                            <Text style={styles.orderTxt} >{moment(order.item.delivery_date).format('do MMMM YYYY ')}</Text>
+                            <Text style={styles.orderTxt} >{(order.item.delivery_date)}</Text>
 
                         </View>
 
@@ -80,20 +80,19 @@ const OrderDetailsScreenAccount = (props) => {
 
                     </View>
 
-                    
                     <Text style={styles.add}>Product Details</Text>
                     <View style={styles.flat} >
                     <FlatList
                         data={order.item.order_items}
                         showsVerticalScrollIndicator={false}
                         renderItem={(item) => {
-                            console.log("\n\n\n\nProduct Details               ",item);
+                            console.log("\n\n\n\nProduct Details               ",item.item);
                             return (
                                 <View>
                                     <Products
-                                        title={item.item.sub_category.title}
-                                        image={item.item.item.item_images[0].image}
-                                        name={item.item.item.name}
+                                        //  title={item.sub_category.title}
+                                         image={item.item.item.item_images[0].image}
+                                         name={item.item.item.name}
                                         size={item.item.item_size.size}
                                         qty={item.item.quantity}
                                         price={item.item.item_size.price}
@@ -127,7 +126,7 @@ const OrderDetailsScreenAccount = (props) => {
                         <View style={styles.delivery} >
                             <Ionicons name={Icons.CALANDER} size={24} color={Colors.grey} />
                             <Text style={styles.orderIn} >    Delivery Date :</Text>
-                            <Text style={styles.week} >{moment(order.item.delivery_date).format('do MMMM YYYY ')}</Text>
+                            <Text style={styles.week} >{order.item.delivery_date}</Text>
                         </View>
 
                         <View style={styles.delivery2} >

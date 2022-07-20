@@ -102,10 +102,6 @@ const MyOrdersScreen = props => {
                     <View>
                        
                             <FlatList
-                                // ListFooterComponent={renderLoader}
-                                // onEndReached={loadMoreItem}
-                                // onEndReached={()=>{console.log("hi")}}
-                                // onEndReachedThreshold={0.5}
                                 data={pastOrder}
                                 showsVerticalScrollIndicator={false}
                                 renderItem={(item) => {
@@ -140,20 +136,20 @@ const MyOrdersScreen = props => {
                                 data={currentOrder}
                                 showsVerticalScrollIndicator={false}
                                 renderItem={(item) => {
-                                    //  console.log("\n\n\nCurrent     ", item);
+                                    //   console.log("\n\n\nCurrent     ", item);
                                     return (
                                         <View key={item.id} >
                                             {/* <Text>Hello</Text> */}
                                             <OrderProfile
                                                 id={item.item.id}
-                                                date={moment(item.item.delivery_date).format('ddd, Do MMM YYYY')}
+                                                date={item.item.delivery_date}
                                                 time={item.item.delivery_time}
                                                 Order_Number={val}
                                                 Order_Number1={num}
                                                 quantity={item.item.order_items.length}
                                                 total={item.item.total_amount}
                                                 status={item.item.status}
-                                            // onClick={ () => {props.navigation.navigate('OrderDetails',{ order:item, orderId: item.id })} }
+                                                onClick={ () => {props.navigation.navigate('OrderDetails',{ order:item, orderId: item.id })} }
                                             />
                                         </View>
                                     )
@@ -172,13 +168,14 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        flex: 0.6,
+        flex: 0.5,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
         padding: 10,
     },
     back: {
-        color: Colors.white
+        color: Colors.white,
+        marginTop: 20
     },
     my: {
         fontSize: 24,
