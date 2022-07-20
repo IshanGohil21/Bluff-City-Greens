@@ -15,7 +15,7 @@ const AuthStack = createStackNavigator();
 
 const AuthStackScreen = ({ navigation }) => {
     return(
-        <AuthStack.Navigator headerMode='none' initialRouteName='Location' >
+        <AuthStack.Navigator headerMode='none' initialRouteName='Splash' >
             <AuthStack.Screen name="Location" component={LocationScreen} />
              <AuthStack.Screen name="SignIn" component={SignInScreen} />
              <AuthStack.Screen name="SignUp" component={SignUpScreen} />
@@ -25,7 +25,6 @@ const AuthStackScreen = ({ navigation }) => {
             <AuthStack.Screen name="AccessibilityPolicy" component={AccessibilityPolicyScreen} />
             <AuthStack.Screen name="PickCurrentLocation" component={PickCurrentLocationScreen} />
             <AuthStack.Screen name="Splash" component={SplashScreen} />
-            
         </AuthStack.Navigator>
     );
 }
