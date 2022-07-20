@@ -132,12 +132,12 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         justifyContent:'space-between',
         //padding:10,
-       // marginTop: 20,
+       
       paddingVertical:10
     },
     back: {
-         paddingHorizontal:10,
-        paddingHorizontal:10
+        paddingHorizontal:10,
+        marginTop: 25,
     },
     cartext:{
         fontSize:24,

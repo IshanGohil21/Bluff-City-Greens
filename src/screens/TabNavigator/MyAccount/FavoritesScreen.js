@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, Animated, Dimensions, ToastAndroid } from 'react-native';
+import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, Animated, Dimensions, ToastAndroid, StatusBar } from 'react-native';
 
 import { RangeSlider } from '@sharcoux/slider';
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
@@ -39,6 +39,7 @@ const FavoritesScreen = props => {
 
     return (
         <View  style={styles.main}>
+            <StatusBar backgroundColor={Colors.primary} />
             {/* Main */}
             <View style={styles.header} >
             {/* Header & Title */}
@@ -78,7 +79,6 @@ const FavoritesScreen = props => {
 const styles= StyleSheet.create({
     main:{
         flex:1,
-        // backgroundColor: Colors.primary
     },
     header:{
         flex:0.6,
@@ -87,7 +87,8 @@ const styles= StyleSheet.create({
         padding:10
     },
     back:{
-        justifyContent:'space-between', 
+        justifyContent:'space-between',
+        marginTop:20
     },
     fav:{
         fontSize:24,

@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
 
     },
     back: {
-        // marginTop: 20,
+        marginTop: 20,
         padding: 10
     },
     title: {

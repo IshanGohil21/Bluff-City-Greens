@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 0.5,
     backgroundColor: Colors.primary,
     justifyContent: 'space-between',
-    // marginTop:20,
+    marginTop:20,
     padding: 10
   },
   time: {

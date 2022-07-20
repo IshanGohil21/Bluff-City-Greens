@@ -9,16 +9,18 @@ const ContactScreen = props => {
         <View style={{ flex: 1 }} >
             <StatusBar backgroundColor={Colors.primary} />
             
-            <View style={{paddingHorizontal:10,paddingVertical:10 ,backgroundColor: '#259D57',  }}>
-                <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
-                    <Ionicons
-                        name='arrow-back'
-                        size={30}
-                        color='white'
-                        style={{paddingHorizontal:5, marginTop:10}}
-                    />
-                </TouchableOpacity>
-                <Text style={styles.text} > Contact Us </Text>
+            <View style={{paddingHorizontal:10,paddingVertical:10 ,backgroundColor: '#259D57', }}>
+                
+                    <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
+                        <Ionicons
+                            name='arrow-back'
+                            size={30}
+                            color='white'
+                            style={{paddingHorizontal:5, marginTop:20}}
+                        />
+                    </TouchableOpacity>
+                    <Text style={styles.text} > Contact Us </Text>
+               
             </View>
             
 

@@ -33,6 +33,7 @@ const FAQScreen = (props) => {
                         name={Icons.BACK_ARROW}
                         size={30}
                         color={Colors.white}
+                        style={{marginTop:20}}
                     />
                 </TouchableOpacity>
                 <Text style={styles.text} > FAQ </Text>

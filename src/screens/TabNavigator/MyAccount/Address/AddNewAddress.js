@@ -72,7 +72,7 @@ const AddNewAddressScreen = (props) => {
                             props.navigation.goBack()
                         }}
                         >
-                            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.back} />
+                            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={{marginTop:20}} />
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryCheckout') }} >

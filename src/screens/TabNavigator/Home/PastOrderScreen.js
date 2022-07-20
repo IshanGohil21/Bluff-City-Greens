@@ -273,6 +273,7 @@ const styles = StyleSheet.create({
     back: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+        marginTop: 10,
     },
     titleIcons: {
         padding: 15,

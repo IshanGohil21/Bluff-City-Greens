@@ -45,9 +45,7 @@ const personalInfoScreen = props => {
                 </View>
 
                 {/*Title*/}
-                
                     <Text style={styles.title}> Personal Information </Text>
-                
             </View>
             { /* Body */}
 
@@ -88,6 +86,9 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 25,
         justifyContent: 'space-between',
+    },
+    icon:{
+        marginTop:20
     },
     signin: {
         width: "90%",

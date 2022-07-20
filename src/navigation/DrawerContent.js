@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
     },
     header: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginTop:10
     },
     categories: {
         fontSize: 24,

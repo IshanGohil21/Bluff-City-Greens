@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
         // paddingVertical: 10
     },
     back: {
-        marginTop: 10,
+        marginTop: 20,
         padding: 10
     },
     title: {

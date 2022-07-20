@@ -401,7 +401,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        flex: 0.38,
+        flex: 0.5,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
         paddingVertical: 10,
@@ -507,9 +507,9 @@ const styles = StyleSheet.create({
         color: Colors.white,
         fontWeight: '800',
     },
-    // back: {
-    //     marginTop: 30
-    // },
+    back: {
+        marginTop: 30
+    },
     timetable: {
         height: 35,
         width: 35,

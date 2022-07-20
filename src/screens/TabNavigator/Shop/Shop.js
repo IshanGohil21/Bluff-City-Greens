@@ -111,7 +111,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     back: {
-        padding:10
+        padding:10,
+        marginTop:20
     },
     shop: {
         fontSize: 24,

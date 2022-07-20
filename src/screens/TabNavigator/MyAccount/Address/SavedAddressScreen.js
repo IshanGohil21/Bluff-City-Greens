@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     header: {
         padding: 10,
         backgroundColor: Colors.primary,
-        flex: 0.7,
+        flex: 0.8,
     },
     title: {
         color: Colors.white,
@@ -109,7 +109,9 @@ const styles = StyleSheet.create({
         fontSize: 28,
         marginTop: 50
     },
-    
+    back:{
+        marginTop:20
+    },
     body: {
         flex: 3,
         padding: 30

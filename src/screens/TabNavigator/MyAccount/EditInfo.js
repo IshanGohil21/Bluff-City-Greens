@@ -177,4 +177,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         marginTop: 350
     },
+    back: {
+        marginTop:25
+    }
 })

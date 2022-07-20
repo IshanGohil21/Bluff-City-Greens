@@ -121,6 +121,7 @@ const MyAccountScreen = props => {
 
             <View>
                 <RBSheet
+                    height={300}
                     ref={refRBSheet}
                     closeOnDragDown={true}
                     closeOnPressMask={false}

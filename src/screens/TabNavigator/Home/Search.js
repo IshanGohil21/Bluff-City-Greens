@@ -243,11 +243,11 @@ const styles = StyleSheet.create({
     flex: 0.7,
     backgroundColor: Colors.primary,
     justifyContent: 'space-between',
+    marginBottom:10
   },
   body: {
     flex: 3,
   },
-
   cartext: {
     fontSize: 24,
     color: Colors.white,
@@ -256,6 +256,7 @@ const styles = StyleSheet.create({
   },
   back: {
     padding: 10,
+    marginTop:20
   },
   text: {
     fontSize: 28,

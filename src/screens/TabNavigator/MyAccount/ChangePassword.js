@@ -40,7 +40,7 @@ const ChangePasswordScreen = props => {
             {/* Header */}
             <View style={styles.header} >
                 <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-                    <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={styles.back} />
+                    <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={{marginTop:20}} />
                 </TouchableOpacity>
                 <Text style={styles.change} >Change Password</Text>
             </View>

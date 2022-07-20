@@ -73,10 +73,6 @@ const HomeScreen = (props) => {
     setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
   }, [])
 
-  // useEffect(() => {
-  //   console.log("USER      ",token)
-  // },[token])
-
   // Banners API (common Home Page)
   const [banner, setBanner] = useState([]);
   const getBanner = async () => {
@@ -404,12 +400,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    // flex: 1,
     justifyContent: 'space-between',
     backgroundColor: Colors.primary,
     flexDirection: 'row',
-    // marginTop: 20,
-    // marginHorizontal :10
+    marginTop: 10,
   },
   title: {
     flex: 1,
