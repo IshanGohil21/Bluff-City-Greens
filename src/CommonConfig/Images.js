@@ -103,6 +103,10 @@ export default {
     
     // location 
     gps: require('../CommonConfig/Assets/icon/gps.png'),
-    grey_gps: require('../CommonConfig/Assets/icon/grey_gps.png')
+    grey_gps: require('../CommonConfig/Assets/icon/grey_gps.png'),
+
+    // Spash Screen
+
+    leaf: require('../CommonConfig/Assets/icon/logos.png')
 
 }

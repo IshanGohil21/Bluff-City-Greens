@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput, StatusBar } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { RadioButton } from 'react-native-paper';
@@ -47,6 +47,7 @@ const EditAddressScreen = (props) => {
     return (
         <ScrollView>
             <View style={styles.main}>
+                <StatusBar backgroundColor={Colors.primary} />
                 {/* Header */}
                 <View style={styles.header}>
                     <TouchableOpacity onPress={() => {

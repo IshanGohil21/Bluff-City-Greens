@@ -43,7 +43,7 @@ const FavoritesScreen = props => {
             <View style={styles.header} >
             {/* Header & Title */}
                 <TouchableOpacity style={styles.back} onPress={() => {props.navigation.goBack()} }>
-                        <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={{marginTop:20}} />
+                        <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white}  />
                 </TouchableOpacity>   
                 <Text style={styles.fav} >Favorites</Text>
             </View>
@@ -81,7 +81,7 @@ const styles= StyleSheet.create({
         // backgroundColor: Colors.primary
     },
     header:{
-        flex:0.7,
+        flex:0.6,
         justifyContent:'space-between',
         backgroundColor:Colors.primary,
         padding:10

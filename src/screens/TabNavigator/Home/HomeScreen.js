@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: Colors.primary,
     flexDirection: 'row',
-    marginTop: 20,
+    // marginTop: 20,
     // marginHorizontal :10
   },
   title: {

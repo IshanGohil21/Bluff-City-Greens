@@ -6,151 +6,149 @@ import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import RBSheet from "react-native-raw-bottom-sheet";
 import ProfileOption from '../../../components/ProfileOption';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { getRequest } from '../../../Helper/ApiHelper';
-
 
 const MyAccountScreen = props => {
 
     const [isLoading, setIsLoading] = useState(true)
     const [user, setUser] = useState({})
 
-    useEffect( () => {
+    useEffect(() => {
         getProfile()
         setIsLoading(false)
-    },[])
-    
-    const getProfile = async() => {
-        setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))   
+    }, [])
+
+    const getProfile = async () => {
+        setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
     }
 
     const refRBSheet = useRef();
 
     const onPressLogout = async () => {
         setIsLoading(true);
-        
+
         const response = await getRequest('/logout');
         console.log(response);
-             {
+        {
             setIsLoading(false);
             AsyncStorage.clear()
-            props.navigation.navigate('SignIn');
-            
+            props.navigation.navigate('Auth', { screen: 'SignIn' });
+
         }
     }
 
     return (
         <>
-        <View  style={{flex:1}}>
-        <ScrollView>
-        <View>
-           <StatusBar backgroundColor='rgba(0,0,0,0)'/>
+            <View style={{ flex: 1 }}>
+                <ScrollView>
+                    <View>
+                        <StatusBar backgroundColor='rgba(0,0,0,0)' />
                         <ImageBackground source={{ uri: user?.picture }} resizeMode='cover' style={styles.image} >
-                            <View style={{flexDirection:'row' , justifyContent:'space-between' ,paddingHorizontal: 10}} >
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 10 }} >
                                 <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                                     <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.object} />
                                 </TouchableOpacity>
 
-                                <TouchableOpacity   onPress={() => { props.navigation.navigate('EditInfo') }} >
+                                <TouchableOpacity onPress={() => { props.navigation.navigate('EditInfo') }} >
                                     <Ionicons name='create-outline' size={30} color={Colors.white} style={styles.object} />
                                 </TouchableOpacity>
                             </View>
-                        <View style={{borderTopRightRadius:30,borderTopLeftRadius:30, overflow:'hidden'}}>
-                            
-                        <ProfileOption 
-                            name = 'Personal Information'
-                            onPress={() => { user ? props.navigation.navigate('personalInfo',{user}) : props.navigation.navigate('SignIn') }}
-                            iconLeft = {Icons.PERSON}
-                            iconRight = {Icons.PROFILE_FORWARD}
-                        />
-                        </View>
+                            <View style={{ borderTopRightRadius: 30, borderTopLeftRadius: 30, overflow: 'hidden' }}>
+
+                                <ProfileOption
+                                    name='Personal Information'
+                                    onPress={() => { user ? props.navigation.navigate('personalInfo', { user }) : props.navigation.navigate('SignIn') }}
+                                    iconLeft={Icons.PERSON}
+                                    iconRight={Icons.PROFILE_FORWARD}
+                                />
+                            </View>
                         </ImageBackground>
-                        <ProfileOption 
-                            name = 'Saved Address'
+                        <ProfileOption
+                            name='Saved Address'
                             onPress={() => { props.navigation.navigate('SavedAddress') }}
-                            iconLeft = {Icons.LOCATION}
-                            iconRight = {Icons.PROFILE_FORWARD}
+                            iconLeft={Icons.LOCATION}
+                            iconRight={Icons.PROFILE_FORWARD}
                         />
 
-                        <ProfileOption 
-                            name = 'Payment'
-                            onPress={() => { props.navigation.navigate('Checkout', {screen: 'AddCard' }) }}
-                            iconLeft = {Icons.CARD}
-                            iconRight = {Icons.PROFILE_FORWARD}
+                        <ProfileOption
+                            name='Payment'
+                            onPress={() => { props.navigation.navigate('Checkout', { screen: 'AddCard' }) }}
+                            iconLeft={Icons.CARD}
+                            iconRight={Icons.PROFILE_FORWARD}
                         />
 
-                        <ProfileOption 
-                            name = 'My Orders'
+                        <ProfileOption
+                            name='My Orders'
                             onPress={() => { props.navigation.navigate('MyOrders') }}
-                            iconLeft = {Icons.BASKET}
-                            iconRight = {Icons.PROFILE_FORWARD}
+                            iconLeft={Icons.BASKET}
+                            iconRight={Icons.PROFILE_FORWARD}
                         />
 
-                        <ProfileOption 
-                            name = 'Favorites'
+                        <ProfileOption
+                            name='Favorites'
                             onPress={() => { props.navigation.navigate('Favorites') }}
-                            iconLeft = {Icons.HEART}
-                            iconRight = {Icons.PROFILE_FORWARD}
+                            iconLeft={Icons.HEART}
+                            iconRight={Icons.PROFILE_FORWARD}
                         />
 
-                        <ProfileOption 
-                            name = 'Refer A Friend'
+                        <ProfileOption
+                            name='Refer A Friend'
                             onPress={() => { props.navigation.navigate('ReferFriend') }}
-                            iconLeft = {Icons.PERSON_ADD}
-                            iconRight = {Icons.PROFILE_FORWARD}
+                            iconLeft={Icons.PERSON_ADD}
+                            iconRight={Icons.PROFILE_FORWARD}
                         />
-                        <ProfileOption 
-                            name = 'Change Password'
-                            onPress ={() => { props.navigation.navigate('ChangePassword') }}
-                            iconLeft = {Icons.LOCK}
-                            iconRight = {Icons.PROFILE_FORWARD}
+                        <ProfileOption
+                            name='Change Password'
+                            onPress={() => { props.navigation.navigate('ChangePassword') }}
+                            iconLeft={Icons.LOCK}
+                            iconRight={Icons.PROFILE_FORWARD}
                         />
-                        <ProfileOption 
-                            name = 'FAQ'
+                        <ProfileOption
+                            name='FAQ'
                             onPress={() => { props.navigation.navigate('FAQ') }}
-                            iconLeft = {Icons.HELP}
-                            iconRight = {Icons.PROFILE_FORWARD}
+                            iconLeft={Icons.HELP}
+                            iconRight={Icons.PROFILE_FORWARD}
                         />
 
-                        <ProfileOption 
-                            name = 'Logout'
+                        <ProfileOption
+                            name='Logout'
                             onPress={() => refRBSheet.current.open()}
-                            iconLeft = {Icons.LOG_OUT}
+                            iconLeft={Icons.LOG_OUT}
                         />
-        </View>
-        </ScrollView>
-        </View>
+                    </View>
+                </ScrollView>
+            </View>
 
-        <View>
-        <RBSheet
-            ref={refRBSheet}
-            closeOnDragDown={true}
-            closeOnPressMask={false}
-            customStyles={{
-                wrapper: {
-                    backgroundColor: 'rgba(0,0,0,0.5)',
-                },
-                draggableIcon: {
-                    backgroundColor: Colors.grey,
-                    width: 80,
-                },
-                container: {
-                    borderTopLeftRadius: 30,
-                    borderTopRightRadius: 30, 
-                }
-            }}
-        >
-            <Ionicons  name={Icons.LOG_OUT} size={60} color={Colors.grey} style={styles.logo} />
-        <Text style={styles.bottom} >Are you sure you want to logout?</Text>
-        <TouchableOpacity onPress={onPressLogout} style={styles.logout} >
-            <Text style={styles.signin} > Logout </Text>
-        </TouchableOpacity>
-        <TouchableOpacity  onPress={() => refRBSheet.current.close()}  style={{ alignItems: 'center'}}>
+            <View>
+                <RBSheet
+                    ref={refRBSheet}
+                    closeOnDragDown={true}
+                    closeOnPressMask={false}
+                    customStyles={{
+                        wrapper: {
+                            backgroundColor: 'rgba(0,0,0,0.5)',
+                        },
+                        draggableIcon: {
+                            backgroundColor: Colors.grey,
+                            width: 80,
+                        },
+                        container: {
+                            borderTopLeftRadius: 30,
+                            borderTopRightRadius: 30,
+                        }
+                    }}
+                >
+                    <Ionicons name={Icons.LOG_OUT} size={60} color={Colors.grey} style={styles.logo} />
+                    <Text style={styles.bottom} >Are you sure you want to logout?</Text>
+                    <TouchableOpacity onPress={onPressLogout} style={styles.logout} >
+                        <Text style={styles.signin} > Logout </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => refRBSheet.current.close()} style={{ alignItems: 'center' }}>
 
-        <Text style={styles.signin2} > Cancel </Text>
-        </TouchableOpacity>
-        </RBSheet>
-        </View>
+                        <Text style={styles.signin2} > Cancel </Text>
+                    </TouchableOpacity>
+                </RBSheet>
+            </View>
         </>
     );
 };
@@ -165,9 +163,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     image: {
-        
+
         justifyContent: 'space-between',
-        height:Dimensions.get('window').height*0.45,
+        height: Dimensions.get('window').height * 0.45,
         // flexDirection: 'row'
         paddingTop: 15,
     },
@@ -191,7 +189,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
     },
-    
+
     signin: {
         width: "80%",
         alignItems: "center",
@@ -221,8 +219,7 @@ const styles = StyleSheet.create({
         // borderRadius: 10,
         // borderColor: Colors.green,
         overflow: 'hidden',
-        
-    },  
+    },
     bottom: {
         fontWeight: '500',
         fontSize: 20,
@@ -230,7 +227,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         marginLeft: 60,
-        marginBottom:20,
+        marginBottom: 20,
     },
     logo: {
         alignItems: 'center',
@@ -238,10 +235,9 @@ const styles = StyleSheet.create({
         padding: 20,
         marginLeft: 150
     },
-    object:{
-        marginTop: 20, 
+    object: {
         marginLeft: 10,
-        color:Colors.red 
+        color: Colors.red
     }
 });
 

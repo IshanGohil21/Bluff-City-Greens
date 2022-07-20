@@ -130,10 +130,8 @@ const styles = StyleSheet.create({
         flex: 0.6,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
-        padding: 15
-    },
-    back: {
-        marginTop: 20,
+        padding: 10,
+        paddingHorizontal:10
     },
     titleFruit: {
         fontSize: 24,
@@ -142,7 +140,7 @@ const styles = StyleSheet.create({
     },
     mainWrapper: {
         flex: 3,
-        padding: 25,
+        padding: 20,
         //  justifyContent: 'space-between',
     },
     line: {

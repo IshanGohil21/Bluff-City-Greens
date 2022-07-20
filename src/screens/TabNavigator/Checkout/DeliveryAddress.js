@@ -401,11 +401,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     header: {
-        flex: 0.5,
+        flex: 0.38,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
-        marginTop: 5,
-        paddingVertical: 10
+        paddingVertical: 10,
+        paddingHorizontal:15
     },
     checkout: {
         fontSize: 24,
@@ -507,9 +507,9 @@ const styles = StyleSheet.create({
         color: Colors.white,
         fontWeight: '800',
     },
-    back: {
-        marginTop: 30
-    },
+    // back: {
+    //     marginTop: 30
+    // },
     timetable: {
         height: 35,
         width: 35,

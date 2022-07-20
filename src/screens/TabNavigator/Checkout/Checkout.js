@@ -133,13 +133,10 @@ const styles = StyleSheet.create({
         justifyContent:'space-between',
         //padding:10,
        // marginTop: 20,
-      paddingVertical:15
+      paddingVertical:10
     },
     back: {
-        marginTop: 20,
-        //  paddingVertical:10,
          paddingHorizontal:10,
-        // padding:10,
         paddingHorizontal:10
     },
     cartext:{

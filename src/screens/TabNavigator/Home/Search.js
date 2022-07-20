@@ -243,7 +243,6 @@ const styles = StyleSheet.create({
     flex: 0.7,
     backgroundColor: Colors.primary,
     justifyContent: 'space-between',
-    paddingVertical: 10
   },
   body: {
     flex: 3,
@@ -257,8 +256,6 @@ const styles = StyleSheet.create({
   },
   back: {
     padding: 10,
-    marginTop: 20,
-    // marginHorizontal:10
   },
   text: {
     fontSize: 28,

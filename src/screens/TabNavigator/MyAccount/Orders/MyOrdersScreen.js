@@ -160,15 +160,7 @@ const MyOrdersScreen = props => {
                                 }}
                             />
                         }
-
-
-
-
-
-
-
                     </View>
-
                 }
             </View>
         </View>
@@ -186,7 +178,6 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     back: {
-        marginVertical: 20,
         color: Colors.white
     },
     my: {

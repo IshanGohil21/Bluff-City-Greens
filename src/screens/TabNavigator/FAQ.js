@@ -27,7 +27,7 @@ const FAQScreen = (props) => {
         <ScrollView>
         <View style={{ flex: 1 }} >
             {/*  HEADER */}
-            <View style={{ padding: 20, backgroundColor: Colors.primary , fontSize: 30 }}>
+            <View style={{ padding:5 , backgroundColor: Colors.primary , fontSize: 30 }}>
                 <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
                     <Ionicons
                         name={Icons.BACK_ARROW}
@@ -45,10 +45,10 @@ const FAQScreen = (props) => {
 
 const styles = StyleSheet.create({
     text: {
-        fontSize: 28,
+        fontSize: 24,
         color: 'white',
-        marginTop: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop:20
     },
     paymentContainer: {
         justifyContent:'flex-start',

@@ -62,9 +62,11 @@ const ScheduleDelivery = (props) => {
           }
         />
       </View>
-      <TouchableOpacity style={styles.continue} onPress={() => { props.navigation.navigate('Home') }} >
-        <Text style={styles.select1} >CONTINUE SHOPPING</Text>
-      </TouchableOpacity>
+      <View style={{marginBottom:25}} >
+        <TouchableOpacity style={styles.continue} onPress={() => { props.navigation.navigate('Home') }} >
+          <Text style={styles.select1} >CONTINUE SHOPPING</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -76,14 +78,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   head: {
-    flex: 0.7,
+    flex: 0.5,
     backgroundColor: Colors.primary,
     justifyContent: 'space-between',
     // marginTop:20,
-    padding: 15
-  },
-  back: {
-    marginTop: 30
+    padding: 10
   },
   time: {
     fontSize: 24,
@@ -140,6 +139,6 @@ const styles = StyleSheet.create({
   select1: {
     fontSize: 19,
     fontWeight: 'bold',
-    color: Colors.white
+    color: Colors.white,
   }
 });

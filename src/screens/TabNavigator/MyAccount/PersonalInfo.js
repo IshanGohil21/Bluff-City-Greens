@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar } from 'react-native';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
@@ -30,6 +30,7 @@ const personalInfoScreen = props => {
 
     return (
         <View style={styles.main}>
+            <StatusBar backgroundColor={Colors.primary} />
             {/* Header */}
             <View style={styles.header}>
                 
@@ -44,9 +45,9 @@ const personalInfoScreen = props => {
                 </View>
 
                 {/*Title*/}
-                <View>
+                
                     <Text style={styles.title}> Personal Information </Text>
-                </View>
+                
             </View>
             { /* Body */}
 
@@ -106,11 +107,11 @@ const styles = StyleSheet.create({
     header: {
         padding: 10,
         backgroundColor: Colors.primary,
-        flex: 0.4,
+        flex: 0.2,
         justifyContent:'space-between'
     },
     main: {
-        flex: 1
+        flex: 1,
     },
     text: {
         color: Colors.grey,
@@ -119,9 +120,6 @@ const styles = StyleSheet.create({
     },
     save: {
         marginLeft: 40
-    },
-    icon: {
-        marginTop: 30
     },
     line: {
         height: 0,

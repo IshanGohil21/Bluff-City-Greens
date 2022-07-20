@@ -19,7 +19,7 @@ const ReferFriendScreen = (props) => {
            {/* Title */}
             <View style={styles.title} >
                 <TouchableOpacity onPress={() => {props.navigation.goBack()}} >
-                <Ionicons  name={Icons.BACK_ARROW} size={24} color={Colors.white} style={{marginVertical:30}}  />
+                <Ionicons  name={Icons.BACK_ARROW} size={24} color={Colors.white} />
                 </TouchableOpacity>
                 <View>
                     <Text style={styles.refer} >Refer A Friend</Text>

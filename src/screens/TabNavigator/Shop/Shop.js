@@ -109,12 +109,8 @@ const styles = StyleSheet.create({
         flex: 0.6,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
-        paddingVertical: 10
     },
     back: {
-        marginTop: 20,
-        // paddingVertical:10,
-        // paddingHorizontal:10,
         padding:10
     },
     shop: {

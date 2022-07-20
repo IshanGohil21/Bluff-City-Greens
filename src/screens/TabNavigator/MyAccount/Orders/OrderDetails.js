@@ -11,6 +11,7 @@ import Address from '../../../../dummy-data/Address';
 import SelectAddComp from '../../../../components/SelectAddComp';
 import Products from '../../../../components/Products';
 
+
 const OrderDetailsScreenAccount = (props) => {
     const orderId = props.route.params.orderId
     const order = props.route.params.order
@@ -48,6 +49,7 @@ const OrderDetailsScreenAccount = (props) => {
     return (
 
         <View style={styles.main} >
+            <StatusBar backgroundColor={Colors.primary} />
             {/* Header & Back Button */}
             <View style={styles.title} >
                 <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
@@ -193,9 +195,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         paddingVertical: 10,
         padding: 10
-    },
-    back: {
-        marginTop: 30
     },
     heading: {
         fontSize: 24,

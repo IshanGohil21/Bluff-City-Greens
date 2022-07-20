@@ -26,8 +26,6 @@ const PastOrderScreen = (props) => {
     //   const xyz = past.item_size.find(item => item.id === weight.id)
     const y = past.item.item_sizes.find(item => item.id === weight.id)
 
-    
-
     const splitting = (str) => {
         let arr = str.split(' ');
         let arr0 = parseInt(arr[0]);
@@ -275,7 +273,6 @@ const styles = StyleSheet.create({
     back: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingVertical:20
     },
     titleIcons: {
         padding: 15,

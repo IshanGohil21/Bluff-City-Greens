@@ -9,19 +9,17 @@ const SplashScreen = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 8000)
         loadApp()
     }, [])
-
-    useEffect( () => {
-        setTimeout( () => {
-            setIsLoading(false)
-        }, 3000 )
-    }, [] )
 
     const loadApp = async () => {
 
         const isLogin = await AsyncStorage.getItem('isLogin');
         // const role = await AsyncStorage.getItem('role');
+        // console.log(isLogin);
         if (isLogin === "true") {
 
             props.navigation.dispatch(CommonActions.reset({
@@ -37,10 +35,10 @@ const SplashScreen = (props) => {
         }
     }
 
-    return ( 
+    return (
         <View style={styles.screen}>
             <StatusBar backgroundColor={Colors.primary} />
-            <Image source={Images.grains} style={{ width: 200, height: 200 }} />
+            <Image source={Images.leaf} style={{ width: 200, height: 200 }} />
             <ActivityIndicator color={Colors.WHITE} size={50} />
         </View>
     )
@@ -52,8 +50,9 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
         padding: 10,
-        backgroundColor: Colors.primary
+        backgroundColor: Colors.primary,
+        marginTop: 30
     }
 })

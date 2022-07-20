@@ -8,16 +8,19 @@ const ContactScreen = props => {
     return (
         <View style={{ flex: 1 }} >
             <StatusBar backgroundColor={Colors.primary} />
-            <View style={{padding:20 ,backgroundColor: '#259D57', fontSize: 30, }}>
+            
+            <View style={{paddingHorizontal:10,paddingVertical:10 ,backgroundColor: '#259D57',  }}>
                 <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                     <Ionicons
                         name='arrow-back'
                         size={30}
                         color='white'
+                        style={{paddingHorizontal:5, marginTop:10}}
                     />
                 </TouchableOpacity>
                 <Text style={styles.text} > Contact Us </Text>
             </View>
+            
 
             <ScrollView  >
                 <View style={styles.container}>
@@ -125,9 +128,8 @@ const styles = StyleSheet.create({
         flex:3
     },
     text: {
-        fontSize: 30,
+        fontSize: 24,
         color: 'white',
-        marginTop: 20,
         fontWeight: 'bold'
     },
     days: {

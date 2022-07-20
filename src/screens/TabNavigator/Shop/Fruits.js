@@ -28,7 +28,6 @@ const FruitShopScreen = (props) => {
     const shopSub = props.route.params.shop
     // console.log("\n\n\n\n Sub_Categories for each  products           ", shopSub);
 
-
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false)
@@ -46,7 +45,7 @@ const FruitShopScreen = (props) => {
                         <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={styles.back} />
                     </TouchableOpacity>
                     <View style={styles.title} >
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => {props.navigation.navigate("Search")} } >
                             <Ionicons name={Icons.SEARCH} size={24} color={Colors.white} style={styles.back} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
@@ -56,9 +55,9 @@ const FruitShopScreen = (props) => {
                 </View>
                 <View style={styles.heading} >
                     <Text style={styles.titleFruit} >{shopSub.title}</Text>
-                    <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }} >
+                    {/* <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }} >
                         <Ionicons name={Icons.OPTIONS} size={35} color={Colors.white} />
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
             {/* Body  */}
@@ -113,11 +112,11 @@ const styles = StyleSheet.create({
         flex: 0.5,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
-        paddingVertical: 10
+        // paddingVertical: 10
 
     },
     back: {
-        marginTop: 20,
+        // marginTop: 20,
         padding: 10
     },
     title: {
@@ -131,10 +130,7 @@ const styles = StyleSheet.create({
         color: Colors.white
     },
     heading: {
-        justifyContent: 'space-between',
-        flexDirection: 'row',
-        paddingLeft: 10,
-        paddingRight: 10
+        padding:10
     },
     body: {
         flex: 3,

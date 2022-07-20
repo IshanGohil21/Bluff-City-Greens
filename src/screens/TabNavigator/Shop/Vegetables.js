@@ -293,10 +293,10 @@ const styles = StyleSheet.create({
         flex: 0.71,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
-        paddingVertical: 10
+        // paddingVertical: 10
     },
     back: {
-        marginTop: 20,
+        marginTop: 10,
         padding: 10
     },
     title: {

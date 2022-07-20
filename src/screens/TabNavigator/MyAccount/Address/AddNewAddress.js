@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Alert, StatusBar } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, RadioButton, TextInput } from 'react-native-paper';
 
@@ -64,6 +64,7 @@ const AddNewAddressScreen = (props) => {
     return (
         <ScrollView>
             <View style={styles.main}>
+                <StatusBar backgroundColor={Colors.primary} />
                 {/* Header */}
                 <View style={styles.header}>
                     <View style={styles.mainContainer} >
@@ -253,9 +254,6 @@ const styles = StyleSheet.create({
     address: {
         padding: 5,
         marginBottom: 10
-    },
-    back: {
-        marginTop: 20
     },
     radioContainer: {
         fontWeight: 'bold',

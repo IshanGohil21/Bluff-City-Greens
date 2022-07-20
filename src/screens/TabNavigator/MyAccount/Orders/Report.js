@@ -15,7 +15,7 @@ const Report = (props) => {
             <StatusBar backgroundColor={Colors.primary} />
             <View style={styles.title} >
                 <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-                    <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={{ marginTop: 30 }} />
+                    <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} />
                 </TouchableOpacity>
                 <Text style={styles.issue} >Report Issue</Text>
             </View>
