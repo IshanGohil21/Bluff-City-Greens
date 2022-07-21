@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar, FlatList, Dimensions } from 'react-native';
+import { Animated, StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar, FlatList, Dimensions, ScrollView } from 'react-native';
 import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
-
+import Dots from 'react-native-dots-pagination';
+// import { Animated } from 'react-native-animatable'
+import Toast from 'react-native-simple-toast'
 
 import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
 import { getRequest } from '../../../../Helper/ApiHelper';
 import OrderProfile from '../../../../components/OrderProfile';
-
-const val = Math.floor(1 + Math.random() * 999);
-const num = Math.floor(Math.random() * 9999)
-// console.log(val);
-// console.log(num);
+import { ExpandingDot } from "react-native-animated-pagination-dots";
 
 const { width } = Dimensions.get('window')
 
 const MyOrdersScreen = props => {
-    const [state, setState] = useState('past')
+    const [state, setState] = useState('current')
     const [loading, setIsloading] = useState(true)
     const [isMoreItem, setisMoreItem] = useState(false);
     const [paging, setPaging] = useState(1)
@@ -26,32 +24,13 @@ const MyOrdersScreen = props => {
     const [pastOrder, setPastOrders] = useState([]);
     const [currentOrder, setCurrentOrders] = useState([]);
 
+    const [active, setActive] = useState(0);
 
-    let renderLoader = () => {
-        return (
-            <View style={styles.loaderStyle}>
-                {isMoreItem ?
-                    (
-                        <ActivityIndicator size="large" />
-                    ) : null}
-            </View>
-        );
-    }
-
-    const loadMoreItem = () => {
-        // console.log("currentpage       ",setCurrentPage)
-        setPaging(paging + 1)
-        console.log("loadMore  ", paging)
-    };
-
-    useEffect(() => {
-        update();
-    }, [props.navigation])
-
-    const update = async () => {
-        props.navigation.addListener('focus', () => {
-            getOrders();
-        });
+    const change = ({ nativeEvent }) => {
+        const slide = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
+        if (slide !== active) {
+            setActive(slide);
+        }
     }
 
     useEffect(() => {
@@ -59,12 +38,13 @@ const MyOrdersScreen = props => {
     }, [paging, state])
 
     const getOrders = async () => {
-        const response = await getRequest(`/customer/get-order?page=${paging}&status=${state}&page_size=10`)
+        const response = await getRequest(`/customer/get-order?page=${paging}&status=${state}&page_size=2`)
         // console.log("\n\nAll Orders   hello     ", response.data);
 
         if (response.success) {
             setPastOrders(response.data.order);
             setCurrentOrders(response.data.order)
+            
             // console.log("\n\n\nOrders                       ",response.data.order );
         }
         else {
@@ -72,6 +52,9 @@ const MyOrdersScreen = props => {
         }
         setIsloading(false);
     }
+
+    const scrollX = React.useRef(new Animated.Value(1)).current;
+    // console.log(scrollX);
 
     return (
         // Main 
@@ -100,32 +83,31 @@ const MyOrdersScreen = props => {
                 {state === 'past' ?
                     // Past Order Screen
                     <View>
-                       
-                            <FlatList
-                                data={pastOrder}
-                                showsVerticalScrollIndicator={false}
-                                renderItem={(item) => {
-                                    // console.log("\n\n\nPast     ", item);
-                                    return (
-                                        <View key={item.id} >
-                                            {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
+                        <FlatList
+                            data={pastOrder}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={(item) => {
+                                // console.log("\n\n\nPast     ", item);
+                                return (
+                                    <View key={item.id} >
+                                        {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
                                             <OrderProfile
                                                 id={item.item.id}
-                                                date={moment(item.item.delivery_date).format('ddd, Do MMM YYYY')}
+                                                date={item.item.delivery_date}
                                                 time={item.item.delivery_time}
-                                                Order_Number={val}
-                                                Order_Number1={num}
+                                                Order_Number={item.item.id}
                                                 quantity={item.item.order_items.length}
                                                 total={item.item.total_amount}
                                                 status={item.item.status}
                                                 onClick={() => { props.navigation.navigate('OrderDetails', { order: item, orderId: item.id }) }}
                                             />
-                                            }
-                                        </View>
-                                    )
-                                }}
-                            />
-                        
+                                        }
+
+                                    </View>
+                                )
+                            }}
+                        />
+
                     </View>
                     :
                     // Current Orders Screen
@@ -134,23 +116,22 @@ const MyOrdersScreen = props => {
                         {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
                             <FlatList
                                 data={currentOrder}
-                                showsVerticalScrollIndicator={false}
+                                showsVerticalScrollIndicator={true}
                                 renderItem={(item) => {
-                                    //   console.log("\n\n\nCurrent     ", item);
+                                    //    console.log("\n\n\nCurrent     ", item);
                                     return (
                                         <View key={item.id} >
-                                            {/* <Text>Hello</Text> */}
                                             <OrderProfile
                                                 id={item.item.id}
                                                 date={item.item.delivery_date}
                                                 time={item.item.delivery_time}
-                                                Order_Number={val}
-                                                Order_Number1={num}
+                                                Order_Number={item.item.id}
                                                 quantity={item.item.order_items.length}
                                                 total={item.item.total_amount}
                                                 status={item.item.status}
-                                                onClick={ () => {props.navigation.navigate('OrderDetails',{ order:item, orderId: item.id })} }
+                                                onClick={() => { props.navigation.navigate('OrderDetails', { order: item, orderId: item.id }) }}
                                             />
+
                                         </View>
                                     )
                                 }}
@@ -158,6 +139,45 @@ const MyOrdersScreen = props => {
                         }
                     </View>
                 }
+
+
+                {/* <View>
+                    <ScrollView
+                        pagingEnabled
+                        onScroll={change}
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        {
+                            pastOrder.map((item, index) => {
+                                console.log("\n\nITEM:      ", item);
+                                return (
+                                    <View key={index}>
+                                        <OrderProfile
+                                            id={item.id}
+                                            date={item.delivery_date}
+                                            time={item.delivery_time}
+                                            Order_Number={item.id}
+                                            quantity={item.quantity}
+                                            total={item.total_amount}
+                                            status={item.status}
+                                            onClick={() => { props.navigation.navigate('OrderDetails', { order: item, orderId: item.id }) }}
+                                        />
+                                        <Text>Hiiii</Text>
+                                    </View>
+                                )
+                            })
+                        }
+                    </ScrollView>
+                    <View style={styles.scroll} >
+                        {
+                            pastOrder.map((i, k) => (
+                                <Text key={k} style={k == active ? styles.pagingActive : styles.paging} > ⬤ </Text>
+                            ))
+                        }
+                    </View>
+                </View> */}
+
+
             </View>
         </View>
     )
@@ -198,6 +218,21 @@ const styles = StyleSheet.create({
     filterText: {
         fontSize: 15,
         fontWeight: 'bold',
+    },
+    paging: {
+        color: Colors.grey,
+        margin: 5,
+    },
+    pagingActive: {
+        color: Colors.white,
+        margin: 5,
+    },
+    scroll: {
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 0,
+        alignSelf: 'center',
+        zIndex: 10
     },
 })
 

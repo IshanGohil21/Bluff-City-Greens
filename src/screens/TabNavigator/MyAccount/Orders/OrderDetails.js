@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Icons, Colors, Images } from '../../../../CommonConfig/CommonConfig';
 import * as CartActions from '../../../../Redux/Action/Cart';
@@ -11,20 +12,13 @@ import Address from '../../../../dummy-data/Address';
 import SelectAddComp from '../../../../components/SelectAddComp';
 import Products from '../../../../components/Products';
 
-
 const OrderDetailsScreenAccount = (props) => {
     const orderId = props.route.params.orderId
     const order = props.route.params.order
-    //  console.log("\n\n Orders Details             " ,order);
-
-    const refRBSheet = useRef()
+    console.log("\n\n Orders Details     past        ", order.item.order_items);
 
     const [date, setDate] = useState(null);
     const [week, setWeek] = useState(null);
-
-    var RandomNumber = Math.floor(Math.random() * 100) + 100;
-    var RandomNumber2 = Math.floor(Math.random() * 1000) + 1000;
-    var RandomNumber3 = Math.floor(Math.random() * 100000) + 100000
 
     const cartItems = useSelector(state => {
         const updatedCartItems = [];
@@ -41,10 +35,18 @@ const OrderDetailsScreenAccount = (props) => {
     const subTotal = (cartItems.length ? cartItems.reduce((a, c) => a + c.itemTotal, 0) : 0);
     const delivery = 0.5;
 
-    const activeId = useSelector(state => state.Address.activeAddress)
+    const [activeAddress, setActiveAddress] = useState({})
+    // console.log("\n\nActive null        ", activeAddress)
 
-    const x = Address.find(item => item.id === activeId)
-    // console.log(x);
+    useEffect(async () => {
+        setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
+    }, [])
+
+    const tag = (address_type) => {
+        if (address_type === 0) return "Home"
+        if (address_type === 1) return "Work"
+        if (address_type === 2) return "Other"
+    }
 
     return (
 
@@ -70,7 +72,7 @@ const OrderDetailsScreenAccount = (props) => {
 
                         <View style={styles.order} >
                             <Text style={styles.orderIn} >Order Number :    </Text>
-                            <Text style={styles.orderTxt} >{RandomNumber}-{RandomNumber2} </Text>
+                            <Text style={styles.orderTxt} >{order.item.id}</Text>
                         </View>
 
                         <View style={styles.order} >
@@ -82,36 +84,36 @@ const OrderDetailsScreenAccount = (props) => {
 
                     <Text style={styles.add}>Product Details</Text>
                     <View style={styles.flat} >
-                    <FlatList
-                        data={order.item.order_items}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={(item) => {
-                            console.log("\n\n\n\nProduct Details               ",item.item);
-                            return (
-                                <View>
-                                    <Products
-                                        //  title={item.sub_category.title}
-                                         image={item.item.item.item_images[0].image}
-                                         name={item.item.item.name}
-                                        size={item.item.item_size.size}
-                                        qty={item.item.quantity}
-                                        price={item.item.item_size.price}
-                                    />
-                                </View>
-                            )
-                        }}
-                    />
+                        <FlatList
+                            data={order.item.order_items}
+                            showsVerticalScrollIndicator={false}
+                            keyExtractor={item => item.id}
+                            renderItem={(item) => {
+                                // console.log("\n\n\n\nProduct Details               ", item);
+                                return (
+                                    <View>
+                                        <Products
+                                            title={item.item.sub_category.title}
+                                            image={item.item.item.item_images[0].image}
+                                            name={item.item.item.name}
+                                            size={item.item.item_size.size}
+                                            qty={item.item.quantity}
+                                            price={item.item.item_size.price}
+                                        />
+                                    </View>
+                                )
+                            }}
+                        />
                     </View>
 
                     <Text style={styles.add} >Delivery Address</Text>
 
-                    {x ?
+                    {activeAddress !== null ?
                         <View style={styles.overall} >
                             <Ionicons name={Icons.PIN_FILLED} size={35} color={Colors.primary} />
                             <View style={{ padding: 10 }} >
-                                <Text style={styles.heading1} >  {x.tag} - {x.name}</Text>
-                                <Text style={styles.texting} > {x.address} </Text>
-                                <Text style={styles.texting} > {x.country} </Text>
+                                <Text style={styles.heading1} >  {tag(activeAddress.address_type)} - {activeAddress.primary_address}</Text>
+                                <Text style={styles.texting} > {activeAddress.addition_address_info} </Text>
                             </View>
 
                         </View>
@@ -140,19 +142,17 @@ const OrderDetailsScreenAccount = (props) => {
                     <View style={styles.details0} >
                         <View style={styles.details} >
                             <Text style={styles.invoice} >Invoice Number</Text>
-                            <Text style={styles.randomNum} >MBPI-{RandomNumber3}</Text>
+                            <Text style={styles.randomNum} >MBPI-{order.item.id}</Text>
                         </View>
 
                         <View style={styles.details} >
                             <Text style={styles.invoice} >Payment Option</Text>
-                            <Text style={styles.randomNum} >PayUMoney Wallet</Text>
+                            <Text style={styles.randomNum} >{order.item.payment_method}</Text>
                         </View>
 
                         <View style={styles.details} >
                             <Text style={styles.invoice} >Order Items</Text>
-                            {/* {y  ?   */}
                             <Text style={styles.randomNum} >{order.item.order_items.length} items</Text>
-                            {/* // : null } */}
                         </View>
 
                         <View style={styles.details} >
@@ -173,7 +173,7 @@ const OrderDetailsScreenAccount = (props) => {
                     </View>
 
                     <View>
-                        <TouchableOpacity style={styles.signin} onPress={() => {props.navigation.navigate('Report')}} >
+                        <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Report') }} >
                             <Text style={styles.confirm} >REPORT ISSUE</Text>
                         </TouchableOpacity>
                     </View>
@@ -219,34 +219,34 @@ const styles = StyleSheet.create({
         fontWeight: '700'
     },
     orderMain: {
-        marginLeft:20,
-        marginRight:20,
-        marginTop:20,
-        padding:20,
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 20,
+        padding: 20,
         elevation: 10,
-        overflow:'hidden',
-        borderRadius:10,
-        backgroundColor:Colors.white
+        overflow: 'hidden',
+        borderRadius: 10,
+        backgroundColor: Colors.white
     },
-    flat:{
-        marginLeft:20,
-        marginRight:20,
-        marginTop:20,
-        padding:20,
+    flat: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 20,
+        padding: 20,
         elevation: 10,
-        overflow:'hidden',
-        borderRadius:10,
-        backgroundColor:Colors.white
+        overflow: 'hidden',
+        borderRadius: 10,
+        backgroundColor: Colors.white
     },
-    del:{
-        marginLeft:20,
-        marginRight:20,
-        marginTop:10,
-        padding:10,
+    del: {
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop: 10,
+        padding: 10,
         elevation: 10,
-        overflow:'hidden',
-        borderRadius:10,
-        backgroundColor:Colors.white
+        overflow: 'hidden',
+        borderRadius: 10,
+        backgroundColor: Colors.white
     },
     add: {
         padding: 10,
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
         paddingRight: 20
     },
     details0: {
-       marginTop:10
+        marginTop: 10
     },
     invoice: {
         fontWeight: '600',
@@ -353,7 +353,6 @@ const styles = StyleSheet.create({
     },
     overall: {
         flexDirection: 'row',
-        // padding: 20,
         justifyContent: 'flex-start',
         alignItems: 'center',
         padding: 15

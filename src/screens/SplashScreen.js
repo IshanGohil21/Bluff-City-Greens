@@ -11,15 +11,13 @@ const SplashScreen = (props) => {
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false)
-        }, 8000)
-        loadApp()
+            loadApp()
+        }, 5000)
     }, [])
 
     const loadApp = async () => {
 
         const isLogin = await AsyncStorage.getItem('isLogin');
-        // const role = await AsyncStorage.getItem('role');
-        // console.log(isLogin);
         if (isLogin === "true") {
 
             props.navigation.dispatch(CommonActions.reset({
@@ -53,6 +51,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: 10,
         backgroundColor: Colors.primary,
-        marginTop: 30
     }
 })

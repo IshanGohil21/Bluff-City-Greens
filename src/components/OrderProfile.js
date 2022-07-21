@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert, TurboModuleRegistry } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Alert, Modal } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -6,10 +6,10 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { Icons, Images, Colors } from '../CommonConfig/CommonConfig';
 import { Rating } from 'react-native-ratings';
 import { postRequest } from '../Helper/ApiHelper';
-import { ErrorMessage } from 'formik';
 
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import { Toast } from 'react-native-ui-lib';
 
 const OrderProfile = (props) => {
     const refRBSheet = useRef();
@@ -17,19 +17,24 @@ const OrderProfile = (props) => {
     const [rating, setRating] = useState();
     const [ratingDescription, setRatingdescription] = useState('');
     const [loading, setLoading] = useState(true)
+    const [selectedOrder, setSelected] = useState({})
+
+    // console.log(selectedOrder);
+
+    const orderId = props.id
+
 
     const ratingHandler = async () => {
         // console.log("\n\n\nRating            ",rating);
         // console.log("\n\n\nDescription",ratingDescription);
         const data = {
             rate: rating,
-            rating_description: ratingDescription
+            rating_description: ratingDescription,
         }
         // console.log("\n\n\nDATA       ", data);
-        const response = await postRequest(`/customer/rate-order?orderId=${props.id}`, data)
-        console.log("\n\n\nResponse                ", response);
+        const response = await postRequest(`/customer/rate-order?orderId=${selectedOrder}`, data)
+        // console.log("\n\n\nResponse                ", response);
 
-        let errorMessage = "Invalid Rating"
         if (response.success) {
             refRBSheet.current.close()
         }
@@ -40,9 +45,7 @@ const OrderProfile = (props) => {
 
     return (
 
-
         <View style={styles.main} >
-
 
 
             <View >
@@ -56,7 +59,8 @@ const OrderProfile = (props) => {
                     <TouchableOpacity onPress={props.onClick} >
                         <View style={styles.details} >
                             <Text>Order Number:</Text>
-                            <Text style={styles.margin} >{props.Order_Number}-{props.Order_Number1}</Text>
+                            <Text style={styles.margin} >{props.Order_Number}</Text>
+
                         </View>
 
                         <View style={styles.details} >
@@ -74,7 +78,10 @@ const OrderProfile = (props) => {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
                         <Ionicons name={Icons.ELLIPSE} size={16} color={Colors.primary} />
                         <Text style={styles.deli} >Order {props.status}</Text>
-                        <TouchableOpacity onPress={() => refRBSheet.current.open()} >
+                        <TouchableOpacity onPress={() => {
+                            setSelected(orderId)
+                            refRBSheet.current.open()
+                        }} >
                             <Text style={{ fontSize: 18, color: Colors.primary }} >Rate Order</Text>
                         </TouchableOpacity>
                     </View>
@@ -117,21 +124,26 @@ const OrderProfile = (props) => {
                         <TextInput
                             style={{ borderWidth: 1, marginTop: 10, width: '80%', height: 150, borderColor: Colors.grey, borderRadius: 10 }}
                             placeholder="Write Comment..."
-                            onChangeText={(e) => { setRatingdescription(e) }}
+                            onChangeText={(e) => {
+                                setRatingdescription(e)
+                            }}
                             multiline={true}
                             numberOfLines={4}
                         />
                     </View>
 
                     <View style={{ alignItems: 'center' }} >
-                        <TouchableOpacity onPress={ratingHandler} style={{ marginTop: 20 }}>
+                        <TouchableOpacity onPress={
+                            ratingHandler
+                        }
+                            style={{ marginTop: 20 }}
+                        >
                             <Text style={styles.rate} >RATE ORDER</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </RBSheet>
         </View>
-
     )
 
 }
