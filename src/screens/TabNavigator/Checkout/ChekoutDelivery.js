@@ -276,39 +276,7 @@ const checkoutDeliveryScreen = (props) => {
 
         console.log("\n\n\nCheckout API LOG", checkOutResponse);
 
-        // if (!checkOutResponse.success) return Alert.alert(error?.message);
-        // const clientSecret = checkOutResponse.data.data.payment_intent
-        // const EphemeralKeySecret = checkOutResponse.data.data.ephemeral_key
-        // const Displayname = 'Pradip'
-        // const customersId = checkOutResponse.data.data.customer_id
-        // const { error } = await initPaymentSheet({
-        //     paymentIntentClientSecret: clientSecret,
-        //     customerEphemeralKeySecret: EphemeralKeySecret,
-        //     merchantDisplayName: Displayname,
-        //     allowsDelayedPaymentMethods: true,
-        //     testEnv: true,
-            
-        // });
-
-        // if(!error) {
-        //     console.log("First");
-        //     const presentResponse = await presentPaymentSheet({
-        //         client_secret:clientSecret,
-        //         confirmPayment: false
-        //     })
-        //     console.log("Second");
-        // }
-            //     if(initSheet.error) return Alert.alert(initSheet.error.message);
-            //     const presentSheet = await stripe.presentPaymentSheet({
-            //         clientSecret,
-            //     })
-            //     if(presentSheet.error) return Alert.alert(presentSheet.error.message);
-            //         Alert.alert('Payment Complete, Thank you!');
-            //     }
-            // catch(error){
-            //     console.error(error);
-            //     Alert.alert('Something  went Wrong!')
-            // }
+        
         }
     }
 

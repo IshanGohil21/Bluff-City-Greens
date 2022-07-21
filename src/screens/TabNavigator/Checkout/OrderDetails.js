@@ -147,12 +147,6 @@ const OrderDetailsScreen = (props) => {
             </TouchableOpacity>
           </View>
 
-          <View>
-            <TouchableOpacity style={styles.signin0} onPress={() => {props.navigation.navigate('Cancel', {order: Order})}} >
-              <Text style={styles.confirm} >CANCEL ORDER</Text>
-            </TouchableOpacity>
-          </View>
-
           <View style={styles.rb} >
             <RBSheet
               ref={refRBSheet}

@@ -107,6 +107,9 @@ export default {
 
     // Spash Screen
 
-    leaf: require('../CommonConfig/Assets/icon/logos.png')
+    leaf: require('../CommonConfig/Assets/icon/logos.png'),
+
+    // delivery
+    deliveryState : require("../CommonConfig/Assets/icon/delivery_state.png"),
 
 }

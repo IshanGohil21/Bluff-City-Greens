@@ -102,12 +102,10 @@ const MyOrdersScreen = props => {
                                                 onClick={() => { props.navigation.navigate('OrderDetails', { order: item, orderId: item.id }) }}
                                             />
                                         }
-
                                     </View>
                                 )
                             }}
                         />
-
                     </View>
                     :
                     // Current Orders Screen

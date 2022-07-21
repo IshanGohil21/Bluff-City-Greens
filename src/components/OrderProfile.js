@@ -23,7 +23,6 @@ const OrderProfile = (props) => {
 
     const orderId = props.id
 
-
     const ratingHandler = async () => {
         // console.log("\n\n\nRating            ",rating);
         // console.log("\n\n\nDescription",ratingDescription);
@@ -46,15 +45,16 @@ const OrderProfile = (props) => {
     return (
 
         <View style={styles.main} >
-
-
             <View >
                 <Text style={styles.time}  >{props.date} , {props.time}</Text>
             </View>
 
-
             <View style={styles.card} >
-                <Ionicons name={Icons.CHECKMARK} size={30} color={Colors.primary} />
+            { props.status == "Ordered"  ? 
+                <Ionicons name={Icons.TIME} size={30} color={Colors.black} />
+                :
+                <Ionicons name={Icons.CHECKMARK} size={30} color={Colors.primary} /> }
+
                 <View style={styles.orders} >
                     <TouchableOpacity onPress={props.onClick} >
                         <View style={styles.details} >
@@ -75,15 +75,26 @@ const OrderProfile = (props) => {
                     </TouchableOpacity>
 
                     <View style={styles.line} />
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
+                    <View style={{ flexDirection: 'row', alignItems: 'center', }} >
+                        { props.status === "Ordered" ? 
+                        
+                        <Ionicons name={Icons.ELLIPSE} size={16} color={Colors.orange} />
+                        :
                         <Ionicons name={Icons.ELLIPSE} size={16} color={Colors.primary} />
+                        }
+
                         <Text style={styles.deli} >Order {props.status}</Text>
+
+                        { props.status === "Cancelled" || props.status === "Delivered"  ?
+
                         <TouchableOpacity onPress={() => {
                             setSelected(orderId)
                             refRBSheet.current.open()
                         }} >
                             <Text style={{ fontSize: 18, color: Colors.primary }} >Rate Order</Text>
                         </TouchableOpacity>
+                        :
+                        null}
                     </View>
                 </View>
             </View>

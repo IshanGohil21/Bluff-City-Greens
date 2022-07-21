@@ -15,8 +15,8 @@ import Products from '../../../../components/Products';
 const OrderDetailsScreenAccount = (props) => {
     const orderId = props.route.params.orderId
     const order = props.route.params.order
-    console.log("\n\n Orders Details     past        ", order.item.order_items);
-
+    // console.log("\n\n Orders Details     past        ", order.item.id);
+    
     const [date, setDate] = useState(null);
     const [week, setWeek] = useState(null);
 
@@ -173,9 +173,10 @@ const OrderDetailsScreenAccount = (props) => {
                     </View>
 
                     <View>
-                        <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Report') }} >
+                        <TouchableOpacity style={styles.signin} onPress={() => { props.navigation.navigate('Report', {  order } ) }} >
                             <Text style={styles.confirm} >REPORT ISSUE</Text>
                         </TouchableOpacity>
+                        
                     </View>
 
                 </ScrollView>
@@ -344,8 +345,6 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         overflow: 'hidden',
         alignSelf: 'center',
-        // marginTop: 5,
-        // marginBottom: 30
     },
     signin3: {
         alignItems: 'center',

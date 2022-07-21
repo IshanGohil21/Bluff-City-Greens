@@ -33,4 +33,5 @@ export default {
     CALL: 'call',
     PERSON:'person-circle',
     ELLIPSE:'ellipse',
+    TIME:'time-outline',
 }

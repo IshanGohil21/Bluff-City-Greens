@@ -52,10 +52,6 @@ const HomeScreen = (props) => {
 
   const dispatch = useDispatch();
 
-  const activeId = useSelector(state => state.Address.activeAddress)
-
-  const x = Address.find(item => item.id === activeId)
-
   const [recommendedOrders, setRecommendedOrders] = useState([]);
   // const [token, setToken] = useState('')
 
@@ -274,7 +270,6 @@ const HomeScreen = (props) => {
                   <Text style={styles.common} >Past Orders</Text>
                   <Text style={styles.view} >View All</Text>
                 </View>
-
 
                 {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
                   <View style={styles.heading}>

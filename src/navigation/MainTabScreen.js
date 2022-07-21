@@ -44,7 +44,6 @@ import TrackOrderScreen from '../screens/TabNavigator/Checkout/TrackOrder';
 import OrderDetailsScreenAccount from '../screens/TabNavigator/MyAccount/Orders/OrderDetails';
 import Report from '../screens/TabNavigator/MyAccount/Orders/Report';
 import EditInfoScreen from '../screens/TabNavigator/MyAccount/EditInfo';
-import CancelorderScreen from '../screens/TabNavigator/Checkout/Cancelorder';
 
 import AddCard from '../screens/TabNavigator/Checkout/AddCard';
 import ScheduleDelivery from '../screens/TabNavigator/Checkout/ScheduleDelivery';
@@ -172,7 +171,6 @@ const CheckoutStackScreen = () => {
             <CheckoutStack.Screen name='AddCard' component={AddCard} />
             <CheckoutStack.Screen  name='ScheduleDelivery' component={ScheduleDelivery} />
             <CheckoutStack.Screen name='TrackOrder' component={TrackOrderScreen} />
-            <CheckoutStack.Screen name='Cancel' component={CancelorderScreen} />
         </CheckoutStack.Navigator>
     )
 }

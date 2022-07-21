@@ -5,9 +5,33 @@ import { RadioButton } from 'react-native-paper';
 
 import { Colors, Images, Icons } from '../../../../CommonConfig/CommonConfig';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { postRequest } from '../../../../Helper/ApiHelper';
+import  Toast  from 'react-native-simple-toast';
 
 const Report = (props) => {
     const [checked, setChecked] = useState('first')
+
+    const orderId = props.route.params.order
+
+    // console.log(orderId.item.id);
+
+    const onPressCancel = async () => {
+        const data = {
+            orderId: orderId.item.id,
+            cancellation_reason: checked
+        }
+        console.log("CANCEL:  \n\n", data);
+        const responseCancel = await postRequest('/customer/cancel-order', data)
+        console.log(responseCancel);
+
+        if (responseCancel.success) {
+            props.navigation.navigate('MyAccount');
+            Toast.show("Order Cancelled SuccessFully!")
+        }
+        else {
+            Toast.show('Something went Wrong')
+        }
+    }
 
     return (
         <View style={styles.main} >
@@ -15,7 +39,7 @@ const Report = (props) => {
             <StatusBar backgroundColor={Colors.primary} />
             <View style={styles.title} >
                 <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-                    <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} />
+                    <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={{ marginTop: 30 }} />
                 </TouchableOpacity>
                 <Text style={styles.issue} >Report Issue</Text>
             </View>
@@ -30,7 +54,7 @@ const Report = (props) => {
                             status={checked === 'first' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('first')}
                         />
-                        <Text  style={styles.txt} >I have recieved a bad or low quality product</Text>
+                        <Text style={styles.txt} >I have recieved a bad or low quality product</Text>
                     </View>
 
                     <View style={styles.button} >
@@ -40,7 +64,7 @@ const Report = (props) => {
                             status={checked === 'second' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('second')}
                         />
-                        <Text  style={styles.txt} >I have recieved a bad or low quality product</Text>
+                        <Text style={styles.txt} >I have recieved a bad or low quality product</Text>
                     </View>
                     <View style={styles.button} >
                         <RadioButton
@@ -49,7 +73,7 @@ const Report = (props) => {
                             status={checked === 'third' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('third')}
                         />
-                        <Text  style={styles.txt} >I have recieved a bad or low quality product</Text>
+                        <Text style={styles.txt} >I have recieved a bad or low quality product</Text>
                     </View>
                     <View style={styles.button} >
                         <RadioButton
@@ -107,9 +131,19 @@ const Report = (props) => {
                     </View>
 
                 </View>
-                <TouchableOpacity onPress={() => {props.navigation.goBack()}} >
+                <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
                     <Text style={styles.mark} >REPORT ISSUE</Text>
                 </TouchableOpacity>
+
+                { orderId.item.status ==="Ordered" ?  
+
+                <TouchableOpacity onPress={onPressCancel} >
+                    <Text style={styles.mark1} >CANCEL ORDER</Text>
+                </TouchableOpacity>
+
+                : 
+                 null}
+
             </View>
         </View>
     )
@@ -134,22 +168,21 @@ const styles = StyleSheet.create({
     },
     body: {
         flex: 3,
-        justifyContent:'space-between',
-        alignItems:'center'
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
     box: {
-        flex: 0.75,
-        marginBottom: 40,
+        flex: 0.80,
+        marginBottom: 20,
         marginLeft: 20,
         marginRight: 20,
         borderRadius: 10,
-        // borderWidth:1,
-        marginTop: 30,
+        marginTop: 20,
         elevation: 8,
         overflow: 'hidden',
         borderRadius: 10,
         backgroundColor: Colors.white,
-        padding:20
+        padding: 20
     },
     button: {
         color: Colors.white,
@@ -157,22 +190,31 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         flexDirection: 'row',
         alignItems: 'center',
-        // padding: 10
     },
-    Txt:{
-        fontSize:20,
+    Txt: {
+        fontSize: 20,
     },
-    mark:{
+    mark: {
         justifyContent: "center",
         backgroundColor: Colors.primary,
         textAlign: 'center',
         padding: 10,
         borderRadius: 10,
-       marginHorizontal: 20,
-       width:300,
-       color:Colors.white,
-       fontSize:18,
-       marginBottom:30
+        marginHorizontal: 20,
+        width: 300,
+        color: Colors.white,
+        fontSize: 18,
+    },
+    mark1: {
+        justifyContent: "center",
+        backgroundColor: Colors.primary,
+        textAlign: 'center',
+        padding: 10,
+        borderRadius: 10,
+        marginHorizontal: 20,
+        width: 300,
+        color: Colors.white,
+        fontSize: 18,
+        marginBottom: 10
     }
-
 })
