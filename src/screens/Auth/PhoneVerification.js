@@ -1,4 +1,4 @@
-import React, { useRef,useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../CommonConfig/Colors';
 import { Icons } from '../../CommonConfig/CommonConfig';
@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { postRequest, postFormDataRequest } from '../../Helper/ApiHelper';
 
-import { StyleSheet, Text, TextInput, View ,TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Alert } from 'react-native';
 import { useSelector } from 'react-redux';
 import { LocaleConfig } from 'react-native-calendars';
 
@@ -31,146 +31,114 @@ const PhoneVerificationScreen = (props) => {
   console.log(params);
   const country_code = props.route.params.countryCode;
   const mobile = props.route.params.mobile;
-  
+
   const onPressVerify = async () => {
     setisLoading(true);
     const data = {
       otp: otpValue,
       country_code: country_code,
       phone_number: mobile,
-      // country_code:countryCode
     }
     console.log(data);
 
-  const response = await postRequest('/verify-OTP', data);
-  const resData = response.data;
-  let errorMsg = 'Something went wrong';
-  // console.log(response);
-    if(response.success){
+    const response = await postRequest('/verify-OTP', data);
+    const resData = response.data;
+    let errorMsg = 'Something went wrong';
+    // console.log(response);
+    if (response.success) {
       const registerData = new FormData();
-      registerData.append('image', { uri:params?.image.path, type: params.image.mime, name: makeid(10) } )
-      registerData.append('email',  params.email  )
-      registerData.append('password',  params.password  )
-      registerData.append('name',  params.name  )
-      registerData.append('country_code',  country_code  )
-      registerData.append('phone',  mobile  )
-      // console.log("REGISTER FORM DATA\n", registerData);
+      registerData.append('image', { uri: params?.image.path, type: params.image.mime, name: makeid(10) })
+      registerData.append('email', params.email)
+      registerData.append('password', params.password)
+      registerData.append('name', params.name)
+      registerData.append('country_code', country_code)
+      registerData.append('phone', mobile)
+      console.log("REGISTER FORM DATA\n", registerData);
 
-      const res = await fetch('https://thank-greens-city.herokuapp.com/register',{
+      const res = await fetch('https://thank-greens-city.herokuapp.com/register', {
         method: 'POST',
-        headers:{
-            "Content-Type" : "multipart/form-data"
+        headers: {
+          "Content-Type": "multipart/form-data"
         },
         body: registerData
-    })
-    const registerResponse = await res.json()
-    console.log("REFISTERRRRRRRRR", registerResponse);
-    if( registerResponse.status === 1 ){
-      const loginData = {
-        email : params.email,
-        password: params.password,
-      }
-      const loginRes = await postRequest('/login', loginData)
-      const resData = loginRes.data
-
-      if( loginRes.success ) {
-        try {
-            await AsyncStorage.setItem('token', resData.token)
-            await AsyncStorage.setItem('refreshToken', resData.refreshToken)
-            await AsyncStorage.setItem('userInfo', JSON.stringify(resData.user))
-            await AsyncStorage.setItem('isLogin', "1")
-        } catch (error) {
-            console.log(error)
+      })
+      const registerResponse = await res.json()
+      // console.log("REFISTERRRRRRRRR", registerResponse);
+      if (registerResponse.status === 1) {
+        const loginData = {
+          email: params.email,
+          password: params.password,
         }
-        props.navigation.navigate('DiscountCoupon');
-        // if(resData.user.role === 1) {
-        //     navigation.dispatch(
-        //         CommonActions.reset({
-        //             index:0,
-        //             routes: [{name: 'Home'}]
-        //         })
-        //     )
-        //     setLoading(false)
-        // } 
-    } else {
-        if (resData.error === 'Invalid OTP entered!') {
+        const loginRes = await postRequest('/login', loginData)
+        console.log(loginRes);
+         const resData = loginRes.data
+
+        //  console.log(resData)
+
+        if (loginRes.success) {
+          try {
+            await AsyncStorage.setItem('token', resData.access_token)
+            await AsyncStorage.setItem('refreshToken', resData.refresh_token)
+            await AsyncStorage.setItem('userInfo', JSON.stringify(resData.user))
+            await AsyncStorage.setItem('isLogin', "true")
+          } catch (error) {
+            console.log(error)
+          }
+           props.navigation.navigate('MainTab',{screen: 'Home' });
+
+        } else {
+          if (resData.error === 'Invalid OTP entered!') {
             Toast.show(" Invalid OTP entered! ");
             setLoading(false)
-        } else if (resData.error === 'USER ALERADY EXISTS') {
+          } else if (resData.error === 'USER ALERADY EXISTS') {
             Toast.show("The credentials entered already exist. Please check the details.")
             setLoading(false)
+          }
         }
-    }
+      }
     }
   }
-    
-    // if (response.success) {
-    //   const registerData =  {
-    //     email: users.email,
-    //     password:users.password,
-    //     name: users.name,
-    //     country_code: country_code,
-    //     phone:mobile,
-    //   }
-    //   console.log(registerData);
-    //   const registerResponse = await postRequest('/register', registerData)
-    //   console.log(registerResponse);
-    //   if (!registerResponse.success) {
-    //     if (registerResponse.data.error === 'USER ALERADY EXISTS') {
-    //       errorMsg = "The credentials entered already exist. Please check the details.";
-    //     }
-    //     Alert.alert("Error!", errorMsg, [{text: "Okay"}]);
-    //   }else{
-    //     props.navigation.navigate('DiscountCoupon');
-    //   }
-    //   }else{
-    //     if (resData.error === "Invalid OTP entered!") {
-    //       errorMsg = "Invalid OTP entered!"
-    //     }
-    //     Alert.alert("Error", errorMsg, [{ text: "Okay" }])
-    //   }
-    }
 
   return (
     <>
-    <View style={styles.main} >
-      <View style={styles.backButton} >
-        <TouchableOpacity onPress={() => {
-          props.navigation.goBack()
-        }}
-        >
-          <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={{ marginTop: 30, marginLeft:10 }} />
-        </TouchableOpacity>
-        <Text style={styles.verify} > Phone Verification</Text>
-        <Text style={styles.optEnter} > Enter your OTP code here </Text>
-      </View>
-
-      <View style={styles.otp}>
-        <View style={styles.optContainer}>
-        <OTPInputView
-            style={styles.head}
-            pinCount={4}
-            autoFocusOnLoad
-            codeInputFieldStyle={styles.underlineStyleBase}
-            codeInputHighlightStyle={styles.underlineStyleHighLighted}
-            onCodeFilled = {(code) => {setotpValue(code)}}
-        />
-
-        </View>
-
-        <TouchableOpacity onPress={onPressVerify} style={styles.navigate}>
-          <Text style={styles.signin}> VERIFY </Text>
-        </TouchableOpacity>
-
-        <View style={styles.code}>
-          <Text style={styles.codeContainer} >Didn't recieved code?</Text>
+      <View style={styles.main} >
+        <View style={styles.backButton} >
           <TouchableOpacity onPress={() => {
-            props.navigation.navigate('SignUp')
-          }} >
-            <Text style={styles.resend} > Resend </Text>
+            props.navigation.goBack()
+          }}
+          >
+            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={{ marginTop: 30, marginLeft: 10 }} />
           </TouchableOpacity>
+          <Text style={styles.verify} > Phone Verification</Text>
+          <Text style={styles.optEnter} > Enter your OTP code here </Text>
         </View>
-      </View>
+
+        <View style={styles.otp}>
+          <View style={styles.optContainer}>
+            <OTPInputView
+              style={styles.head}
+              pinCount={4}
+              autoFocusOnLoad
+              codeInputFieldStyle={styles.underlineStyleBase}
+              codeInputHighlightStyle={styles.underlineStyleHighLighted}
+              onCodeFilled={(code) => { setotpValue(code) }}
+            />
+
+          </View>
+
+          <TouchableOpacity onPress={onPressVerify} style={styles.navigate}>
+            <Text style={styles.signin}> VERIFY </Text>
+          </TouchableOpacity>
+
+          <View style={styles.code}>
+            <Text style={styles.codeContainer} >Didn't recieved code?</Text>
+            <TouchableOpacity onPress={() => {
+              props.navigation.navigate('SignUp')
+            }} >
+              <Text style={styles.resend} > Resend </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </>
   )
@@ -178,7 +146,7 @@ const PhoneVerificationScreen = (props) => {
 
 const styles = StyleSheet.create({
   signin: {
-    width: 300, 
+    width: 300,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: Colors.primary,
@@ -190,55 +158,55 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   optContainer: {
-    flex: 1, 
-    justifyContent: 'space-between', 
+    flex: 1,
+    justifyContent: 'space-between',
     flexDirection: 'row'
-  },  
-  backButton:{
-    flex: 1, 
-    backgroundColor:Colors.primary, 
+  },
+  backButton: {
+    flex: 1,
+    backgroundColor: Colors.primary,
     justifyContent: 'space-between'
   },
   verify: {
-    justifyContent: 'center', 
-    color: Colors.white, 
-    fontSize: 25, 
-    fontWeight: 'bold', 
-    marginTop:50
+    justifyContent: 'center',
+    color: Colors.white,
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginTop: 50
   },
-  optEnter:{
-    justifyContent: 'center', 
+  optEnter: {
+    justifyContent: 'center',
     color: Colors.white,
     fontSize: 18
   },
   otp: {
-    justifyContent:'center',
+    justifyContent: 'center',
     alignItems: 'center',
     flex: 3
   },
   resend: {
-    color: Colors.green, 
-    fontWeight: 'bold', 
+    color: Colors.green,
+    fontWeight: 'bold',
     fontSize: 20
   },
   code: {
-    flexDirection: 'row', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 50
   },
   codeContainer: {
     color: Colors.grey
   },
-  main:{
-    flex:1
+  main: {
+    flex: 1
   },
-  navigate:{
-    marginTop: 50, 
+  navigate: {
+    marginTop: 50,
     marginHorizontal: 30
   },
   underlineStyleBase: {
-     borderWidth: 0,
+    borderWidth: 0,
     borderBottomWidth: 5,
     borderBottomColor: Colors.grey,
     fontSize: 24,
@@ -248,11 +216,11 @@ const styles = StyleSheet.create({
 
   underlineStyleHighLighted: {
     borderBottomColor: Colors.grey,
-    borderWidth:0,
+    borderWidth: 0,
     borderBottomWidth: 5,
   },
-  head:{
-    width: '80%', 
+  head: {
+    width: '80%',
     height: 200
   }
 });

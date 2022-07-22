@@ -22,7 +22,7 @@ const SignUpScreen = props => {
 
     const [show, setShow] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
-    const [image, setImage] = useState(Images.userPic0);
+    const [image, setImage] = useState(null);
     const [countryCode, setCountryCode] = useState('+91');
     const [isLoading, setisLoading] = useState(false);
     const refRBSheet = useRef();
@@ -34,9 +34,8 @@ const SignUpScreen = props => {
             cropping: true,
         }).then(image => {
             console.log(image);
-            dispatch(AuthAction.addImage(image))
-            setImage(image.path)
-            setImage(image.mime)
+            // dispatch(AuthAction.addImage(image))
+            setImage(image)
             setModalVisible(!modalVisible)
         });
     };
@@ -117,10 +116,13 @@ const SignUpScreen = props => {
                                     <View
                                         style={styles.avatarContainer}
                                     >
-                                        <Image
+                                        {image && <Image
                                             source={{ uri: image.path }}
                                             style={styles.avatar}
-                                        />
+                                        />}
+                                        {!image &&
+                                            <Image source={Images.userPic0} style={styles.avatar} />
+                                        }
                                     </View>
                                 </View>
                                 

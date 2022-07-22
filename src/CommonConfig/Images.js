@@ -93,7 +93,7 @@ export default {
     //    Placeholder image for profile photo 
 
     userPic: require('./Assets/icon/placeholder.jpeg'),
-    userPic0: 'https://as2.ftcdn.net/v2/jpg/02/17/34/67/1000_F_217346782_7XpCTt8bLNJqvVAaDZJwvZjm0epQmj6j.jpg',
+    userPic0: require('./Assets/icon/placeholder.jpeg'),
 
     // Refer A Friend
     refer: require('../CommonConfig/Assets/icon/Refer.jpg'),
@@ -111,5 +111,6 @@ export default {
 
     // delivery
     deliveryState : require("../CommonConfig/Assets/icon/delivery_state.png"),
+
 
 }
