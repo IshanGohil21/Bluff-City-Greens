@@ -13,6 +13,7 @@ const height = width * 100 / 0.6
 const RecommendedProductsCommon = (props) => {
    const itemW = props.item
      const [weight, setWeight] = useState(itemW?.item_sizes[0]);
+    // console.log("Weight", weight);
 
      const splitting = (str) => {
       let arr = str.split(' ');
@@ -29,11 +30,12 @@ const RecommendedProductsCommon = (props) => {
         }
         return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
       })
-       //console.log(cartItems);
+      //  console.log("Recommended",cartItems);
     
       const dispatch = useDispatch();
     
       const x = cartItems.find(item => item?.itemSizeId === weight.id);
+      //  console.log("X", x);
     
       const [isTouched, setIsTouched] = useState(props.initialState);
     

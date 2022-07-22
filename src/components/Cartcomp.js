@@ -17,7 +17,7 @@ const Cartcomp = (props) => {
 
     const WeightProducts = props.item
     const [weight, setWeight] = useState(WeightProducts?.item_sizes[0]);
-    //  console.log(WeightProducts.item_sizes[0]);
+      console.log(WeightProducts.item_sizes[0]);
     const y = WeightProducts.item_sizes.find(item => item.id === weight.id)
     
     // console.log(y)

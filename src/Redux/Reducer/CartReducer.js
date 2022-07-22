@@ -33,10 +33,10 @@ export default (state = initialState, action) => {
 
             if (state.items[addedWeight.id]) {
                 cartItem = { ...state.items[addedWeight.id], qty: state.items[addedWeight.id].qty + 1, itemTotal: state.items[addedWeight.id].itemTotal + addedWeight.price }
-                // console.log("\nCartItems Redux :          \n\n", cartItem);
+                //  console.log("\nCartItems Redux :          \n\n", cartItem);
             } else {
                 cartItem = { ...addedGreens, qty: 1, itemTotal: addedWeight.price, itemSizeId: addedWeight.id }
-                //   console.log(cartItem);
+                //    console.log(cartItem);
             }
 
             return {
@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
         case REMOVE_FROM_CART:
 
             const GreensRemove = action.greens;
-            console.log("REDUCE ", GreensRemove);
+            // console.log("REDUCE ", GreensRemove);
             const removeWeight = action.weight;
 
             //    console.log(removeWeight);

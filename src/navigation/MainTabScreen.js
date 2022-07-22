@@ -47,7 +47,6 @@ import EditInfoScreen from '../screens/TabNavigator/MyAccount/EditInfo';
 
 import AddCard from '../screens/TabNavigator/Checkout/AddCard';
 import ScheduleDelivery from '../screens/TabNavigator/Checkout/ScheduleDelivery';
-import checkoutDeliveryScreen from '../screens/TabNavigator/Checkout/ChekoutDelivery';
 
 import Icons from '../CommonConfig/Icons';
 

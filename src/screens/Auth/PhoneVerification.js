@@ -3,29 +3,34 @@ import { Ionicons } from '@expo/vector-icons';
 import Colors from '../../CommonConfig/Colors';
 import { Icons } from '../../CommonConfig/CommonConfig';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { postRequest, postFormDataRequest } from '../../Helper/ApiHelper';
 
 import { StyleSheet, Text, TextInput, View ,TouchableOpacity, Alert } from 'react-native';
 import { useSelector } from 'react-redux';
+import { LocaleConfig } from 'react-native-calendars';
 
 const PhoneVerificationScreen = (props) => {
+
+  const makeid = (length) => {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
   const otpInput = useRef(null);
   const [isLoading, setisLoading] = useState(false);
   const [otpValue, setotpValue] = useState('');
 
+  const params = props.route.params.xyz
+  console.log(params);
   const country_code = props.route.params.countryCode;
   const mobile = props.route.params.mobile;
-
-  const users = useSelector( state => state.Auth)
-  // console.log(users);
-  // const userFormData = new FormData();
-  // userFormData.append("name", users.name)
-  // userFormData.append("email", users.email)
-  // userFormData.append("password", users.password)
-  // userFormData.append("country_code", country_code)
-  // userFormData.append("phone_number", mobile)
-  // console.log(userFormData);
   
   const onPressVerify = async () => {
     setisLoading(true);
@@ -40,32 +45,90 @@ const PhoneVerificationScreen = (props) => {
   const response = await postRequest('/verify-OTP', data);
   const resData = response.data;
   let errorMsg = 'Something went wrong';
-  console.log(response);
-    if (response.success) {
-      const registerData = {
-        email: users.email,
-        password:users.password,
-        name: users.name,
-        country_code: country_code,
-        phone:mobile,
+  // console.log(response);
+    if(response.success){
+      const registerData = new FormData();
+      registerData.append('image', { uri:params?.image.path, type: params.image.mime, name: makeid(10) } )
+      registerData.append('email',  params.email  )
+      registerData.append('password',  params.password  )
+      registerData.append('name',  params.name  )
+      registerData.append('country_code',  country_code  )
+      registerData.append('phone',  mobile  )
+      // console.log("REGISTER FORM DATA\n", registerData);
+
+      const res = await fetch('https://thank-greens-city.herokuapp.com/register',{
+        method: 'POST',
+        headers:{
+            "Content-Type" : "multipart/form-data"
+        },
+        body: registerData
+    })
+    const registerResponse = await res.json()
+    console.log("REFISTERRRRRRRRR", registerResponse);
+    if( registerResponse.status === 1 ){
+      const loginData = {
+        email : params.email,
+        password: params.password,
       }
-      console.log(registerData);
-      const registerResponse = await postRequest('/register', registerData)
-      console.log(registerResponse);
-      if (!registerResponse.success) {
-        if (registerResponse.data.error === 'USER ALERADY EXISTS') {
-          errorMsg = "The credentials entered already exist. Please check the details.";
+      const loginRes = await postRequest('/login', loginData)
+      const resData = loginRes.data
+
+      if( loginRes.success ) {
+        try {
+            await AsyncStorage.setItem('token', resData.token)
+            await AsyncStorage.setItem('refreshToken', resData.refreshToken)
+            await AsyncStorage.setItem('userInfo', JSON.stringify(resData.user))
+            await AsyncStorage.setItem('isLogin', "1")
+        } catch (error) {
+            console.log(error)
         }
-        Alert.alert("Error!", errorMsg, [{text: "Okay"}]);
-      }else{
         props.navigation.navigate('DiscountCoupon');
-      }
-      }else{
-        if (resData.error === "Invalid OTP entered!") {
-          errorMsg = "Invalid OTP entered!"
+        // if(resData.user.role === 1) {
+        //     navigation.dispatch(
+        //         CommonActions.reset({
+        //             index:0,
+        //             routes: [{name: 'Home'}]
+        //         })
+        //     )
+        //     setLoading(false)
+        // } 
+    } else {
+        if (resData.error === 'Invalid OTP entered!') {
+            Toast.show(" Invalid OTP entered! ");
+            setLoading(false)
+        } else if (resData.error === 'USER ALERADY EXISTS') {
+            Toast.show("The credentials entered already exist. Please check the details.")
+            setLoading(false)
         }
-        Alert.alert("Error", errorMsg, [{ text: "Okay" }])
-      }
+    }
+    }
+  }
+    
+    // if (response.success) {
+    //   const registerData =  {
+    //     email: users.email,
+    //     password:users.password,
+    //     name: users.name,
+    //     country_code: country_code,
+    //     phone:mobile,
+    //   }
+    //   console.log(registerData);
+    //   const registerResponse = await postRequest('/register', registerData)
+    //   console.log(registerResponse);
+    //   if (!registerResponse.success) {
+    //     if (registerResponse.data.error === 'USER ALERADY EXISTS') {
+    //       errorMsg = "The credentials entered already exist. Please check the details.";
+    //     }
+    //     Alert.alert("Error!", errorMsg, [{text: "Okay"}]);
+    //   }else{
+    //     props.navigation.navigate('DiscountCoupon');
+    //   }
+    //   }else{
+    //     if (resData.error === "Invalid OTP entered!") {
+    //       errorMsg = "Invalid OTP entered!"
+    //     }
+    //     Alert.alert("Error", errorMsg, [{ text: "Okay" }])
+    //   }
     }
 
   return (

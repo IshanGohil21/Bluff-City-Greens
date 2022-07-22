@@ -11,23 +11,17 @@ const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
 const PastProductsCommon = (props) => {
-  const itemW = props.item
-  // const [weight, setWeight] = useState(itemW?.item_sizes[0]);
+  const itemPast = props.item
+  //  console.log("\n\nPAST ORDERS \n\n", itemPast);
 
-  // console.log("\n\ntemsW            ", itemW.item_sizes)
-  // console.log("\n\nitemW2           ", itemW.item_size);
-
-  const [weight, setWeight] = useState(itemW?.item_size);
-  // console.log(itemW.item_size);
+  const [weight, setWeight] = useState(itemPast?.item_size);
+    // console.log(itemPast.item_size);
 
   const splitting = (str) => {
     let arr = str.split(' ');
     let arr0 = parseInt(arr[0]);
     return arr0
   }
-
-  // const y = itemW.item_sizes.find(item => item.id === weight.id)
-
 
   const cartItems = useSelector(state => {
     const updatedCartItems = [];
@@ -38,20 +32,25 @@ const PastProductsCommon = (props) => {
     }
     return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
   })
-  //console.log(cartItems);
+  // console.log(cartItems);
 
   const dispatch = useDispatch();
 
-  const x = cartItems.find(item => item.id === itemW.id);
+  const x = cartItems.find(item => item?.itemSizeId === weight.id);
+  //  console.log("X ", x);
 
   const [isTouched, setIsTouched] = useState(props.initialState);
 
   const [isFavorite, setIsFavorite] = useState(props.initialState);
 
+  const newPast = itemPast.item
+  // console.log(newPast);
+  
+
   const onPressFav = async () => {
     setIsFavorite(true)
     const data = {
-      itemId: itemW.id
+      itemId: itemPast.id,
     }
 
     //  console.log("\n\nDATA            ",data);
@@ -92,18 +91,18 @@ const PastProductsCommon = (props) => {
         {x ?
 
           <View style={styles.signin2} >
-            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW, weight.price, splitting(weight.size))) }} >
+            <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(newPast, weight)) }} >
               <Ionicons name={Icons.ADD} size={24} color={Colors.white} />
             </TouchableOpacity>
 
-            <Text style={styles.qtyText} > {x?.size} </Text>
+            <Text style={styles.qtyText} > {x?.qty} </Text>
 
-            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(itemW, weight.price, splitting(weight.size))) }} >
+            <TouchableOpacity onPress={() => { dispatch(CartActions.removeFromCart(newPast, weight)) }} >
               <Ionicons name={Icons.SUB} size={24} color={Colors.white} />
             </TouchableOpacity>
           </View>
           :
-          <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(itemW, weight.price, splitting(weight.size))) }} style={styles.addButton} >
+          <TouchableOpacity onPress={() => { dispatch(CartActions.addToCart(newPast, weight)) }} style={styles.addButton} >
             <Ionicons name={Icons.CART} size={24} color={Colors.white} />
             <Text style={styles.button} >ADD</Text>
           </TouchableOpacity>

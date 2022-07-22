@@ -279,16 +279,14 @@ const HomeScreen = (props) => {
                       horizontal
                       showsHorizontalScrollIndicator={false}
                       renderItem={(item, index) => {
-                          // console.log("\n\n\n\n\nOnly for FlatList    ",item.item.order_items);
+                          //  console.log("\n\n\n\n\nOnly for FlatList    ",item.item.order_items);
                         return (
                           <View key={index} style={{ flex: 1, flexDirection: 'row' }} >
-                            {/* <Text  style= {{color: Colors.red}} >{item.item.order_items[0].item.name} </Text> */}
                             {
                               item.item.order_items.map((indi) => {
                                 //  console.log("\n\nNest FlatList:   ",indi.item_size);
                                 return (
                                   <View>
-                                    
                                     <PastProductsCommon
                                       name={indi.item.name}
                                       id={indi.id}
@@ -308,40 +306,6 @@ const HomeScreen = (props) => {
                         )
                       }}
                     />
-                    {/* Nested Scrollview for the Past Order API calling check */}
-                    {/* <ScrollView
-              pagingEnabled
-              horizontal
-              onScroll={change}
-              showsHorizontalScrollIndicator={false}
-            >
-              {
-                pastOrders.map( (item) => {
-                 // console.log("\n\n\n\nTest      ",item.order_items);
-                    return(
-                      <View  >
-                        <Text>
-                         {
-                           item.order_items.map( (index) => {
-                           //  console.log("\n\n\n\n\nTest for nested mapping     ",  index);
-                             return (
-                               <View >
-                                 <TouchableOpacity onPress={()  => {props.navigation.navigate('Past_Orders', {past: item, pastId: item.id})} } >
-                                 <Text>{index.item.name}</Text>
-                                 <Text>{index.item_size.price}</Text>
-                                 <Text>{index.item_size.size}</Text>
-                                 </TouchableOpacity>
-                               </View>
-                             )
-                           } )
-                         }
-                       </Text>
-                      </View>
-                    )
-                } )
-              }
-            </ScrollView> */}
-
                   </View>
                 }
               </View>

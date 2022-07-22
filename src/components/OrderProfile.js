@@ -46,7 +46,7 @@ const OrderProfile = (props) => {
 
         <View style={styles.main} >
             <View >
-                <Text style={styles.time}  >{props.date} , {props.time}</Text>
+                <Text style={styles.time}  >{props.date},{props.time}</Text>
             </View>
 
             <View style={styles.card} >

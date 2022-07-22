@@ -33,9 +33,10 @@ const SignUpScreen = props => {
             height: 400,
             cropping: true,
         }).then(image => {
-            // console.log(image);
-            // dispatch(AuthAction.addImage(image))
+            console.log(image);
+            dispatch(AuthAction.addImage(image))
             setImage(image.path)
+            setImage(image.mime)
             setModalVisible(!modalVisible)
         });
     };
@@ -46,9 +47,9 @@ const SignUpScreen = props => {
             height: 400,
             cropping: true
         }).then(image => {
-            // console.log(image);
             // dispatch(AuthAction.addImage(image))
-            setImage(image.path)
+            setImage(image)
+            console.log(image);
             setModalVisible(!modalVisible)
         });
     };
@@ -64,12 +65,12 @@ const SignUpScreen = props => {
             channel: "sms"
         }
         const response = await postRequest('/generate-OTP', OTPData);
-        console.log(response)
+        console.log("SMS Response  ",response)
         let errorMsg = 'Something went wrong!';
         if (response.success) {
             setisLoading(false);
             dispatch(AuthActions.addDetails(xyz));
-            props.navigation.navigate('PhoneVerification', { countryCode: countryCode, mobile: mobile })
+            props.navigation.navigate('PhoneVerification', { countryCode: countryCode, mobile: mobile , xyz})
         } else {
             setisLoading(false);
             Alert.alert("Error", errorMsg, [{ text: "Okay" }])
@@ -100,11 +101,13 @@ const SignUpScreen = props => {
                         }}
 
                         onSubmit={values => {
-                            const xyz = { name: values.name, email: values.email, password: values.password, country_code: countryCode, phone: values.mobile}
+                            const xyz = { name: values.name, email: values.email, password: values.password, country_code: countryCode, phone: values.mobile, image: image}
                             dispatch(AuthActions.addDetails(xyz));
                             pressHandler(countryCode, values.mobile, xyz)
                             // onPressRegister(countryCode,values.mobile,xyz)
-                        }}
+                        }
+                    }
+                        
                         validationSchema={SignUpValidationSchema}
                     >
                         {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
@@ -115,7 +118,7 @@ const SignUpScreen = props => {
                                         style={styles.avatarContainer}
                                     >
                                         <Image
-                                            source={{ uri: image }}
+                                            source={{ uri: image.path }}
                                             style={styles.avatar}
                                         />
                                     </View>
@@ -199,7 +202,7 @@ const SignUpScreen = props => {
                                             // style={styles.customCss}
                                             keyboardType="phone-pad"
                                             maxLength={10}
-                                            color="white"
+                                            color="black"
                                             placeholder='Enter your Phone Number'
                                             onBlur={() => setFieldTouched('mobile')}
                                             onChangeText={handleChange('mobile')}
