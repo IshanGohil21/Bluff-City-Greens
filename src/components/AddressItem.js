@@ -5,7 +5,7 @@ import Colors from '../CommonConfig/Colors';
 
 const AddressItem = props => {
     return (
-        <View style={{marginVertical:10, elevation:10, overflow:'hidden', backgroundColor:Colors.white, padding:20, borderRadius:10}}>
+        <View style={{marginVertical:10, elevation:10, overflow:'hidden', backgroundColor:Colors.white, padding:20, borderRadius:10, elevation:5}}>
             <View  style={styles.mainContainer}> 
                 <Ionicons  name={props.icon} size={25} color='grey'/>
                 <Text style={styles.tags} > {props.tag} - {props.name} </Text>

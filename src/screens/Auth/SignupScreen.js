@@ -4,7 +4,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import ProfilePicture from 'react-native-profile-picture';
-// import { backgroundColor, borderColor } from 'react-native/Libraries/components/View/ReactNativeStyleAttributes';
 import PhoneInput from 'react-native-phone-number-input';
 import PhoneVerificationScreen from './PhoneVerification'
 import ImagePicker from 'react-native-image-crop-picker';

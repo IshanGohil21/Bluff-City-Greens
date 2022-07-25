@@ -22,6 +22,13 @@ const MyAccountScreen = props => {
         setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
     }
 
+    useEffect( () => {
+        const unsubscribe = props.navigation.addListener('focus', () => {
+            getProfile();
+        })
+        return unsubscribe;
+    }, [props.navigation])
+
     const refRBSheet = useRef();
 
     const onPressLogout = async () => {

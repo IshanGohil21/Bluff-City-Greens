@@ -36,9 +36,11 @@ const ScheduleDelivery = (props) => {
 
       {/* Header & Back Button */}
       <View style={styles.head} >
-        <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-          <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.back} />
-        </TouchableOpacity>
+        
+          <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
+              <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.back} />
+          </TouchableOpacity>
+        
         <Text style={styles.time} >Delivery Times</Text>
       </View>
       {/* Body */}
@@ -77,11 +79,13 @@ const styles = StyleSheet.create({
   main: {
     flex: 1,
   },
+  back:{
+    marginTop:30
+  },
   head: {
-    flex: 0.5,
+    flex: 0.65,
     backgroundColor: Colors.primary,
     justifyContent: 'space-between',
-    marginTop:20,
     padding: 10
   },
   time: {

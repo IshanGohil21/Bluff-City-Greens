@@ -64,7 +64,7 @@ const Report = (props) => {
                             status={checked === 'second' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('second')}
                         />
-                        <Text style={styles.txt} >I have recieved a bad or low quality product</Text>
+                        <Text style={styles.txt} >I have not recieved a product, but it is billed</Text>
                     </View>
                     <View style={styles.button} >
                         <RadioButton
@@ -73,7 +73,7 @@ const Report = (props) => {
                             status={checked === 'third' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('third')}
                         />
-                        <Text style={styles.txt} >I have recieved a bad or low quality product</Text>
+                        <Text style={styles.txt} >I have recieved a product nearing expiry</Text>
                     </View>
                     <View style={styles.button} >
                         <RadioButton
@@ -82,7 +82,7 @@ const Report = (props) => {
                             status={checked === 'fourth' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('fourth')}
                         />
-                        <Text style={styles.txt}  >I have recieved a bad or low quality product</Text>
+                        <Text style={styles.txt}  >Product has been charged more than MRP</Text>
                     </View >
                     <View style={styles.button} >
                         <RadioButton
@@ -91,7 +91,7 @@ const Report = (props) => {
                             status={checked === 'fifth' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('fifth')}
                         />
-                        <Text style={styles.txt}  >I have recieved a bad or low quality product</Text>
+                        <Text style={styles.txt}  >I didn't recieve my order, but I got an SMS stating it is delivered</Text>
                     </View>
                     <View style={styles.button} >
                         <RadioButton
@@ -109,7 +109,7 @@ const Report = (props) => {
                             status={checked === 'ninth' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('ninth')}
                         />
-                        <Text style={styles.txt}  >I have recieved a bad or low quality product</Text>
+                        <Text style={styles.txt}  >I recieved a wrong product</Text>
                     </View>
                     <View style={styles.button} >
                         <RadioButton
@@ -127,7 +127,7 @@ const Report = (props) => {
                             status={checked === 'eighth' ? 'checked' : 'unchecked'}
                             onPress={() => setChecked('eighth')}
                         />
-                        <Text style={styles.txt} >I have recieved a bad or low quality product</Text>
+                        <Text style={styles.txt} >My return was picked up but I haven't recieved any refund yet</Text>
                     </View>
 
                 </View>
@@ -172,17 +172,17 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     box: {
-        flex: 0.80,
+        flex: 0.64,
         marginBottom: 20,
-        marginLeft: 20,
-        marginRight: 20,
+        marginLeft: 30,
+        marginRight: 30,
         borderRadius: 10,
         marginTop: 20,
         elevation: 8,
         overflow: 'hidden',
         borderRadius: 10,
         backgroundColor: Colors.white,
-        padding: 20
+        padding: 10
     },
     button: {
         color: Colors.white,
@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
         width: 300,
         color: Colors.white,
         fontSize: 18,
+        marginBottom:25
     },
     mark1: {
         justifyContent: "center",

@@ -13,7 +13,7 @@ const personalInfoScreen = props => {
     
     const [user, setUser] = useState({})
     // const user = props.route.params.user
-    //  console.log("                    ", user);
+      console.log("                    ", user);
     const [phoneNumber, setphoneNumber] = useState('');
     const phoneInput = useRef(null);
 
@@ -28,6 +28,8 @@ const personalInfoScreen = props => {
         return unsubscribe;
     }, [props.navigation])
 
+    // console.log("log user", user);
+
     return (
         <View style={styles.main}>
             <StatusBar backgroundColor={Colors.primary} />
@@ -39,7 +41,9 @@ const personalInfoScreen = props => {
                     <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.icon} />
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => {props.navigation.navigate('EditInfo',)}} style={{flexDirection:'row', justifyContent:'space-between'}} >
+                <TouchableOpacity onPress={() => {props.navigation.navigate('EditInfo',{user})}}
+                 style={{flexDirection:'row', justifyContent:'space-between'}} 
+                 >
                     <Ionicons name='create-outline' color={Colors.white} size={30} style={styles.icon} />
                 </TouchableOpacity>
                 </View>

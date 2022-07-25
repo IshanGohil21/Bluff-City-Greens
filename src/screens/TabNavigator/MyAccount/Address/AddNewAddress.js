@@ -23,6 +23,8 @@ const AddNewAddressScreen = (props) => {
     const [longitudes, setLongitudes] = useState();
     const [radio, setRadio] = useState()
 
+    
+
     const onPressAddress = async (values) => {
         // console.log("\n\nValues          ", values);
         const data = {
@@ -31,6 +33,7 @@ const AddNewAddressScreen = (props) => {
             latitude: latitudes,
             longitude: longitudes,
             is_select: values.address_type,
+            zip: values.zip
         }
         console.log("DATA            ", data);
         const AddressResponse = await postRequest('/add-address', data)
@@ -72,7 +75,7 @@ const AddNewAddressScreen = (props) => {
                             props.navigation.goBack()
                         }}
                         >
-                            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={{marginTop:20}} />
+                            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={{ marginTop: 20 }} />
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryCheckout') }} >
@@ -88,15 +91,22 @@ const AddNewAddressScreen = (props) => {
                 <View style={styles.body} >
 
                     <View>
-                        {/* <Image
-                            source={Images.address}
-                            style={styles.map}
-                        /> */}
 
                         <MapView
                             provider={PROVIDER_GOOGLE}
                             style={styles.map}
-                        />
+                        >
+
+                            <MapView.Marker
+                                coordinate={{
+                                    latitude: latitudes,
+                                    longitude: longitudes
+                                }}
+                                title={"title"}
+                                description={"description"}
+                            /> 
+                         </MapView>
+
                     </View>
                     <Formik
                         initialValues={{

@@ -42,7 +42,7 @@ const CheckoutScreen = (props) => {
     return (
 
         <View style={styles.main} >
-            <StatusBar backgroundColor={Colors.primary} />
+            <StatusBar  barStyle='dark-content'/>
             {/* Header */}
             <View style={styles.header} >
                 <TouchableOpacity onPress={() => props.navigation.navigate('Home')}>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         flex: 1
     },
     header: {
-        flex: 0.5,
+        flex: 0.6,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
         //padding:10,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     },
     back: {
         paddingHorizontal: 10,
-        marginTop: 25,
+        marginTop: 20,
     },
     cartext: {
         fontSize: 24,

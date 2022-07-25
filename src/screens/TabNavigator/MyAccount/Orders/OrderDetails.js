@@ -55,7 +55,9 @@ const OrderDetailsScreenAccount = (props) => {
             {/* Header & Back Button */}
             <View style={styles.title} >
                 <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-                    <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.back} />
+                    <View>
+                        <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.back} />
+                    </View>
                 </TouchableOpacity>
                 <Text style={styles.heading} >Order Details</Text>
             </View>
@@ -188,6 +190,9 @@ const OrderDetailsScreenAccount = (props) => {
 const styles = StyleSheet.create({
     main: {
         flex: 1,
+    },
+    back:{
+        marginTop:30
     },
     title: {
         flex: 0.5,

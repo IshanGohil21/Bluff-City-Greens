@@ -1,20 +1,48 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, StatusBar, Image, ScrollView, ImageBackground, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Modal, TouchableOpacity, StatusBar, Image, ScrollView, ImageBackground, Dimensions } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Formik } from 'formik';
+import ImagePicker from 'react-native-image-crop-picker';
 import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import { async } from '@firebase/util';
 import EditInfoValidationSchema from '../../../Schema/EditInfoValidationSchema';
 import { postRequest } from '../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CardStyleInterpolators } from '@react-navigation/stack';
 
 const EditInfoScreen = (props) => {
 
+    const [modalVisible, setModalVisible] = useState(false);
+    const [image, setImage] = useState(null);
     const [user, setUser] = useState({})
+
+    const takePhotoFromCamera = () => {
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+        }).then(image => {
+            console.log(image);
+            // dispatch(AuthAction.addImage(image))
+            setImage(image)
+            setModalVisible(!modalVisible)
+        });
+    };
+
+    const choosePhotoFromLibrary = () => {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            // dispatch(AuthAction.addImage(image))
+            setImage(image)
+            console.log(image);
+            setModalVisible(!modalVisible)
+        });
+    };
 
     useEffect(() => {
         getProfile()
@@ -25,23 +53,33 @@ const EditInfoScreen = (props) => {
     }
 
     const onPressEdit = async (values) => {
-        const data = {
-            name: values?.name,
-            phone: values?.phone
-        }
-        //  console.log('EDIT DATA          ', data)
+        const updateData = new FormData()
 
-        const EditResponse = await postRequest('/update-profile', data)
-        //  console.log("EDIT Screen Response          ", EditResponse)
+        updateData.append('name', values.name)
+        updateData.append('phone', values.phone)
+        updateData.append("image", {
+            uri: image.path,
+            type: image.mime,
+            name: "image",
+        })
+        console.log("UPDATE\n", updateData);
 
-        if (EditResponse.success) {
-            AsyncStorage.setItem("userInfo", JSON.stringify({ ...user, name: data.name, phone: data.phone }))
-            Toast.show('Update customer successfully')
-            props.navigation.goBack();
-        }
-        else {
-            Toast.show('Unable to Update Information')
-        }
+        const res = await fetch('https://thank-greens-city.herokuapp.com/update-profile',
+            {
+                method: 'POST',
+                body: updateData,
+                headers: {
+                    'content-Type': 'multipart/form-data',
+                    Authorization: 'Bearer ' + (await AsyncStorage.getItem('token'))
+                }
+            })
+        const response = await res.json()
+        console.log(response);
+
+        await AsyncStorage.setItem('userInfo', JSON.stringify(response.user))
+
+        Toast.show("Profile Update Successfully")
+        props.navigation.goBack()
     }
 
     return (
@@ -61,8 +99,8 @@ const EditInfoScreen = (props) => {
             <View style={styles.mainWrapper}>
                 <Formik
                     initialValues={{
-                        name: '',
-                        phone: '',
+                        name: user.name,
+                        phone: user.phone,
                     }}
                     onSubmit={values => { onPressEdit(values) }}
                     validationSchema={EditInfoValidationSchema}
@@ -70,6 +108,61 @@ const EditInfoScreen = (props) => {
                     {({ values, errors, setFieldTouched, touched, handleChange, setFieldValue, isValid, handleSubmit }) => (
 
                         <View style={styles.wrapper} >
+
+                            <View style={styles.profile} >
+                                <View
+                                    style={styles.avatarContainer}
+                                >
+                                    {image && <Image
+                                        source={{ uri: image.path }}
+                                        style={styles.avatar}
+                                    />}
+                                    {!image &&
+                                        <Image source={Images.userPic0} style={styles.avatar} />
+                                    }
+                                </View>
+                            </View>
+
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={modalVisible}
+                            >
+                                <View style={styles.centeredView}>
+                                    <View style={styles.modalView}>
+
+                                        <Text style={styles.modalText}>Choose From</Text>
+                                        <TouchableOpacity
+                                            style={[styles.button, styles.buttonClose]}
+                                            onPress={choosePhotoFromLibrary}
+                                        >
+                                            <Text style={styles.textStyle}>Gallery</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            style={[styles.button, styles.buttonClose]}
+                                            onPress={takePhotoFromCamera}
+                                        >
+                                            <Text style={styles.textStyle}>Camera</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            style={[styles.button, styles.buttonClose]}
+                                            onPress={() => { setModalVisible(false) }}
+                                        >
+                                            <Text style={styles.textStyle}>Close</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
+                            </Modal>
+
+
+                            <TouchableOpacity
+                                style={styles.camera}
+                                onPress={() => setModalVisible(true)}
+                            >
+                                <Ionicons name='camera' color={Colors.primary} size={24} />
+                            </TouchableOpacity>
+
+
                             {/* Name */}
                             <View>
                                 <Text style={styles.text}>Full Name</Text>
@@ -77,7 +170,8 @@ const EditInfoScreen = (props) => {
                                     value={values.name}
                                     onBlur={() => setFieldTouched('name')}
                                     onChangeText={handleChange('name')}
-                                    placeholder='Enter Your Name'
+                                    placeholder="Enter your name"
+                                    placeholderTextColor={Colors.grey}
                                     style={styles.edit}
                                 />
                                 {touched.name && errors.name &&
@@ -93,7 +187,8 @@ const EditInfoScreen = (props) => {
                                     onBlur={() => setFieldTouched('phone')}
                                     onChangeText={handleChange('phone')}
                                     keyboardType='numeric'
-                                    placeholder='Enter Phone Number'
+                                    placeholder="enter your phone number"
+                                    placeholderTextColor={Colors.grey}
                                     maxLength={10}
                                     style={styles.edit}
                                 />
@@ -131,7 +226,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
         padding: 10,
-        paddingHorizontal:10
+        paddingHorizontal: 10
     },
     titleFruit: {
         fontSize: 24,
@@ -175,9 +270,72 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: Colors.green,
         overflow: 'hidden',
-        marginTop: 350
+        marginTop: 150,
     },
     back: {
-        marginTop:25
-    }
+        marginTop: 25
+    },
+    profile: {
+        alignItems: 'center',
+        width: '100%',
+        marginBottom: 50
+    },
+    avatar: {
+        width: 120,
+        height: 120,
+        borderRadius: 10
+    },
+    camera: {
+        position: 'absolute',
+        right: Dimensions.get('window').width * 0.300,
+        top: Dimensions.get('window').width * 0.25,
+        borderRadius: 25,
+        borderWidth: 4,
+        borderColor: Colors.primary,
+        overflow: 'hidden',
+        alignItems: 'center',
+        backgroundColor: Colors.white,
+        height: 50,
+        width: 50,
+        justifyContent: 'center'
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    modalView: {
+        backgroundColor: Colors.white,
+        borderRadius: 40,
+        padding: 25,
+        alignItems: "center",
+        shadowColor: "#000",
+        height: 280,
+        width: 270,
+    },
+    button: {
+        borderRadius: 50,
+        padding: 10,
+        elevation: 2,
+        marginTop: 20,
+        width: 150
+    },
+    buttonOpen: {
+        backgroundColor: Colors.primary,
+    },
+    buttonClose: {
+        backgroundColor: Colors.primary,
+        justifyContent: 'center'
+    },
+    textStyle: {
+        color: Colors.white,
+        fontWeight: "bold",
+        textAlign: "center",
+        padding: 5
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 20
+    },
 })

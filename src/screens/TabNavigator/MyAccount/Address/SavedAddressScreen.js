@@ -45,6 +45,12 @@ const SavedAddressScreen = props => {
         console.log("\n\nDELETE                 ", deleteResponse);
     }
 
+    const tag = (address_type) => {
+        if (address_type === 0) return "Home"
+        if (address_type === 1) return "Work"
+        if (address_type === 2) return "Other"
+      }
+
     return (
         <View style={styles.main}>
             <StatusBar backgroundColor={Colors.primary} />
@@ -74,7 +80,7 @@ const SavedAddressScreen = props => {
                                 {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
                                     <AddressItem
                                         id={item.item.id}
-                                        tag={item.item.is_select}
+                                        tag={tag(item.item.is_select)}
                                         name={item.item.primary_address}
                                         address={item.item.addition_address_info}
                                         onEdit={() => { props.navigation.navigate('EditAddress', { edit: item, editId: item.item.id }) }}
@@ -101,20 +107,20 @@ const styles = StyleSheet.create({
     header: {
         padding: 10,
         backgroundColor: Colors.primary,
-        flex: 0.8,
+        flex: 0.6,
     },
     title: {
         color: Colors.white,
         fontWeight: 'bold',
-        fontSize: 28,
-        marginTop: 50
+        fontSize: 24,
+        marginTop: 10
     },
     back:{
-        marginTop:20
+        marginTop:30
     },
     body: {
         flex: 3,
-        padding: 30
+        padding: 20
     },
     signin: {
         alignItems: "center",
