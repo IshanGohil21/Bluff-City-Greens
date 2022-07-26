@@ -44,7 +44,7 @@ const DeliveryAddressScreen = (props) => {
 
     const [isLoading, setIsLoading] = useState({});
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState({});
 
     const cartItems = useSelector(state => {
         const updatedCartItems = [];
@@ -84,10 +84,6 @@ const DeliveryAddressScreen = (props) => {
         setActivateCard(JSON.parse(await AsyncStorage.getItem('activateCard')))
     }, [])
 
-    useEffect(() => {
-        getProfile()
-    }, [])
-
     const [user, setUser] = useState({})
 
     const getProfile = async () => {
@@ -99,6 +95,7 @@ const DeliveryAddressScreen = (props) => {
     useEffect(() => {
         getAddress();
         getCard();
+        getProfile()
         // getDiscount();
     }, [credit, address]);
 
@@ -146,6 +143,7 @@ const DeliveryAddressScreen = (props) => {
     // console.log("\n\n\nTEMP",temp);
 
     const onPressPlaceOrder = async () => {
+        setLoading(true);
         // try{
         const data = {
             delivery_date: date,
@@ -162,6 +160,7 @@ const DeliveryAddressScreen = (props) => {
 
         if (paymentstate === 'COD') {
             if (placeOrderResponse.success) {
+                
                 //  console.log("Storing details : \n\n ",placeOrderResponse.data.order.id);
 
                 setStoreID(placeOrderResponse.data.order.id)
@@ -171,6 +170,7 @@ const DeliveryAddressScreen = (props) => {
                 dispatch(Cart.clearCart())
             }
             else {
+                
                 Toast.show('Something went Wrong')
             }
         }
@@ -188,6 +188,7 @@ const DeliveryAddressScreen = (props) => {
             console.log("\n\n\nCheckout API LOG", checkOutResponse);
 
             if (!checkOutResponse.success) return Alert.alert(error?.message);
+           
             const clientSecret = checkOutResponse.data.data.payment_intent
             const EphemeralKeySecret = checkOutResponse.data.data.ephemeral_key
             const Displayname = 'Pradip'
@@ -384,7 +385,7 @@ const DeliveryAddressScreen = (props) => {
 
                         <TouchableOpacity  onPress={onPressPlaceOrder} disabled={((cartItems.length === 0) || (!date) || (!address)) ? true : false} >
                             <View   style={styles.signin}>
-                                {loading ? <ActivityIndicator size="small" color={Colors.blue} /> :
+                                {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
                                     <Text style={{ fontSize: 24, color: Colors.white }}>PLACE ORDER</Text>}
                             </View>
                         </TouchableOpacity>
