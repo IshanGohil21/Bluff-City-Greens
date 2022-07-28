@@ -4,7 +4,7 @@ import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpaci
 import { Formik } from "formik";
 import * as yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
-import User from '../../../dummy-data/User';
+import User from '../../../Dummy-Data/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig'

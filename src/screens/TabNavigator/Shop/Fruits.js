@@ -5,7 +5,7 @@ import RBSheet from "react-native-raw-bottom-sheet";
 import { RangeSlider } from '@sharcoux/slider';
 
 import { Images, Colors, Icons } from '../../../CommonConfig/CommonConfig';
-import FruitsComp from '../../../components/fruits';
+import FruitsComp from '../../../Components/fruits';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import { postRequest } from '../../../Helper/ApiHelper';

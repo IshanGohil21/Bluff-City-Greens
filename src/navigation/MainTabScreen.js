@@ -7,46 +7,46 @@ import { Icon } from 'react-native-vector-icons';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import HomeScreen from '../screens/TabNavigator/Home/HomeScreen';
-import CheckoutScreen from '../screens/TabNavigator/Checkout/Checkout';
-import ShopScreen from '../screens/TabNavigator/Shop/Shop';
-import DeliveryLocationScreen from '../screens/TabNavigator/DeliveryLocationScreen';
-import FilterScreen from '../screens/TabNavigator/FilterScreen';
-import NotificationScreen from '../screens/TabNavigator/NotificationScreen';
+import HomeScreen from '../Screens/TabNavigator/Home/HomeScreen';
+import CheckoutScreen from '../Screens/TabNavigator/Checkout/Checkout';
+import ShopScreen from '../Screens/TabNavigator/Shop/Shop';
+import DeliveryLocationScreen from '../Screens/TabNavigator/DeliveryLocationScreen';
+import FilterScreen from '../Screens/TabNavigator/FilterScreen';
+import NotificationScreen from '../Screens/TabNavigator/NotificationScreen';
 import DrawerContentScreen from './DrawerContent';
-import SearchScreen from '../screens/TabNavigator/Home/Search';
-import FiltersScreen2  from '../screens/TabNavigator/FiltersScreen2';
-import FruitShopScreen  from '../screens/TabNavigator/Shop/Fruits';
-import Vegetables from '../screens/TabNavigator/Shop/Vegetables';
+import SearchScreen from '../Screens/TabNavigator/Home/Search';
+import FiltersScreen2  from '../Screens/TabNavigator/FiltersScreen2';
+import FruitShopScreen  from '../Screens/TabNavigator/Shop/Fruits';
+import Vegetables from '../Screens/TabNavigator/Shop/Vegetables';
 
 
 { /* Contact US Screen */ }
-import ContactScreen from '../screens/TabNavigator/Contact';
-import FAQScreen from '../screens/TabNavigator/FAQ';
+import ContactScreen from '../Screens/TabNavigator/Contact';
+import FAQScreen from '../Screens/TabNavigator/FAQ';
 
-{ /* My Account screens */ }
-import MyAccountScreen from '../screens/TabNavigator/MyAccount/MyAccount';
-import personalInfoScreen from '../screens/TabNavigator/MyAccount/PersonalInfo';
-import SavedAddressScreen from '../screens/TabNavigator/MyAccount/Address/SavedAddressScreen';
-import MyOrdersScreen from '../screens/TabNavigator/MyAccount/Orders/MyOrdersScreen';
-import FavoritesScreen from '../screens/TabNavigator/MyAccount/FavoritesScreen';
-import PaymentScreen from '../screens/TabNavigator/MyAccount/PaymentScreen';
-import ReferFriendScreen from '../screens/TabNavigator/MyAccount/ReferFriend';
-import ChangePasswordScreen from '../screens/TabNavigator/MyAccount/ChangePassword';
-import AddNewAddressScreen from '../screens/TabNavigator/MyAccount/Address/AddNewAddress';
-import EditAddressScreen from '../screens/TabNavigator/MyAccount/Address/EditAddress';
-import AddNewAddress2Screen from '../screens/TabNavigator/MyAccount/Address/AddAddress2';
-import PastOrderScreen from '../screens/TabNavigator/Home/PastOrderScreen';
-import RecommendedProducts from '../screens/TabNavigator/Home/RecommendedProducts';
-import DeliveryAddressScreen from '../screens/TabNavigator/Checkout/DeliveryAddress';
-import OrderDetailsScreen from '../screens/TabNavigator/Checkout/OrderDetails';
-import TrackOrderScreen from '../screens/TabNavigator/Checkout/TrackOrder';
-import OrderDetailsScreenAccount from '../screens/TabNavigator/MyAccount/Orders/OrderDetails';
-import Report from '../screens/TabNavigator/MyAccount/Orders/Report';
-import EditInfoScreen from '../screens/TabNavigator/MyAccount/EditInfo';
+{ /* My Account Screens */ }
+import MyAccountScreen from '../Screens/TabNavigator/MyAccount/MyAccount';
+import personalInfoScreen from '../Screens/TabNavigator/MyAccount/PersonalInfo';
+import SavedAddressScreen from '../Screens/TabNavigator/MyAccount/Address/SavedAddressScreen';
+import MyOrdersScreen from '../Screens/TabNavigator/MyAccount/Orders/MyOrdersScreen';
+import FavoritesScreen from '../Screens/TabNavigator/MyAccount/FavoritesScreen';
+import PaymentScreen from '../Screens/TabNavigator/MyAccount/PaymentScreen';
+import ReferFriendScreen from '../Screens/TabNavigator/MyAccount/ReferFriend';
+import ChangePasswordScreen from '../Screens/TabNavigator/MyAccount/ChangePassword';
+import AddNewAddressScreen from '../Screens/TabNavigator/MyAccount/Address/AddNewAddress';
+import EditAddressScreen from '../Screens/TabNavigator/MyAccount/Address/EditAddress';
+import AddNewAddress2Screen from '../Screens/TabNavigator/MyAccount/Address/AddAddress2';
+import PastOrderScreen from '../Screens/TabNavigator/Home/PastOrderScreen';
+import RecommendedProducts from '../Screens/TabNavigator/Home/RecommendedProducts';
+import DeliveryAddressScreen from '../Screens/TabNavigator/Checkout/DeliveryAddress';
+import OrderDetailsScreen from '../Screens/TabNavigator/Checkout/OrderDetails';
+import TrackOrderScreen from '../Screens/TabNavigator/Checkout/TrackOrder';
+import OrderDetailsScreenAccount from '../Screens/TabNavigator/MyAccount/Orders/OrderDetails';
+import Report from '../Screens/TabNavigator/MyAccount/Orders/Report';
+import EditInfoScreen from '../Screens/TabNavigator/MyAccount/EditInfo';
 
-import AddCard from '../screens/TabNavigator/Checkout/AddCard';
-import ScheduleDelivery from '../screens/TabNavigator/Checkout/ScheduleDelivery';
+import AddCard from '../Screens/TabNavigator/Checkout/AddCard';
+import ScheduleDelivery from '../Screens/TabNavigator/Checkout/ScheduleDelivery';
 
 import Icons from '../CommonConfig/Icons';
 

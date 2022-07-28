@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StyleSheet, Text, Dimensions ,TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar, ScrollView, FlatList } from 'react-native';
 
-import AddressItem from '../../../../components/AddressItem';
+import AddressItem from '../../../../Components/AddressItem';
 import { Icons, Colors } from '../../../../CommonConfig/CommonConfig';
 import { getRequest, deleteRequest } from '../../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';

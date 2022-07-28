@@ -4,12 +4,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import MostPopularProductScreen from '../../../dummy-data/MostPopular';
-import Popular from '../../../components/Popular';
-import SearchBarScreen3 from '../../../components/SearchBar3';
+import MostPopularProductScreen from '../../../Dummy-Data/MostPopular';
+import Popular from '../../../Components/Popular';
+import SearchBarScreen3 from '../../../Components/SearchBar3';
 import { getRequest } from '../../../Helper/ApiHelper';
-import CategoriesScreen from '../../../components/Categories';
-import RecommendedProductsCommon from '../../../components/RecommendedProducts';
+import CategoriesScreen from '../../../Components/Categories';
+import RecommendedProductsCommon from '../../../Components/RecommendedProducts';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import { getMainRequest } from '../../../Helper/ApiHelper';

@@ -8,9 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Icons, Colors, Images } from '../../../../CommonConfig/CommonConfig';
 import * as CartActions from '../../../../Redux/Action/Cart';
 import RBSheet from "react-native-raw-bottom-sheet";
-import Address from '../../../../dummy-data/Address';
-import SelectAddComp from '../../../../components/SelectAddComp';
-import Products from '../../../../components/Products';
+import Address from '../../../../Dummy-Data/Address';
+import SelectAddComp from '../../../../Components/SelectAddComp';
+import Products from '../../../../Components/Products';
 
 const OrderDetailsScreenAccount = (props) => {
     const orderId = props.route.params.orderId

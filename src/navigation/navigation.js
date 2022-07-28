@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import AuthStackScreen from "./AuthStackScreen";
 import MainTabScreen from "./MainTabScreen";
-import SplashScreen from "../screens/SplashScreen";
+import SplashScreen from "../Screens/SplashScreen";
 
 
 const AppStack = createStackNavigator();

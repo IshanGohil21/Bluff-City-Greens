@@ -7,8 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as Cart from '../../../Redux/Action/Cart';
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
-import SelectAddComp from '../../../components/SelectAddComp';
-import CardsComp from '../../../components/CardsComp';
+import SelectAddComp from '../../../Components/SelectAddComp';
+import CardsComp from '../../../Components/CardsComp';
 import { getRequest, getMainRequest, postRequest } from '../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';

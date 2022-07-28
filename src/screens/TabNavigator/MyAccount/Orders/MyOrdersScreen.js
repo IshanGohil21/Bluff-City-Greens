@@ -10,7 +10,7 @@ import Toast from 'react-native-simple-toast'
 
 import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
 import { getRequest } from '../../../../Helper/ApiHelper';
-import OrderProfile from '../../../../components/OrderProfile';
+import OrderProfile from '../../../../Components/OrderProfile';
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 
 const { width } = Dimensions.get('window')

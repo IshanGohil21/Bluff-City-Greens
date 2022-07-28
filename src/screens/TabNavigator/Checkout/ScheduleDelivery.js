@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
-import AccordianDeliveryTime from '../../../components/Accordian(DeliveryTime)';
+import AccordianDeliveryTime from '../../../Components/Accordian(DeliveryTime)';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Toast } from 'react-native-simple-toast';
 import * as DateTimeAction from '../../../Redux/Action/OrderAction';

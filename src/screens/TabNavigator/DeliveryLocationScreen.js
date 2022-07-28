@@ -2,8 +2,8 @@ import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ImageBackground, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Images, Icons } from '../../CommonConfig/CommonConfig';
-import Address from '../../dummy-data/Address';
-import Searchbar from '../../components/SearchBar';
+import Address from '../../Dummy-Data/Address';
+import Searchbar from '../../Components/SearchBar';
 
 const PickCurrentLocationScreen = (props) => {
   return (

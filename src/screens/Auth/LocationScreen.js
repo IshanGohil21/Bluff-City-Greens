@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, StatusBar} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Searchbar from '../../components/SearchBar';
+import Searchbar from '../../Components/SearchBar';
 import { Images, Colors, Icons }from '../../CommonConfig/CommonConfig';
 
 const LocationScreen = (props) => {

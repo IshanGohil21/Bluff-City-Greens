@@ -7,10 +7,10 @@ import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import { getRequest } from '../../../Helper/ApiHelper'; 
 import { FlatList } from 'react-native-gesture-handler';
 import Toast from 'react-native-simple-toast';
-import Favi from '../../../components/Favi';
+import Favi from '../../../Components/Favi';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
-import RecommendedProductsCommon from '../../../components/RecommendedProducts';
+import RecommendedProductsCommon from '../../../Components/RecommendedProducts';
 
 const { width } = Dimensions.get('window')
 const numColumns = 2

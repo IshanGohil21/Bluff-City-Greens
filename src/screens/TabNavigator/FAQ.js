@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {Icons, Colors} from '../../CommonConfig/CommonConfig';
-import FAQ from '../../dummy-data/FAQ';
+import FAQ from '../../Dummy-Data/FAQ';
 import Collapsible from 'react-native-collapsible';
 import * as Animatable from 'react-native-animatable';
-import Accordian from '../../components/Accordian(FAQ)';
+import Accordian from '../../Components/Accordian(FAQ)';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const FAQScreen = (props) => {

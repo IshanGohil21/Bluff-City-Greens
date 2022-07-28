@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, StatusBar, FlatList, ScrollVi
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useDispatch, useSelector } from 'react-redux';
 import { Icons, Colors } from '../../../CommonConfig/CommonConfig';
-import Vegetables from '../../../dummy-data/Vegetables';
-import Cartcomp from '../../../components/Cartcomp';
+import Vegetables from '../../../Dummy-Data/Vegetables';
+import Cartcomp from '../../../Components/Cartcomp';
 import { postRequest } from '../../../Helper/ApiHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as CartActions from '../../../Redux/Action/Cart';

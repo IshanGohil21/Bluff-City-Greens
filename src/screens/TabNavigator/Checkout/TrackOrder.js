@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Timeline from 'react-native-timeline-flatlist'
 
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig';
-import data from '../../../dummy-data/Timeline';
+import data from '../../../Dummy-Data/Timeline';
 import Icon from 'react-native-ionicons';
 
 const TrackOrderScreen = (props) => {

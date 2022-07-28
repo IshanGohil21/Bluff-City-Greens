@@ -4,17 +4,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
-import Address from '../../../dummy-data/Address';
-import Orders from '../../../components/Orders';
-import SearchBarScreen from '../../../components/Slider/SearchBar2';
-import CategoriesScreen from '../../../components/Categories';
+import Address from '../../../Dummy-Data/Address';
+import Orders from '../../../Components/Orders';
+import SearchBarScreen from '../../../Components/Slider/SearchBar2';
+import CategoriesScreen from '../../../Components/Categories';
 import { getMainRequest, getRequest, postRequest } from '../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
-import RecommendedProductsCommon from '../../../components/RecommendedProducts';
+import RecommendedProductsCommon from '../../../Components/RecommendedProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
-import PastProductsCommon from '../../../components/PastOrdesCommon';
+import PastProductsCommon from '../../../Components/PastOrdesCommon';
 import { validateYupSchema } from 'formik';
 
 const { width } = Dimensions.get('window')

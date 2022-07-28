@@ -4,7 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { RadioButton } from 'react-native-paper';
 
-import RecommendedProducts from '../../../dummy-data/RecommendedProducts';
+import RecommendedProducts from '../../../Dummy-Data/RecommendedProducts';
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import { useSelector, useDispatch } from 'react-redux';
 import * as CartActions from '../../../Redux/Action/Cart';
