@@ -108,7 +108,7 @@ const VegetableScreen = (props) => {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
                             <View style={styles.qtyCart} >
-                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{abc}</Text>
+                                <Text style={styles.abcf}>{abc}</Text>
                             </View>
                             <Ionicons name={Icons.CART} size={28} color={Colors.white} style={styles.back} />
                         </TouchableOpacity>
@@ -199,8 +199,8 @@ const VegetableScreen = (props) => {
                                 {/* Range Slider */}
                                 <View style={styles.priceRange} >
                                     <Text style={styles.priceRange2} >Price Range</Text>
-                                    <View style={{ alignItems: 'center', justifyContent: 'center', padding: 5 }} >
-                                        <Text style={{ fontSize: 20, fontWeight: 'bold', color: Colors.grey }} >${start} - ${end}</Text>
+                                    <View style={styles.ending} >
+                                        <Text style={styles.startEnd} >${start} - ${end}</Text>
                                     </View>
                                     <View style={styles.rangeSlider} >
                                         <RangeSlider
@@ -506,7 +506,6 @@ const styles = StyleSheet.create({
         padding: 5
     },
     priceTag: {
-        // padding: 15,
         alignItems: 'center',
         justifyContent: 'space-between',
         flexDirection: 'row',
@@ -520,9 +519,6 @@ const styles = StyleSheet.create({
         marginRight: 15,
         color: Colors.grey
     },
-    // applyButton: {
-    //     marginTop: 10
-    // },
     rangeSlider: {
         marginTop: 20
     },
@@ -547,5 +543,20 @@ const styles = StyleSheet.create({
         marginLeft: 22,
         position: 'absolute',
         zIndex: 10
+    },
+    abcf:{
+        fontSize: 12, 
+        fontWeight: 'bold', 
+        color: Colors.white 
+    },
+    startEnd:{
+        fontSize: 20, 
+        fontWeight: 'bold', 
+        color: Colors.grey
+    },
+    ending:{
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        padding: 5
     }
 })

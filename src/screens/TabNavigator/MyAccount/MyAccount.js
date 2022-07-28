@@ -46,12 +46,12 @@ const MyAccountScreen = props => {
 
     return (
         <>
-            <View style={{ flex: 1 }}>
+            <View style={styles.main}>
                 <ScrollView>
                     <View>
-                        <StatusBar backgroundColor='rgba(0,0,0,0)' />
+                        <StatusBar  />
                         <ImageBackground source={{ uri: user?.picture }} resizeMode='cover' style={styles.image} >
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 10 }} >
+                            <View style={styles.heading} >
                                 <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                                     <Ionicons name={Icons.BACK_ARROW} size={30} color={Colors.white} style={styles.object} />
                                 </TouchableOpacity>
@@ -162,42 +162,27 @@ const MyAccountScreen = props => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-        // flex: 1,
-    },
     header: {
-        // flex: 1,
-        // flexDirection: 'row',
         justifyContent: 'center',
     },
     image: {
 
         justifyContent: 'space-between',
         height: Dimensions.get('window').height * 0.45,
-        // flexDirection: 'row'
         paddingTop: 15,
     },
-    // body: {
-    //     backgroundColor: 'white',
-    //     flexDirection: 'row',
-    //     alignItems: 'center',
-    //     justifyContent: 'space-evenly',
-    //     borderBottomColor: Colors.grey,
-    //     borderBottomWidth: 0.5,
-    //     paddingHorizontal: 15,
-    //     marginLeft: 15,
-    // },
+    main:{
+        flex: 1
+    },
     text: {
         padding: 15,
         fontSize: 17,
         color: 'black'
     },
     bodyContainer: {
-        // flex: 3,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
     },
-
     signin: {
         width: "80%",
         alignItems: "center",
@@ -208,7 +193,6 @@ const styles = StyleSheet.create({
         fontSize: 23,
         padding: 10,
         borderRadius: 10,
-        // borderColor: Colors.green,
         overflow: 'hidden',
     },
     logout: {
@@ -219,19 +203,15 @@ const styles = StyleSheet.create({
         width: "80%",
         alignItems: "center",
         justifyContent: "center",
-        // backgroundColor: Colors.primary,
         textAlign: 'center',
         color: Colors.primary,
         fontSize: 18,
         padding: 10,
-        // borderRadius: 10,
-        // borderColor: Colors.green,
         overflow: 'hidden',
     },
     bottom: {
         fontWeight: '500',
         fontSize: 20,
-        //alignItems: 'center',
         justifyContent: 'center',
         alignContent: 'center',
         marginLeft: 60,
@@ -246,6 +226,11 @@ const styles = StyleSheet.create({
     object: {
         marginLeft: 10,
         color: Colors.red
+    },
+    heading:{
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        paddingHorizontal: 10 
     }
 });
 

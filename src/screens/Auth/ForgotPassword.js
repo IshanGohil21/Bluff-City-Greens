@@ -45,7 +45,7 @@ const ForgotPasswordScreen = props => {
           props.navigation.goBack()
         }}
         >
-          <Ionicons name={Icons.BACK_ARROW} color='white' size={28} style={{ marginTop: 10 }} />
+          <Ionicons name={Icons.BACK_ARROW} color='white' size={28} style={styles.margins} />
         </TouchableOpacity>
         {/*Title*/}
         <View>
@@ -93,7 +93,7 @@ const ForgotPasswordScreen = props => {
               <Text style={styles.emailContainer}>{errors.email}</Text>
             }
             <View>
-              <TouchableOpacity onPress={handleSubmit} style={{ marginTop: 50 }}>
+              <TouchableOpacity onPress={handleSubmit} style={margins0}>
                 <View style={styles.signin} >
                 { isLoading ? <ActivityIndicator size='small' color={Colors.white} /> :
                 <Text style={{fontSize: 24, color: Colors.white}}> SUBMIT </Text> }
@@ -178,6 +178,12 @@ const styles = StyleSheet.create({
   forgot: {
     flexDirection: 'row', 
     marginTop: 30
+  },
+  margins:{
+    marginTop: 10
+  },
+  margins0:{
+    marginTop: 50
   }
 });
 

@@ -77,24 +77,6 @@ const ShopScreen = (props) => {
                         }}
                     /> 
                 </View>
-                    
-                {/* ScrollView to test wether the called API is running or not */}
-                {/* <ScrollView>
-                        {
-                            categories.map( (item, index) => {
-                                console.log("\n\n\n\nHeloooo       ",item);
-                                return (
-                                    <View key={index} >
-                                        <Text>{item.title}</Text>
-                                        <Text>{item.items}</Text>
-                                        {/* <Image source={{ uri:item.image }} /> */}
-                                    {/* </View> */}
-                                {/* )
-
-                            } )
-                        } */}
-                {/* </ScrollView>  */}
-
             </View>
         </View>
     );

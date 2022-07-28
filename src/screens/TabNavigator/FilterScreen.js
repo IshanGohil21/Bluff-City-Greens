@@ -68,7 +68,7 @@ const FilterScreen = (props) => {
                   Categories.map((item) => {
                     return (
                       <TouchableOpacity key={item.id} style={styles.categories}>
-                        <Image source={item.image} style={{ height: 50, width: 50 }} />
+                        <Image source={item.image} style={styles.imagess} />
                         <Text style={{ color: item.color }} > {item.name} </Text>
                       </TouchableOpacity>
                     )
@@ -412,7 +412,6 @@ const styles = StyleSheet.create({
        padding: 5
   },
   priceTag: {
-    // padding: 15,
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
@@ -431,5 +430,9 @@ const styles = StyleSheet.create({
   },
   rangeSlider: {
     marginTop: 40
+  },
+  imagess:{
+    height: 50, 
+    width: 50
   }
 })

@@ -9,7 +9,6 @@ import Icon from 'react-native-ionicons';
 
 const TrackOrderScreen = (props) => {
     var RandomNumber = Math.floor(Math.random() * 100) + 100 ;
-  var RandomNumber2 = Math.floor(Math.random() * 1000) + 1000;
 
   return (
     <View style={styles.main} >
@@ -24,17 +23,16 @@ const TrackOrderScreen = (props) => {
         <View style={styles.body} >
             <View style={styles.order} >
                 <Text  style={styles.num}>Order Number : </Text>
-                <Text style={styles.ran} > {RandomNumber}-{RandomNumber2}</Text>
+                <Text style={styles.ran} > {RandomNumber}-{RandomNumber}</Text>
             </View>
 
-            <View style={{flex:3, marginTop: 20, justifyContent:'space-between'}} >
+            <View style={styles.tracking} >
             <Timeline
                 data={data}
-                //..other props
                 circleSize={20}
                 circleColor={Colors.primary}
                 lineColor={Colors.primary}
-                timeContainerStyle={{minWidth:52, marginTop:70}}
+                timeContainerStyle={styles.minContainer}
                 descriptionStyle={{color:Colors.grey}}
                 options={{
                     style:{paddingTop:5}
@@ -115,4 +113,13 @@ const styles = StyleSheet.create({
     kunal:{
         fontSize: 18,
     },
+    tracking:{
+        flex:3,
+        marginTop: 20, 
+        justifyContent:'space-between'
+    },
+    minContainer:{
+        minWidth:52, 
+        marginTop:70
+    }
 })

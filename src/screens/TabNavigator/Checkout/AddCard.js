@@ -76,16 +76,7 @@ const AddCard = (props) => {
                     }}
                     onSubmit={(values) => {
                         onPressAddCard(values)
-                        // const xyz = {
-                        //     number: values.cardNumber,
-                        //     expiryDate: values.expiryDate,
-                        //     cvv: values.cvv,
-                        //     name: values.name,
-                        //     isActive: values.isActive
-                        // }
-                        // dispatch(CardAction.addCard(xyz))
-                        // onPressAddCard(xyz)
-                        // props.navigation.goBack();
+
                     }}
                     validationSchema={CardValidationSchema}
                 >
@@ -107,7 +98,7 @@ const AddCard = (props) => {
                             </View>
                             <View style={styles.line} />
                             {touched.cardNumber && errors.cardNumber &&
-                                <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.cardNumber}</Text>
+                                <Text style={styles.errorsTxt} >{errors.cardNumber}</Text>
                             }
                             {/* EXPIRY & CVV */}
                             <View style={{ marginHorizontal: 5 }}>
@@ -149,7 +140,7 @@ const AddCard = (props) => {
                                 </Modal>
                                 <View style={styles.line} />
                                 {touched.expiryDate && errors.expiryDate &&
-                                    <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.expiryDate}</Text>
+                                    <Text style={styles.erroCvv} >{errors.expiryDate}</Text>
                                 }
                             </View>
 
@@ -169,7 +160,7 @@ const AddCard = (props) => {
                                     {touched.cvv ? (!errors.cvv ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color="green" size={20} /></Animatable.View> : null) : null}
                                 </View>
                                 {touched.cvv && errors.cvv &&
-                                    <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.cvv}</Text>
+                                    <Text style={styles.erroCvv} >{errors.cvv}</Text>
                                 }
                             </View>
                             <View style={styles.line} />
@@ -188,7 +179,7 @@ const AddCard = (props) => {
                             <View style={styles.line} />
 
                             {touched.name && errors.name &&
-                                <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.name}</Text>
+                                <Text style={styles.erroCvv} >{errors.name}</Text>
                             }
                             <View style={styles.switch} >
 
@@ -204,18 +195,8 @@ const AddCard = (props) => {
                                     circleColorOn={Colors.white}
                                     backgroundColorOn={Colors.primary}
                                     backgroundColorOff={Colors.grey}
-                                    containerStyle={{
-                                        marginTop: 16,
-                                        width: 60,
-                                        height: 35,
-                                        borderRadius: 25,
-                                        padding: 2,
-                                    }}
-                                    circleStyle={{
-                                        width: 30,
-                                        height: 30,
-                                        borderRadius: 20,
-                                    }}
+                                    containerStyle={styles.containerStyles}
+                                    circleStyle={ styles.circle }
                                 />
 
                             </View>
@@ -264,7 +245,6 @@ const styles = StyleSheet.create({
     },
     container: {
         marginTop: 10,
-        //padding:5
     },
     button: {
         width: "80%",
@@ -272,7 +252,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         textAlign: 'center',
         color: Colors.white,
-        // fontSize: 23,
         padding: 10,
         borderRadius: 10,
         marginTop: 50,
@@ -290,8 +269,6 @@ const styles = StyleSheet.create({
     },
     content: {
         backgroundColor: '#fff',
-        // marginHorizontal: 10,
-        // marginVertical: 70,
     },
     toggle: {
         fontSize: 16,
@@ -312,7 +289,6 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary,
         textAlign: 'center',
         color: Colors.white,
-        // fontSize: 23,
         padding: 10,
         borderRadius: 10,
         marginTop: 50,
@@ -332,6 +308,28 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         marginBottom: 20
+    },
+    errorsTxt:{
+        fontSize: 11, 
+        color: Colors.red, 
+        margin: 10
+    },
+    containerStyles:{
+        marginTop: 16,
+        width: 60,
+        height: 35,
+        borderRadius: 25,
+        padding: 2,
+    },
+    circle:{
+        width: 30,
+        height: 30,
+        borderRadius: 20,
+    },
+    erroCvv:{
+        fontSize: 11, 
+        color: Colors.red, 
+        margin: 10
     }
 });
 

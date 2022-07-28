@@ -73,7 +73,7 @@ const AddNewAddressScreen = (props) => {
                             props.navigation.goBack()
                         }}
                         >
-                            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={{ marginTop: 20 }} />
+                            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.margining} />
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => { props.navigation.navigate('DeliveryCheckout') }} >
@@ -123,7 +123,7 @@ const AddNewAddressScreen = (props) => {
                                         backgroundColor={Colors.white}
                                     />
                                     {touched.primary_address && errors.primary_address &&
-                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.primary_address}</Text>
+                                        <Text style={styles.errorValidate} >{errors.primary_address}</Text>
                                     }
 
                                     <Text style={styles.details} > Zip Code </Text>
@@ -136,7 +136,7 @@ const AddNewAddressScreen = (props) => {
                                         backgroundColor={Colors.white}
                                     />
                                     {touched.zip && errors.zip &&
-                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.zip}</Text>
+                                        <Text style={styles.errorValidate} >{errors.zip}</Text>
                                     }
 
                                     <Text style={styles.details} > Nearest Landmark (Optional) </Text>
@@ -149,7 +149,7 @@ const AddNewAddressScreen = (props) => {
                                         backgroundColor={Colors.white}
                                     />
                                     {touched.addition_address_info && errors.addition_address_info &&
-                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.addition_address_info}</Text>
+                                        <Text style={styles.errorValidate} >{errors.addition_address_info}</Text>
                                     }
 
                                 </View>
@@ -201,7 +201,7 @@ const AddNewAddressScreen = (props) => {
                                     </View>
                                 </View>
                                 {touched.address_type && errors.address_type &&
-                                    <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.address_type}</Text>
+                                    <Text style={styles.errorValidate} >{errors.address_type}</Text>
                                 }
 
                                 <TouchableOpacity onPress={handleSubmit} disabled={!isValid} >
@@ -286,6 +286,14 @@ const styles = StyleSheet.create({
     mainContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
+    },
+    margining:{
+        marginTop: 20 
+    },
+    errorValidate:{
+        fontSize: 11, 
+        color: Colors.red, 
+        margin: 10 
     }
 });
 

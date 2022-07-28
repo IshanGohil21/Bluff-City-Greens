@@ -199,7 +199,7 @@ const EditInfoScreen = (props) => {
                                 <View style={styles.line} />
                             </View>
 
-                            <View style={{ alignItems: 'center', }} >
+                            <View style={styles.apply} >
                                 <TouchableOpacity onPress={handleSubmit}>
                                     <Text style={styles.signin} >APPLY</Text>
                                 </TouchableOpacity>
@@ -338,4 +338,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 20
     },
+    apply:{
+        alignItems: 'center',
+    }
 })

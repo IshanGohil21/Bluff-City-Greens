@@ -75,15 +75,15 @@ const SignInScreen = (props) => {
                             resizeMode='contain'
                         />
                         
-                        <View style={{ alignItems: 'center', justifyContent: 'center', marginRight: 60 }} >
-                            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={styles.siginnn} >
+                            <View style={styles.signInStyle}>
                                 <Text style={styles.bluff}>Bluff City </Text></View>
                             <View><Text style={styles.greens}> GREENS </Text></View>
                         </View>
                     </View>
 
 
-                    <Text style={{ textAlign: 'left', paddingVertical: 10, color: Colors.white }}>Email id</Text>
+                    <Text style={styles.emailId}>Email id</Text>
                     <TextInput
                         value={values.email}
                         style={styles.customCss}
@@ -115,9 +115,9 @@ const SignInScreen = (props) => {
 
                     <View style={styles.rememberContainer} >
 
-                        <View style={{ flexDirection: 'row' }} >
+                        <View style={styles.flexing} >
                             <TouchableOpacity onPress={() => { setRememberMe(!rememberMe) }}>
-                                {rememberMe ? <Ionicons name="checkbox-outline" size={20} color='white' /> : <Ionicons name="square-outline" size={20} color='white' />}
+                                {rememberMe ? <Ionicons name="checkbox-outline" size={20} color={Colors.white} /> : <Ionicons name="square-outline" size={20} color={Colors.white} />}
                             </TouchableOpacity>
                             <Text style={styles.remember}> Remember me </Text>
                         </View>
@@ -130,7 +130,7 @@ const SignInScreen = (props) => {
 
                     </View>
 
-                    <View style={{ alignItems: 'center' }} >
+                    <View style={styles.alignment} >
                         <View style={styles.connect}>
                             <View style={styles.connectContainer} />
                             <View>
@@ -158,7 +158,7 @@ const SignInScreen = (props) => {
                     <TouchableOpacity onPress={handleSubmit} >
                         <View style={styles.signin}>
                             {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
-                                <Text style={{ fontSize: 24, color: Colors.white }} >  SIGN IN </Text>}
+                                <Text style={styles.siginFont} >  SIGN IN </Text>}
                         </View>
                     </TouchableOpacity>
 
@@ -170,14 +170,9 @@ const SignInScreen = (props) => {
                             <Text style={styles.signup} > SignUp </Text>
                         </TouchableOpacity>
                     </View>
-
-
                 </View>
             )}
-
         </Formik>
-
-
     );
 }
 
@@ -195,13 +190,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginTop: 5,
         width: '100%',
-        // backgroundColor: 'rgba(25,20,200,0.35)'
         backgroundColor: Colors.white,
         color: Colors.black
     },
     forgot_password: {
         height: 30,
-        // marginBottom: 5,
         textAlign: 'right',
         fontSize: 14,
         color: Colors.white
@@ -219,7 +212,6 @@ const styles = StyleSheet.create({
     },
     remember: {
         height: 20,
-        // marginBottom: 10,
         textAlign: 'left',
         fontSize: 14,
         color: Colors.white,
@@ -261,7 +253,6 @@ const styles = StyleSheet.create({
     },
     rememberContainer: {
         flexDirection: 'row',
-        // marginBottom: 30,
         justifyContent: 'space-between',
         paddingVertical: 5
     },
@@ -320,7 +311,33 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         alignItems: 'center',
         justifyContent: 'center'
-    }
+    },
+    siginnn:{
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        marginRight: 60 
+    },
+    emailId:{
+        textAlign: 'left', 
+        paddingVertical: 10, 
+        color: Colors.white
+    },
+    signinFont:{
+        fontSize: 24, 
+        color: Colors.white 
+    },
+    signInStyle:{
+        flexDirection: 'row',
+         justifyContent: 'center', 
+         alignItems: 'center'
+    },
+    alignment:{
+        alignItems: 'center' 
+    },
+    flexing:{
+        flexDirection: 'row' 
+    },
+
 });
 
 export default SignInScreen;

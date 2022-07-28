@@ -99,10 +99,10 @@ const EditAddressScreen = (props) => {
                                         placeholder={edit.item.primary_address}
                                         keyboardType='default'
                                         backgroundColor={Colors.white}
-                                        style={{padding:10}}
+                                        style={styles.textinput}
                                     />
                                     {touched.primary_address && errors.primary_address &&
-                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.primary_address}</Text>
+                                        <Text style={styles.errorValidate} >{errors.primary_address}</Text>
                                     }
 
                                     <Text style={styles.details} > Zip Code </Text>
@@ -113,10 +113,10 @@ const EditAddressScreen = (props) => {
                                         placeholder='Please Enter you Zip Code again'
                                         keyboardType='numeric'
                                         backgroundColor={Colors.white}
-                                        style={{padding:10}}
+                                        style={styles.textinput}
                                     />
                                     {touched.zip && errors.zip &&
-                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.zip}</Text>
+                                        <Text style={styles.errorValidate} >{errors.zip}</Text>
                                     }
 
                                     <Text style={styles.details} > Nearest Landmark (Optional) </Text>
@@ -127,16 +127,16 @@ const EditAddressScreen = (props) => {
                                         placeholder={edit.addition_address_info}
                                         keyboardType='default'
                                         backgroundColor={Colors.white}
-                                        style={{padding:10}}
+                                        style={styles.textinput}
                                     />
                                     {touched.addition_address_info && errors.addition_address_info &&
-                                        <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.addition_address_info}</Text>
+                                        <Text style={styles.errorValidate} >{errors.addition_address_info}</Text>
                                     }
 
                                 </View>
                                 <Text style={styles.radioContainer} > Tag this address as: </Text>
                                 <View style={{ flexDirection: 'row', }} >
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
+                                    <View style={styles.alling}>
                                         {radio === 0 ?
                                             <Ionicons name='radio-button-on' size={25} color={Colors.primary} />
                                             :
@@ -148,10 +148,10 @@ const EditAddressScreen = (props) => {
                                                 <Ionicons name='radio-button-off' size={25} color={Colors.grey} />
                                             </TouchableOpacity>
                                         }
-                                        <Text style={{ fontWeight: 'bold', fontSize: 16, color: Colors.grey }}> Home</Text>
+                                        <Text style={styles.others}> Home</Text>
                                     </View>
 
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                                    <View style={styles.radioButtons}>
                                         {radio === 1 ?
                                             <Ionicons name='radio-button-on' size={25} color={Colors.primary} />
                                             :
@@ -163,10 +163,10 @@ const EditAddressScreen = (props) => {
                                                 <Ionicons name='radio-button-off' size={25} color={Colors.grey} />
                                             </TouchableOpacity>
                                         }
-                                        <Text style={{ fontWeight: 'bold', fontSize: 16, color: Colors.grey }}> Work</Text>
+                                        <Text style={styles.others}> Work</Text>
                                     </View>
 
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10, color: Colors.grey }}>
+                                    <View style={styles.radios}>
                                         {radio === 2 ?
                                             <Ionicons name='radio-button-on' size={25} color={Colors.primary} />
                                             :
@@ -178,11 +178,11 @@ const EditAddressScreen = (props) => {
                                                 <Ionicons name='radio-button-off' size={25} color={Colors.grey} />
                                             </TouchableOpacity>
                                         }
-                                        <Text style={{ fontWeight: 'bold', fontSize: 16, color: Colors.grey }}> Others</Text>
+                                        <Text style={styles.others}> Others</Text>
                                     </View>
                                 </View>
                                 {touched.address_type && errors.address_type &&
-                                    <Text style={{ fontSize: 11, color: Colors.red, margin: 10 }} >{errors.address_type}</Text>
+                                    <Text style={styles.errorValidate} >{errors.address_type}</Text>
                                 }
 
                                 <TouchableOpacity onPress={handleSubmit}  >
@@ -291,6 +291,35 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
+    errorValidate:{
+        fontSize: 11, 
+        color: Colors.red, 
+        margin: 10 
+    },
+    others:{
+        fontWeight: 'bold', 
+        fontSize: 16, 
+        color: Colors.grey
+    },
+    radios:{
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        marginHorizontal: 10, 
+        color: Colors.grey
+    },
+    radioButtons:{
+        flexDirection: 'row', 
+        alignItems: 'center', 
+    },
+    alling:{
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        marginHorizontal: 10 
+    },
+    textinput:{
+        padding:10
+    }
+
 });
 
 export default EditAddressScreen;

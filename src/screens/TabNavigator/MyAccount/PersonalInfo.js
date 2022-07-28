@@ -37,13 +37,13 @@ const personalInfoScreen = props => {
             {/* Header */}
             <View style={styles.header}>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                <View style={styles.iconic} >
                     <TouchableOpacity onPress={() => { props.navigation.goBack() }}  >
                         <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.icon} />
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => { props.navigation.navigate('EditInfo', { user }) }}
-                        style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+                        style={styles.iconic}
                     >
                         <Ionicons name='create-outline' color={Colors.white} size={30} style={styles.icon} />
                     </TouchableOpacity>
@@ -153,6 +153,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
+    iconic:{
+        flexDirection: 'row', 
+        justifyContent: 'space-between'
+    }
 
 })
 

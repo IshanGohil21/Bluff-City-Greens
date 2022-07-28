@@ -74,7 +74,7 @@ const PastOrderScreen = (props) => {
                    
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
                             <View style={styles.qtyCart} >
-                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{x?.qty}</Text>
+                                <Text style={styles.quat}>{x?.qty}</Text>
                             </View>
                             <Ionicons name={Icons.CART} size={30} color={Colors.white} style={styles.titleIcons} />
                     </TouchableOpacity>
@@ -350,7 +350,6 @@ const styles = StyleSheet.create({
     quantityContainer: {
         fontSize: 18,
         fontWeight: 'bold',
-        // marginTop: 10
     },
     addQuantity: {
         flexDirection: 'row',
@@ -374,7 +373,6 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     sizeContainer2: {
-        //   borderWidth: 1,
         justifyContent: 'space-between',
         flexDirection: 'row',
         elevation: 0.7
@@ -442,4 +440,9 @@ const styles = StyleSheet.create({
         padding: 15,
         marginTop: 15
     },
+    quat:{
+        fontSize: 12, 
+        fontWeight: 'bold', 
+        color: Colors.white
+    }
 })

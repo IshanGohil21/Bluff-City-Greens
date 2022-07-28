@@ -25,9 +25,9 @@ const FAQScreen = (props) => {
 
     return (
         <ScrollView>
-        <View style={{ flex: 1 }} >
+        <View style={styles.mains} >
             {/*  HEADER */}
-            <View style={{ padding:5 , backgroundColor: Colors.primary , fontSize: 30 }}>
+            <View style={styles.accrdioanComp}>
                 <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
                     <Ionicons
                         name={Icons.BACK_ARROW}
@@ -65,93 +65,20 @@ const styles = StyleSheet.create({
         padding:10
     },
     textContianer:{
-        //padding:5,
         fontSize: 14,
         color: 'grey',
+    },
+    accrdioanComp:{
+        padding:5 , 
+        backgroundColor: Colors.primary , 
+        fontSize: 30 
+    },
+    mains:{ 
+        flex: 1 
     }
 });
 
 export default FAQScreen;
-
-/* BODY
-            <View>
-                <Text style={styles.paymentContainer} > Payment Related queries </Text>
-            </View>
-
-        <View> 
-         {FAQ.map(item=>{
-            return( 
-                <View key={item.id}>
-                    <View  style={styles.main}>
-                        <Text style={styles.textContianer} >{item.q}</Text>
-                        <TouchableOpacity 
-                        
-                         onPress={() => setActiveSections([item.a])}
-                        //onPress={toggleExpanded}
-                        >
-                        <Ionicons  name={Icons.DOWN_ARROW} size={24} color={Colors.grey} />
-                        </TouchableOpacity>
-                    </View>
-                    
-                    {/* <Collapsible collapsed={iscollapsed}>
-                    <View key={item.id}>
-                        <Text  style={styles.textContianer} > {item.a} </Text>
-                    </View>
-                    </Collapsible> 
-                    <Accordion 
-                    // collapsed={iscollapsed}
-                    renderHeader={renderHeader}
-                    renderContent={renderContent}
-                    sections={FAQ}
-                    onChange={setSections}
-                    expandMultiple={multipleSelect}
-                    duration={5000}
-                    >
-                    <View key={item.id}>
-                        <Text  style={styles.textContianer} > {item.a} </Text>
-                    </View>
-                    </Accordion>
-                </View>
-            )
-        })}
-        </View> */
-
-        // const [currentIndex, setCurrentIndex] = useState(null)
-
-//     const [iscollapsed, setCollapsed] = useState(true);
-
-//     const toggleExpanded = () => {
-//         setCollapsed(!iscollapsed)
-//     }
-
-//     const [activeScetions, setActiveSections] = useState('');
-//     const [multipleSelect, setmultipleSelect] = useState(false);
-
-//    const [sections, setSections] = useState([]);
-
-//    const renderHeader = (item, isActive) => {
-//        return (
-//            <Animatable.View
-//            duration={5000}
-//            transition="backgroundColor"
-//            >
-//                <Text> {item.q} </Text>
-//            </Animatable.View>
-//        )
-//    }
-
-//    const renderContent = (item, isActive ) => {
-//        return(
-//            <Animatable.View
-//            duration={5000}
-//            transition="backgroundColor"
-//            >
-//                <Animatable.Text>
-//                    {item.a}
-//                </Animatable.Text>
-//            </Animatable.View>
-//        )
-//    }
 
 
 

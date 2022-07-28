@@ -78,7 +78,7 @@ const RecommendedProductsScreen = (props) => {
                     <View >
                         <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} >
                             <View style={styles.qtyCart} >
-                                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{x == null ? 0 : x?.qty}</Text>
+                                <Text style={styles.quat}>{x == null ? 0 : x?.qty}</Text>
                             </View>
                             <Ionicons name={Icons.CART} size={30} color={Colors.white} style={styles.titleIcons} />
 
@@ -431,5 +431,10 @@ const styles = StyleSheet.create({
         marginLeft: 30,
         position: 'absolute',
         zIndex: 10
+    },
+    quat:{
+        fontSize: 12, 
+        fontWeight: 'bold', 
+        color: Colors.white 
     }
 })

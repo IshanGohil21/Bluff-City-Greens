@@ -1,14 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Form, Formik } from 'formik';
+import { Formik } from 'formik';
 import * as yup from 'yup';
-import { ref } from 'yup';
 
 import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { postRequest, refreshToken } from '../../../Helper/ApiHelper';
-import { collectBankAccountForPayment } from '@stripe/stripe-react-native';
 
 const ChangePasswordScreen = props => {
     const onPressSave = async (values) => {
@@ -65,7 +63,7 @@ const ChangePasswordScreen = props => {
                     >
 
                         {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
-                            <View style={{ flex: 1, justifyContent: 'space-between', paddingBottom: 25 }}>
+                            <View style={styles.wrapping}>
                                 {/* Current */}
                                 <View>
                                     <View style={styles.current}>
@@ -180,6 +178,11 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         width: '100%',
         flexDirection: 'row',
+    },
+    wrapping:{
+        flex: 1, 
+        justifyContent: 'space-between', 
+        paddingBottom: 25 
     }
 });
 

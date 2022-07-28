@@ -9,7 +9,7 @@ const ContactScreen = props => {
         <View style={{ flex: 1 }} >
             <StatusBar backgroundColor={Colors.primary} />
             
-            <View style={{paddingHorizontal:10,paddingVertical:10 ,backgroundColor: '#259D57', }}>
+            <View style={styles.contacting}>
                 
                     <TouchableOpacity onPress={() => { props.navigation.navigate('Home') }} >
                         <Ionicons
@@ -22,8 +22,6 @@ const ContactScreen = props => {
                     <Text style={styles.text} > Contact Us </Text>
                
             </View>
-            
-
             <ScrollView  >
                 <View style={styles.container}>
                     <View style={styles.mains0} >
@@ -202,6 +200,11 @@ const styles = StyleSheet.create({
         elevation:15,
         width:'95%',
         padding:10
+      },
+      contacting:{
+        paddingHorizontal:10,
+        paddingVertical:10 ,
+        backgroundColor:Colors.primary,
       }
 });
 

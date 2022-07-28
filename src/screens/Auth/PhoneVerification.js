@@ -107,7 +107,7 @@ const PhoneVerificationScreen = (props) => {
             props.navigation.goBack()
           }}
           >
-            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={{ marginTop: 30, marginLeft: 10 }} />
+            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={styles.margin0} />
           </TouchableOpacity>
           <Text style={styles.verify} > Phone Verification</Text>
           <Text style={styles.optEnter} > Enter your OTP code here </Text>
@@ -222,6 +222,10 @@ const styles = StyleSheet.create({
   head: {
     width: '80%',
     height: 200
+  },
+  margin0:{
+    marginTop: 30, 
+    marginLeft: 10
   }
 });
 

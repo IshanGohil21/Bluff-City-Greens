@@ -46,7 +46,7 @@ const SplashScreen = (props) => {
     return (
         <View style={styles.screen}>
             <StatusBar backgroundColor={Colors.primary} />
-            <Image source={Images.leaf} style={{ width: 200, height: 200 }} />
+            <Image source={Images.leaf} style={styles.all} />
             <ActivityIndicator color={Colors.white} size={50} />
         </View>
     )
@@ -59,7 +59,10 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        // padding: 10,
         backgroundColor: Colors.primary,
+    },
+    all:{
+        width: 200, 
+        height: 200
     }
 })

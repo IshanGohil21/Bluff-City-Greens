@@ -55,9 +55,7 @@ const FruitShopScreen = (props) => {
                 </View>
                 <View style={styles.heading} >
                     <Text style={styles.titleFruit} >{shopSub.title}</Text>
-                    {/* <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }} >
-                        <Ionicons name={Icons.OPTIONS} size={35} color={Colors.white} />
-                    </TouchableOpacity> */}
+                    
                 </View>
             </View>
             {/* Body  */}
@@ -67,7 +65,6 @@ const FruitShopScreen = (props) => {
                     {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} contentStyle={styles.content} /> :
                         <View>
                             <Image source={Images.organic} style={styles.images} />
-                            {/* <Image source={{ uri: shopSub.sub_categories.image  }} /> */}
                         </View>
                     }
 
@@ -112,7 +109,6 @@ const styles = StyleSheet.create({
         flex: 0.5,
         backgroundColor: Colors.primary,
         justifyContent: 'space-between',
-        // paddingVertical: 10
 
     },
     back: {

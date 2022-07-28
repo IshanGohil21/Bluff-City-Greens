@@ -15,7 +15,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import { confirmPayment, StripeProvider, useStripe } from '@stripe/stripe-react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { set } from 'react-native-reanimated';
 
 const { width } = Dimensions.get('window')
 
@@ -73,30 +72,22 @@ const DeliveryAddressScreen = (props) => {
     const [activeAddress, setActiveAddress] = useState({})
     //  console.log("\n\nActive null        ",activeAddress)
 
-    useEffect(async () => {
-        setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
-    }, [])
-
     const [activateCard, setActivateCard] = useState({})
     //    console.log("\n\nActive CARD       ",activateCard)
 
+    const [user, setUser] = useState({})
+    // console.log("USER DETAILS", user.name);
+
     useEffect(async () => {
+        setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
+        setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
         setActivateCard(JSON.parse(await AsyncStorage.getItem('activateCard')))
     }, [])
-
-    const [user, setUser] = useState({})
-
-    const getProfile = async () => {
-        setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
-    }
-
-    // console.log("USER DETAILS", user.name);
 
     useEffect(() => {
         getAddress();
         getCard();
         getProfile()
-        // getDiscount();
     }, [credit, address]);
 
     const [credit, setCredit] = useState([]);

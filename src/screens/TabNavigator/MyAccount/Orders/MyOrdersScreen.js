@@ -137,45 +137,6 @@ const MyOrdersScreen = props => {
                         }
                     </View>
                 }
-
-
-                {/* <View>
-                    <ScrollView
-                        pagingEnabled
-                        onScroll={change}
-                        showsHorizontalScrollIndicator={false}
-                    >
-                        {
-                            pastOrder.map((item, index) => {
-                                console.log("\n\nITEM:      ", item);
-                                return (
-                                    <View key={index}>
-                                        <OrderProfile
-                                            id={item.id}
-                                            date={item.delivery_date}
-                                            time={item.delivery_time}
-                                            Order_Number={item.id}
-                                            quantity={item.quantity}
-                                            total={item.total_amount}
-                                            status={item.status}
-                                            onClick={() => { props.navigation.navigate('OrderDetails', { order: item, orderId: item.id }) }}
-                                        />
-                                        <Text>Hiiii</Text>
-                                    </View>
-                                )
-                            })
-                        }
-                    </ScrollView>
-                    <View style={styles.scroll} >
-                        {
-                            pastOrder.map((i, k) => (
-                                <Text key={k} style={k == active ? styles.pagingActive : styles.paging} > ⬤ </Text>
-                            ))
-                        }
-                    </View>
-                </View> */}
-
-
             </View>
         </View>
     )

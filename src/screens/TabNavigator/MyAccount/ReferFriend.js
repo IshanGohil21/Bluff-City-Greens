@@ -19,7 +19,7 @@ const ReferFriendScreen = (props) => {
            {/* Title */}
             <View style={styles.title} >
                 <TouchableOpacity onPress={() => {props.navigation.goBack()}} >
-                <Ionicons  name={Icons.BACK_ARROW} size={24} color={Colors.white} style={{marginTop:20}} />
+                <Ionicons  name={Icons.BACK_ARROW} size={24} color={Colors.white} style={styles.back} />
                 </TouchableOpacity>
                 <View>
                     <Text style={styles.refer} >Refer A Friend</Text>
@@ -29,7 +29,7 @@ const ReferFriendScreen = (props) => {
             {/* Body */}
             <View style={styles.body} >
                 <View style={styles.all} >
-                    <Image source={Images.refer}  style={{height:width-100, width:width-100, marginVertical:30}} />
+                    <Image source={Images.refer}  style={styles.dost} />
                     <Text style={styles.a} >Invite A Friend</Text>
                     <Text style={styles.earn} >Invite a friend and earn $2</Text>
                 </View>
@@ -39,13 +39,13 @@ const ReferFriendScreen = (props) => {
 
                 <Text style={styles.value} >{val}</Text>
                 
-                <View  style={{flexDirection:'row', alignItems:'center', width:'65%'}}>
-                    <View style={{flex:1,height:1, backgroundColor: Colors.black}}  />
+                <View  style={styles.referal}>
+                    <View style={styles.sharing}  />
                 <Text style={styles.share} >SHARE VIA</Text>
-                    <View style={{flex:1, height:1, backgroundColor:Colors.black }} />
+                    <View style={styles.sharing} />
                 </View>
 
-                <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row'}} >
+                <View style={styles.mains} >
 
                     <TouchableOpacity >
                         <Image source={Images.facebook } style={styles.social} />
@@ -139,7 +139,31 @@ const styles = StyleSheet.create({
          width:40 , 
          paddingHorizontal:20, 
          marginHorizontal:10
+    },
+    referal:{
+        flexDirection:'row', 
+        alignItems:'center', 
+        width:'65%'
+    },
+    mains:{
+        alignItems:'center', 
+        justifyContent:'center', 
+        flexDirection:'row'
+    },
+    sharing:{
+        flex:1, 
+        height:1, 
+        backgroundColor:Colors.black
+    },
+    dost:{
+        height:width-100, 
+        width:width-100, 
+        marginVertical:30
+    },
+    back:{
+        marginTop:20
     }
+
 })
 
 export default ReferFriendScreen;

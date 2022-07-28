@@ -195,7 +195,7 @@ const SignUpScreen = props => {
 
                                     <View style={styles.phoneCont} >
 
-                                        <TouchableOpacity onPress={() => setShow(true)} style={{ flex: 0.5 }}><Ionicons name="caret-down-outline" size={20} color={Colors.BLACK} /></TouchableOpacity>
+                                        <TouchableOpacity onPress={() => setShow(true)} style={styles.flexing}><Ionicons name="caret-down-outline" size={20} color={Colors.black} /></TouchableOpacity>
                                         
                                         <Text style={{ flex: 0.5, fontWeight: 'bold' }}>{countryCode}</Text>
                                         <TextInput
@@ -448,6 +448,9 @@ const styles = StyleSheet.create({
         // backgroundColor: "#D9FFFFFF",
         backgroundColor:Colors.white,
         alignItems: 'center'
+    },
+    flexing:{
+        flex: 0.5 
     }
 });
 

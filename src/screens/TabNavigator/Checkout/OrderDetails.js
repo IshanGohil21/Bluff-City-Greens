@@ -16,8 +16,6 @@ const OrderDetailsScreen = (props) => {
     // console.log("Oder reciept         ",Order);
 
   var RandomNumber = Math.floor(Math.random() * 100) + 100;
-  var RandomNumber2 = Math.floor(Math.random() * 1000) + 1000;
-  var RandomNumber3 = Math.floor(Math.random() * 100000) + 100000
 
   const cartItems = useSelector(state => {
     const updatedCartItems = [];
@@ -72,7 +70,7 @@ const OrderDetailsScreen = (props) => {
 
             <View style={styles.order} >
               <Text style={styles.orderIn} >Order Number :    </Text>
-              <Text style={styles.orderTxt} >{RandomNumber}-{RandomNumber2} </Text>
+              <Text style={styles.orderTxt} >{RandomNumber}-{RandomNumber} </Text>
             </View>
           </View>
           <Text style={styles.add} >Delivery Address</Text>
@@ -80,7 +78,7 @@ const OrderDetailsScreen = (props) => {
           {activeAddress !== null ?
             <View style={styles.overall} >
               <Ionicons name={Icons.PIN_FILLED} size={35} color={Colors.primary} />
-              <View style={{ padding: 10 }} >
+              <View style={styles.paddings} >
                 <Text style={styles.heading1} >  {tag(activeAddress.address_type)} - {activeAddress.primary_address}</Text>
                 <Text style={styles.texting} > {activeAddress.addition_address_info} </Text>
               </View>
@@ -111,7 +109,7 @@ const OrderDetailsScreen = (props) => {
           <View style={styles.details0} >
             <View style={styles.details} >
               <Text style={styles.invoice} >Invoice Number</Text>
-              <Text style={styles.randomNum} >MBPI-{RandomNumber3}</Text>
+              <Text style={styles.randomNum} >MBPI-{RandomNumber}</Text>
             </View>
 
             <View style={styles.details} >
@@ -166,7 +164,7 @@ const OrderDetailsScreen = (props) => {
                 }
               }}
             >
-              <View style={{ alignItems: 'center', padding: 10 }} >
+              <View style={styles.orderPlaced} >
                 <Ionicons name={Icons.CHECKMARK} color={Colors.primary} size={60} />
                 <Text style={styles.placed} >Order Placed Successfully!</Text>
               </View>
@@ -389,6 +387,13 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
        marginTop: 5,
       marginBottom: 30
+  },
+  paddings:{ 
+    padding: 10 
+  },
+  orderPlaced:{
+    alignItems: 'center',
+    padding: 10 
   }
 });
 
