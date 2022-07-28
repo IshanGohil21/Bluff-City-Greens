@@ -166,7 +166,7 @@ const HomeScreen = (props) => {
                       // console.log("\n\nITEM:      ",item);
                       return (
                         <View key={index}>
-                          <Image source={{ uri: item.image }} style={{ height: 150, width: width }} />
+                          <Image source={{ uri: item.image }} style={styles.imaging} />
                         </View>
                       )
                     })
@@ -532,6 +532,10 @@ const styles = StyleSheet.create({
   reco:{
     flexDirection: 'row', 
     justifyContent: 'space-between'
+  },
+  imaging:{
+    height: 150, 
+    width: width 
   }
 });
 
