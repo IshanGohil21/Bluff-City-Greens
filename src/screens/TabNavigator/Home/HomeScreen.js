@@ -48,15 +48,11 @@ const HomeScreen = (props) => {
     return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
   })
 
-  const Badgeqty = (cartItems.length ? cartItems.reduce((a, c) => a + c.qty, 0) : 0)
-  const BadgeSize = (cartItems.length ? cartItems.reduce((a, c) => a + c.size, 0) : 0)
-  // console.log(BadgeSize) 
   // console.log(cartItems);
   const y = cartItems?.length;
 
   const dispatch = useDispatch();
 
-  
   // const [token, setToken] = useState('')
 
   const z = cartItems.find(item => item.id === props.id)
@@ -131,7 +127,7 @@ const HomeScreen = (props) => {
             {/* Cart */}
             <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 20 }}  >
               <View style={styles.qtyCart} >
-                <Text style={{ fontSize: 12, fontWeight: 'bold', color: Colors.white }}>{y}</Text>
+                <Text style={styles.quanty}>{y}</Text>
               </View>
               {/* <Text style={styles.xyz} >{z}</Text> */}
               <Ionicons name={Icons.CART} size={24} color={Colors.white} style={styles.notify0} />
@@ -237,7 +233,7 @@ const HomeScreen = (props) => {
                       renderItem={(item, index) => {
                           //  console.log("\n\n\n\n\nOnly for FlatList    ",item.item.order_items);
                         return (
-                          <View key={index} style={{ flex: 1, flexDirection: 'row' }} >
+                          <View key={index} style={styles.ailing} >
                             {
                               item.item.order_items.map((indi) => {
                                 //  console.log("\n\nNest FlatList:   ",indi.item_size);
@@ -269,7 +265,7 @@ const HomeScreen = (props) => {
 
             {/* Recommended Products render by API */}
             <View style={styles.commonContainer} >
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+              <View style={styles.reco} >
                 <Text style={styles.common} >Recommended Products</Text>
                 <Text style={styles.view} >View All</Text>
               </View>
@@ -469,7 +465,6 @@ const styles = StyleSheet.create({
   heading: {
     flexDirection: 'row',
     padding: 10,
-    //backgroundColor: Colors.white
   },
   view: {
     color: Colors.primary,
@@ -485,8 +480,6 @@ const styles = StyleSheet.create({
   },
   cart: {
     position: 'absolute',
-    // right: Dimensions.get('window').width * 500,
-    // top: Dimensions.get('window').width * 350,
     overflow: 'hidden',
     backgroundColor: Colors.red,
     height: 20,
@@ -526,6 +519,19 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     position: 'absolute',
     zIndex: 10
+  },
+  quanty:{
+    fontSize: 12, 
+    fontWeight: 'bold', 
+    color: Colors.white 
+  },
+  ailing:{
+    flex: 1, 
+    flexDirection: 'row' 
+  },
+  reco:{
+    flexDirection: 'row', 
+    justifyContent: 'space-between'
   }
 });
 
