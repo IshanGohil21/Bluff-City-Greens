@@ -23,8 +23,6 @@ const AddNewAddressScreen = (props) => {
     const [longitudes, setLongitudes] = useState();
     const [radio, setRadio] = useState()
 
-    
-
     const onPressAddress = async (values) => {
         // console.log("\n\nValues          ", values);
         const data = {
@@ -54,7 +52,7 @@ const AddNewAddressScreen = (props) => {
             enableHighAccuracy: true,
         })
             .then(location => {
-                //    console.log("location        ", location);
+                    // console.log("location        ", location);
                 setLatitudes(location.latitude)
                 setLongitudes(location.longitude)
             })
@@ -95,18 +93,11 @@ const AddNewAddressScreen = (props) => {
                         <MapView
                             provider={PROVIDER_GOOGLE}
                             style={styles.map}
-                        >
-
-                            <MapView.Marker
-                                coordinate={{
-                                    latitude: latitudes,
-                                    longitude: longitudes
-                                }}
-                                title={"title"}
-                                description={"description"}
-                            /> 
-                         </MapView>
-
+                        />
+                            {/* <Marker
+                                coordinate={{ latitude : latitudes , longitude : longitudes }}
+                            />   */}
+                          {/* </MapView> */}
                     </View>
                     <Formik
                         initialValues={{

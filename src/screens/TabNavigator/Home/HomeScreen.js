@@ -22,6 +22,10 @@ const { width } = Dimensions.get('window')
 const HomeScreen = (props) => {
 
   const [isLoading, setIsLoading] = useState(true)
+  const [banner, setBanner] = useState([]);
+  const [categories, setCatogeries] = useState([]);
+  const [recommendedOrders, setRecommendedOrders] = useState([]);
+  const [pastOrders, setPastOrders] = useState([]);
 
   const height = width * 100 / 0.6
   const [active, setActive] = useState(0);
@@ -52,7 +56,7 @@ const HomeScreen = (props) => {
 
   const dispatch = useDispatch();
 
-  const [recommendedOrders, setRecommendedOrders] = useState([]);
+  
   // const [token, setToken] = useState('')
 
   const z = cartItems.find(item => item.id === props.id)
@@ -61,75 +65,27 @@ const HomeScreen = (props) => {
   const [activeAddress, setActiveAddress] = useState({})
   // console.log("\n\nActive null        ", activeAddress)
 
-  useEffect(async () => {
-    getBanner();
-    getCategories();
-    getPastOrders();
-    getRecommendedOrders();
-    setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
-  }, [])
+  useEffect(() => {
+    const refresh = props.navigation.addListener('focus',async() => {
+      getHome();
+      setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
+    })
+    return refresh
+  }, [props.navigation])
+  
 
-  // Banners API (common Home Page)
-  const [banner, setBanner] = useState([]);
-  const getBanner = async () => {
-    const response = await getMainRequest('/customer/get-homepage')
-    // console.log("Banners   ", response.data );
-
-    if (response.success) {
-      setBanner(response.data.banners);
-      // console.log(response.data.banners);
-    } else {
-      Toast.show('No Banners to Show Currently!')
-    }
-  }
-
-  // Recommended APIs (common Home Page)
-  const getRecommendedOrders = async () => {
-    const response = await getMainRequest('/customer/get-homepage')
-    //  console.log('get Recommended   ', response)
-
-    if (response.success) {
-      setRecommendedOrders(response.data.recommended_products)
-      //  console.log('Recommended' , response.data.recommended_products);
-    }
-    else {
-      Toast.show('No Recommended Orders Available Currently');
-    }
-    setIsLoading(false)
-  }
-
-  // Categories API (common Home Page)
-  const [categories, setCatogeries] = useState([]);
-
-  const getCategories = async () => {
-    const response = await getMainRequest('/customer/get-homepage')
-    // console.log("Categories   ", response);
-
-    if (response.success) {
-      setCatogeries(response.data.categories)
-      //    console.log('Categories      ', response.data.categories);
-    }
-    else {
-      Toast.show('No Categories Available Currently');
-    }
-  }
-
-  // Past Orders API (common Home Page)
-
-  const [pastOrders, setPastOrders] = useState([]);
-
-  const getPastOrders = async () => {
-
+  const getHome = async () => {
     const response = await getRequest('/customer/get-homepage')
+    // console.log("All Home",response);
 
-    // console.log("\n\n\n\nAll      ", response);
-
-    if (response.success) {
+    if(response.success){
+      setBanner(response.data.banners)
+      setCatogeries(response.data.categories)
       setPastOrders(response.data.past_orders)
-      // console.log("\n\n\n\nPastOrders       ", response.data.past_orders);
-    }
-    else {
-      Toast.show('No Past Orders')
+      setRecommendedOrders(response.data.recommended_products)
+      setIsLoading(false)
+    } else {
+      Toast.show('Nothing to Show')
     }
   }
 

@@ -1,60 +1,71 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar, image } from 'react-native';
 import { Formik } from "formik";
 import * as yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import User from '../../../dummy-data/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { Icons, Colors } from '../../../CommonConfig/CommonConfig'
+import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig'
 
 const personalInfoScreen = props => {
-    
+
     const [user, setUser] = useState({})
+    const [image, setImage] = useState(null)
     // const user = props.route.params.user
-      console.log("                    ", user);
+    //   console.log("                    ", user);
     const [phoneNumber, setphoneNumber] = useState('');
     const phoneInput = useRef(null);
 
-    const getProfile = async() => {
+    const getProfile = async () => {
         setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
-    } 
+    }
 
-    useEffect( () => {
+    useEffect(() => {
         const unsubscribe = props.navigation.addListener('focus', () => {
             getProfile();
         })
         return unsubscribe;
     }, [props.navigation])
 
-    // console.log("log user", user);
+    //  console.log("log user", user);
 
     return (
         <View style={styles.main}>
             <StatusBar backgroundColor={Colors.primary} />
             {/* Header */}
             <View style={styles.header}>
-                
-                <View style={{flexDirection:'row', justifyContent:'space-between'}} >
-                <TouchableOpacity onPress={() => {props.navigation.goBack()}}  >
-                    <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.icon} />
-                </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => {props.navigation.navigate('EditInfo',{user})}}
-                 style={{flexDirection:'row', justifyContent:'space-between'}} 
-                 >
-                    <Ionicons name='create-outline' color={Colors.white} size={30} style={styles.icon} />
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }} >
+                    <TouchableOpacity onPress={() => { props.navigation.goBack() }}  >
+                        <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.icon} />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => { props.navigation.navigate('EditInfo', { user }) }}
+                        style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+                    >
+                        <Ionicons name='create-outline' color={Colors.white} size={30} style={styles.icon} />
+                    </TouchableOpacity>
                 </View>
 
                 {/*Title*/}
-                    <Text style={styles.title}> Personal Information </Text>
+                <Text style={styles.title}> Personal Information </Text>
             </View>
             { /* Body */}
 
             <View style={styles.mainWrapper}>
-                <View  >
+                <View>
+                    <View style={styles.profile} >
+                        <View
+                            style={styles.avatarContainer}
+                        >
+                            <Image
+                                source={{ uri: user.picture }}
+                                style={styles.avatar}
+                            />
+                        </View>
+                    </View>
                     <Text style={styles.text}>Full Name</Text>
                     <Text style={styles.number} >{user.name}</Text>
 
@@ -91,8 +102,8 @@ const styles = StyleSheet.create({
         padding: 25,
         justifyContent: 'space-between',
     },
-    icon:{
-        marginTop:20
+    icon: {
+        marginTop: 20
     },
     signin: {
         width: "90%",
@@ -113,7 +124,7 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: Colors.primary,
         flex: 0.2,
-        justifyContent:'space-between'
+        justifyContent: 'space-between'
     },
     main: {
         flex: 1,
@@ -121,7 +132,7 @@ const styles = StyleSheet.create({
     text: {
         color: Colors.grey,
         marginBottom: 10,
-        marginTop:10
+        marginTop: 10
     },
     save: {
         marginLeft: 40
@@ -132,7 +143,17 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         width: '100%',
         flexDirection: 'row',
-    }
+    },
+    avatar: {
+        width: 120,
+        height: 120,
+        borderRadius: 10
+    },
+    profile: {
+        alignItems: 'center',
+        width: '100%',
+    },
+
 })
 
 export default personalInfoScreen;

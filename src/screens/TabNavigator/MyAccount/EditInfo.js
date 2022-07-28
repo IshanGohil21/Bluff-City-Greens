@@ -287,8 +287,8 @@ const styles = StyleSheet.create({
     },
     camera: {
         position: 'absolute',
-        right: Dimensions.get('window').width * 0.300,
-        top: Dimensions.get('window').width * 0.25,
+        right: Dimensions.get('window').width * 0.275,
+        top: Dimensions.get('window').width * 0.22,
         borderRadius: 25,
         borderWidth: 4,
         borderColor: Colors.primary,

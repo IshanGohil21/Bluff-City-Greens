@@ -8,12 +8,22 @@ import { Colors, Images, Icons } from '../CommonConfig/CommonConfig';
 const SplashScreen = (props) => {
     const [isLoading, setIsLoading] = useState(true);
 
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setIsLoading(false)
+    //         loadApp()
+    //     }, 5000)
+    // }, [])
+
     useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false)
-            loadApp()
-        }, 5000)
-    }, [])
+        const refresh = props.navigation.addListener('focus',async() => {
+            setTimeout(() => {
+                setIsLoading(false)
+                loadApp()
+            }, 5000)
+        })
+        return refresh
+      }, [props.navigation])
 
     const loadApp = async () => {
 
@@ -49,7 +59,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        padding: 10,
+        // padding: 10,
         backgroundColor: Colors.primary,
     }
 })
