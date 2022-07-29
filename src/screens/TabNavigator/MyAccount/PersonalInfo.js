@@ -29,7 +29,7 @@ const personalInfoScreen = props => {
         return unsubscribe;
     }, [props.navigation])
 
-    //  console.log("log user", user);
+      console.log("log user", user);
 
     return (
         <View style={styles.main}>

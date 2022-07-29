@@ -2,12 +2,11 @@ import * as React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { styleProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
-import {Colors, Icons} from '../../CommonConfig/CommonConfig';
+import { Colors, Icons } from '../../CommonConfig/CommonConfig';
 
 const AccessibilityPolicyScreen = (props) => {
   return (
     <View>
-
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => {
@@ -31,14 +30,14 @@ const AccessibilityPolicyScreen = (props) => {
           <Text style={styles.font}>
             If you are having trouble accessing mobile apps, please call Customer Care at <Text style={{ color: 'green', fontWeight: 'bold' }} > 1-800-234-2790 </Text> or <Text style={styles.email} > email us </Text> for assistance.{"\n"}
           </Text>
-          <Text  style={styles.font}>
-            Google Chrome has internet accessibility limitations when using with the Thank Greens application on the android platform. The Thank Greens application cannot work around these limitations, therefore we recommend using Mozilla Firefox as an alternative browser, especially if accessibility tools or assistive technology will be used in conjuction with the Thank Greens Application . Mozilla Firefox is only supported platform when using accessibility tool or assistive technology on Android Devices. <Text style={{ color: Colors.green}} >To download the Mozilla Firefox browser, please click here. </Text>
+          <Text style={styles.font}>
+            Google Chrome has internet accessibility limitations when using with the Thank Greens application on the android platform. The Thank Greens application cannot work around these limitations, therefore we recommend using Mozilla Firefox as an alternative browser, especially if accessibility tools or assistive technology will be used in conjuction with the Thank Greens Application . Mozilla Firefox is only supported platform when using accessibility tool or assistive technology on Android Devices. <Text style={{ color: Colors.green }} >To download the Mozilla Firefox browser, please click here. </Text>
           </Text>
           <View style={styles.footer} >
-          <View style={{width: '100%'}} >
-            <TouchableOpacity onPress={() => { }} style={styles.agree}>
-              <Text style={styles.signin}> AGREE </Text>
-            </TouchableOpacity>
+            <View style={{ width: '100%' }} >
+              <TouchableOpacity onPress={() => { props.navigation.navigate('MainTab', { screen: 'Home' }) }} style={styles.agree}>
+                <Text style={styles.signin}> AGREE </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -74,28 +73,28 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   header: {
-    padding: 10, 
+    padding: 10,
     backgroundColor: Colors.primary
   },
   email: {
     color: Colors.green,
-    fontWeight: 'bold' 
+    fontWeight: 'bold'
   },
   policy: {
-    color: Colors.white, 
+    color: Colors.white,
     fontSize: 30,
-    padding: 20, 
+    padding: 20,
     fontWeight: 'bold'
   },
   footer: {
-    alignItems:'center', 
+    alignItems: 'center',
     width: '100%'
   },
   agree: {
     marginTop: 50,
-    marginHorizontal: 40 
+    marginHorizontal: 40
   },
-  icon:{
+  icon: {
     marginTop: 30
   }
 });

@@ -37,10 +37,13 @@ const OrderDetailsScreenAccount = (props) => {
 
     const [activeAddress, setActiveAddress] = useState({})
     // console.log("\n\nActive null        ", activeAddress)
-
-    useEffect(async () => {
-        setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
-    }, [])
+    
+    useEffect(() => {
+        const unsubscribe = props.navigation.addListener('focus', async() => {
+            setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
+        })
+        return unsubscribe;
+    }, [props.navigation])
 
     const tag = (address_type) => {
         if (address_type === 0) return "Home"

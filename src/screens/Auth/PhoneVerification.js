@@ -71,7 +71,7 @@ const PhoneVerificationScreen = (props) => {
         }
         const loginRes = await postRequest('/login', loginData)
         console.log(loginRes);
-         const resData = loginRes.data
+        const resData = loginRes.data
 
         //  console.log(resData)
 
@@ -84,7 +84,7 @@ const PhoneVerificationScreen = (props) => {
           } catch (error) {
             console.log(error)
           }
-           props.navigation.navigate('MainTab',{screen: 'Home' });
+          props.navigation.navigate('AccessibilityPolicy');
 
         } else {
           if (resData.error === 'Invalid OTP entered!') {
@@ -123,9 +123,8 @@ const PhoneVerificationScreen = (props) => {
               codeInputHighlightStyle={styles.underlineStyleHighLighted}
               onCodeFilled={(code) => { setotpValue(code) }}
             />
-
+            
           </View>
-
           <TouchableOpacity onPress={onPressVerify} style={styles.navigate}>
             <Text style={styles.signin}> VERIFY </Text>
           </TouchableOpacity>
@@ -223,8 +222,8 @@ const styles = StyleSheet.create({
     width: '80%',
     height: 200
   },
-  margin0:{
-    marginTop: 30, 
+  margin0: {
+    marginTop: 30,
     marginLeft: 10
   }
 });
