@@ -13,9 +13,6 @@ import RecommendedProductsCommon from '../../../Components/RecommendedProducts';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import { getMainRequest } from '../../../Helper/ApiHelper';
-import { Formik } from 'formik';
-import * as yup from 'yup';
-import SearchValidationSchema from '../../../Schema/SerachValidationSchema';
 
 const { width } = Dimensions.get('window')
 
@@ -154,7 +151,6 @@ const SearchScreen = (props) => {
                       <CategoriesScreen
                         name={item.title}
                         image={item.image}
-                      // onClick={() => {props.navigation.navigate( 'Shop' , { screen :'Vegetables', params: { shop:item, shopId: item.id }}  )}}
                       />
                     </View>
                   )
@@ -163,10 +159,7 @@ const SearchScreen = (props) => {
             </View>
           }
 
-
           {/* Products */}
-
-
 
           {!TestItems || result?.items?.length === 0 ? null :
 
@@ -214,7 +207,6 @@ const SearchScreen = (props) => {
                 // console.log(result.items);
                 return (
                   <View key={item.id}>
-
                     <Popular
                       image={item.image}
                       name={item.name}

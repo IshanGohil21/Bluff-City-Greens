@@ -46,7 +46,7 @@ const ChangePasswordScreen = props => {
             {/* Body */}
             <View style={styles.body} >
 
-                <View style={{ justifyContent: 'space-between', flex: 1 }} >
+                <View style={styles.validation} >
                     {/* Formik Validation Schema */}
                     <Formik
                         initialValues={{
@@ -183,6 +183,10 @@ const styles = StyleSheet.create({
         flex: 1, 
         justifyContent: 'space-between', 
         paddingBottom: 25 
+    },
+    validation:{
+        justifyContent: 'space-between', 
+        flex: 1 
     }
 });
 

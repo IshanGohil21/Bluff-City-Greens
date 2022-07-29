@@ -76,7 +76,7 @@ const DeliveryAddressScreen = (props) => {
     //    console.log("\n\nActive CARD       ",activateCard)
 
     const [user, setUser] = useState({})
-    // console.log("USER DETAILS", user.name);
+    //  console.log("USER DETAILS", user);
 
     useEffect(async () => {
         setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
@@ -87,7 +87,6 @@ const DeliveryAddressScreen = (props) => {
     useEffect(() => {
         getAddress();
         getCard();
-        getProfile()
     }, [credit, address]);
 
     const [credit, setCredit] = useState([]);

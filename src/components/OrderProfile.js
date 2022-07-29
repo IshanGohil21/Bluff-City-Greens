@@ -18,14 +18,11 @@ const OrderProfile = (props) => {
     const [ratingDescription, setRatingdescription] = useState('');
     const [loading, setLoading] = useState(true)
     const [selectedOrder, setSelected] = useState({})
-
     // console.log(selectedOrder);
 
     const orderId = props.id
 
     const ratingHandler = async () => {
-        // console.log("\n\n\nRating            ",rating);
-        // console.log("\n\n\nDescription",ratingDescription);
         const data = {
             rate: rating,
             rating_description: ratingDescription,
@@ -51,9 +48,9 @@ const OrderProfile = (props) => {
 
             <View style={styles.card} >
             { props.status == "Ordered"  ? 
-                <Ionicons name={Icons.TIME} size={30} color={Colors.black} />
+                <Ionicons name={Icons.TIME} size={25} color={Colors.black} />
                 :
-                <Ionicons name={Icons.CHECKMARK} size={30} color={Colors.primary} /> }
+                <Ionicons name={Icons.CHECKMARK} size={25} color={Colors.primary} /> }
 
                 <View style={styles.orders} >
                     <TouchableOpacity onPress={props.onClick} >
@@ -78,9 +75,9 @@ const OrderProfile = (props) => {
                     <View style={{ flexDirection: 'row', alignItems: 'center', }} >
                         { props.status === "Ordered" ? 
                         
-                        <Ionicons name={Icons.ELLIPSE} size={16} color={Colors.orange} />
+                        <Ionicons name={Icons.ELLIPSE} size={14} color={Colors.orange} />
                         :
-                        <Ionicons name={Icons.ELLIPSE} size={16} color={Colors.primary} />
+                        <Ionicons name={Icons.ELLIPSE} size={14} color={Colors.primary} />
                         }
 
                         <Text style={styles.deli} >Order {props.status}</Text>
@@ -91,7 +88,7 @@ const OrderProfile = (props) => {
                             setSelected(orderId)
                             refRBSheet.current.open()
                         }} >
-                            <Text style={{ fontSize: 18, color: Colors.primary }} >Rate Order</Text>
+                            <Text style={{ fontSize: 16, color: Colors.primary }} >Rate Order</Text>
                         </TouchableOpacity>
                         :
                         null}
@@ -118,7 +115,7 @@ const OrderProfile = (props) => {
                     }
                 }}
             >
-                <View style={{ paddingVertical: 10 }} >
+                <View>
                     <View style={{ alignItems: 'center' }} >
                         <Image source={Images.thumb} style={{ height: 80, width: 80, alignItems: 'center' }} />
                     </View>
@@ -156,7 +153,6 @@ const OrderProfile = (props) => {
             </RBSheet>
         </View>
     )
-
 }
 
 export default OrderProfile
@@ -166,10 +162,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     time: {
-        fontSize: 16,
-        padding: 10,
-        marginVertical: 10,
-        marginHorizontal: 10
+        fontSize: 18,
+        padding: 10, 
     },
     card: {
         flex: 1,
@@ -181,7 +175,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         elevation: 10,
-        overflow: 'hidden',
         borderRadius: 10,
         backgroundColor: Colors.white
     },
@@ -191,7 +184,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         width: '100%',
         marginVertical: 10,
-        marginTop: 20,
+        marginTop: 10,
         flexDirection: 'row'
     },
     deli: {

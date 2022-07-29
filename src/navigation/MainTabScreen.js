@@ -30,7 +30,6 @@ import personalInfoScreen from '../Screens/TabNavigator/MyAccount/PersonalInfo';
 import SavedAddressScreen from '../Screens/TabNavigator/MyAccount/Address/SavedAddressScreen';
 import MyOrdersScreen from '../Screens/TabNavigator/MyAccount/Orders/MyOrdersScreen';
 import FavoritesScreen from '../Screens/TabNavigator/MyAccount/FavoritesScreen';
-import PaymentScreen from '../Screens/TabNavigator/MyAccount/PaymentScreen';
 import ReferFriendScreen from '../Screens/TabNavigator/MyAccount/ReferFriend';
 import ChangePasswordScreen from '../Screens/TabNavigator/MyAccount/ChangePassword';
 import AddNewAddressScreen from '../Screens/TabNavigator/MyAccount/Address/AddNewAddress';
@@ -54,7 +53,7 @@ const Tab = createBottomTabNavigator();
 const MainTabScreen = () => {
     const getTabBarVisibility = (route) => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        const hideOnscreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer', 'DeliveryCheckout','Orders', 'TrackOrder', 'ScheduleDelivery','ReferFriend']
+        const hideOnscreens = ['AddNewAddress', 'EditAddress', 'AddNewAddress2','Past_Orders','Recommended_Products', 'Drawer', 'DeliveryCheckout','Orders', 'TrackOrder', 'ScheduleDelivery','ReferFriend','MyOrders']
         if(hideOnscreens.indexOf(routeName) > -1) return false;
         return true;
     };
@@ -181,7 +180,6 @@ const MyAccountStackScreen = () => {
             <MyAccountStack.Screen name='MyAccount' component={MyAccountScreen} />
             <MyAccountStack.Screen name='personalInfo' component={personalInfoScreen} />
             <MyAccountStack.Screen name='SavedAddress' component={SavedAddressScreen} />
-            <MyAccountStack.Screen  name='Payment' component={PaymentScreen} />
             <MyAccountStack.Screen  name='MyOrders' component={MyOrdersScreen} />
             <MyAccountStack.Screen  name='Favorites' component={FavoritesScreen} />
             <MyAccountStack.Screen  name='ReferFriend' component={ReferFriendScreen} />

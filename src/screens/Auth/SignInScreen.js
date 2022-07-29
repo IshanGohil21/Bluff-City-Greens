@@ -158,7 +158,7 @@ const SignInScreen = (props) => {
                     <TouchableOpacity onPress={handleSubmit} >
                         <View style={styles.signin}>
                             {isLoading ? <ActivityIndicator size="small" color={Colors.white} /> :
-                                <Text style={styles.siginFont} >  SIGN IN </Text>}
+                                <Text style={styles.signinFont} >  SIGN IN </Text>}
                         </View>
                     </TouchableOpacity>
 

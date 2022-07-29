@@ -4,11 +4,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { RadioButton } from 'react-native-paper';
 
-import PastOrder from '../../../Dummy-Data/PastOrders';
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
 import { useSelector, useDispatch } from 'react-redux';
 import * as CartActions from '../../../Redux/Action/Cart';
-import { ref } from 'yup';
 
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6

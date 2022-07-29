@@ -207,5 +207,4 @@ export const deleteRequest = async( url, data) => {
       };
   });
 }
- 
   

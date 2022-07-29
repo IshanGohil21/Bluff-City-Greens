@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
       
   },
   vwSearch: {
- // flex: 1,
   justifyContent: 'center',
   alignItems: 'flex-start',
   flexDirection: 'row',

@@ -4,18 +4,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Colors, Icons, Images } from '../../../CommonConfig/CommonConfig';
-import Address from '../../../Dummy-Data/Address';
-import Orders from '../../../Components/Orders';
 import SearchBarScreen from '../../../Components/Slider/SearchBar2';
 import CategoriesScreen from '../../../Components/Categories';
-import { getMainRequest, getRequest, postRequest } from '../../../Helper/ApiHelper';
+import { getRequest } from '../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
 import RecommendedProductsCommon from '../../../Components/RecommendedProducts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import PastProductsCommon from '../../../Components/PastOrdesCommon';
-import { validateYupSchema } from 'formik';
 
 const { width } = Dimensions.get('window')
 
@@ -182,10 +179,6 @@ const HomeScreen = (props) => {
               </View>
             }
 
-            {/* Discount Coupon Image */}
-            {/* <View>
-          <Image source={Images.discount} style={styles.discount} />
-        </View> */}
             {/* Categories */}
 
             <View style={styles.commonContainer} >
@@ -204,7 +197,6 @@ const HomeScreen = (props) => {
                           image={itemData.item.image}
                           id={itemData.item.id}
                           name={itemData.item.title}
-                          // color={item.color}
                           onClick={() => { props.navigation.navigate('Shop', { screen: 'Fruits', params: { shop: itemData.item, shopId: itemData.item.id } }) }}
                         />
                       </View>
@@ -352,7 +344,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: Colors.white,
-    //marginTop: 10,
     borderRadius: 5,
     marginBottom: 10
   },
@@ -363,7 +354,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textInput: {
-    // backgroundColor: 'green',
     flex: 1,
   },
   filter: {

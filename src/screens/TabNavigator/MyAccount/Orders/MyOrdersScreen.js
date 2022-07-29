@@ -4,14 +4,11 @@ import { Animated, StyleSheet, Text, TextInput, Alert, Button, View, Image, Touc
 import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
-import Dots from 'react-native-dots-pagination';
-// import { Animated } from 'react-native-animatable'
 import Toast from 'react-native-simple-toast'
 
 import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
 import { getRequest } from '../../../../Helper/ApiHelper';
 import OrderProfile from '../../../../Components/OrderProfile';
-import { ExpandingDot } from "react-native-animated-pagination-dots";
 
 const { width } = Dimensions.get('window')
 
@@ -19,32 +16,26 @@ const MyOrdersScreen = props => {
     const [state, setState] = useState('current')
     const [loading, setIsloading] = useState(true)
     const [isMoreItem, setisMoreItem] = useState(false);
-    const [paging, setPaging] = useState(1)
+    const [paging, setPaging] = useState(0)
+
+    const [dots, setDots] = useState(0)
 
     const [pastOrder, setPastOrders] = useState([]);
     const [currentOrder, setCurrentOrders] = useState([]);
 
     const [active, setActive] = useState(0);
 
-    const change = ({ nativeEvent }) => {
-        const slide = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
-        if (slide !== active) {
-            setActive(slide);
-        }
-    }
-
     useEffect(() => {
         getOrders();
     }, [paging, state])
 
     const getOrders = async () => {
-        const response = await getRequest(`/customer/get-order?page=${paging}&status=${state}&page_size=2`)
+        const response = await getRequest(`/customer/get-order?&paging=${paging}&status=${state}&page_size=2`)
         // console.log("\n\nAll Orders   hello     ", response.data);
 
         if (response.success) {
             setPastOrders(response.data.order);
             setCurrentOrders(response.data.order)
-            
             // console.log("\n\n\nOrders                       ",response.data.order );
         }
         else {
@@ -52,9 +43,6 @@ const MyOrdersScreen = props => {
         }
         setIsloading(false);
     }
-
-    const scrollX = React.useRef(new Animated.Value(1)).current;
-    // console.log(scrollX);
 
     return (
         // Main 
@@ -107,13 +95,16 @@ const MyOrdersScreen = props => {
                             }}
                         />
                     </View>
+
                     :
+
                     // Current Orders Screen
                     <View>
-
                         {loading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={150} width={width} /> :
                             <FlatList
                                 data={currentOrder}
+                                pagingEnabled
+
                                 showsVerticalScrollIndicator={true}
                                 renderItem={(item) => {
                                     //    console.log("\n\n\nCurrent     ", item);
@@ -129,7 +120,6 @@ const MyOrdersScreen = props => {
                                                 status={item.item.status}
                                                 onClick={() => { props.navigation.navigate('OrderDetails', { order: item, orderId: item.id }) }}
                                             />
-
                                         </View>
                                     )
                                 }}

@@ -94,10 +94,6 @@ const AddNewAddressScreen = (props) => {
                             provider={PROVIDER_GOOGLE}
                             style={styles.map}
                         />
-                            {/* <Marker
-                                coordinate={{ latitude : latitudes , longitude : longitudes }}
-                            />   */}
-                          {/* </MapView> */}
                     </View>
                     <Formik
                         initialValues={{
