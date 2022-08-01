@@ -13,7 +13,6 @@ const personalInfoScreen = props => {
 
     const [user, setUser] = useState({})
     const [image, setImage] = useState(null)
-    // const user = props.route.params.user
     //   console.log("                    ", user);
     const [phoneNumber, setphoneNumber] = useState('');
     const phoneInput = useRef(null);
@@ -29,7 +28,7 @@ const personalInfoScreen = props => {
         return unsubscribe;
     }, [props.navigation])
 
-      console.log("log user", user);
+    //   console.log("log user", user);
 
     return (
         <View style={styles.main}>

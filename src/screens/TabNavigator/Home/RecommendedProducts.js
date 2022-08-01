@@ -31,12 +31,6 @@ const RecommendedProductsScreen = (props) => {
     const y = current.item_sizes.find(item => item.id === weight.id)
     //   console.log(y)
 
-    const splitting = (str) => {
-        let arr = str.split(' ');
-        let arr0 = parseInt(arr[0]);
-        return arr0
-    }
-     
     const height = width * 100 / 0.6
     const [active, setActive] = useState(0);
 

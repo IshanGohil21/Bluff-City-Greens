@@ -65,6 +65,7 @@ const EditInfoScreen = (props) => {
         console.log("UPDATE\n", updateData);
 
         const res = await fetch('https://thank-greens-city.herokuapp.com/update-profile',
+        
             {
                 method: 'POST',
                 body: updateData,

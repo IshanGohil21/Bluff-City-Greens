@@ -174,7 +174,7 @@ const SearchScreen = (props) => {
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => {
-                  //console.log(item);
+                  console.log(item);
                   return (
                     <View key={item.id} >
 

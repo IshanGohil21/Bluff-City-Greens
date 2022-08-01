@@ -3,17 +3,17 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Alert, Sta
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ActivityIndicator, RadioButton, TextInput } from 'react-native-paper';
 
-import { Icons, Images, Colors } from '../../../../CommonConfig/CommonConfig'
-import * as Address from '../../../../Redux/Action/Address';
-import { postRequest } from '../../../../Helper/ApiHelper';
+import { Icons, Images, Colors } from '../../../CommonConfig/CommonConfig'
+import * as Address from '../../../Redux/Action/Address';
+import { postRequest } from '../../../Helper/ApiHelper';
 import { Formik } from 'formik';
 import { useDispatch } from 'react-redux';
 import GetLocation from 'react-native-get-location';
 import Toast from 'react-native-simple-toast';
-import addressValidationSchema from '../../../../Schema/AddressValidationSchema';
+import addressValidationSchema from '../../../Schema/AddressValidationSchema';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 
-const AddNewAddressScreen = (props) => {
+const NewAddressScreen = (props) => {
 
     const [checked, setChecked] = useState('')
     const [isLoading, setIsLoading] = useState(false);
@@ -69,7 +69,7 @@ const AddNewAddressScreen = (props) => {
                 <View style={styles.header}>
                     <View style={styles.mainContainer} >
                         <TouchableOpacity onPress={() => {
-                            props.navigation.navigate('MyAccount')
+                            props.navigation.goBack()
                         }}
                         >
                             <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={30} style={styles.margining} />
@@ -292,4 +292,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AddNewAddressScreen;
+export default NewAddressScreen;

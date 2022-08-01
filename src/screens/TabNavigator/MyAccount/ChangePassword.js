@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpaci
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { ref } from 'yup';
 
 import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';

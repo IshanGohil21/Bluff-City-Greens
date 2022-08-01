@@ -24,12 +24,6 @@ const PastOrderScreen = (props) => {
     //   const xyz = past.item_size.find(item => item.id === weight.id)
     const y = past.item.item_sizes.find(item => item.id === weight.id)
 
-    const splitting = (str) => {
-        let arr = str.split(' ');
-        let arr0 = parseInt(arr[0]);
-        return arr0
-    }
-
     const [isFavorite, setIsFavorite] = useState(props.initialState);
 
     const [checked, setChecked] = useState('first')

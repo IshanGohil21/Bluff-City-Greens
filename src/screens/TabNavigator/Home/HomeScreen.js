@@ -45,12 +45,10 @@ const HomeScreen = (props) => {
     return updatedCartItems.sort((a, b) => a.id > b.id ? 1 : -1);
   })
 
-  // console.log(cartItems);
+  // console.log("After selector",cartItems);
   const y = cartItems?.length;
 
   const dispatch = useDispatch();
-
-  // const [token, setToken] = useState('')
 
   const z = cartItems.find(item => item.id === props.id)
   // console.log(z)
@@ -66,7 +64,6 @@ const HomeScreen = (props) => {
     return refresh
   }, [props.navigation])
   
-
   const getHome = async () => {
     const response = await getRequest('/customer/get-homepage')
     // console.log("All Home",response);

@@ -46,6 +46,7 @@ import EditInfoScreen from '../Screens/TabNavigator/MyAccount/EditInfo';
 
 import AddCard from '../Screens/TabNavigator/Checkout/AddCard';
 import ScheduleDelivery from '../Screens/TabNavigator/Checkout/ScheduleDelivery';
+import NewAddressScreen from '../Screens/TabNavigator/Checkout/NewAddress';
 
 import Icons from '../CommonConfig/Icons';
 
@@ -169,6 +170,7 @@ const CheckoutStackScreen = () => {
             <CheckoutStack.Screen name='AddCard' component={AddCard} />
             <CheckoutStack.Screen  name='ScheduleDelivery' component={ScheduleDelivery} />
             <CheckoutStack.Screen name='TrackOrder' component={TrackOrderScreen} />
+            <CheckoutStack.Screen name='NewAddress' component={NewAddressScreen} />
         </CheckoutStack.Navigator>
     )
 }
