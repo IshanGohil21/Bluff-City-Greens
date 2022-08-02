@@ -8,6 +8,7 @@ import { getRequest, deleteRequest } from '../../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
 import LinearGradient from 'react-native-linear-gradient';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width } = Dimensions.get('window')
 
@@ -16,7 +17,7 @@ const SavedAddressScreen = props => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getAddress();
+        
     }, [address])
 
     useEffect(() => {
@@ -26,6 +27,17 @@ const SavedAddressScreen = props => {
     }, [])
 
     const [address, setAddress] = useState([]);
+
+    const [activeAddress, setActiveAddress] = useState({})
+  // console.log("\n\nActive null        ", activeAddress)
+
+  useEffect(() => {
+    const refresh = props.navigation.addListener('focus',async() => {
+        getAddress();
+        setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
+    })
+    return refresh
+  }, [props.navigation, address])
 
     const getAddress = async () => {
         const response = await getRequest('/get-address');

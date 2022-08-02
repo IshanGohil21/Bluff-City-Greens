@@ -113,11 +113,6 @@ const HomeScreen = (props) => {
               }
             </TouchableOpacity>
 
-            {/* Notification Logo */}
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Notification') }} style={{ marginLeft: 35 }} >
-              <Ionicons name={Icons.NOTIFICATION} size={24} color={Colors.white} style={styles.notify} />
-            </TouchableOpacity>
-
             {/* Cart */}
             <TouchableOpacity onPress={() => { props.navigation.navigate('Checkout') }} style={{ marginRight: 20 }}  >
               <View style={styles.qtyCart} >
@@ -135,9 +130,7 @@ const HomeScreen = (props) => {
             </TouchableOpacity>
 
             {/* Filers Screen */}
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Filter') }}>
-              <Ionicons name={Icons.OPTIONS} size={30} color={Colors.white} />
-            </TouchableOpacity>
+            
           </View>
         </View>
 
@@ -303,7 +296,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     backgroundColor: Colors.primary,
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop:10,
   },
   title: {
     flex: 1,

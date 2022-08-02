@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   {
     // width: Dimensions.get('window').width,
     // width: '100%',
-    width: Dimensions.get('window').width * 0.85,
+    width: Dimensions.get('window').width * 0.92,
     height: 40,
     flexDirection: 'row',
     justifyContent: 'flex-start',

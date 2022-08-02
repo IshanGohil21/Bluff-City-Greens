@@ -10,5 +10,6 @@ export default {
     black: '#000000',
     transparentGreen: 'rgba(51, 170, 51, .3)',
     yellow: '#bda000',
-    blue: '#00008B'
+    blue: '#00008B',
+    lightYellow:'#FFE77AFF'
 }

@@ -98,7 +98,7 @@ const SignInScreen = (props) => {
                     }
 
                     <Text style={{ color: Colors.white }} >Password</Text>
-
+                    
                     <TextInput
                         value={values.password}
                         style={styles.customCss}

@@ -18,7 +18,6 @@ const { width } = Dimensions.get('window')
 
 const SearchScreen = (props) => {
   const [loading, setLoading] = useState(true);
-  const [length, setLength] = useState(0);
   const [search, setSearch] = useState('');
   const [result, setResult] = useState([]);
   const [text, setText] = useState();
@@ -183,7 +182,7 @@ const SearchScreen = (props) => {
                         image={item.item_images[0].image}
                         price={item.item_sizes[0].price}
                         weight={item.item_sizes[0].size}
-                        onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: item, recommendId: item.id }) }}
+                        // onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: item, recommendId: item.id }) }}
                       />
                     </View>
                   )
@@ -201,10 +200,11 @@ const SearchScreen = (props) => {
           <View>
             <FlatList
               data={MostPopularProductScreen}
+              // data={result.items}
 
               renderItem={({ item }) => {
                 //  console.log("\n\n\nSearch  ", item);
-                // console.log(result.items);
+                //  console.log(item);
                 return (
                   <View key={item.id}>
                     <Popular

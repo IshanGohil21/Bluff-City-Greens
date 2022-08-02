@@ -5,13 +5,15 @@ import { Icons } from '../../CommonConfig/CommonConfig';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { postRequest, postFormDataRequest } from '../../Helper/ApiHelper';
+import { postRequest} from '../../Helper/ApiHelper';
 
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { useSelector } from 'react-redux';
 import { LocaleConfig } from 'react-native-calendars';
 
+
 const PhoneVerificationScreen = (props) => {
+
 
   const makeid = (length) => {
     var result = '';
@@ -46,6 +48,7 @@ const PhoneVerificationScreen = (props) => {
     let errorMsg = 'Something went wrong';
     // console.log(response);
     if (response.success) {
+      setisLoading(false);
       const registerData = new FormData();
       registerData.append('image', { uri: params?.image.path, type: params.image.mime, name: makeid(10) })
       registerData.append('email', params.email)
@@ -76,6 +79,7 @@ const PhoneVerificationScreen = (props) => {
         //  console.log(resData)
 
         if (loginRes.success) {
+          setisLoading(false);
           try {
             await AsyncStorage.setItem('token', resData.access_token)
             await AsyncStorage.setItem('refreshToken', resData.refresh_token)
@@ -87,12 +91,15 @@ const PhoneVerificationScreen = (props) => {
           props.navigation.navigate('AccessibilityPolicy');
 
         } else {
+          setisLoading(false);
           if (resData.error === 'Invalid OTP entered!') {
+            setisLoading(false);
             Toast.show(" Invalid OTP entered! ");
-            setLoading(false)
+            
           } else if (resData.error === 'USER ALERADY EXISTS') {
+            setisLoading(false);
             Toast.show("The credentials entered already exist. Please check the details.")
-            setLoading(false)
+            
           }
         }
       }
@@ -125,12 +132,15 @@ const PhoneVerificationScreen = (props) => {
             />
             
           </View>
+          
           <TouchableOpacity onPress={onPressVerify} style={styles.navigate}>
-            <Text style={styles.signin}> VERIFY </Text>
+            { isLoading ? <ActivityIndicator size='small' color={Colors.primary} />: 
+            <Text style={styles.signin}> VERIFY </Text> }
           </TouchableOpacity>
 
           <View style={styles.code}>
             <Text style={styles.codeContainer} >Didn't recieved code?</Text>
+            
             <TouchableOpacity onPress={() => {
               props.navigation.navigate('SignUp')
             }} >
@@ -162,7 +172,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   backButton: {
-    flex: 1,
+    flex: 1.2,
     backgroundColor: Colors.primary,
     justifyContent: 'space-between'
   },

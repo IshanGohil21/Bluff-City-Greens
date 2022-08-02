@@ -239,12 +239,14 @@ const styles = StyleSheet.create({
         flex: 3,
     },
     title: {
-        fontSize: 14,
-        color: Colors.grey,
+        fontSize: 16,
+        color: Colors.black,
         marginTop: 10
     },
     container: {
         marginTop: 10,
+        flexDirection:'row',
+        justifyContent:'space-between'
     },
     button: {
         width: "80%",
@@ -284,7 +286,7 @@ const styles = StyleSheet.create({
         color: Colors.grey
     },
     confirm: {
-        width: "100%",
+        width: "50%",
         alignItems: "center",
         backgroundColor: Colors.primary,
         textAlign: 'center',
@@ -292,7 +294,7 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
         marginTop: 50,
-        marginHorizontal: 70,
+        marginHorizontal: 100,
         marginBottom: 20
     },
     mainFormik: {

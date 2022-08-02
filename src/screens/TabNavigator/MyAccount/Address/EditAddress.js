@@ -92,11 +92,12 @@ const EditAddressScreen = (props) => {
                                 <View style={styles.detailContainer} >
                                     <Text style={styles.details} >Street Name, Flat No., Society/Office Name</Text>
 
+                                <View style={{padding:5,borderRadius:10}} >
                                     <TextInput
                                         value={values.primary_address}
                                         onBlur={() => setFieldTouched('primary_address')}
                                         onChangeText={handleChange('primary_address')}
-                                        placeholder={edit.item.primary_address}
+                                        placeholder='Enter your new address'
                                         keyboardType='default'
                                         backgroundColor={Colors.white}
                                         style={styles.textinput}
@@ -104,8 +105,10 @@ const EditAddressScreen = (props) => {
                                     {touched.primary_address && errors.primary_address &&
                                         <Text style={styles.errorValidate} >{errors.primary_address}</Text>
                                     }
+                                    </View>
 
                                     <Text style={styles.details} > Zip Code </Text>
+                                    <View style={{padding:5,borderRadius:10}} >
                                     <TextInput
                                         value={values.zip}
                                         onBlur={() => setFieldTouched('zip')}
@@ -118,8 +121,11 @@ const EditAddressScreen = (props) => {
                                     {touched.zip && errors.zip &&
                                         <Text style={styles.errorValidate} >{errors.zip}</Text>
                                     }
+                                    </View>
 
                                     <Text style={styles.details} > Nearest Landmark (Optional) </Text>
+                                    
+                                    <View style={{padding:5,borderRadius:10}} >
                                     <TextInput
                                         value={values.addition_address_info}
                                         onBlur={() => setFieldTouched('addition_address_info')}
@@ -132,6 +138,7 @@ const EditAddressScreen = (props) => {
                                     {touched.addition_address_info && errors.addition_address_info &&
                                         <Text style={styles.errorValidate} >{errors.addition_address_info}</Text>
                                     }
+                                    </View>
 
                                 </View>
                                 <Text style={styles.radioContainer} > Tag this address as: </Text>
@@ -219,15 +226,8 @@ const styles = StyleSheet.create({
         flex: 3
     },
     map: {
-        height: 300,
+        height: 250,
         width: 400,
-    },
-    detailContainer: {
-        borderColor: Colors.white,
-        //   borderWidth: 5,
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 50,
-        padding: 10,
     },
     address: {
         padding: 5,
@@ -264,7 +264,8 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     details: {
-        color: Colors.grey
+        color: Colors.grey,
+        padding:5
     },
     detailContainer: {
         borderColor: Colors.white,
@@ -282,9 +283,6 @@ const styles = StyleSheet.create({
     radioContainer: {
         fontWeight: 'bold',
         padding: 10,
-    },
-    bodyContainer: {
-        flex: 1
     },
     radio: {
         //   marginLeft: 10,
@@ -317,7 +315,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 10 
     },
     textinput:{
-        padding:10
+        padding:10,
+        borderRadius:10,
+        backgroundColor:Colors.white
     }
 
 });

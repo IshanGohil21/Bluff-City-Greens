@@ -37,9 +37,9 @@ const RecommendedProductsCommon = (props) => {
       const x = cartItems.find(item => item?.itemSizeId === weight.id);
       //  console.log("X", x);
     
-      const [isTouched, setIsTouched] = useState(props.initialState);
+      const [isTouched, setIsTouched] = useState(props?.initialState);
     
-      const [isFavorite, setIsFavorite] = useState(props.initialState);
+      const [isFavorite, setIsFavorite] = useState(props?.initialState);
 
       const onPressFav = async () => {
         setIsFavorite(true)

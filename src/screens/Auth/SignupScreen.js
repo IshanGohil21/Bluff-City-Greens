@@ -11,11 +11,13 @@ import SignUpValidationSchema from '../../Schema/SignUpValidationSchema';
 import { Colors, Images, Icons, Button } from '../../CommonConfig/CommonConfig';
 import RBSheet from "react-native-raw-bottom-sheet";
 import CountryPicker from 'react-native-country-codes-picker';
+import * as Animatable from 'react-native-animatable';
 
 import * as AuthActions from '../../Redux/Action/AuthAction';
 import { useDispatch } from 'react-redux';
 import { postRequest } from '../../Helper/ApiHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Feather from 'react-native-vector-icons/Feather';
 
 const SignUpScreen = props => {
 
@@ -28,9 +30,7 @@ const SignUpScreen = props => {
 
     const takePhotoFromCamera = () => {
         ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true,
+            
         }).then(image => {
             console.log(image);
             // dispatch(AuthAction.addImage(image))
@@ -166,19 +166,26 @@ const SignUpScreen = props => {
 
                                 <View>
                                     <Text style={styles.emailContainer}>Name</Text>
+                                    
+                                    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}} >
+                                    
                                     <TextInput
                                         value={values.name}
                                         style={styles.customCss}
                                         onBlur={() => setFieldTouched('name')}
                                         onChangeText={handleChange('name')}
                                         placeholder="Name"
-
+                                        
                                     />
+                                    {touched.name ? (!errors.name ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color={Colors.lightYellow} size={20} /></Animatable.View> : null) : null}
+                                    </View>
+
                                     {touched.name && errors.name &&
                                         <Text style={styles.error}>{errors.name}</Text>
                                     }
 
                                     <Text style={styles.emailContainer}>Email</Text>
+                                    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center',}} >
                                     <TextInput
                                         value={values.email}
                                         style={styles.customCss}
@@ -187,6 +194,8 @@ const SignUpScreen = props => {
                                         placeholder="E-mail"
                                         keyboardType='email-address'
                                     />
+                                         {touched.email ? (!errors.email ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color={Colors.lightYellow} size={20} /></Animatable.View> : null) : null}
+                                    </View>
                                     {touched.email && errors.email &&
                                         <Text style={styles.errorEmail}>{errors.email}</Text>
                                     }
@@ -208,9 +217,11 @@ const SignUpScreen = props => {
                                             onBlur={() => setFieldTouched('mobile')}
                                             onChangeText={handleChange('mobile')}
                                         />
+                                         {touched.mobile ? (!errors.mobile ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color={Colors.primary} size={20} /></Animatable.View> : null) : null}
                                     </View>
 
                                     <Text style={styles.password} >Password</Text>
+
                                     <TextInput
                                         value={values.password}
                                         style={styles.customCss}
@@ -444,13 +455,15 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         borderRadius: 10,
         padding: 10,
-        // backgroundColor: 'rgba(25,20,200,0.35)',
-        // backgroundColor: "#D9FFFFFF",
         backgroundColor:Colors.white,
         alignItems: 'center'
     },
     flexing:{
         flex: 0.5 
+    },
+    phoneCont0:{
+        flexDirection:'row',
+        alignItems:'center',
     }
 });
 
