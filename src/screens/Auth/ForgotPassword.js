@@ -93,7 +93,7 @@ const ForgotPasswordScreen = props => {
               <Text style={styles.emailContainer}>{errors.email}</Text>
             }
             <View>
-              <TouchableOpacity onPress={handleSubmit} style={margins0}>
+              <TouchableOpacity onPress={handleSubmit} style={styles.margins0}>
                 <View style={styles.signin} >
                 { isLoading ? <ActivityIndicator size='small' color={Colors.white} /> :
                 <Text style={{fontSize: 24, color: Colors.white}}> SUBMIT </Text> }
@@ -101,7 +101,6 @@ const ForgotPasswordScreen = props => {
               </TouchableOpacity>
             </View>
           </View>
-
         )}
       </Formik>
     </>

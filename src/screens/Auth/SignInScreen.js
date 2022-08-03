@@ -9,10 +9,15 @@ import { Images, Colors, Button } from '../../CommonConfig/CommonConfig'
 import { postRequest, getRequest } from '../../Helper/ApiHelper';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import messaging from '@react-native-firebase/messaging';
+import * as Animatable from 'react-native-animatable';
+import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { color } from "react-native-reanimated";
 
 const SignInScreen = (props) => {
 
     const [isLoading, setisLoading] = useState(false);
+    const [eyeTouched, setEyeTouched] = useState(false)
 
     const onPressLogin = async (values) => {
         setisLoading(true);
@@ -64,7 +69,7 @@ const SignInScreen = (props) => {
                     </View>
                     <View>
                         <TouchableOpacity onPress={() => props.navigation.navigate('MainTab', { screen: 'Home', params: { skipped: true } })}>
-                            <Text style={styles.skip}> SKIP </Text> 
+                            <Text style={styles.skip}> SKIP </Text>
                         </TouchableOpacity>
                     </View>
 
@@ -74,7 +79,7 @@ const SignInScreen = (props) => {
                             style={styles.image}
                             resizeMode='contain'
                         />
-                        
+
                         <View style={styles.siginnn} >
                             <View style={styles.signInStyle}>
                                 <Text style={styles.bluff}>Bluff City </Text></View>
@@ -83,40 +88,54 @@ const SignInScreen = (props) => {
                     </View>
 
 
-                    <Text style={styles.emailId}>Email id</Text>
-                    <TextInput
-                        value={values.email}
-                        style={styles.customCss}
-                        onBlur={() => setFieldTouched('email')}
-                        onChangeText={handleChange('email')}
-                        placeholder="E-mail"
-                        color="white"
-                        keyboardType='email-address'
-                    />
+                    <Text style={{color: Colors.white, paddingVertical:10 }}>Email id</Text>
+
+                    <View style={styles.done} >
+                    <FontAwesome name="envelope" color={Colors.black} size={18}/>
+                        <TextInput
+                            value={values.email}
+                            style={styles.customCss}
+                            onBlur={() => setFieldTouched('email')}
+                            onChangeText={handleChange('email')}
+                            placeholder="E-mail"
+                            color="white"
+                            keyboardType='email-address'
+                        />
+                        <View style={{marginRight:10}} >
+                            {touched.email && !errors.email && <Feather name="check-circle" color="green" size={20} />}
+                        </View>
+                    </View>
+
                     {touched.email && errors.email &&
                         <Text style={styles.emailError}>{errors.email}</Text>
                     }
 
-                    <Text style={{ color: Colors.white }} >Password</Text>
-                    
-                    <TextInput
-                        value={values.password}
-                        style={styles.customCss}
-                        placeholder="Password"
-                        color="white"
-                        onBlur={() => setFieldTouched('password')}
-                        onChangeText={handleChange('password')}
-                        secureTextEntry={true}
-                    />
+                    <Text style={{ color: Colors.white, paddingVertical:10 }} >Password</Text>
+
+                    <View style={styles.done} >
+                    <FontAwesome name="lock" color={Colors.black} size={20}/>
+                        <TextInput
+                            value={values.password}
+                            style={styles.customCss}
+                            placeholder="Password"
+                            color="white"
+                            onBlur={() => setFieldTouched('password')}
+                            onChangeText={handleChange('password')}
+                            secureTextEntry={eyeTouched ? false : true}
+                        />
+                        <TouchableOpacity onPress={() => setEyeTouched(!eyeTouched)} style={{marginRight:10}} >
+                            {!eyeTouched ? <Feather name="eye-off" color={Colors.black} size={20} /> : <Feather name="eye" color={Colors.primary} size={20} />}
+                        </TouchableOpacity>
+                    </View>
 
                     {touched.password && errors.password &&
-                        <Text style={styles.errors}>{errors.password}</Text>
+                        <Text style={styles.emailError}>{errors.password}</Text>
                     }
 
                     <View style={styles.rememberContainer} >
 
                         <View style={styles.flexing} >
-                            <TouchableOpacity onPress={() => { setRememberMe(!rememberMe) }}>
+                            <TouchableOpacity onPress={() => { setRememberMe(!rememberMe) }}  >
                                 {rememberMe ? <Ionicons name="checkbox-outline" size={20} color={Colors.white} /> : <Ionicons name="square-outline" size={20} color={Colors.white} />}
                             </TouchableOpacity>
                             <Text style={styles.remember}> Remember me </Text>
@@ -184,12 +203,13 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary
     },
     customCss: {
-        padding: 10,
+        padding: 5,
         marginBottom: 12,
         borderColor: '#cccccc',
         borderRadius: 10,
         marginTop: 5,
-        width: '100%',
+        width: '80%',
+        height:30,
         backgroundColor: Colors.white,
         color: Colors.black
     },
@@ -264,7 +284,8 @@ const styles = StyleSheet.create({
     },
     emailError: {
         fontSize: 11,
-        color: Colors.red
+        color: Colors.red,
+        paddingVertical:5
     },
     connectContainer: {
         flex: 1,
@@ -312,31 +333,54 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    siginnn:{
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        marginRight: 60 
+    siginnn: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 60
     },
-    emailId:{
-        textAlign: 'left', 
-        paddingVertical: 10, 
+    emailId: {
+        textAlign: 'left',
+        paddingVertical: 10,
         color: Colors.white
     },
-    signinFont:{
-        fontSize: 24, 
-        color: Colors.white 
+    signinFont: {
+        fontSize: 24,
+        color: Colors.white
     },
-    signInStyle:{
+    signInStyle: {
         flexDirection: 'row',
-         justifyContent: 'center', 
-         alignItems: 'center'
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    alignment:{
-        alignItems: 'center' 
+    alignment: {
+        alignItems: 'center'
     },
-    flexing:{
-        flexDirection: 'row' 
+    flexing: {
+        flexDirection: 'row'
     },
+    action: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    textInput: {
+        padding: 10,
+        marginBottom: 12,
+        borderColor: '#cccccc',
+        borderRadius: 10,
+        marginTop: 5,
+        width: '100%',
+        backgroundColor: Colors.white,
+        color: Colors.black,
+    },
+    done:{
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent:'space-between', 
+        backgroundColor:Colors.white, 
+        borderRadius:10,
+        paddingHorizontal:10
+    }
 
 });
 

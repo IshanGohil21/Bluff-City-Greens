@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, Alert, Button, View, Image, TouchableOpacity, StatusBar } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Formik } from 'formik';
@@ -8,8 +8,16 @@ import { ref } from 'yup';
 import { Colors, Images, Icons } from '../../../CommonConfig/CommonConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { postRequest, refreshToken } from '../../../Helper/ApiHelper';
+import * as Animatable from 'react-native-animatable';
+import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const ChangePasswordScreen = props => {
+
+    const [eyeTouched, setEyeTouched] = useState(false);
+    const [eyeTouched0, setEyeTouched0] = useState(false);
+    const [eyeTouched1, setEyeTouched1] = useState(false);
+
     const onPressSave = async (values) => {
         console.log("\n\n\nValues   ", values);
         const data = {
@@ -39,7 +47,7 @@ const ChangePasswordScreen = props => {
             {/* Header */}
             <View style={styles.header} >
                 <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-                    <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={{marginTop:20}} />
+                    <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={{ marginTop: 20 }} />
                 </TouchableOpacity>
                 <Text style={styles.change} >Change Password</Text>
             </View>
@@ -69,14 +77,19 @@ const ChangePasswordScreen = props => {
                                 <View>
                                     <View style={styles.current}>
                                         <Text>Current Password</Text>
-                                        <View>
+                                        <View style={styles.allDone} >
+                                        {!eyeTouched ? <FontAwesome name="lock" color={Colors.black} size={20}/>  :  <FontAwesome name="unlock" color={Colors.black} size={20}/> }
                                             <TextInput
                                                 value={values.currentPass}
                                                 onBlur={() => setFieldTouched('currentPass')}
                                                 onChangeText={handleChange('currentPass')}
                                                 placeholder="Enter Current Password"
-                                                secureTextEntry={true}
+                                                secureTextEntry={eyeTouched ? false : true}
+                                                style={{marginRight:80}}
                                             />
+                                            <TouchableOpacity onPress={() => setEyeTouched(!eyeTouched)} style={{ marginRight: 10 }} >
+                                                {!eyeTouched ? <Feather name="eye-off" color={Colors.black} size={20} /> : <Feather name="eye" color={Colors.primary} size={20} />}
+                                            </TouchableOpacity>
                                         </View>
                                         <View style={styles.line} />
                                     </View>
@@ -85,14 +98,19 @@ const ChangePasswordScreen = props => {
                                     {/* New Password */}
                                     <View style={styles.current}>
                                         <Text>New Password</Text>
-                                        <View>
+                                        <View style={styles.allDone} >
+                                        {!eyeTouched0 ? <FontAwesome name="lock" color={Colors.black} size={20}/>  :  <FontAwesome name="unlock" color={Colors.black} size={20}/> }
                                             <TextInput
                                                 value={values.newPass}
                                                 onBlur={() => setFieldTouched('newPass')}
                                                 onChangeText={handleChange('newPass')}
                                                 placeholder="Enter New Password"
-                                                secureTextEntry={true}
+                                                secureTextEntry={eyeTouched ? false : true}
+                                                style={{marginRight:80}}
                                             />
+                                            <TouchableOpacity onPress={() => setEyeTouched0(!eyeTouched0)} style={{ marginRight: 10 }} >
+                                                {!eyeTouched0 ? <Feather name="eye-off" color={Colors.black} size={20} /> : <Feather name="eye" color={Colors.primary} size={20} />}
+                                            </TouchableOpacity>
                                         </View>
                                         <View style={styles.line} />
                                     </View>
@@ -101,14 +119,20 @@ const ChangePasswordScreen = props => {
                                     {/* Re-enter new Password */}
                                     <View style={styles.current}>
                                         <Text>Re- enter New Password</Text>
-                                        <View>
+                                        <View style={styles.allDone} >
+                                        {!eyeTouched1 ? <FontAwesome name="lock" color={Colors.black} size={20}/>  :  <FontAwesome name="unlock" color={Colors.black} size={20}/> }
                                             <TextInput
                                                 value={values.confirmPass}
                                                 onBlur={() => setFieldTouched('confirmPass')}
                                                 onChangeText={handleChange('confirmPass')}
                                                 placeholder="Re- Enter New Password"
-                                                secureTextEntry={true}
+                                                secureTextEntry={eyeTouched ? false : true}
+                                                style={{marginRight:80}}
                                             />
+                                             <TouchableOpacity onPress={() => setEyeTouched1(!eyeTouched1)} style={{ marginRight: 10 }} >
+                                                {!eyeTouched1 ? <Feather name="eye-off" color={Colors.black} size={20} /> : <Feather name="eye" color={Colors.primary} size={20} />}
+                                            </TouchableOpacity>
+
                                         </View>
                                         <View style={styles.line} />
                                     </View>
@@ -180,14 +204,19 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
     },
-    wrapping:{
-        flex: 1, 
-        justifyContent: 'space-between', 
-        paddingBottom: 25 
+    wrapping: {
+        flex: 1,
+        justifyContent: 'space-between',
+        paddingBottom: 25
     },
-    validation:{
+    validation: {
+        justifyContent: 'space-between',
+        flex: 1
+    },
+    allDone:{
+        flexDirection: 'row', 
         justifyContent: 'space-between', 
-        flex: 1 
+        marginTop:10
     }
 });
 

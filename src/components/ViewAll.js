@@ -10,7 +10,7 @@ import { postRequest } from '../Helper/ApiHelper';
 const { width } = Dimensions.get('window')
 const height = width * 100 / 0.6
 
-const RecommendedProductsCommon = (props) => {
+const ViewAllCommonComp = (props) => {
    const itemW = props.item
      const [weight, setWeight] = useState(itemW?.item_sizes[0]);
     // console.log("Weight", weight);
@@ -47,14 +47,7 @@ const RecommendedProductsCommon = (props) => {
       }
 
   return (
-    <View  >
-      {/* Favorite */}
-      <TouchableOpacity style={styles.orders} onPress={onPressFav} disabled={isFavorite} >
-          {isFavorite ?
-            <Ionicons name={Icons.HEART_FILLED} size={30} color={Colors.red} />:
-            <Ionicons name={Icons.HEART} size={30} color={Colors.black} />
-          }
-      </TouchableOpacity>
+    <View >
 
 {/* Image Containers */}
 <TouchableOpacity style={styles.orderContainer} onPress={props.onClick} >
@@ -100,7 +93,7 @@ const RecommendedProductsCommon = (props) => {
   )
 }
 
-export default RecommendedProductsCommon;
+export default ViewAllCommonComp;
 
 const styles = StyleSheet.create({
     main: {
@@ -108,7 +101,6 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     header: {
-      // flex: 1,
       justifyContent: 'flex-start',
       backgroundColor: Colors.primary,
       flexDirection: 'row',
@@ -171,39 +163,34 @@ const styles = StyleSheet.create({
       fontSize: 12
     },
     price1: {
-      fontSize: 20,
+      fontSize: 16,
       marginHorizontal: 30,
       fontWeight: 'bold'
     },
-    orders: {
-      position: 'absolute',
-      bottom: 165,
-      left: width * 0.5 - 20,
-      zIndex: 10,
-      elevation:15
-    },
+
     orderContainer: {
       flex: 1,
-      width: width * 0.5,
+      width: width * 0.4,
       height: 200,
       justifyContent: 'space-between',
       alignItems: 'center',
-      marginHorizontal: 15,
+      marginHorizontal: 20,
       borderBottomRightRadius: 15,
       borderBottomLeftRadius: 15,
-       backgroundColor: Colors.white,
-       elevation:15,
-       borderRadius: 5,
+      backgroundColor: Colors.white,
+      elevation:5,
+      borderRadius: 5,
+      marginVertical:20
     },
     addButton: {
       flexDirection: 'row',
       backgroundColor: Colors.primary,
-      width: '100%',
+      width: width * 0.4,
       alignItems: 'center',
       justifyContent: 'center',
       padding: 10,
       borderBottomRightRadius: 15,
-      borderBottomLeftRadius: 15
+      borderBottomLeftRadius: 15,
     },
     button: {
       color: Colors.white,

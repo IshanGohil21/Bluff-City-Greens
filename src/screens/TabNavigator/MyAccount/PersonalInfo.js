@@ -8,6 +8,9 @@ import User from '../../../Dummy-Data/User';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Icons, Colors, Images } from '../../../CommonConfig/CommonConfig'
+import * as Animatable from 'react-native-animatable';
+import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const personalInfoScreen = props => {
 
@@ -65,20 +68,31 @@ const personalInfoScreen = props => {
                             />
                         </View>
                     </View>
-                    <Text style={styles.text}>Full Name</Text>
-                    <Text style={styles.number} >{user.name}</Text>
 
+                    <Text style={styles.text}>Full Name</Text>
+
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <FontAwesome name="user" color={Colors.black} size={20} style={{ marginRight: 20 }} />
+                        <Text style={styles.number} >{user.name}</Text>
+                    </View>
                     <View style={styles.line} />
 
                     <Text style={styles.text} >Email</Text>
-                    <Text style={styles.number} >{user.email}</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <FontAwesome name="envelope" color={Colors.black} size={20} style={{ marginRight: 20 }} />
+                        <Text style={styles.number} >{user.email}</Text>
+                    </View>
 
                     <View style={styles.line} />
 
                     <Text style={styles.text}>Contact Number</Text>
-                    <Text style={styles.number}>({user.country_code}) {user.phone}</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <FontAwesome name="phone" color={Colors.black} size={20} style={{ marginRight: 20 }} />
+                        <Text style={styles.number}>({user.country_code}) {user.phone}</Text>
+                    </View>
 
                     <View style={styles.line} />
+
 
                 </View>
 
@@ -152,8 +166,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
-    iconic:{
-        flexDirection: 'row', 
+    iconic: {
+        flexDirection: 'row',
         justifyContent: 'space-between'
     }
 

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Pressable, StyleSheet, Text, View, Image, TextInput, Modal, SafeAreaView, TouchableOpacity, ScrollView, Dimensions, Alert, ActivityIndicator } from 'react-native';
+import { Pressable, StyleSheet, Text, View, Image, TextInput, Modal, SafeAreaView, TouchableOpacity, ScrollView, Dimensions, Alert, ActivityIndicator, } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Formik } from "formik";
 import * as yup from 'yup';
@@ -12,12 +12,14 @@ import { Colors, Images, Icons, Button } from '../../CommonConfig/CommonConfig';
 import RBSheet from "react-native-raw-bottom-sheet";
 import CountryPicker from 'react-native-country-codes-picker';
 import * as Animatable from 'react-native-animatable';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import * as AuthActions from '../../Redux/Action/AuthAction';
 import { useDispatch } from 'react-redux';
 import { postRequest } from '../../Helper/ApiHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const SignUpScreen = props => {
 
@@ -27,10 +29,11 @@ const SignUpScreen = props => {
     const [countryCode, setCountryCode] = useState('+91');
     const [isLoading, setisLoading] = useState(false);
     const refRBSheet = useRef();
+    const [eyeTouched, setEyeTouched] = useState(false)
 
     const takePhotoFromCamera = () => {
         ImagePicker.openCamera({
-            
+
         }).then(image => {
             console.log(image);
             // dispatch(AuthAction.addImage(image))
@@ -56,19 +59,19 @@ const SignUpScreen = props => {
 
     const pressHandler = async (countryCode, mobile, xyz) => {
         setisLoading(true);
-        
+
         const OTPData = {
             country_code: countryCode,
             phone_number: mobile,
             channel: "sms"
         }
         const response = await postRequest('/generate-OTP', OTPData);
-        console.log("SMS Response  ",response)
+        console.log("SMS Response  ", response)
         let errorMsg = 'Something went wrong!';
         if (response.success) {
             setisLoading(false);
             dispatch(AuthActions.addDetails(xyz));
-            props.navigation.navigate('PhoneVerification', { countryCode: countryCode, mobile: mobile , xyz})
+            props.navigation.navigate('PhoneVerification', { countryCode: countryCode, mobile: mobile, xyz })
         } else {
             setisLoading(false);
             Alert.alert("Error", errorMsg, [{ text: "Okay" }])
@@ -77,17 +80,19 @@ const SignUpScreen = props => {
 
     return (
         <>
-            <ScrollView>
+            <KeyboardAwareScrollView>
                 <View style={styles.main}>
 
-                    <TouchableOpacity onPress={() => {
-                        props.navigation.goBack()
-                    }
-                    }
-                        style={styles.back}
-                    >
-                        <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={styles.backArrow} />
-                    </TouchableOpacity>
+                    <View>
+                        <TouchableOpacity onPress={() => {
+                            props.navigation.goBack()
+                        }
+                        }
+                            style={styles.back}
+                        >
+                            <Ionicons name={Icons.BACK_ARROW} color={Colors.white} size={28} style={styles.backArrow} />
+                        </TouchableOpacity>
+                    </View>
 
                     <Formik
                         initialValues={{
@@ -99,13 +104,13 @@ const SignUpScreen = props => {
                         }}
 
                         onSubmit={values => {
-                            const xyz = { name: values.name, email: values.email, password: values.password, country_code: countryCode, phone: values.mobile, image: image}
+                            const xyz = { name: values.name, email: values.email, password: values.password, country_code: countryCode, phone: values.mobile, image: image }
                             dispatch(AuthActions.addDetails(xyz));
                             pressHandler(countryCode, values.mobile, xyz)
                             // onPressRegister(countryCode,values.mobile,xyz)
                         }
-                    }
-                        
+                        }
+
                         validationSchema={SignUpValidationSchema}
                     >
                         {({ values, errors, setFieldTouched, touched, handleChange, isValid, handleSubmit }) => (
@@ -124,11 +129,12 @@ const SignUpScreen = props => {
                                         }
                                     </View>
                                 </View>
-                                
+
                                 <Modal
                                     animationType="slide"
                                     transparent={true}
                                     visible={modalVisible}
+                                    
                                 >
                                     <View style={styles.centeredView}>
                                         <View style={styles.modalView}>
@@ -166,18 +172,18 @@ const SignUpScreen = props => {
 
                                 <View>
                                     <Text style={styles.emailContainer}>Name</Text>
-                                    
-                                    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center'}} >
-                                    
-                                    <TextInput
-                                        value={values.name}
-                                        style={styles.customCss}
-                                        onBlur={() => setFieldTouched('name')}
-                                        onChangeText={handleChange('name')}
-                                        placeholder="Name"
-                                        
-                                    />
-                                    {touched.name ? (!errors.name ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color={Colors.lightYellow} size={20} /></Animatable.View> : null) : null}
+
+                                    <View style={styles.done} >
+                                    <FontAwesome name="user" color={Colors.black} size={18}/>
+                                        <TextInput
+                                            value={values.name}
+                                            style={styles.customCss}
+                                            onBlur={() => setFieldTouched('name')}
+                                            onChangeText={handleChange('name')}
+                                            placeholder="Name"
+
+                                        />
+                                        {touched.name ? (!errors.name ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color={Colors.primary} size={20} /></Animatable.View> : null) : null}
                                     </View>
 
                                     {touched.name && errors.name &&
@@ -185,16 +191,17 @@ const SignUpScreen = props => {
                                     }
 
                                     <Text style={styles.emailContainer}>Email</Text>
-                                    <View style={{flexDirection:'row', justifyContent:'space-between', alignItems:'center',}} >
-                                    <TextInput
-                                        value={values.email}
-                                        style={styles.customCss}
-                                        onBlur={() => setFieldTouched('email')}
-                                        onChangeText={handleChange('email')}
-                                        placeholder="E-mail"
-                                        keyboardType='email-address'
-                                    />
-                                         {touched.email ? (!errors.email ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color={Colors.lightYellow} size={20} /></Animatable.View> : null) : null}
+                                    <View style={styles.done} >
+                                    <FontAwesome name="envelope" color={Colors.black} size={18}/>
+                                        <TextInput
+                                            value={values.email}
+                                            style={styles.customCss}
+                                            onBlur={() => setFieldTouched('email')}
+                                            onChangeText={handleChange('email')}
+                                            placeholder="E-mail"
+                                            keyboardType='email-address'
+                                        />
+                                        {touched.email ? (!errors.email ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color={Colors.lightYellow} size={20} /></Animatable.View> : null) : null}
                                     </View>
                                     {touched.email && errors.email &&
                                         <Text style={styles.errorEmail}>{errors.email}</Text>
@@ -203,13 +210,13 @@ const SignUpScreen = props => {
                                     <Text style={styles.phone}>Phone Number</Text>
 
                                     <View style={styles.phoneCont} >
+                                    <FontAwesome name="phone" color={Colors.black} size={18} style={{paddingHorizontal:5}}/>
 
                                         <TouchableOpacity onPress={() => setShow(true)} style={styles.flexing}><Ionicons name="caret-down-outline" size={20} color={Colors.black} /></TouchableOpacity>
-                                        
+
                                         <Text style={{ flex: 0.5, fontWeight: 'bold' }}>{countryCode}</Text>
                                         <TextInput
-                                            style={{ flex: 3.5,}}
-                                            // style={styles.customCss}
+                                            style={{ flex: 3.5, }}
                                             keyboardType="phone-pad"
                                             maxLength={10}
                                             color="black"
@@ -217,43 +224,61 @@ const SignUpScreen = props => {
                                             onBlur={() => setFieldTouched('mobile')}
                                             onChangeText={handleChange('mobile')}
                                         />
-                                         {touched.mobile ? (!errors.mobile ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color={Colors.primary} size={20} /></Animatable.View> : null) : null}
+                                        {touched.mobile ? (!errors.mobile ? <Animatable.View animation="bounceIn" ><Feather name="check-circle" color={Colors.primary} size={20} /></Animatable.View> : null) : null}
                                     </View>
 
-                                    <Text style={styles.password} >Password</Text>
+                                    <Text style={styles.emailContainer} >Password</Text>
 
-                                    <TextInput
-                                        value={values.password}
-                                        style={styles.customCss}
-                                        placeholder="Password"
-                                        onBlur={() => setFieldTouched('password')}
-                                        onChangeText={handleChange('password')}
-                                        secureTextEntry={true}
-                                    />
+                                    <View style={styles.done}>
+                                    <FontAwesome name="lock" color={Colors.black} size={18}/>
+                                        <TextInput
+                                            value={values.password}
+                                            style={styles.customCss}
+                                            placeholder="Password"
+                                            onBlur={() => setFieldTouched('password')}
+                                            onChangeText={handleChange('password')}
+                                            secureTextEntry={eyeTouched ? false : true}
+                                        />
+                                        <TouchableOpacity onPress={() => setEyeTouched(!eyeTouched)} style={{ marginRight: 10 }} >
+                                            {!eyeTouched ? <Feather name="eye-off" color={Colors.black} size={20} /> : <Feather name="eye" color={Colors.primary} size={20} />}
+                                        </TouchableOpacity>
+
+                                    </View>
                                     {touched.password && errors.password &&
                                         <Text style={styles.passwordContainer}>{errors.password}</Text>
                                     }
-                                    <Text style={{ color: Colors.white }}> Confirm Password </Text>
-                                    <TextInput
-                                        value={values.passwordConfirm}
-                                        style={styles.customCss}
-                                        placeholder='Confirm Password'
-                                        onBlur={() => setFieldTouched('passwordConfirm')}
-                                        onChangeText={handleChange('passwordConfirm')}
-                                        secureTextEntry={true}
-                                    />
+                                    <Text style={styles.emailContainer}> Confirm Password </Text>
+
+                                    <View style={styles.done}>
+                                    <FontAwesome name="lock" color={Colors.black} size={18}/>
+                                        <TextInput
+                                            value={values.passwordConfirm}
+                                            style={styles.customCss}
+                                            placeholder='Confirm Password'
+                                            onBlur={() => setFieldTouched('passwordConfirm')}
+                                            onChangeText={handleChange('passwordConfirm')}
+                                            secureTextEntry={eyeTouched ? false : true}
+                                        />
+                                        <View  style={{ marginRight: 10 }}>
+                                        <TouchableOpacity onPress={() => setEyeTouched(!eyeTouched)}  >
+                                            {!eyeTouched ? <Feather name="eye-off" color={Colors.black} size={20} /> : <Feather name="eye" color={Colors.primary} size={20} />}
+                                        </TouchableOpacity>
+                                        </View>
+
+                                    </View>
+
                                     {touched.passwordConfirm && errors.passwordConfirm &&
                                         <Text style={styles.errorPassword} >{errors.passwordConfirm}</Text>
                                     }
                                 </View>
-                               
-                                    <TouchableOpacity onPress={handleSubmit} disabled={!isValid} >
-                                        <View style={styles.signin}>
-                                            {isLoading ? <ActivityIndicator size='small' color={Colors.white} /> :
-                                                <Text style={{ fontSize: 24, color: Colors.white }}  > SIGN UP </Text>}
-                                        </View>
-                                    </TouchableOpacity>
-                             
+
+                                <TouchableOpacity onPress={handleSubmit} disabled={!isValid} >
+                                    <View style={styles.signin}>
+                                        {isLoading ? <ActivityIndicator size='small' color={Colors.white} /> :
+                                            <Text style={{ fontSize: 24, color: Colors.white }}  > SIGN UP </Text>}
+                                    </View>
+                                </TouchableOpacity>
+
                                 <View style={styles.account}>
                                     <Text style={styles.emailContainer}> Already have account? </Text>
                                     <TouchableOpacity onPress={() => {
@@ -267,7 +292,8 @@ const SignUpScreen = props => {
                     </Formik>
 
                 </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
+
             <CountryPicker
                 show={show}
                 style={{
@@ -289,7 +315,7 @@ const SignUpScreen = props => {
                     countryName: {
                         fontSize: 18
                     },
-                     getFlag: true
+                    getFlag: true
                 }}
                 pickerButtonOnPress={(item) => {
                     setCountryCode(item.dial_code);
@@ -308,13 +334,16 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primary
     },
     customCss: {
-        padding: 10,
+        padding: 5,
         marginBottom: 12,
+        borderColor: '#cccccc',
         borderRadius: 10,
         marginTop: 5,
-        width: '100%',
+        width: '80%',
+        height: 30,
         backgroundColor: Colors.white,
-        color:Colors.black
+        color: Colors.black,
+        marginRight:35
     },
     signin: {
         width: "100%",
@@ -326,7 +355,8 @@ const styles = StyleSheet.create({
         fontSize: 23,
         padding: 10,
         borderRadius: 10,
-        marginVertical: 10
+        marginVertical: 10,
+
     },
     profile: {
         alignItems: 'center',
@@ -367,15 +397,17 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        
     },
     modalView: {
         backgroundColor: Colors.white,
         borderRadius: 40,
-        padding: 25,
+        padding: 10,
         alignItems: "center",
         shadowColor: "#000",
         height: 280,
         width: 270,
+        elevation:10
     },
     button: {
         borderRadius: 50,
@@ -403,7 +435,8 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     main: {
-        flex: 1
+        flex: 1,
+        backgroundColor: Colors.primary
     },
     back: {
         backgroundColor: Colors.primary
@@ -418,7 +451,8 @@ const styles = StyleSheet.create({
     },
     phone: {
         color: Colors.white,
-        marginBottom: 5
+        marginBottom: 5,
+        paddingVertical: 5
     },
     password: {
         color: Colors.white
@@ -448,22 +482,32 @@ const styles = StyleSheet.create({
         color: Colors.red
     },
     emailContainer: {
-        color: Colors.white
+        color: Colors.white,
+        paddingVertical: 5,
+        marginBottom: 5,
     },
     phoneCont: {
         flexDirection: 'row',
         marginBottom: 12,
         borderRadius: 10,
         padding: 10,
-        backgroundColor:Colors.white,
+        backgroundColor: Colors.white,
         alignItems: 'center'
     },
-    flexing:{
-        flex: 0.5 
+    flexing: {
+        flex: 0.5
     },
-    phoneCont0:{
-        flexDirection:'row',
-        alignItems:'center',
+    phoneCont0: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    done: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: Colors.white,
+        borderRadius: 10,
+        paddingHorizontal: 10
     }
 });
 

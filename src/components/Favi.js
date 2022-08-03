@@ -192,7 +192,6 @@ const styles = StyleSheet.create({
        backgroundColor: Colors.white,
        borderRadius: 5,
        marginVertical:20
-      //  elevation: 5
     },
     addButton: {
       flexDirection: 'row',

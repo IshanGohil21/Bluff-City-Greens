@@ -11,6 +11,9 @@ import EditInfoValidationSchema from '../../../Schema/EditInfoValidationSchema';
 import { postRequest } from '../../../Helper/ApiHelper';
 import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Animatable from 'react-native-animatable';
+import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const EditInfoScreen = (props) => {
 
@@ -65,7 +68,7 @@ const EditInfoScreen = (props) => {
         console.log("UPDATE\n", updateData);
 
         const res = await fetch('https://thank-greens-city.herokuapp.com/update-profile',
-        
+
             {
                 method: 'POST',
                 body: updateData,
@@ -155,7 +158,6 @@ const EditInfoScreen = (props) => {
                                 </View>
                             </Modal>
 
-
                             <TouchableOpacity
                                 style={styles.camera}
                                 onPress={() => setModalVisible(true)}
@@ -163,18 +165,24 @@ const EditInfoScreen = (props) => {
                                 <Ionicons name='camera' color={Colors.primary} size={24} />
                             </TouchableOpacity>
 
-
                             {/* Name */}
                             <View>
                                 <Text style={styles.text}>Full Name</Text>
-                                <TextInput
-                                    value={values.name}
-                                    onBlur={() => setFieldTouched('name')}
-                                    onChangeText={handleChange('name')}
-                                    placeholder="Enter your name"
-                                    placeholderTextColor={Colors.grey}
-                                    style={styles.edit}
-                                />
+
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} >
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }} >
+                                        <FontAwesome name="user" color={Colors.black} size={20} style={{ marginRight: 20 }} />
+                                        <TextInput
+                                            value={values.name}
+                                            onBlur={() => setFieldTouched('name')}
+                                            onChangeText={handleChange('name')}
+                                            placeholder="Enter your name"
+                                            placeholderTextColor={Colors.grey}
+                                            style={styles.edit}
+                                        />
+                                    </View>
+                                    {touched.name && !errors.name && <Feather name="check-circle" color="green" size={20} />}
+                                </View>
                                 {touched.name && errors.name &&
                                     <Text style={styles.error}>{errors.name}</Text>
                                 }
@@ -183,16 +191,23 @@ const EditInfoScreen = (props) => {
                                 {/* Country Code & Phone */}
 
                                 <Text style={styles.text} >Contact Number</Text>
-                                <TextInput
-                                    value={values.phone}
-                                    onBlur={() => setFieldTouched('phone')}
-                                    onChangeText={handleChange('phone')}
-                                    keyboardType='numeric'
-                                    placeholder="enter your phone number"
-                                    placeholderTextColor={Colors.grey}
-                                    maxLength={10}
-                                    style={styles.edit}
-                                />
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }} >
+                                    <View style={{ flexDirection: 'row', alignItems: 'center' }} >
+                                        <FontAwesome name="phone" color={Colors.black} size={20} style={{ marginRight: 20 }} />
+                                        <TextInput
+                                            value={values.phone}
+                                            onBlur={() => setFieldTouched('phone')}
+                                            onChangeText={handleChange('phone')}
+                                            keyboardType='numeric'
+                                            placeholder="enter your phone number"
+                                            placeholderTextColor={Colors.grey}
+                                            maxLength={10}
+                                            style={styles.edit}
+                                        />
+                                    </View>
+                                    {touched.phone && !errors.phone && <Feather name="check-circle" color="green" size={20} />}
+                                </View>
                                 {touched.phone && errors.phone &&
                                     <Text style={styles.error}>{errors.phone}</Text>
                                 }
@@ -252,7 +267,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     edit: {
-        paddingVertical: 10
+        paddingVertical: 10,
+
     },
     text: {
         paddingVertical: 10
@@ -339,7 +355,7 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 20
     },
-    apply:{
+    apply: {
         alignItems: 'center',
     }
 })

@@ -79,10 +79,9 @@ const SearchScreen = (props) => {
 
               <View style={{ alignItems: 'center', justifyContent: 'flex-start', flexDirection: 'row' }}>
                 {/* <Text style={{fontSize:20, fontWeight:'bold', marginLeft:10}}>{search}</Text> */}
-                {search.length === 0 ? null : <TouchableOpacity onPress={() => { setSearch('') }}><Ionicons name="close" size={Dimensions.get('screen').width * 0.08} color={Colors.grey} /></TouchableOpacity>}
+                {search.length === 0 ? null : <TouchableOpacity onPress={() => { setSearch(''), setTest(false), setTestItems(false), setTestSub(false) }}><Ionicons name="close" size={Dimensions.get('screen').width * 0.08} color={Colors.grey} /></TouchableOpacity>}
                 <TouchableOpacity disabled={search.length === 0 ? true : false} onPress={getSearch} ><Ionicons name="search-outline" size={Dimensions.get('screen').width * 0.08} color={Colors.grey} /></TouchableOpacity>
               </View>
-
             </View>
 
             <TouchableOpacity style={styles.filter} onPress={() => { props.navigation.navigate('Filter2') }} >

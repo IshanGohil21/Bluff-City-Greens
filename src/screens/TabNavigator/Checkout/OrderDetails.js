@@ -13,7 +13,7 @@ const OrderDetailsScreen = (props) => {
   const dispatch = useDispatch();
 
   const Order = props.route.params.order;
-    // console.log("Oder reciept         ",Order);
+     console.log("Oder reciept         ",Order);
 
   var RandomNumber = Math.floor(Math.random() * 100) + 100;
 

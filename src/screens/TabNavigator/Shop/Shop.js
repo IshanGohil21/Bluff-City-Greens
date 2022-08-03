@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     search: {
         justifyContent: 'flex-start',
         padding: 10,
-        marginHorizontal:20
+        // marginHorizontal:20
     },
     line:{
         height: 0,

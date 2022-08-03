@@ -202,7 +202,10 @@ const HomeScreen = (props) => {
               <View style={styles.commonContainer} >
                 <View style={styles.past} >
                   <Text style={styles.common} >Past Orders</Text>
-                  <Text style={styles.view} >View All</Text>
+                  <TouchableOpacity onPress={() => {props.navigation.navigate('ViewAllPast', { past: pastOrders})}} >
+                    <Text style={styles.view} >View All</Text>
+                  </TouchableOpacity>
+                  
                 </View>
 
                 {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
@@ -249,7 +252,10 @@ const HomeScreen = (props) => {
             <View style={styles.commonContainer} >
               <View style={styles.reco} >
                 <Text style={styles.common} >Recommended Products</Text>
-                <Text style={styles.view} >View All</Text>
+                <TouchableOpacity onPress={ () => {props.navigation.navigate('ViewAll', {reco: recommendedOrders})} } >
+                  <Text style={styles.view} >View All</Text>
+                </TouchableOpacity>
+
               </View>
               {isLoading ? <ShimmerPlaceholder LinearGradient={LinearGradient} height={100} width={width} /> :
                 <View style={styles.heading} >

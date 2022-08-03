@@ -68,7 +68,7 @@ const MyOrdersScreen = props => {
                     </TouchableOpacity>
                 </View>
 
-                {state === 'past' ?
+                { state === 'past' ?
                     // Past Order Screen
                     <View>
                         <FlatList

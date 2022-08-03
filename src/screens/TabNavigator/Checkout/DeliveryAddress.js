@@ -77,12 +77,15 @@ const DeliveryAddressScreen = (props) => {
 
     const [user, setUser] = useState({})
     //  console.log("USER DETAILS", user);
-
-    useEffect(async () => {
+    
+  useEffect(() => {
+    const refresh = props.navigation.addListener('focus',async() => {
         setUser(JSON.parse(await AsyncStorage.getItem("userInfo")))
-        setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
-        setActivateCard(JSON.parse(await AsyncStorage.getItem('activateCard')))
-    }, [])
+      setActiveAddress(JSON.parse(await AsyncStorage.getItem('activeAddress')))
+      setActivateCard(JSON.parse(await AsyncStorage.getItem('activateCard')))
+    })
+    return refresh
+  }, [props.navigation])
 
     useEffect(() => {
         getAddress();
@@ -160,17 +163,14 @@ const DeliveryAddressScreen = (props) => {
                 dispatch(Cart.clearCart())
             }
             else {
-                
                 Toast.show('Something went Wrong')
             }
         }
-
         else {
             const cardParams = {
                 orderId: placeOrderResponse.data.order.id,
                 card_id: activateCard.id
             }
-
             console.log("\n\n\nONLY CARD PAYMENT PARAMS   ", cardParams);
 
             const checkOutResponse = await postRequest('/customer/checkout', cardParams)
@@ -181,11 +181,12 @@ const DeliveryAddressScreen = (props) => {
            
             const clientSecret = checkOutResponse.data.data.payment_intent
             const EphemeralKeySecret = checkOutResponse.data.data.ephemeral_key
-            const Displayname = 'Pradip'
+            const Displayname = 'Ishan'
             const customersId = checkOutResponse.data.data.customer_id
             const { error } = await initPaymentSheet({
                 paymentIntentClientSecret: clientSecret,
                 customerEphemeralKeySecret: EphemeralKeySecret,
+                customerId:customersId,
                 merchantDisplayName: Displayname,
                 allowsDelayedPaymentMethods: true,
                 testEnv: true,
@@ -267,9 +268,11 @@ const DeliveryAddressScreen = (props) => {
                             <Text style={styles.schedule} >Schedule Delivery</Text>
                         </View>
 
+                        
                         <View style={styles.scheduleD} >
                             <TouchableOpacity style={styles.deliveryTime} onPress={() => { props.navigation.navigate('ScheduleDelivery') }}  >
                                 <Image source={Images.timetable} style={styles.timetable} />
+
 
                                 <View style={{ paddingHorizontal: 8 }}>
                                     <Text>Date</Text>

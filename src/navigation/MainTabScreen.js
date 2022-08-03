@@ -18,8 +18,8 @@ import SearchScreen from '../Screens/TabNavigator/Home/Search';
 import FiltersScreen2  from '../Screens/TabNavigator/FiltersScreen2';
 import FruitShopScreen  from '../Screens/TabNavigator/Shop/Fruits';
 import Vegetables from '../Screens/TabNavigator/Shop/Vegetables';
-
-
+import ViewAllReco from '../Screens/TabNavigator/Home/ViewAllReco';
+import ViewAllPast from '../Screens/TabNavigator/Home/ViewAllPast';
 { /* Contact US Screen */ }
 import ContactScreen from '../Screens/TabNavigator/Contact';
 import FAQScreen from '../Screens/TabNavigator/FAQ';
@@ -145,6 +145,8 @@ const HomeStackScreen = () => {
             <HomeStack.Screen name='Recommended_Products' component={RecommendedProducts} />
             <HomeStack.Screen name='Search' component={SearchScreen} />
             <HomeStack.Screen name='Filter2' component={FiltersScreen2} />
+            <HomeStack.Screen name='ViewAll' component={ViewAllReco} />
+            <HomeStack.Screen name='ViewAllPast' component={ViewAllPast} />
         </HomeStack.Navigator>
     )
 }

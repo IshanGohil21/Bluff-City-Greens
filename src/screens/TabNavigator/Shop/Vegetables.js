@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     search: {
-        padding: 20
+        padding: 20,
     },
     line1: {
         height: 0,
