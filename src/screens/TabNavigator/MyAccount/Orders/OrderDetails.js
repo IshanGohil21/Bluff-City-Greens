@@ -98,7 +98,7 @@ const OrderDetailsScreenAccount = (props) => {
                                 return (
                                     <View>
                                         <Products
-                                            title={item.item.sub_category.title}
+                                            // title={item.item.sub_category.title}
                                             image={item.item.item.item_images[0].image}
                                             name={item.item.item.name}
                                             size={item.item.item_size.size}
@@ -113,7 +113,7 @@ const OrderDetailsScreenAccount = (props) => {
 
                     <Text style={styles.add} >Delivery Address</Text>
 
-                    {activeAddress !== null ?
+                    {/* {activeAddress !== null ?
                         <View style={styles.overall} >
                             <Ionicons name={Icons.PIN_FILLED} size={35} color={Colors.primary} />
                             <View style={{ padding: 10 }} >
@@ -126,7 +126,7 @@ const OrderDetailsScreenAccount = (props) => {
                         <TouchableOpacity style={styles.other} onPress={() => { props.navigation.goBack() }}>
                             <Text style={styles.please} >Please Select Address</Text>
                         </TouchableOpacity>
-                    }
+                    } */}
 
                     <Text style={styles.add} >Delivery Date and Time</Text>
                     <View style={styles.del} >

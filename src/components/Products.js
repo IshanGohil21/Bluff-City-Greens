@@ -6,7 +6,7 @@ import { Colors } from '../CommonConfig/CommonConfig';
 const Products = (props) => {
   return (
     <View style={styles.main} >
-      <Text style={styles.name} >{props.title}</Text>
+      {/* <Text style={styles.name} >{props.title}</Text> */}
       <View style={styles.all} >
         <Image source={{ uri: props.image }} style={styles.image} />
         <View style={{ marginRight: 80 }}>

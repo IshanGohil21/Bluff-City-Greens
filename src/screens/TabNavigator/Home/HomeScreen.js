@@ -16,6 +16,7 @@ import PastProductsCommon from '../../../Components/PastOrdesCommon';
 
 const { width } = Dimensions.get('window')
 
+
 const HomeScreen = (props) => {
 
   const [isLoading, setIsLoading] = useState(true)
@@ -125,7 +126,7 @@ const HomeScreen = (props) => {
 
           {/* Serach bar */}
           <View style={styles.filter} >
-            <TouchableOpacity onPress={() => { props.navigation.navigate('Search') }} >
+            <TouchableOpacity onPress={() => { props.navigation.navigate('Search', { reco: recommendedOrders }) }} >
               <SearchBarScreen />
             </TouchableOpacity>
 

@@ -17,6 +17,9 @@ import { getMainRequest } from '../../../Helper/ApiHelper';
 const { width } = Dimensions.get('window')
 
 const SearchScreen = (props) => {
+  const recoProducts = props.route.params.reco
+  console.log(recoProducts);
+
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [result, setResult] = useState([]);
@@ -198,20 +201,21 @@ const SearchScreen = (props) => {
           </View>
           <View>
             <FlatList
-              data={MostPopularProductScreen}
+              data={recoProducts}
               // data={result.items}
 
               renderItem={({ item }) => {
-                //  console.log("\n\n\nSearch  ", item);
+                  console.log("\n\n\nSearch  ", item);
                 //  console.log(item);
                 return (
                   <View key={item.id}>
                     <Popular
-                      image={item.image}
-                      name={item.name}
-                      weight={item.weight}
-                      price={item.price}
-                      onHeart={() => { }}
+                      item={item}
+                       image={item.item_images[0].image}
+                       name={item.name}
+                       weight={item.item_sizes[0].size}
+                       price={item.item_sizes[0].price}
+                       onClick={() => { props.navigation.navigate('Recommended_Products', { recommended: item, recommendId: item.id }) }}
                     />
                   </View>
                 )

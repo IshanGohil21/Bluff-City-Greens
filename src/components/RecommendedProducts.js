@@ -12,6 +12,7 @@ const height = width * 100 / 0.6
 
 const RecommendedProductsCommon = (props) => {
    const itemW = props.item
+  //  console.log("itemssssss", itemW);
      const [weight, setWeight] = useState(itemW?.item_sizes[0]);
     // console.log("Weight", weight);
 

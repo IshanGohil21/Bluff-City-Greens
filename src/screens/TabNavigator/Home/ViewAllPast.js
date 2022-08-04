@@ -14,7 +14,7 @@ const ViewAllPast = (props) => {
             {/* Title */}
             <View style={styles.title} >
                 <TouchableOpacity onPress={() => { props.navigation.goBack() }} >
-                    <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={{ marginTop: 10 }} />
+                    <Ionicons name={Icons.BACK_ARROW} size={24} color={Colors.white} style={{ marginTop: 30 }} />
                 </TouchableOpacity>
                 <Text style={styles.views} >View All</Text>
             </View>

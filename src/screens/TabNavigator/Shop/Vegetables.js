@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
         // paddingVertical: 10
     },
     back: {
-        marginTop: 20,
+        marginTop: 30,
         padding: 10
     },
     title: {
@@ -539,7 +539,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         height: 22,
         width: 18,
-        marginTop: 18,
+        marginTop: 30,
         marginLeft: 22,
         position: 'absolute',
         zIndex: 10
